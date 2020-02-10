@@ -1,0 +1,92 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage[pdftex]{graphicx}
+\usepackage{balance}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\newcommand{\comment}[1]{{\textcolor{blue}{#1}}}
+
+
+\usepackage{color,soul}
+
+\newcommand{\todo}[1]{\hl{TODO:~#1}}
+\renewcommand*\ttdefault{txtt} % the more modern typewriter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+\title{SLOC: Service Level Objectives for Next Generation Cloud Comping}
+%SUBTITLE
+%\Large{}
+
+\author{
+	\IEEEauthorblockN{Stefan Nastic, Andrea Morichetti, \\ Thomas Pusztai, Schahram Dustdar}
+	\IEEEauthorblockA{Distributed Systems Group, \\TU Wien, Vienna, Austria} 
+									
+\and	
+	\IEEEauthorblockN{Deepak Vij, Futurewei Team}
+	\IEEEauthorblockA{Futurewei Technologies, Inc., \\ Santa Clara CA USA}
+}
+
+% \IEEEoverridecommandlockouts
+
+\maketitle
+\begin{abstract}
+In this paper we outline the general research challenges, aproaches, vision and roadmap for the SLOC project ....
+Some citation for BibTex~\cite{nastic2014provisioning}
+\todo{NOTE: IC papers have a limit of 5000 words.}
+\end{abstract}
+
+\begin{IEEEkeywords}
+Service Level Objectives, Cloud Computing, Elasticity, Data Analytics 
+\end{IEEEkeywords}
+
+% Include expernal sections
+\input{sections/introduction}
+
+\section{Conclusion}
+\label{sec:Conclusion}
+
+\todo{Add conclusion.}
+
+\section*{Acknowledgments}
+This work is supported by \todo{SLOC}, under project No. \todo{XXX}.
+\todo{Check with Margret about the project ref.}
+
+
+
+\section*{About the authors}
+
+\textbf{Stefan Nastic} is a Postdoctoral Research Assistant at the Distributed Systems Group (DSG), 
+TU Wien, Austria.  He received his Dr. Tech. degree (equivalent PhD)
+%in Software Engineering \& 	Internet Technologies, 
+from TU Wien in 2016.  
+%with a thesis titled: ''Programming, Provisioning and Governing IoT Cloud Systems``.
+His research interests include: IoT and Edge Computing; 
+Cloud Computing; Big Data Analytics; and Smart Cities.
+%Nastic has been involved in several 
+%EU-funded research projects such as SMART-FI, U-Test and SM4ALL, as well as, large 
+%industrial projects such as Pacific Controls Cloud Computing Lab (PC3L). 
+Contact him at snastic@infosys.tuwien.ac.at. \\
+
+\textbf{Schahram Dustdar} 
+is a full professor of computer science heading the DSG at TU 
+Wien, Austria. His work focuses on Internet technologies. He is an IEEE Fellow, a member 
+of the Academy Europeana, and an ACM Distinguished Scientist. Contact him at 
+dustdar@dsg.tuwien.ac.at.\\
+
+\todo{All: please add a short bio...}
+
+
+\balance
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}
+
+
