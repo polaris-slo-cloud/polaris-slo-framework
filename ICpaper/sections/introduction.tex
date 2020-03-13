@@ -1,1 +1,101 @@
+%!TEX root = ../main.tex
 \section{Introduction}
+\label{sec:Introduction}
+
+In recent years, Cloud Computing~\cite{Armbrust:2010ee} emerged as a popular
+approach to host large-scale distributed applications, as op-
+posed to purchasing, provisioning and maintaining a dedicated
+infrastructure. In theory, utility-driven, on-demand nature of cloud
+offerings allows customers to easily and quickly provision
+the exact type and amount of resources needed for a given
+task. While cloud enables new possibilities for application design
+and management, it also introduces a plethora of new practical 
+challenges and adds a layer of complexity for system design, 
+development and management.
+
+%SLO/SLA - resource capacity guarantees vs performance guarantee 
+Cloud's service consumption model inherently requires a
+formal agreement between a customer (service consumer) 
+and a cloud service provider. This is usually described as
+Service Level Agreement (SLA)~\cite{TODO}. Key components of any
+SLA are Service Level Objectives (SLOs)~\cite{TODO}. They define
+specific and measurable capacity guarantees to a customer, e.g., available 
+memory to a provisioned VM. 
+However, customers are usually more interested in performance guarantees, whose
+impact can be reflected in business key performance indicators (KPIs). 
+Unfortunately, currently there is only limited support to clearly mapping the 
+resource capacity requirements to the guarantees 
+about workload performance.
+Defining application
+SLOs is largely performed ad hoc, with limited support from cloud providers. 
+This poses a significant challenge to customers as it is
+usually very difficult to correctly derive low-level 
+resource capacity requirements, such as memory allocation,
+from workload's business requirements.
+%as well as to maintain them during application's life cycle.
+
+
+Elasticity, one of the fundamental properties of cloud computing, allows for
+applications to respond to varying load patterns by adjusting the amount of
+provisioned resources to exactly match their current need, thus minimizing
+over-provisioning and reducing hosting costs. 
+Although elasticity offers theoretically ideal strategies to keep 
+track of and enforce application's resource-bound SLOs, in practice it is 
+increasingly complex to define correct elastic strategies in face of
+ever-changing cloud services, novel and heterogeneous resource types (e.g., containers),
+execution paradigms (e.g., serverless computing) and deployments
+topologies (e.g., microservice mashes). 
+In addition to resource
+elasticity, the cloud computing paradigm enables additional elasticity dimensions, such
+as cost elasticity and quality elasticity~\cite{Dustdar:2011dk}. 
+However, current approaches dealing with SLOs largely fail to 
+consider elasticity dimensions holistically. This introduces another
+level of indirection for the users, who now need to consider not only 
+implications of low level resources on, for example costs, but also
+implications of costs on business KPIs.  
+
+%Cloud provider's perspective. Resource underutilization
+SLOs also play a crucial role for cloud service providers, as
+their main business model depends on achieving best utilization
+of their resource pools, while maintaining minimal level of SLA 
+violations. Although cloud service providers employ numerous
+techniques to optimize resource utilization in their data centers,
+such as resource overcommitment and over subscription models~\cite{TODO}, 
+resource bursting~\cite{noonan2016managing} and resources reclamations~\cite{engle2015capacity},
+the average utilization of data centers' resource pools is 
+reported to be as low as 20-30\%~\cite{TODO}. This has a negative impact 
+on both the cloud service providers and the customers, because
+customers are usually over provisioning for their workloads, hence 
+incurring higher operational costs, while cloud service providers
+are left with de facto unused resources, hence are not able to 
+fully utilize their economies of scale.
+
+% AWS Savings plan to have money commitment
+% Different types of ec2 instances and multiple consumption models RI, on demand ...
+
+In this paper we introduce SLOC -- a novel elasticity framework that promotes SLOs to 
+the first-class cloud citizens. SLOC aims to raise the level of 
+abstraction and provide suitable models, algorithms, runtime mechanisms and tools
+for providing and consuming cloud resources in an SLO-native manner, while
+at the same time offering performance guarantees to the users. 
+%
+Concretely, SLOC framework intends to relieve users from explicitly 
+dealing with low-level concepts such as CPU and memory, by enabling 
+{\em performance-driven, SLO-native approach} to cloud computing. 
+Conversely SLOC aims to  
+enable cloud providers to have more versatile understanding, greater control 
+and better utilization of their resource pools by, among other things,
+accounting for additional elasticity dimensions such as cost and quality. 
+
+The remainder of this paper is structured as follows. 
+In Section~\ref{sec:Background}, we provide an overview of our previous
+work in the field of elastic computing, SLAs and cloud engineering.
+In Section~\ref{sec:Challenges}, we analyze key research challenges,
+which motivate our SLOC framework.
+Section~\ref{sec:Approach}, presents the main vision and introduces 
+the general approach of SLOC framework.
+In Section~\ref{sec:mechanisms}, we discuss main techniques,  
+mechanisms and the road map for our SLOC framework.
+Related research is discussed in Section~\ref{sec:related_work}.
+Finally, we conclude the work in Section~\ref{sec:Conclusion} and provide an outlook for
+ongoing and future work.

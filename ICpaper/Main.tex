@@ -6,6 +6,7 @@
 \usepackage{balance}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{paralist}
 
 \newcommand{\comment}[1]{{\textcolor{blue}{#1}}}
 
@@ -19,16 +20,17 @@
 \begin{document}
 
 
-\title{SLOC: Service Level Objectives for Next Generation Cloud Comping}
+\title{SLOC: Service Level Objectives for Next Generation Cloud Computing \\
 %SUBTITLE
-%\Large{}
+\Large{Vision, Research Challenges and Approach Overview}
+}
 
 \author{
 	\IEEEauthorblockN{Stefan Nastic, Andrea Morichetti, \\ Thomas Pusztai, Schahram Dustdar}
 	\IEEEauthorblockA{Distributed Systems Group, \\TU Wien, Vienna, Austria} 
 									
 \and	
-	\IEEEauthorblockN{Deepak Vij, Futurewei Team}
+	\IEEEauthorblockN{\todo{Futurewei Team}}
 	\IEEEauthorblockA{Futurewei Technologies, Inc., \\ Santa Clara CA USA}
 }
 
@@ -36,9 +38,9 @@
 
 \maketitle
 \begin{abstract}
-In this paper we outline the general research challenges, aproaches, vision and roadmap for the SLOC project ....
-Some citation for BibTex~\cite{nastic2014provisioning}
-\todo{NOTE: IC papers have a limit of 5000 words.}
+In this paper we outline research challenges, approaches, vision and road map for the SLOC project ....
+
+\todo{NOTE: IC papers have a limit of 5000 words or ca. 5.5 pages IEEE style.}
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -47,6 +49,13 @@ Service Level Objectives, Cloud Computing, Elasticity, Data Analytics
 
 % Include expernal sections
 \input{sections/introduction}
+\input{sections/background}
+\input{sections/challenges}
+\input{sections/approach}
+\input{sections/mechanisms}
+\input{sections/related_work}
+
+
 
 \section{Conclusion}
 \label{sec:Conclusion}
