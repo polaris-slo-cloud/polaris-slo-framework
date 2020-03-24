@@ -23,9 +23,15 @@ This folder contains an example stack for Kubernetes consisting of:
     ```
     kubectl get pods | grep cassandra-operator
     ```
+5. Deploy the Cassandra cluster:
+    ```
+    kubectl apply -f ./cassandra/data-center.yaml
+    ```
 
 
 Prometheus and Grafana are available on ports `30900` and `30901` respectively on the node, on which they have been deployed.
 
 If you are running minikube, you can get the IP address of your node by running `minikube ip`.
 Note that the scrape interval for Prometheus has been configured to 5 seconds, but the dashboards in Grafana need to be manually configured to refresh (top right corner of each dashboard).
+
+See this [guide](https://github.com/instaclustr/cassandra-operator/blob/master/doc/op_guide.md) for further information about the cassandra-operator.
