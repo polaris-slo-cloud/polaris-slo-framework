@@ -31,6 +31,8 @@ This folder contains an example stack for Kubernetes consisting of:
 
 Prometheus and Grafana are available on ports `30900` and `30901` respectively on the node, on which they have been deployed.
 
+Cassandra is available on port `30902`.
+
 If you are running minikube, you can get the IP address of your node by running `minikube ip`.
 Note that the scrape interval for Prometheus has been configured to 5 seconds, but the dashboards in Grafana need to be manually configured to refresh (top right corner of each dashboard).
 
