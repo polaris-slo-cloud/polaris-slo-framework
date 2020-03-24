@@ -7,7 +7,7 @@ metadata:
 datacenter: dc1
 cluster: test-cluster
 spec:
-  prometheusSupport: false
+  prometheusSupport: true
   optimizeKernelParams: true
   serviceAccountName: cassandra-performance
   nodes: 3
@@ -63,13 +63,13 @@ spec:
 #    secretName: test-cassandra-dc-ssl-sidecar
 
   cassandraAuth:
-    authenticator: PasswordAuthenticator
-    authorizer: CassandraAuthorizer
+    authenticator: AllowAllAuthenticator
+    authorizer: AllowAllAuthorizer
     roleManager: CassandraRoleManager
 
-#  operatorLabels:
-#    prometheusService:
-#      cassandratestdclabel: testdc
+  operatorLabels:
+    prometheusService:
+      cassandradc: testdc
 #    nodesService:
 #      mynodesservicelabel: labelvalue1
 #    statefulSet:
