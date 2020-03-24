@@ -11,6 +11,21 @@ This folder contains an example stack for Kubernetes consisting of:
     ```
     helm install prometheus-release-1 stable/prometheus-operator -f ./prometheus/helm-chart-config.yaml
     ```
-2. Prometheus and Grafana are available on ports `30900` and `30901` respectively on the node, on which they have been deployed.
+2. Deploy the custom resource definitions for the [cassandra-operator](https://github.com/instaclustr/cassandra-operator), which is used for managing the Cassandra cluster:
+    ```
+    kubectl apply -f ./cassandra/operator/crds.yaml
+    ```
+3. Deploy the cassandra operator:
+    ```
+    kubectl apply -f ./cassandra/operator/bundle.yaml
+    ```
+4. Verify that the operator is running:
+    ```
+    kubectl get pods | grep cassandra-operator
+    ```
+
+
+Prometheus and Grafana are available on ports `30900` and `30901` respectively on the node, on which they have been deployed.
+
 If you are running minikube, you can get the IP address of your node by running `minikube ip`.
 Note that the scrape interval for Prometheus has been configured to 5 seconds, but the dashboards in Grafana need to be manually configured to refresh (top right corner of each dashboard).
