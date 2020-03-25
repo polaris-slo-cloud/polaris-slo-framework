@@ -1,0 +1,22 @@
+{
+  "name": "twitter-clone",
+  "version": "1.0.0",
+  "description": "A simple REST API for a Twitter clone",
+  "main": "main.js",
+  "scripts": {
+    "start": "npx ts-node ./src/main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "private",
+  "private": true,
+  "devDependencies": {
+    "ts-node": "^8.8.1",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "cassandra-driver": "^4.4.0",
+    "express": "^4.17.1"
+  }
+}
