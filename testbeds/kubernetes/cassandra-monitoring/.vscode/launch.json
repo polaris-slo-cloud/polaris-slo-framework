@@ -15,7 +15,10 @@
             "runtimeArgs": [ "-r", "ts-node/register" ],
             "cwd": "${workspaceFolder}/twitter-clone",
             "env": {
-                "TS_NODE_PROJECT": "${workspaceFolder}/twitter-clone/tsconfig.json"
+                "TS_NODE_PROJECT": "${workspaceFolder}/twitter-clone/tsconfig.json",
+                "LISTEN_PORT": "8080",
+                "CASSANDRA_NODE": "192.168.99.101",
+                "CASSANDRA_PORT": "30902"
 			}
         }
     ]
