@@ -1,1 +1,15 @@
-// ToDo: Add a class that implements all endpoints of the /tweets resource.
+import { ResourceControllerBase } from '../resource.controller.base';
+import { types as CassandraTypes } from 'cassandra-driver';
+import { Express } from 'express';
+
+const queries = {
+
+};
+
+export class TweetsController extends ResourceControllerBase {
+
+    protected registerEndpointsInternal(express: Express): void {
+
+    }
+
+}

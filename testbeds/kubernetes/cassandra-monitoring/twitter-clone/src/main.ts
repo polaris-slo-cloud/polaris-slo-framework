@@ -1,6 +1,9 @@
 import { Client } from 'cassandra-driver';
 import express from 'express';
 import { convertToNumber, getEnvironmentVariable } from './util/environment';
+import { UsersController } from './resource-controllers/users/users.controller';
+import { ResourceController } from './resource-controllers/resource-controller';
+import { TweetsController } from './resource-controllers/tweets/tweets.controller';
 
 const config = {
     port: getEnvironmentVariable('LISTEN_PORT', convertToNumber) || 8080,
@@ -24,6 +27,7 @@ function connectToDb(): Promise<Client> {
         contactPoints: [ `${config.cassandraNode}:${config.cassandraPort}` ],
         credentials: config.cassandraUser ? { username: config.cassandraUser, password: config.cassandraPassword } : undefined,
         localDataCenter: 'dc1',
+        keyspace: 'twitter',
     });
 
     return cassandraClient.connect()
@@ -35,10 +39,13 @@ function connectToDb(): Promise<Client> {
 
 function initRestApi(cassandraClient: Client): void {
     const app = express();
+    app.use(express.json());
 
-    app.get('/', (req, res) => {
-        res.send('hallo!');
-    });
+    const controllers: ResourceController[] = [
+        new UsersController(),
+        new TweetsController(),
+    ];
+    controllers.forEach(controller => controller.registerEndpoints(app, cassandraClient));
 
     app.listen(config.port, () => {
         console.log(`Listening on port ${config.port}.`);
