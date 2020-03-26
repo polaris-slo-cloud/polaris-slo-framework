@@ -14,7 +14,7 @@ CREATE TABLE twitter.users(
 );
 
 CREATE TABLE twitter.tweets(
-    tweet_id uuid,
+    tweet_id timeuuid,
     username text,
     tweet_body text,
     time timestamp,
@@ -23,7 +23,7 @@ CREATE TABLE twitter.tweets(
 );
 
 CREATE TABLE twitter.tweets_by_user(
-    tweet_id uuid,
+    tweet_id timeuuid,
     username text,
     tweet_body text,
     time timestamp,
@@ -32,7 +32,7 @@ CREATE TABLE twitter.tweets_by_user(
 ) WITH CLUSTERING ORDER BY (time DESC);
 
 CREATE TABLE twitter.tweets_by_location(
-    tweet_id uuid,
+    tweet_id timeuuid,
     username text,
     tweet_body text,
     time timestamp,

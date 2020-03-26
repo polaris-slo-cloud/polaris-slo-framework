@@ -22,6 +22,7 @@ export class UsersController extends ResourceControllerBase {
             USERS_PREFIX,
             (req, res) => this.executeSafely(req, res, () => this.createUser(req, res)),
         );
+
         express.get(
             `${USERS_PREFIX}/:username`,
             (req, res) => this.getUser(req, res),
