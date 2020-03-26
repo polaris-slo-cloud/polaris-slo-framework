@@ -1,4 +1,4 @@
 
-export function getCurrTimestampForDb(): number {
-    return new Date().valueOf();
+export function getCurrTimestampForDb(): Date {
+    return new Date();
 }

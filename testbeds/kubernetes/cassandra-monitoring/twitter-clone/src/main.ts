@@ -1,9 +1,10 @@
 import { Client } from 'cassandra-driver';
 import express from 'express';
-import { convertToNumber, getEnvironmentVariable } from './util/environment';
-import { UsersController } from './resource-controllers/users/users.controller';
 import { ResourceController } from './resource-controllers/resource-controller';
 import { TweetsController } from './resource-controllers/tweets/tweets.controller';
+import { UsersController } from './resource-controllers/users/users.controller';
+import { CassandraInfo, createDbMapper } from './util/cassandra';
+import { convertToNumber, getEnvironmentVariable } from './util/environment';
 
 const config = {
     port: getEnvironmentVariable('LISTEN_PORT', convertToNumber) || 8080,
@@ -20,7 +21,7 @@ if (!config.cassandraNode) {
 }
 
 
-function connectToDb(): Promise<Client> {
+async function connectToDb(): Promise<CassandraInfo> {
     console.log('Connecting to Cassandra...');
 
     const cassandraClient = new Client({
@@ -30,14 +31,18 @@ function connectToDb(): Promise<Client> {
         keyspace: 'twitter',
     });
 
-    return cassandraClient.connect()
-        .then(() => {
-            console.log('Successfully connected to Cassandra DB.')
-            return cassandraClient
-        });
+    await cassandraClient.connect();
+    const mapper = createDbMapper(cassandraClient);
+
+    console.log('Successfully connected to Cassandra DB.')
+    return {
+        client: cassandraClient,
+        mapper,
+    };
+
 }
 
-function initRestApi(cassandraClient: Client): void {
+function initRestApi(cassandra: CassandraInfo): void {
     const app = express();
     app.use(express.json());
 
@@ -45,7 +50,7 @@ function initRestApi(cassandraClient: Client): void {
         new UsersController(),
         new TweetsController(),
     ];
-    controllers.forEach(controller => controller.registerEndpoints(app, cassandraClient));
+    controllers.forEach(controller => controller.registerEndpoints(app, cassandra));
 
     app.listen(config.port, () => {
         console.log(`Listening on port ${config.port}.`);

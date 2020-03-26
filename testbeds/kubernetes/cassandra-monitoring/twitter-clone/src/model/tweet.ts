@@ -8,6 +8,6 @@ export interface Tweet {
     tweet_id: string;
     username: string;
     tweet_body: string;
-    time: number;
+    time: Date;
     location: GeoLocation;
 }

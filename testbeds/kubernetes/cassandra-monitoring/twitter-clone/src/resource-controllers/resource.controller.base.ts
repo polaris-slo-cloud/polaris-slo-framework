@@ -1,5 +1,6 @@
 import { Client } from 'cassandra-driver';
 import { Express, Request, Response } from 'express';
+import { CassandraInfo, DbMapper } from '../util/cassandra';
 import { ResourceController } from './resource-controller';
 
 export interface ResponseOptions {
@@ -8,10 +9,12 @@ export interface ResponseOptions {
 
 export abstract class ResourceControllerBase implements ResourceController {
 
-    protected cassandra: Client;
+    protected dbClient: Client;
+    protected dbMapper: DbMapper;
 
-    registerEndpoints(express: Express, cassandra: Client): void {
-        this.cassandra = cassandra;
+    registerEndpoints(express: Express, cassandra: CassandraInfo): void {
+        this.dbClient = cassandra.client;
+        this.dbMapper = cassandra.mapper;
         this.registerEndpointsInternal(express);
     }
 
