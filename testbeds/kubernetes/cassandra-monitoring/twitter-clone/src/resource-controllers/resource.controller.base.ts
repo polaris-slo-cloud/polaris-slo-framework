@@ -1,5 +1,5 @@
 import { Client } from 'cassandra-driver';
-import { Express, Response, Request } from 'express';
+import { Express, Request, Response } from 'express';
 import { ResourceController } from './resource-controller';
 
 export interface ResponseOptions {
@@ -28,6 +28,18 @@ export abstract class ResourceControllerBase implements ResourceController {
         expressResponse.status(options.statusCode);
         expressResponse.statusMessage = errorMsg;
         expressResponse.send();
+    }
+
+    protected async executeSafely(req: Request, res: Response, handler: () => Promise<void>): Promise<void> {
+        console.log(`${req.method} ${req.url}`);
+
+        return handler()
+            .then(() => {})
+            .catch(error => this.handleError(error, res));
+    }
+
+    protected handleError(error: any, expressResponse: Response): void {
+        this.sendErrorResponse(expressResponse, error?.toString() || 'Internal Error');
     }
 
 }
