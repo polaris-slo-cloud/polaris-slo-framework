@@ -27,11 +27,17 @@ This folder contains an example stack for Kubernetes consisting of:
     ```
     kubectl apply -f ./cassandra/data-center.yaml
     ```
+6. Deploy the twitter-clone application
+    ```
+    kubectl apply -f ./twitter-clone/kubernetes/twitter-clone.yaml
+    ```
 
 
 Prometheus and Grafana are available on ports `30900` and `30901` respectively on the node, on which they have been deployed.
 
 Cassandra is available on port `30902`.
+
+twitter-clone is available on port `30903`.
 
 If you are running minikube, you can get the IP address of your node by running `minikube ip`.
 Note that the scrape interval for Prometheus has been configured to 5 seconds, but the dashboards in Grafana need to be manually configured to refresh (top right corner of each dashboard).
