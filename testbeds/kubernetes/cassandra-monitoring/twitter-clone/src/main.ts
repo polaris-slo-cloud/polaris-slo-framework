@@ -16,7 +16,7 @@ const config = {
 
 if (!config.cassandraNode) {
     throw new Error(
-        'No Cassandra node host specified. Please set the environment variable CASSANDRA_HOST to the host of the Cassandra node that this application should connect to.',
+        'No Cassandra node specified. Please set the environment variable CASSANDRA_NODE to the host of the Cassandra node that this application should connect to.',
     );
 }
 
