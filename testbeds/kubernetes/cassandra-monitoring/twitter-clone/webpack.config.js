@@ -17,6 +17,6 @@ module.exports = {
     },
     output: {
         filename: 'twitter-clone.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist/build'),
     },
 };
