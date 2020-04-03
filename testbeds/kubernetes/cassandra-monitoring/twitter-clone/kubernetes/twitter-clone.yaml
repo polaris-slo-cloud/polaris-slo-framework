@@ -1,3 +1,12 @@
+apiVersion: v1
+type: kubernetes.io/dockerconfigjson
+kind: Secret
+# This uses the `gitlab+deploy-token-1` for getting read access to git.dsg.tuwien.ac.at:5005/sloc/testbed-docker-registry
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJnaXQuZHNnLnR1d2llbi5hYy5hdDo1MDA1Ijp7InVzZXJuYW1lIjoiZ2l0bGFiK2RlcGxveS10b2tlbi0xIiwicGFzc3dvcmQiOiI2Y3IzWlhaWFhITXNSWFZWNGF6ZyIsImF1dGgiOiJaMmwwYkdGaUsyUmxjR3h2ZVMxMGIydGxiaTB4T2paamNqTmFXRnBZV0VoTmMxSllWbFkwWVhwbiJ9fX0=
+metadata:
+  name: dsg-gitlab-credentials
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +23,7 @@ spec:
     spec:
       containers:
       - name: twitter-clone
-        image: node:10.19.0-alpine3.11
+        image: git.dsg.tuwien.ac.at:5005/sloc/testbed-docker-registry/twitter-clone
         resources:
           limits:
             memory: "512Mi"
@@ -26,15 +35,10 @@ spec:
               value: "cassandra-test-cluster-dc1-nodes"
             - name: CASSANDRA_PORT
               value: "9042"
-            - name: CHECKSUM
-              value: "976f7ef8c222bdfe17edd9607747623ef0729a1ef58f179715727f4a9fd44016 *./twitter-clone.tar.gz"
-        command: ["/bin/sh"]
-        args: [
-            "-c",
-            "apk add --no-cache wget perl-utils && wget https://dsg.tuwien.ac.at/team/tpusztai/sloc/twitter-clone/twitter-clone.tar.gz && echo $CHECKSUM | shasum -a 256 -b -c -- && tar -xzf ./twitter-clone.tar.gz && node twitter-clone.js"
-        ]
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: dsg-gitlab-credentials
 ---
 apiVersion: v1
 kind: Service
