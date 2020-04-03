@@ -4,6 +4,10 @@ This folder contains an example stack for Kubernetes consisting of:
 * a Cassandra cluster,
 * Prometheus and Grafana for monitoring, and
 * a frontend application for receiving requests and storing/retrieving data to/from Cassandra.
+* a load generator in form of an Apache JMeter test.
+
+For details regarding the architecture, please see the [architecture overview](./architecture-overview.md).
+
 
 ## Installation
 
@@ -27,7 +31,11 @@ This folder contains an example stack for Kubernetes consisting of:
     ```
     kubectl apply -f ./cassandra/data-center.yaml
     ```
-6. Deploy the twitter-clone application
+6. Apply the twitter-clone DB schema:
+    ```
+    cqlsh <Cassandra-node-IP> 30902 --file=./twitter-clone/db/schema.cql
+    ```
+7. Deploy the twitter-clone application
     ```
     kubectl apply -f ./twitter-clone/kubernetes/twitter-clone.yaml
     ```
@@ -43,3 +51,17 @@ If you are running minikube, you can get the IP address of your node by running 
 Note that the scrape interval for Prometheus has been configured to 5 seconds, but the dashboards in Grafana need to be manually configured to refresh (top right corner of each dashboard).
 
 See this [guide](https://github.com/instaclustr/cassandra-operator/blob/master/doc/op_guide.md) for further information about the cassandra-operator.
+
+
+## Load Generator Prerequisites
+
+In order to be able to run the load generator, the following four users need to be created: `test1, `test2`, `test3`, and `test4`.
+You can do this by issuing the following curl requests to a Kubernetes node that hosts a twitter-clone pod:
+
+```
+export TWITTER_CLONE_IP=<IP of a node running twitter-clone>
+curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d '{ "username": "test1", "password": "secret", "email": "test@dsg.tuwien.ac.at"}'
+curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d '{ "username": "test2", "password": "secret", "email": "test@dsg.tuwien.ac.at"}'
+curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d '{ "username": "test3", "password": "secret", "email": "test@dsg.tuwien.ac.at"}'
+curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d '{ "username": "test4", "password": "secret", "email": "test@dsg.tuwien.ac.at"}'
+```
