@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx ts-node ./src/main.ts",
     "build": "npx webpack",
+    "build:docker": "npx webpack && docker build -t git.dsg.tuwien.ac.at:5005/sloc/testbed-docker-registry/twitter-clone .",
     "package": "npx webpack && tar -czvf ./dist/twitter-clone.tar.gz -C ./dist/build .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
