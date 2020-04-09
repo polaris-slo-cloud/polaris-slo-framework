@@ -65,3 +65,23 @@ curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d
 curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d '{ "username": "test3", "password": "secret", "email": "test@dsg.tuwien.ac.at"}'
 curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d '{ "username": "test4", "password": "secret", "email": "test@dsg.tuwien.ac.at"}'
 ```
+
+## Building the twitter-clone Docker Image
+
+twitter-clone is packaged as a Docker image with the name `tuwiendsgsloc/tweeter-test`.
+It is called `tweeter-test` to avoid legal issues with the copyrighted name Twitter.
+
+To build and publish `twitter-clone` to DockerHub, execute the following steps:
+
+1. Open a terminal in `./twitter-clone`.
+2. Run `npm install`
+3. If necessary, adjust the package version in [package.json](./twitter-clone/package.json).
+4. Build twitter-clone and package it in a Docker image that is tagged with the current package version and the `latest` tag by running:
+    ```
+    npm run docker:build-latest
+    ```
+5. Push the Docker image to DockerHub:
+    ```
+    npm run docker:push-latest
+    ```
+

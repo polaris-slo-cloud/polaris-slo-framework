@@ -16,7 +16,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: 'twitter-clone.js',
+        filename: 'tweeter.js',
         path: path.resolve(__dirname, 'dist/build'),
     },
 };
