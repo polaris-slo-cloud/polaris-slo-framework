@@ -1,4 +1,4 @@
-FROM node:10.19.0-alpine3.11
+FROM node:10.20.0-alpine3.11
 WORKDIR /usr/apps/twitter-clone
 
 # Copy the build output.
