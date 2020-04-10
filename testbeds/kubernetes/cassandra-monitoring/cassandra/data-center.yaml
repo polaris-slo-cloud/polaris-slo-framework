@@ -69,7 +69,13 @@ spec:
 
   operatorLabels:
     prometheusService:
+    # These labels are applied to the ServiceMonitor that is created for Cassandra.
+    # If they match the selector that has been configured for Prometheus, the
+    # ServiceMonitor will be discovered automatically: https://medium.com/inspiredbrilliance/monitoring-cassandra-cluster-with-prometheus-operator-69c38fdcf34d
       cassandradc: testdc
+      release: prometheus-release-1
+
+
 #    nodesService:
 #      mynodesservicelabel: labelvalue1
 #    statefulSet:
