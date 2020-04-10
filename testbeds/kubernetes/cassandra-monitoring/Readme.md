@@ -39,9 +39,10 @@ For details regarding the architecture, please see the [architecture overview](.
     ```
     kubectl apply -f ./twitter-clone/kubernetes/twitter-clone.yaml
     ```
+8. Import the Cassandra dashboards into Grafana by navigating to `http://<node-id>:30901` and uploading the dashboards (taken from the [cassandra-exporter project](https://github.com/instaclustr/cassandra-exporter/tree/master/grafana/instaclustr)) from the folder `./cassandra/grafana`.
 
 
-Prometheus and Grafana are available on ports `30900` and `30901` respectively on the node, on which they have been deployed.
+Prometheus and Grafana are available on ports `30900` and `30901` respectively on any of the nodes of the Kubernetes Cluster.
 
 Cassandra is available on port `30902`.
 
