@@ -38,6 +38,7 @@ spec:
     requests:
       memory: 512Mi
   dataVolumeClaimSpec:
+    storageClassName: local-storage
     accessModes:
       - ReadWriteOnce
     resources:
