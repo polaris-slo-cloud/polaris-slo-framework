@@ -56,7 +56,7 @@ See this [guide](https://github.com/instaclustr/cassandra-operator/blob/master/d
 
 ## Load Generator Prerequisites
 
-In order to be able to run the load generator, the following four users need to be created: `test1, `test2`, `test3`, and `test4`.
+In order to be able to run the load generator, the following four users need to be created: `test1`, `test2`, `test3`, and `test4`.
 You can do this by issuing the following curl requests to a Kubernetes node that hosts a twitter-clone pod:
 
 ```
