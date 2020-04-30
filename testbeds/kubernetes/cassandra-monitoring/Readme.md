@@ -15,6 +15,11 @@ For details regarding the architecture, please see the [architecture overview](.
     ```
     helm install prometheus-release-1 stable/prometheus-operator -f ./prometheus/helm-chart-config.yaml
     ```
+    If helm times out and the `prometheus-release-1-prome-admission-create-<hash>` pod keeps crashing (see https://github.com/helm/charts/issues/22153), use this alternative way of installing the prometheus-operator with hash suffixes disabled for generated secrets and other objects:
+    ```
+    helm template prometheus-release-1 stable/prometheus-operator -f ./prometheus/helm-chart-config.yaml > ./prometheus/kustomization/prometheus-operator-template.yaml
+    kubectl apply -k ./prometheus/kustomization/
+    ```
 2. Deploy the custom resource definitions for the [cassandra-operator](https://github.com/instaclustr/cassandra-operator), which is used for managing the Cassandra cluster:
     ```
     kubectl apply -f ./cassandra/operator/crds.yaml
