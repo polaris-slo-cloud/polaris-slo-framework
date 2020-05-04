@@ -1,0 +1,20 @@
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 5s
+    evaluationInterval: 5s
+  service:
+    type: NodePort
+    nodePort: 30900
+  serviceMonitor:
+    interval: 5s
+prometheusOperator:
+  serviceMonitor:
+    interval: 5s
+grafana:
+  adminPassword: "sloc-@dm1n"
+  service:
+    type: NodePort
+    nodePort: 30901
+coreDns:
+  serviceMonitor:
+    interval: 5s

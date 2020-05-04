@@ -1,0 +1,115 @@
+apiVersion: cassandraoperator.instaclustr.com/v1alpha1
+kind: CassandraDataCenter
+metadata:
+  name: test-cluster-dc1
+  labels:
+    app: cassandra
+datacenter: dc1
+cluster: test-cluster
+spec:
+  prometheusSupport: true
+  optimizeKernelParams: true
+  serviceAccountName: cassandra-performance
+  nodes: 3
+  # racks:
+  #   - name: "west1-b"
+  #     labels:
+  #       failure-domain.beta.kubernetes.io/zone: europe-west1-b
+  #   - name: "west1-c"
+  #     labels:
+  #       failure-domain.beta.kubernetes.io/zone: europe-west1-c
+  #   - name: "west1-a"
+  #     labels:
+  #       failure-domain.beta.kubernetes.io/zone: europe-west1-a
+  cassandraImage: "gcr.io/cassandra-operator/cassandra-3.11.6:latest"
+  sidecarImage: "gcr.io/cassandra-operator/cassandra-sidecar:latest"
+  imagePullPolicy: Always
+  imagePullSecrets:
+    - name: regcred
+
+  resources:
+    limits:
+      memory: 1Gi
+    requests:
+      memory: 1Gi
+  sidecarResources:
+    limits:
+      memory: 512Mi
+    requests:
+      memory: 512Mi
+  dataVolumeClaimSpec:
+    storageClassName: local-storage
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi
+
+#  userConfigMapVolumeSource:
+#    name: test-dc-cassandra-user-config
+#    type: array
+#    items:
+#      - key: cassandra_ssl
+#        path: cassandra.yaml.d/003-ssl.yaml
+#      - key: cqlshrc
+#        path: cqlshrc
+#      - key: install_cqlshrc
+#        path: cassandra-env.sh.d/003-install-cqlshrc.sh
+#      - key: cassandra_concurrent
+#        path: cassandra.yaml.d/100-concurrent.yaml
+#  userSecretVolumeSource:
+#    secretName: test-cassandra-dc-ssl
+#
+#  sidecarSecretVolumeSource:
+#    secretName: test-cassandra-dc-ssl-sidecar
+
+  cassandraAuth:
+    authenticator: AllowAllAuthenticator
+    authorizer: AllowAllAuthorizer
+    roleManager: CassandraRoleManager
+
+  operatorLabels:
+    prometheusService:
+    # These labels are applied to the ServiceMonitor that is created for Cassandra.
+    # If they match the selector that has been configured for Prometheus, the
+    # ServiceMonitor will be discovered automatically: https://medium.com/inspiredbrilliance/monitoring-cassandra-cluster-with-prometheus-operator-69c38fdcf34d
+      cassandradc: testdc
+      release: prometheus-release-1
+
+
+#    nodesService:
+#      mynodesservicelabel: labelvalue1
+#    statefulSet:
+#      mystatefullabel: labelvalue2
+#    podTemplate:
+#      mypodlabel: label1
+#      myanotherpod: label2
+#
+#  operatorAnnotations:
+#    prometheusService:
+#      p1 : pv1
+#    nodesService:
+#      n1: nv1
+#      n2: nv2
+#    statefulSet:
+#      s1: sv1
+#      s2: sv2
+#    podTemplate:
+#      pt1: ptv1
+#      pt2: ptv2
+
+  # Needed to run on AKS
+  fsGroup: 999
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandra-public
+spec:
+  type: NodePort
+  selector:
+    cassandra-operator.instaclustr.com/cluster: test-cluster
+  ports:
+  - port: 9042
+    targetPort: 9042
+    nodePort: 30902

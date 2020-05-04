@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "args": [ "${workspaceFolder}/twitter-clone/src/main.ts" ],
+            "runtimeArgs": [ "-r", "ts-node/register" ],
+            "cwd": "${workspaceFolder}/twitter-clone",
+            "env": {
+                "TS_NODE_PROJECT": "${workspaceFolder}/twitter-clone/tsconfig.json",
+                "LISTEN_PORT": "8080",
+                "CASSANDRA_NODE": "192.168.99.101",
+                "CASSANDRA_PORT": "30902"
+			}
+        }
+    ]
+}
