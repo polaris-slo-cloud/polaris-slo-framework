@@ -47,7 +47,7 @@ The following REST endpoints are provided:
 The [load-generator](./load-generator) directory contains a JMeter test plan that can be used as a load generator.
 It contains two thread groups (readers and writers), which are both configured to loop infinitely.
 The number of threads, i.e., the number of simulated users, in each group can be configured in the user defined variables of the test plan.
-The test plan assumes that the following four users exist: `test1, `test2`, `test3`, and `test4`.
+The test plan assumes that the following four users exist: `test1`, `test2`, `test3`, and `test4`.
 
 The `Readers` thread group performs the following actions:
 * GET the latest 1000 tweets globally.
