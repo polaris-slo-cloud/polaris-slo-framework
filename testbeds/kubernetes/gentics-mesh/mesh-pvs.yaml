@@ -1,12 +1,37 @@
-# Currently the PVs created here point to directories on rainbow2, so they are not really NFS.
+# Gentics Mesh needs 4 PVs for a basic deployment, 2 of them need to be ReadWriteMany.
+# This file creates two local-storage PVs and two nfs-storage PVs.
+# Currently all PVs created here point to directories on rainbow2, so even the ReadWriteMany PVs are not really located on an NFS.
 
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-pv-volume-01
+  name: local-pv-volume-05
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  local:
+    path: /mnt/disks/rainbow2-k8s-disk-01
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - rainbow2
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-volume-07
+spec:
+  accessModes:
+  - ReadWriteOnce
   capacity:
     storage: 5Gi
   local:
@@ -20,13 +45,13 @@ spec:
           values:
           - rainbow2
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-storage
+  storageClassName: local-storage
   volumeMode: Filesystem
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-pv-volume-02
+  name: nfs-pv-volume-01
 spec:
   accessModes:
   - ReadWriteMany
@@ -49,7 +74,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-pv-volume-03
+  name: nfs-pv-volume-02
 spec:
   accessModes:
   - ReadWriteMany
