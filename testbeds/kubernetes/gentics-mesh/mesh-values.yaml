@@ -1,4 +1,4 @@
-# Default values for Gentics Mesh.
+# Values for Gentics Mesh.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -28,7 +28,7 @@ securityContext: {}
 
 service:
   mesh:
-    type: ClusterIP
+    type: NodeIP
     port: 80
 
   meshSSL:
@@ -40,7 +40,7 @@ service:
     port: 8081
 
 ingress:
-  enabled: true
+  enabled: false
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
     # kubernetes.io/ingress.class: nginx
@@ -102,10 +102,10 @@ persistence:
       spec:
         accessModes:
           - ReadWriteOnce
-        # storageClassName: ""
+        storageClassName: "local-storage"
         resources:
           requests:
-            storage: 10Gi
+            storage: 5Gi
 
   backup:
     ##  Storage for database snapshots
@@ -116,10 +116,10 @@ persistence:
       spec:
         accessModes:
           - ReadWriteMany
-        # storageClassName: ""
+        storageClassName: "nfs-storage"
         resources:
           requests:
-            storage: 10Gi
+            storage: 5Gi
 
     # Volume for backup instance graphdb
     graphdb:
@@ -129,10 +129,10 @@ persistence:
       spec:
         accessModes:
           - ReadWriteOnce
-        # storageClassName: ""
+        storageClassName: "local-storage"
         resources:
           requests:
-            storage: 10Gi
+            storage: 5Gi
 
   # Volume for shared data (uploads, keystore)
   # This volume will only be created when replicaCount > 1
@@ -144,10 +144,10 @@ persistence:
     spec:
       accessModes:
         - ReadWriteMany
-      # storageClassName: ""
+      storageClassName: "nfs-storage"
       resources:
         requests:
-          storage: 10Gi
+          storage: 5Gi
 
 livenessProbe:
   httpGet:
@@ -197,7 +197,7 @@ cluster:
   readQuorum: 1
 
 # Configure backup related settings
-backup: 
+backup:
   enabled: false
 
   cron:
@@ -208,7 +208,7 @@ backup:
 
     username: "admin"
     password: "admin"
-    # Image for the CronJob which will invoke the backup 
+    # Image for the CronJob which will invoke the backup
     # and transfer the files to the storage volume
     image:
       repository: docker.apa-it.at/gentics/mesh/mesh-tools
@@ -223,7 +223,7 @@ backup:
 
 # Configure credentials
 credentials:
-  initialAdminPassword: ""
+  initialAdminPassword: "admin"
   forcePasswordReset: false
 
 config:
