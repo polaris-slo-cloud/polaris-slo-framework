@@ -54,6 +54,7 @@ metadata:
   name: nfs-pv-volume-01
 spec:
   accessModes:
+  - ReadWriteOnce
   - ReadWriteMany
   capacity:
     storage: 5Gi
@@ -77,6 +78,7 @@ metadata:
   name: nfs-pv-volume-02
 spec:
   accessModes:
+  - ReadWriteOnce
   - ReadWriteMany
   capacity:
     storage: 5Gi

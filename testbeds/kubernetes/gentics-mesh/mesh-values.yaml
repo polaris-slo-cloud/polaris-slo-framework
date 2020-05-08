@@ -27,16 +27,16 @@ podSecurityContext: {}
 securityContext: {}
 
 service:
+  type: NodePort
+
   mesh:
-    type: NodeIP
     port: 80
+    nodePort: 30904
 
   meshSSL:
-    type: ClusterIP
     port: 443
 
   monitoring:
-    type: ClusterIP
     port: 8081
 
 ingress:
