@@ -2,6 +2,21 @@
 
 For details about Gentics Mesh, see its [website](https://getmesh.io).
 
+## Deploy ElasticSearch
+
+This guide uses the ElasticSearch operator [Elastic Cloud on Kubernetes](https://www.elastic.co/downloads/elastic-cloud-kubernetes).
+
+1. Install the operator:
+    ```
+    kubectl apply -f ./elasticsearch/all-in-one.yaml
+    ```
+
+2. Deploy an ElasticSearch cluster:
+    ```
+    kubectl apply -f ./elasticsearch/es-cluster.yaml
+    ```
+
+
 
 ## Deploy Gentics Mesh
 
