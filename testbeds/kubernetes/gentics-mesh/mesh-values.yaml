@@ -59,11 +59,11 @@ ingress:
 # See: https://getmesh.io/docs/administration-guide/#_memory_settings
 resources:
   limits:
-    memory: 2Gi
-    cpu: 2000m
+    memory: 3Gi
+    cpu: 4000m
   requests:
-    memory: 256Mi
-    cpu: 500m
+    memory: 2.5Gi
+    cpu: 2000m
 
 nodeSelector: {}
 
@@ -74,7 +74,7 @@ affinity: {}
 # Settings for clustering will be configured automatically
 extraEnv:
 - name: JAVA_TOOL_OPTIONS
-  value: "-Xms128m -Xmx128m -XX:MaxDirectMemorySize=128m -Dstorage.diskCache.bufferSize=512"
+  value: "-Xms2500m -Xmx2500m -XX:MaxDirectMemorySize=1024m -Dstorage.diskCache.bufferSize=1024"
 - name: MESH_INITIAL_ADMIN_PASSWORD
   value: "admin"
 - name: MESH_INITIAL_ADMIN_PASSWORD_FORCE_RESET
