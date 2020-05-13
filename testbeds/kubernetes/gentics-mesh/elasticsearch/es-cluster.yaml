@@ -21,6 +21,11 @@ spec:
         node.data: true
         node.ingest: true
         node.store.allow_mmap: false
+        xpack.security.authc:
+          anonymous:
+            username: anonymous
+            roles: superuser
+            authz_exception: false
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
