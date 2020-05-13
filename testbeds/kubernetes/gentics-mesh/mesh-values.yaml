@@ -8,7 +8,7 @@ replicaCount: 1
 
 image:
   repository: gentics/mesh
-  tag: 1.4.8
+  tag: 1.5.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -79,8 +79,10 @@ extraEnv:
   value: "admin"
 - name: MESH_INITIAL_ADMIN_PASSWORD_FORCE_RESET
   value: "false"
-# - name: MESH_ELASTICSEARCH_URL
-#   value: "http://elasticsearch:9200"
+- name: MESH_ELASTICSEARCH_URL
+  value: "http://mesh-elasticsearch-es-http:9200"
+- name: MESH_ELASTICSEARCH_COMPLIANCE_MODE
+  value: ES_7
 
 # By default, a default configmap will be created
 # existingConfigmap: "mesh-custom-config"
@@ -235,7 +237,7 @@ monitoring:
 
 # Elasticsearch settings
 elasticsearch:
-  url: "null" ## ES integeration disabled by default
+  url: "http://mesh-elasticsearch-es-http:9200"
 
 # Upload settings
 upload:
