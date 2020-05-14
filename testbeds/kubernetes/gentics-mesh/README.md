@@ -44,6 +44,11 @@ This guide uses the ElasticSearch operator [Elastic Cloud on Kubernetes](https:/
     kubectl apply -f ./mesh-pvs.yaml
     ```
 
+3. Create the keystore secret needed by Mesh for running without shared volumes:
+    ```
+    kubectl apply -k ./keystore
+    ```
+
 3. Deploy Mesh
     ```
     helm install -f ./mesh-values.yaml mesh gentics/gentics-mesh --namespace=mesh --atomic

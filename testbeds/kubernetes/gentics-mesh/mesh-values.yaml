@@ -175,9 +175,9 @@ keystore:
   # The name of an existing Kubernetes secret that contains the keystore
   # The keystore will also be automatically generated and persisted when clustering is not enabled.
   # The secret has to contain the following keys: "keystore.jceks", "password"
-  # secret: ""
+  secret: mesh-keystore-manual
   # Change this password. This will be used if no custom keystore secret has been specified.
-  password: "secret"
+  # password: "secret"
 
 ssl:
   enabled: false
