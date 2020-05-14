@@ -40,14 +40,13 @@ service:
     port: 8081
 
 ingress:
-  enabled: false
+  enabled: true
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
-    # kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: mesh.local
-      paths:
+    - paths:
         - "/"
   tls: []
   #  - secretName: chart-example-tls
