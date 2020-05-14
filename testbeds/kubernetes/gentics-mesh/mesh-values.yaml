@@ -4,7 +4,7 @@
 
 # Setting this higher than 1 will enable master clustering automatically
 # In this case, be sure you have correctly configured a network storage for the uploads
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: gentics/mesh
