@@ -2,6 +2,14 @@
 
 For details about Gentics Mesh, see its [website](https://getmesh.io).
 
+## Install the Ingress-Nginx Controller
+
+1. Install the ingress-nginx controller:
+    ```
+    helm install -f ./ingress-nginx/values.yaml ingress-nginx ingress-nginx/ingress-nginx --atomic
+    ```
+
+
 ## Deploy ElasticSearch
 
 This guide uses the ElasticSearch operator [Elastic Cloud on Kubernetes](https://www.elastic.co/downloads/elastic-cloud-kubernetes).

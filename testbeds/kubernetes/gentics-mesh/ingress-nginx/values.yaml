@@ -264,7 +264,7 @@ controller:
     loadBalancerSourceRanges: []
 
     enableHttp: true
-    enableHttps: true
+    enableHttps: false
 
     ## Set external traffic policy to: "Local" to preserve source IP on
     ## providers supporting it
@@ -288,7 +288,7 @@ controller:
       http: http
       https: https
 
-    type: LoadBalancer
+    type: NodePort
 
     # type: NodePort
     # nodePorts:
@@ -297,7 +297,7 @@ controller:
     #   tcp:
     #     8080: 32808
     nodePorts:
-      http: ""
+      http: 30906
       https: ""
       tcp: {}
       udp: {}
@@ -372,11 +372,11 @@ controller:
   metrics:
     port: 10254
     # if this port is changed, change healthz-port: in extraArgs: accordingly
-    enabled: false
+    enabled: true
 
     service:
       annotations: {}
-      # prometheus.io/scrape: "true"
+      prometheus.io/scrape: "true"
       # prometheus.io/port: "10254"
 
       # clusterIP: ""
@@ -392,15 +392,16 @@ controller:
       type: ClusterIP
 
     serviceMonitor:
-      enabled: false
-      additionalLabels: {}
+      enabled: true
+      additionalLabels:
+        release: prometheus-release-1
       namespace: ""
       namespaceSelector: {}
       # Default: scrape .Release.Namespace only
       # To scrape all, use the following:
-      # namespaceSelector:
-      #   any: true
-      scrapeInterval: 30s
+      namespaceSelector:
+        any: true
+      scrapeInterval: 10s
       # honorLabels: true
 
     prometheusRule:
