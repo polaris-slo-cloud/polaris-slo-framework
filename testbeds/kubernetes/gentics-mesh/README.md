@@ -6,6 +6,8 @@ For details about Gentics Mesh, see its [website](https://getmesh.io).
 
 1. Install the ingress-nginx controller:
     ```
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm repo update
     helm install -f ./ingress-nginx/values.yaml ingress-nginx ingress-nginx/ingress-nginx --atomic
     ```
 
