@@ -9,6 +9,8 @@ For details about Gentics Mesh, see its [website](https://getmesh.io).
     helm install -f ./ingress-nginx/values.yaml ingress-nginx ingress-nginx/ingress-nginx --atomic
     ```
 
+2. Import the [Grafana dashboards](https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards) from the `ingress-nginx/grafana-dashboards` folder.
+
 
 ## Deploy ElasticSearch
 
