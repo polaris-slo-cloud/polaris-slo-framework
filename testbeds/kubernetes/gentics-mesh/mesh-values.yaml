@@ -44,10 +44,16 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - paths:
-        - "/"
+    - host: localhost
+      paths:
+        # We define multiple paths to allow us to retrieve distinct metrics for each of them
+        - /api/v1/search/nodes
+        - /api/v1/.+/nodes
+        - /api/v1/.+/graphql
+        - /
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
