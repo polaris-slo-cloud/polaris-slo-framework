@@ -476,7 +476,7 @@ grafana:
   ##
   defaultDashboardsEnabled: true
 
-  adminPassword: prom-operator
+  adminPassword: "sloc-@dm1n"
 
   ingress:
     ## If true, Grafana Ingress will be created
@@ -556,6 +556,8 @@ grafana:
   ##
   service:
     portName: service
+    type: NodePort
+    nodePort: 30901
 
   ## If true, create a serviceMonitor for grafana
   ##
@@ -1329,7 +1331,7 @@ prometheus:
     ## Port to expose on each node
     ## Only used if service.type is 'NodePort'
     ##
-    nodePort: 30090
+    nodePort: 30900
 
     ## Loadbalancer IP
     ## Only use if service.type is "loadbalancer"
@@ -1337,7 +1339,7 @@ prometheus:
     loadBalancerSourceRanges: []
     ## Service type
     ##
-    type: ClusterIP
+    type: NodePort
 
     sessionAffinity: ""
 
@@ -1487,11 +1489,11 @@ prometheus:
 
     ## Interval between consecutive scrapes.
     ##
-    scrapeInterval: ""
+    scrapeInterval: 5s
 
     ## Interval between consecutive evaluations.
     ##
-    evaluationInterval: ""
+    evaluationInterval: 5s
 
     ## ListenLocal makes the Prometheus server listen on loopback, so that it does not bind against the Pod IP.
     ##

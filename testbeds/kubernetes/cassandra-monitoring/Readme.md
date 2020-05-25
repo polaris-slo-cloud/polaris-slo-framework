@@ -13,7 +13,7 @@ For details regarding the architecture, please see the [architecture overview](.
 
 1. Install the [prometheus-operator helm chart](https://github.com/helm/charts/tree/master/stable/prometheus-operator):
     ```
-    helm install prometheus-release-1 stable/prometheus-operator -f ./prometheus/helm-chart-config.yaml
+    helm install prometheus-release-1 stable/prometheus-operator -f ./prometheus/values.yaml
     ```
 2. Deploy the custom resource definitions for the [cassandra-operator](https://github.com/instaclustr/cassandra-operator), which is used for managing the Cassandra cluster:
     ```
