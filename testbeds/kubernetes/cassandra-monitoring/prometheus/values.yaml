@@ -1761,7 +1761,34 @@ prometheus:
     ## The scrape configuraiton example below will find master nodes, provided they have the name .*mst.*, relabel the
     ## port to 2379 and allow etcd scraping provided it is running on all Kubernetes master nodes
     ##
-    additionalScrapeConfigs: []
+    additionalScrapeConfigs:
+      # Config for Kubecost (https://docs.kubecost.com/custom-prom.html)
+      - job_name: kubecost
+        honor_labels: true
+        scrape_interval: 1m
+        scrape_timeout: 10s
+        metrics_path: /metrics
+        scheme: http
+        dns_sd_configs:
+        - names:
+          - kubecost-cost-analyzer.kubecost
+          type: 'A'
+          port: 9003
+        metric_relabel_configs:
+          - source_labels: [ container ]
+            target_label: container_name
+            regex: (.+)
+            action: replace
+          - source_labels: [ pod ]
+            target_label: pod_name
+            regex: (.+)
+            action: replace
+          - source_labels: [node]
+            separator: ;
+            regex: (.*)
+            target_label: instance
+            replacement: $1
+            action: replace
     # - job_name: kube-etcd
     #   kubernetes_sd_configs:
     #     - role: node
