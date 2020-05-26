@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "6.6.0"
+      "version": "6.7.3"
     },
     {
       "type": "panel",
@@ -47,7 +47,7 @@
   "gnetId": 9614,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1582146566338,
+  "iteration": 1590516613216,
   "links": [],
   "panels": [
     {
@@ -156,8 +156,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "The time spent on receiving the response from the upstream server",
+      "datasource": "$DS_PROMETHEUS",
+      "description": "The average response time for each API path.",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -167,12 +167,14 @@
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 94,
+      "id": 104,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": false
@@ -193,23 +195,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(\n  0.5,\n  sum by (le)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        ingress =~ \"$ingress\"\n      }[1m]\n    )\n  )\n)",
-          "instant": false,
+          "expr": "sum by (path)(\n  rate(\n    nginx_ingress_controller_request_duration_seconds_sum{ingress =~ \"$ingress\"}[1m]\n  )\n)\n/\nsum by (path)(\n  rate(\n    nginx_ingress_controller_request_duration_seconds_count{ingress =~ \"$ingress\"}[1m]\n  )\n)\n* 1000",
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": ".5",
-          "refId": "D"
-        },
-        {
-          "expr": "histogram_quantile(\n  0.95,\n  sum by (le)(\n    rate(\n    nginx_ingress_controller_response_duration_seconds_bucket{\n        ingress =~ \"$ingress\"\n      }[1m]\n    )\n  )\n)",
-          "interval": "",
-          "legendFormat": ".95",
-          "refId": "B"
-        },
-        {
-          "expr": "histogram_quantile(\n  0.99,\n  sum by (le)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        ingress =~ \"$ingress\"\n      }[1m]\n    )\n  )\n)",
-          "interval": "",
-          "legendFormat": ".99",
+          "legendFormat": "{{ path }}",
           "refId": "A"
         }
       ],
@@ -217,7 +205,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Upstream response time",
+      "title": "Average request handling time by path",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -233,8 +221,8 @@
       },
       "yaxes": [
         {
-          "format": "s",
-          "label": null,
+          "format": "short",
+          "label": "msec",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -351,7 +339,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${DS_PROMETHEUS}",
-      "description": "For each path observed, its median upstream response time",
+      "description": "The time spent on receiving the response from the upstream server",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -359,6 +347,109 @@
         "w": 12,
         "x": 12,
         "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 94,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "histogram_quantile(\n  0.5,\n  sum by (le)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        ingress =~ \"$ingress\"\n      }[1m]\n    )\n  )\n)",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": ".5",
+          "refId": "D"
+        },
+        {
+          "expr": "histogram_quantile(\n  0.95,\n  sum by (le)(\n    rate(\n    nginx_ingress_controller_response_duration_seconds_bucket{\n        ingress =~ \"$ingress\"\n      }[1m]\n    )\n  )\n)",
+          "interval": "",
+          "legendFormat": ".95",
+          "refId": "B"
+        },
+        {
+          "expr": "histogram_quantile(\n  0.99,\n  sum by (le)(\n    rate(\n      nginx_ingress_controller_response_duration_seconds_bucket{\n        ingress =~ \"$ingress\"\n      }[1m]\n    )\n  )\n)",
+          "interval": "",
+          "legendFormat": ".99",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Upstream response time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "For each path observed, its median upstream response time",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
       },
       "hiddenSeries": false,
       "id": 98,
@@ -417,98 +508,6 @@
       "yaxes": [
         {
           "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "Percentage of 4xx and 5xx responses among all responses.",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 16
-      },
-      "hiddenSeries": false,
-      "id": 100,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null as zero",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{\n  ingress = \"$ingress\",\n  status =~ \"[4-5].*\"\n}[1m])) / sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{\n  ingress = \"$ingress\",\n}[1m]))",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{ path }}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Response error rate by Path",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percentunit",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -627,6 +626,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${DS_PROMETHEUS}",
+      "description": "Percentage of 4xx and 5xx responses among all responses.",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -636,7 +636,7 @@
         "y": 24
       },
       "hiddenSeries": false,
-      "id": 101,
+      "id": 100,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -650,7 +650,7 @@
       },
       "lines": true,
       "linewidth": 1,
-      "nullPointMode": "null",
+      "nullPointMode": "null as zero",
       "options": {
         "dataLinks": []
       },
@@ -664,10 +664,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "  sum (\n    rate(\n      nginx_ingress_controller_request_duration_seconds_count{\n        ingress =~ \"$ingress\",\n        status =~\"[4-5].*\",\n      }[1m]\n    )\n  ) by(path, status)\n",
+          "expr": "sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{\n  ingress = \"$ingress\",\n  status =~ \"[4-5].*\"\n}[1m])) / sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{\n  ingress = \"$ingress\",\n}[1m]))",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{ path }} {{ status }}",
+          "legendFormat": "{{ path }}",
           "refId": "A"
         }
       ],
@@ -675,7 +675,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Response error volume by Path",
+      "title": "Response error rate by Path",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -691,7 +691,7 @@
       },
       "yaxes": [
         {
-          "format": "reqps",
+          "format": "percentunit",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -826,6 +826,97 @@
         "y": 32
       },
       "hiddenSeries": false,
+      "id": 101,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "  sum (\n    rate(\n      nginx_ingress_controller_request_duration_seconds_count{\n        ingress =~ \"$ingress\",\n        status =~\"[4-5].*\",\n      }[1m]\n    )\n  ) by(path, status)\n",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{ path }} {{ status }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Response error volume by Path",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "reqps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 40
+      },
+      "hiddenSeries": false,
       "id": 96,
       "legend": {
         "avg": false,
@@ -903,7 +994,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "5s",
   "schemaVersion": 22,
   "style": "dark",
   "tags": [
@@ -912,13 +1003,21 @@
   "templating": {
     "list": [
       {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
         "hide": 0,
+        "includeAll": false,
         "label": "datasource",
+        "multi": false,
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "type": "datasource"
       },
       {
@@ -928,6 +1027,7 @@
         "definition": "label_values(nginx_ingress_controller_requests, ingress) ",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Service Ingress",
         "multi": false,
         "name": "ingress",
@@ -975,7 +1075,10 @@
     ]
   },
   "timezone": "browser",
-  "title": "Request Handling Performance",
+  "title": "Ingress / Request Handling Performance",
   "uid": "4GFbkOsZk",
-  "version": 1
+  "variables": {
+    "list": []
+  },
+  "version": 2
 }
