@@ -1,6 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "types": ["node", "jest"]
-  }
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "types": [
+            "node",
+            "jest"
+        ]
+    }
 }
