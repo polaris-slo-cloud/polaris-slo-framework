@@ -25,7 +25,14 @@
               "apps/sloc-ui/src/favicon.ico",
               "apps/sloc-ui/src/assets"
             ],
-            "styles": ["apps/sloc-ui/src/styles.scss"],
+            "styles": [
+              "apps/sloc-ui/src/styles/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "apps/sloc-ui/src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
