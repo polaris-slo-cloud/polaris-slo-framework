@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 
 const PROVIDERS: any[] = [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -16,6 +17,7 @@ const PROVIDERS: any[] = [
     imports: [
         BrowserModule,
         AppRoutingModule,
+        CoreModule,
     ],
     providers: PROVIDERS,
     bootstrap: [ AppComponent ],
