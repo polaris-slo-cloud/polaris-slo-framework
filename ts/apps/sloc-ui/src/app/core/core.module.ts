@@ -3,8 +3,10 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { throwIfAlreadyLoaded } from '../common';
 import { SharedModule } from '../shared/shared.module';
+import { HttpService } from './providers';
 
 const PROVIDERS: any[] = [
+    HttpService,
 ];
 
 @NgModule({
