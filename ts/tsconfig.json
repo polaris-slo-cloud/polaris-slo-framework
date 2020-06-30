@@ -20,7 +20,11 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "lodash": [
+                "node_modules/lodash-es"
+            ],
+        }
     },
     "exclude": [
         "node_modules",
