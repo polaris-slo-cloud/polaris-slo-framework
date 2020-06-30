@@ -156,18 +156,6 @@
         ],
         "component-class-suffix": true,
         "directive-class-suffix": true,
-        "directive-selector": [
-            true,
-            "attribute",
-            "sloc",
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            "sloc",
-            "kebab-case"
-        ],
         "no-conflicting-lifecycle": true,
         "no-host-metadata-property": true,
         "no-input-rename": true,
