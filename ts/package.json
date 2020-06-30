@@ -29,7 +29,6 @@
   },
   "private": true,
   "dependencies": {
-    "@nrwl/angular": "9.4.5",
     "@angular/animations": "^9.1.0",
     "@angular/common": "^9.1.0",
     "@angular/compiler": "^9.1.0",
@@ -38,6 +37,8 @@
     "@angular/platform-browser": "^9.1.0",
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "^9.1.0",
+    "@grafana/data": "^7.0.4",
+    "@nrwl/angular": "9.4.5",
     "rxjs": "~6.5.4",
     "zone.js": "^0.10.2"
   },
