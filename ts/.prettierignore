@@ -2,3 +2,6 @@
 
 /dist
 /coverage
+
+# Formatted by TSLint
+*.ts
