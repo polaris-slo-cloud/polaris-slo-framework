@@ -4,6 +4,8 @@
  * Many of the descriptions are copied from the respective documentation pages under https://grafana.com/docs/grafana/latest/http_api/
  */
 
+import { DashboardSearchItemType } from './vendor';
+
 /**
  * Possible query parameters for a search request.
  *
@@ -18,7 +20,7 @@ export interface SearchRequestOptions {
     tag?: string[];
 
     /** Type to search for. */
-    type: 'dash-folder' | 'dash-db';
+    type: DashboardSearchItemType.DashFolder | DashboardSearchItemType.DashDB;
 
     /** List of dashboard IDs to search for. */
     dashboardIds?: number[];

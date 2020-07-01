@@ -47,6 +47,11 @@ export interface DashboardSectionItem {
     url: string;
 }
 
+/**
+ * Represents a single item in the results of a search executed using `GrafanaApi.search.search()`.
+ *
+ * Note that despite the name of the interface, the `type` field may also be set to `DashboardSearchItemType.DashFolder`.
+ */
 export interface DashboardSearchHit extends DashboardSectionItem, DashboardSection { }
 
 export interface DashboardTag {
