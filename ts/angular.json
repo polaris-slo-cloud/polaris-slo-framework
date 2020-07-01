@@ -26,6 +26,7 @@
               "apps/sloc-ui/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "apps/sloc-ui/src/styles/styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -90,7 +91,10 @@
               "apps/sloc-ui/tsconfig.app.json",
               "apps/sloc-ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/sloc-ui/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui/**/*"
+            ]
           }
         },
         "test": {
@@ -125,8 +129,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/sloc-ui-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/sloc-ui-e2e/**/*"]
+            "tsConfig": [
+              "apps/sloc-ui-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui-e2e/**/*"
+            ]
           }
         }
       }
