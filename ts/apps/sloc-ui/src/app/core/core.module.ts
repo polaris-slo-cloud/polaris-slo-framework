@@ -5,12 +5,14 @@ import { throwIfAlreadyLoaded } from '../common';
 import { CONFIG } from '../common/config/config';
 import { SharedModule } from '../shared/shared.module';
 import { GrafanaApiService, GRAFANA_BASE_URL, HttpService } from './providers';
+import { DashboardOperations } from './providers/operations/dashboard/dashboard.operations';
 
 const PROVIDERS: any[] = [
     { provide: GRAFANA_BASE_URL, useValue: CONFIG.grafanaBaseUrl },
 
     HttpService,
     GrafanaApiService,
+    DashboardOperations,
 ];
 
 @NgModule({
