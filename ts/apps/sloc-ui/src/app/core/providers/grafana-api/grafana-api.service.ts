@@ -21,11 +21,13 @@ export class GrafanaApiService {
     readonly search: SearchApi;
 
     constructor(
-        private http: HttpService,
+        httpService: HttpService,
         @Inject(GRAFANA_BASE_URL) private grafanaBaseUrl: string,
     ) {
-        const apiBaseUrl = `${grafanaBaseUrl}/api`;
-        this.dashboard = new DashboardApi(http, apiBaseUrl);
-        this.search = new SearchApi(http, apiBaseUrl);
+        const apiBaseUrl = `${grafanaBaseUrl}/api/`;
+        const httpRestClient = httpService.createHttpRestClient(apiBaseUrl);
+
+        this.dashboard = new DashboardApi(httpRestClient);
+        this.search = new SearchApi(httpRestClient);
     }
 }

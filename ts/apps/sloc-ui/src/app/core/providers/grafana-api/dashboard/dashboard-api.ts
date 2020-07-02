@@ -1,21 +1,18 @@
 import { Observable } from 'rxjs';
 
 import { DashboardDTO } from '../../../../common/model';
-import { HttpService } from '../../http';
+import { HttpRestClient } from '../../http';
+
+const DASHBOARDS_PREFIX = 'dashboards';
 
 export class DashboardApi {
 
-    private readonly dashboardsApiUrl: string;
-
     constructor(
-        private http: HttpService,
-        private apiBaseUrl: string,
-    ) {
-        this.dashboardsApiUrl = apiBaseUrl + '/dashboards';
-    }
+        private http: HttpRestClient,
+    ) {}
 
     getDashboardByUid(uid: string): Observable<DashboardDTO> {
-        return this.http.get(`${this.dashboardsApiUrl}/uid/${uid}`);
+        return this.http.get(`${DASHBOARDS_PREFIX}/uid/${uid}`);
     }
 
 }
