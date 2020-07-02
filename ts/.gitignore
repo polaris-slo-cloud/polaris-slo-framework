@@ -17,3 +17,6 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+
+# Local proxy configuration
+/proxy.conf.json

@@ -1,0 +1,5 @@
+<mat-list *ngIf="dashboards$">
+    <mat-list-item *ngFor="let dashboard of (dashboards$ | async)">
+        {{ dashboard.title }}
+    </mat-list-item>
+</mat-list>

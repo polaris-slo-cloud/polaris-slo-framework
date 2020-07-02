@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
+
+import { DashboardsListComponent } from './components/dashboards-list/dashboards-list.component';
 
 const COMPONENTS: any[] = [
-];
-
-const ENTRY_COMPONENTS: any[] = [
+    DashboardsListComponent,
 ];
 
 const DIRECTIVES: any[] = [
@@ -16,7 +17,6 @@ const PIPES: any[] = [
 
 const DECLARATIONS: any[] = [
     ...COMPONENTS,
-    ...ENTRY_COMPONENTS,
     ...DIRECTIVES,
     ...PIPES,
 ];
@@ -24,13 +24,17 @@ const DECLARATIONS: any[] = [
 const PROVIDERS: any[] = [
 ];
 
+const MATERIAL_IMPORTS: any[] = [
+    MatListModule,
+];
+
 @NgModule({
     declarations: DECLARATIONS,
-    entryComponents: ENTRY_COMPONENTS,
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        ...MATERIAL_IMPORTS,
     ],
     providers: PROVIDERS,
     exports: [
@@ -38,6 +42,7 @@ const PROVIDERS: any[] = [
         FormsModule,
         ReactiveFormsModule,
         ...DECLARATIONS,
+        ...MATERIAL_IMPORTS,
     ],
 })
 export class SharedModule { }

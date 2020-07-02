@@ -9,7 +9,7 @@ import { ControlCenterRoutingModule } from './control-center-routing.module';
     declarations: [
         ControlCenterComponent,
     ],
-    imports: [,
+    imports: [
         SharedModule,
         ControlCenterRoutingModule,
     ],

@@ -70,7 +70,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sloc-ui:build"
+            "browserTarget": "sloc-ui:build",
+            "proxyConfig": "./proxy.conf.json"
           },
           "configurations": {
             "production": {

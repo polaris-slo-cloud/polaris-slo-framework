@@ -14,7 +14,7 @@ export class DashboardOperations {
         private grafana: GrafanaApiService,
     ) {}
 
-    searchDashboards(query: Exclude<SearchRequestOptions, 'type'>): Observable<DashboardSearchHit[]> {
+    searchDashboards(query: Omit<SearchRequestOptions, 'type'>): Observable<DashboardSearchHit[]> {
         return this.grafana.search.search({ ...query, type: DashboardSearchItemType.DashDB });
     }
 
