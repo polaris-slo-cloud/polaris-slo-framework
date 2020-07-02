@@ -1,5 +1,8 @@
-<mat-list *ngIf="dashboards$">
-    <mat-list-item *ngFor="let dashboard of (dashboards$ | async)">
-        {{ dashboard.title }}
-    </mat-list-item>
-</mat-list>
+<mat-form-field *ngIf="dashboards$">
+    <mat-label>Dashboard</mat-label>
+    <mat-select [(value)]="selectedId">
+        <mat-option *ngFor="let dashboard of (dashboards$ | async)" [value]="dashboard.id">
+            {{ dashboard.title }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

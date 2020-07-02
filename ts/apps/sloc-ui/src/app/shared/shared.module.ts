@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 
 import { DashboardsListComponent } from './components/dashboards-list/dashboards-list.component';
 
@@ -26,6 +27,7 @@ const PROVIDERS: any[] = [
 
 const MATERIAL_IMPORTS: any[] = [
     MatListModule,
+    MatSelectModule,
 ];
 
 @NgModule({

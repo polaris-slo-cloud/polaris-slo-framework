@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { ChangesOf } from '../../../common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { Observable } from 'rxjs';
-import { DashboardSearchHit, SearchRequestOptions } from '../../../common/model';
+import { ChangesOf, OnChangeFn, OnTouchedFn } from '../../../common';
+import { DashboardSearchHit } from '../../../common/model';
 import { DashboardOperations } from '../../../core';
 
 @Component({
@@ -9,14 +11,29 @@ import { DashboardOperations } from '../../../core';
     templateUrl: './dashboards-list.component.html',
     styleUrls: ['./dashboards-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DashboardsListComponent),
+            multi: true,
+        },
+    ],
 })
-export class DashboardsListComponent implements OnInit, OnChanges {
+export class DashboardsListComponent implements OnInit, OnChanges, ControlValueAccessor {
 
     /** The tags that the dashboards need to have. */
     @Input()
     tags: string[];
 
+    @Input()
+    disabled = false;
+
     dashboards$: Observable<DashboardSearchHit[]>;
+
+    selectedId: number;
+
+    private onChangeFn: OnChangeFn<number>;
+    private onTouchedFn: OnTouchedFn;
 
     constructor(
         private changeDetector: ChangeDetectorRef,
@@ -29,6 +46,32 @@ export class DashboardsListComponent implements OnInit, OnChanges {
     ngOnChanges(changes: ChangesOf<this>): void {
         if (changes.tags) {
             this.searchForDashboards();
+        }
+    }
+
+    writeValue(selectedId: number): void {
+        if (typeof selectedId === 'number') {
+            this.selectedId = selectedId;
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    registerOnChange(fn: OnChangeFn<number>): void {
+        this.onChangeFn = fn;
+    }
+
+    registerOnTouched(fn: OnTouchedFn): void {
+        this.onTouchedFn = fn;
+    }
+
+    setDisabledState?(isDisabled: boolean): void {
+        this.disabled = isDisabled;
+        this.changeDetector.markForCheck();
+    }
+
+    onDashboardSelectionChange(change: MatSelectChange): void {
+        if (this.onChangeFn) {
+            this.onChangeFn(change.value);
         }
     }
 
