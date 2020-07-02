@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IndexByKey } from '../../../common';
 import { HttpHeadersMap, HttpRestClient } from './http-rest-client';
 
 /**
@@ -23,12 +22,7 @@ interface HttpOptions {
 export class HttpRestClientImpl implements HttpRestClient {
 
     readonly baseUrl: string;
-
-    private _httpHeaders: HttpHeaders;
-
-    get httpHeaders(): HttpHeaders {
-        return this._httpHeaders;
-    }
+    httpHeaders: HttpHeaders;
 
     constructor(
         private http: HttpClient,
@@ -36,12 +30,7 @@ export class HttpRestClientImpl implements HttpRestClient {
         httpHeadersMap: HttpHeadersMap,
     ) {
         this.baseUrl = _baseUrl;
-        this.setHeaders(httpHeadersMap);
-    }
-
-    setHeaders(newHeaders: IndexByKey<string | string[]>): HttpHeaders {
-        this._httpHeaders = new HttpHeaders(newHeaders);
-        return this._httpHeaders;
+        this.httpHeaders = new HttpHeaders(httpHeadersMap);
     }
 
     get<T>(url: string, params: any = {}): Observable<T> {
@@ -97,7 +86,7 @@ export class HttpRestClientImpl implements HttpRestClient {
 
     private getDefaultOptions(): HttpOptions {
         return {
-            headers: this._httpHeaders,
+            headers: this.httpHeaders,
             observe: 'response',
             responseType: 'json',
         };

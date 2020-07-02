@@ -15,13 +15,10 @@ export type HttpHeadersMap = IndexByKey<string | string[]>;
 export interface HttpRestClient {
 
     /** Headers used for making HTTP requests with this client. */
-    readonly httpHeaders: HttpHeaders;
+    httpHeaders: HttpHeaders;
 
     /** The base URL that is prepended to every request's path. */
     readonly baseUrl: string;
-
-    /** Sets new HTTP headers.  */
-    setHeaders(newHeaders: HttpHeadersMap): HttpHeaders;
 
     get<T>(url: string, params?: any): Observable<T>;
 

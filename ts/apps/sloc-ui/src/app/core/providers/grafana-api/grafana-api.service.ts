@@ -1,5 +1,7 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { HttpService } from '../http';
+
+import { CONFIG } from '../../../common/config/config';
+import { HttpRestClient, HttpService } from '../http';
 import { DashboardApi } from './dashboard/dashboard-api';
 import { SearchApi } from './search/search-api';
 
@@ -20,14 +22,24 @@ export class GrafanaApiService {
     readonly dashboard: DashboardApi;
     readonly search: SearchApi;
 
+    private httpRestClient: HttpRestClient;
+
     constructor(
         httpService: HttpService,
         @Inject(GRAFANA_BASE_URL) private grafanaBaseUrl: string,
     ) {
         const apiBaseUrl = `${grafanaBaseUrl}/api/`;
-        const httpRestClient = httpService.createHttpRestClient(apiBaseUrl);
+        this.httpRestClient = httpService.createHttpRestClient(apiBaseUrl);
+        this.setAuthToken();
 
-        this.dashboard = new DashboardApi(httpRestClient);
-        this.search = new SearchApi(httpRestClient);
+        this.dashboard = new DashboardApi(this.httpRestClient);
+        this.search = new SearchApi(this.httpRestClient);
     }
+
+    // ToDo: replace this with a proper login or token loading and an immutable and observable state pattern to handle changing values.
+    private setAuthToken(): void {
+        const newHeaders = this.httpRestClient.httpHeaders.set('Authorization', `Bearer ${CONFIG.grafanaAuthToken}`);
+        this.httpRestClient.httpHeaders = newHeaders;
+    }
+
 }
