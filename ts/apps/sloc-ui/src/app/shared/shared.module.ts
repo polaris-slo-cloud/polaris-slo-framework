@@ -5,10 +5,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 
 import { DashboardsListComponent } from './components/dashboards-list/dashboards-list.component';
+import { GrafanaPanelHostComponent } from './components/grafana-panel-host/grafana-panel-host.component';
 import { PanelsListComponent } from './components/panels-list/panels-list.component';
+import { GrafanaPanelEmbedUrlPipe } from './pipes/grafana-panel-embed-url/grafana-panel-embed-url.pipe';
 
 const COMPONENTS: any[] = [
     DashboardsListComponent,
+    GrafanaPanelHostComponent,
     PanelsListComponent,
 ];
 
@@ -16,6 +19,7 @@ const DIRECTIVES: any[] = [
 ];
 
 const PIPES: any[] = [
+    GrafanaPanelEmbedUrlPipe,
 ];
 
 const DECLARATIONS: any[] = [

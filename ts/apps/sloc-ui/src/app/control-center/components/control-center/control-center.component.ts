@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { DashboardDTO } from '../../../common/model';
 import { DashboardOperations } from '../../../core';
+import { PanelIdentifier } from '../../../shared';
 
 @Component({
     selector: 'sloc-control-center',
@@ -11,8 +14,7 @@ import { DashboardOperations } from '../../../core';
 })
 export class ControlCenterComponent implements OnInit {
 
-    selectedDashboardUid: string;
-
+    panelForm: FormGroup;
     selectedDashboard$: Observable<DashboardDTO>;
 
     constructor(
@@ -20,13 +22,27 @@ export class ControlCenterComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.initForm();
     }
 
-    onSelectedDashboardChange(): void {
-        this.selectedDashboard$ = null;
-        if (this.selectedDashboardUid) {
-            this.selectedDashboard$ = this.dashboardOps.getDashboardByUid(this.selectedDashboardUid);
-        }
+    private initForm(): void {
+        this.panelForm = new FormGroup({
+            dashboardUid: new FormControl(null, Validators.required),
+            panelId: new FormControl(null, Validators.required),
+        });
+
+        this.selectedDashboard$ = this.panelForm.valueChanges.pipe(
+            map((value: PanelIdentifier) => value.dashboardUid),
+            distinctUntilChanged(),
+            switchMap(dashboardUid => {
+                this.panelForm.patchValue({ panelId: null });
+                if (dashboardUid) {
+                    return this.dashboardOps.getDashboardByUid(dashboardUid);
+                } else {
+                    return observableOf(null);
+                }
+            }),
+        );
     }
 
 }

@@ -1,13 +1,19 @@
-<div>
-    <sloc-dashboards-list
-        [tags]="[ 'sloc' ]"
-        [(ngModel)]="selectedDashboardUid"
-        (ngModelChange)="onSelectedDashboardChange()"
-    ></sloc-dashboards-list>
-</div>
+<form [formGroup]="panelForm">
+    <div>
+        <sloc-dashboards-list
+            formControlName="dashboardUid"
+            [tags]="[ 'sloc' ]"
+        ></sloc-dashboards-list>
+    </div>
 
-<div>
-    <sloc-panels-list
-        [dashboard]="selectedDashboard$ | async"
-    ></sloc-panels-list>
+    <div>
+        <sloc-panels-list
+            formControlName="panelId"
+            [dashboard]="selectedDashboard$ | async"
+        ></sloc-panels-list>
+    </div>
+</form>
+
+<div *ngIf="panelForm.valid">
+    <sloc-grafana-panel-host [panelIdentifier]="panelForm.value"></sloc-grafana-panel-host>
 </div>

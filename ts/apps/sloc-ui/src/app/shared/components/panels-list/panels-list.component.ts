@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, Input, forwardRef } from '@angular/core';
-import { DashboardDTO } from '../../../common/model';
-import { MatSelectChange } from '@angular/material/select';
+import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { OnChangeFn, OnTouchedFn } from '../../../common';
+import { DashboardDTO } from '../../../common/model';
 
 @Component({
     selector: 'sloc-panels-list',

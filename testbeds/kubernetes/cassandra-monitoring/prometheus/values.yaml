@@ -544,6 +544,10 @@ grafana:
     finalizers:
       - kubernetes.io/pvc-protection
 
+  grafana.ini:
+    security:
+      allow_embedding: true
+
   extraConfigmapMounts: []
   # - name: certs-configmap
   #   mountPath: /etc/grafana/ssl/
