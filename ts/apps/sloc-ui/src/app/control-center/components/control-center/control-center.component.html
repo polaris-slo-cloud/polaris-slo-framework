@@ -1,1 +1,13 @@
-<sloc-dashboards-list [tags]="[ 'nginx' ]"></sloc-dashboards-list>
+<div>
+    <sloc-dashboards-list
+        [tags]="[ 'sloc' ]"
+        [(ngModel)]="selectedDashboardUid"
+        (ngModelChange)="onSelectedDashboardChange()"
+    ></sloc-dashboards-list>
+</div>
+
+<div>
+    <sloc-panels-list
+        [dashboard]="selectedDashboard$ | async"
+    ></sloc-panels-list>
+</div>

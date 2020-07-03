@@ -5,6 +5,8 @@
  */
 
 import { DataQuery } from '@grafana/data';
+import { DashboardSectionItem } from './search-types';
+import { Panel } from './panel';
 
 export interface DashboardDTO {
     redirectUri?: string;
@@ -39,8 +41,9 @@ export interface DashboardMeta {
     updatedBy?: string;
 }
 
-export interface DashboardDataDTO {
+export interface DashboardDataDTO extends DashboardSectionItem {
     title: string;
+    panels: Panel[];
 }
 
 export enum DashboardRouteInfo {

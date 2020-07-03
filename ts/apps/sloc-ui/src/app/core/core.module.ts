@@ -21,9 +21,6 @@ const PROVIDERS: any[] = [
         SharedModule,
         HttpClientModule,
     ],
-    exports: [
-        SharedModule,
-    ],
     providers: PROVIDERS,
 })
 export class CoreModule {

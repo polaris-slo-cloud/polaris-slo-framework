@@ -5,9 +5,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 
 import { DashboardsListComponent } from './components/dashboards-list/dashboards-list.component';
+import { PanelsListComponent } from './components/panels-list/panels-list.component';
 
 const COMPONENTS: any[] = [
     DashboardsListComponent,
+    PanelsListComponent,
 ];
 
 const DIRECTIVES: any[] = [

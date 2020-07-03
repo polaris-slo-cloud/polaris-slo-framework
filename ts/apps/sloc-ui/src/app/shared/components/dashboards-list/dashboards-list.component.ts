@@ -30,9 +30,9 @@ export class DashboardsListComponent implements OnInit, OnChanges, ControlValueA
 
     dashboards$: Observable<DashboardSearchHit[]>;
 
-    selectedId: number;
+    selectedUid: string;
 
-    private onChangeFn: OnChangeFn<number>;
+    private onChangeFn: OnChangeFn<string>;
     private onTouchedFn: OnTouchedFn;
 
     constructor(
@@ -49,14 +49,14 @@ export class DashboardsListComponent implements OnInit, OnChanges, ControlValueA
         }
     }
 
-    writeValue(selectedId: number): void {
-        if (typeof selectedId === 'number') {
-            this.selectedId = selectedId;
+    writeValue(selectedUid: string): void {
+        if (typeof selectedUid === 'string') {
+            this.selectedUid = selectedUid;
             this.changeDetector.markForCheck();
         }
     }
 
-    registerOnChange(fn: OnChangeFn<number>): void {
+    registerOnChange(fn: OnChangeFn<string>): void {
         this.onChangeFn = fn;
     }
 

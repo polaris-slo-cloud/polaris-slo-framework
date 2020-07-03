@@ -1,7 +1,7 @@
 <mat-form-field *ngIf="dashboards$">
     <mat-label>Dashboard</mat-label>
-    <mat-select [(value)]="selectedId">
-        <mat-option *ngFor="let dashboard of (dashboards$ | async)" [value]="dashboard.id">
+    <mat-select [(value)]="selectedUid" (selectionChange)="onDashboardSelectionChange($event)" [disabled]="disabled">
+        <mat-option *ngFor="let dashboard of (dashboards$ | async)" [value]="dashboard.uid">
             {{ dashboard.title }}
         </mat-option>
     </mat-select>
