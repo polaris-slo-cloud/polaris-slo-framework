@@ -530,6 +530,20 @@ grafana:
       createPrometheusReplicasDatasources: false
       label: grafana_datasource
 
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
+    type: pvc
+    enabled: true
+    storageClassName: local-storage
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+    # annotations: {}
+    finalizers:
+      - kubernetes.io/pvc-protection
+
   extraConfigmapMounts: []
   # - name: certs-configmap
   #   mountPath: /etc/grafana/ssl/

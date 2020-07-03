@@ -28,3 +28,7 @@ indent_style = space
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
+
+[*.yaml]
+indent_size = 2
+indent_style = space
