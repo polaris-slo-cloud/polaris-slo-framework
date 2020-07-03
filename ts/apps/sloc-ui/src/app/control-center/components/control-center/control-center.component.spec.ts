@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ControlCenterComponent } from './control-center.component';
 
+// ToDo
 describe('ControlCenterComponent', () => {
     let component: ControlCenterComponent;
     let fixture: ComponentFixture<ControlCenterComponent>;

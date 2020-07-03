@@ -1,5 +1,6 @@
 import { Inject, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CONFIG } from '../../../common';
 import { GRAFANA_BASE_URL } from '../../../core';
 
 export interface PanelIdentifier {
@@ -21,7 +22,7 @@ export class GrafanaPanelEmbedUrlPipe implements PipeTransform {
         if (!value || !value.dashboardUid || typeof value.panelId !== 'number') {
             return '';
         }
-        return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.grafanaBaseUrl}d-solo/${value.dashboardUid}?refresh=5s&panelId=${value.panelId}`);
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`${CONFIG.grafanaEmbeddingBaseUrl}/d-solo/${value.dashboardUid}?refresh=5s&panelId=${value.panelId}`);
     }
 
 }

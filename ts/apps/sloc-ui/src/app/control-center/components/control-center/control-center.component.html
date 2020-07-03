@@ -14,6 +14,6 @@
     </div>
 </form>
 
-<div *ngIf="panelForm.valid">
+<div *ngIf="panelForm.valid" class="sloc-grafana-panel">
     <sloc-grafana-panel-host [panelIdentifier]="panelForm.value"></sloc-grafana-panel-host>
 </div>
