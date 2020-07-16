@@ -1,5 +1,5 @@
 <mat-form-field *ngIf="dashboard">
-    <mat-label>Panel</mat-label>
+    <mat-label>{{ 'visualization.panel' | translate }}</mat-label>
     <mat-select [(value)]="selectedPanelId" (selectionChange)="onPanelSelectionChange($event)" [disabled]="disabled">
         <mat-option *ngFor="let panel of dashboard.dashboard.panels" [value]="panel.id">
             {{ panel.title }}

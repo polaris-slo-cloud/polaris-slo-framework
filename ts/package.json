@@ -40,6 +40,7 @@
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "^9.1.0",
     "@grafana/data": "^7.0.4",
+    "@ngx-translate/core": "^12.1.2",
     "lodash-es": "^4.17.15",
     "rxjs": "~6.5.4",
     "zone.js": "^0.10.2"
