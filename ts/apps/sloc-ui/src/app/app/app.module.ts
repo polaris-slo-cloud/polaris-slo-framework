@@ -7,6 +7,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { AppComponent } from './app.component';
+import { NavigationItemComponent } from './components/navigation-item/navigation-item.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 const PROVIDERS: any[] = [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -15,6 +17,8 @@ const PROVIDERS: any[] = [
 @NgModule({
     declarations: [
         AppComponent,
+        NavigationComponent,
+        NavigationItemComponent,
     ],
     imports: [
         BrowserModule,

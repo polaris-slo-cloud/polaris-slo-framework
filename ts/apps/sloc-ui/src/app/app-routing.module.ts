@@ -3,9 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 const ROUTES: Routes = [
     {
-        path: '',
+        path: 'control-center',
         loadChildren: () => import('./control-center/control-center.module').then(m => m.ControlCenterModule),
-     },
+    },
+    {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'control-center',
+    },
 ];
 
 @NgModule({

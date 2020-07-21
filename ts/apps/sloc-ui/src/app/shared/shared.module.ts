@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { DashboardsListComponent } from './components/dashboards-list/dashboards-list.component';
@@ -33,8 +36,11 @@ const PROVIDERS: any[] = [
 ];
 
 const MATERIAL_IMPORTS: any[] = [
+    MatIconModule,
     MatListModule,
     MatSelectModule,
+    MatSidenavModule,
+    MatToolbarModule,
 ];
 
 @NgModule({

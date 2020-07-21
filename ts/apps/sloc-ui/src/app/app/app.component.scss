@@ -1,4 +1,17 @@
-:host {
-    display: block;
-    padding: 10px;
+$header-height: 64px;
+
+.sloc-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $header-height
+}
+
+.sloc-nav-container {
+    position: absolute;
+    top: $header-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }

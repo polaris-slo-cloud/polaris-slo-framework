@@ -1,4 +1,16 @@
-<header class="flex">
-    <h1>{{ 'common.sloc_ui_title' | translate }}</h1>
-</header>
-<router-outlet></router-outlet>
+<mat-toolbar class="sloc-header" color="primary">
+    <span>{{ 'common.sloc_ui_title' | translate }}</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sloc-nav-container">
+
+    <mat-sidenav mode="side" opened>
+        <sloc-navigation></sloc-navigation>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
+
