@@ -7,6 +7,10 @@ const ROUTES: Routes = [
         loadChildren: () => import('./control-center/control-center.module').then(m => m.ControlCenterModule),
     },
     {
+        path: 'visualization',
+        loadChildren: () => import('./visualization/visualization.module').then(m => m.VisualizationModule),
+    },
+    {
         path: '',
         pathMatch: 'full',
         redirectTo: 'control-center',
