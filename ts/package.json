@@ -1,6 +1,6 @@
 {
   "name": "sloc",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "nx",
@@ -8,6 +8,8 @@
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",
+    "docker:build:sloc-ui": "npm run build -- sloc-ui && mv ./dist/apps/sloc-ui ./apps/sloc-ui/dist && docker build -t tuwiendsgsloc/sloc-ui:$npm_package_version -t tuwiendsgsloc/sloc-ui:latest ./apps/sloc-ui",
+    "docker:push-latest:sloc-ui": "docker push tuwiendsgsloc/sloc-ui:$npm_package_version && docker push tuwiendsgsloc/sloc-ui:latest",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
