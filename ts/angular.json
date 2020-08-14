@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "projects": {
+    "sloc-ui": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/sloc-ui",
+      "sourceRoot": "apps/sloc-ui/src",
+      "prefix": "sloc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/sloc-ui",
+            "index": "apps/sloc-ui/src/index.html",
+            "main": "apps/sloc-ui/src/main.ts",
+            "polyfills": "apps/sloc-ui/src/polyfills.ts",
+            "tsConfig": "apps/sloc-ui/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/sloc-ui/src/favicon.ico",
+              "apps/sloc-ui/src/assets"
+            ],
+            "styles": [
+              "apps/sloc-ui/src/styles/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "apps/sloc-ui/src/styles"
+              ]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/sloc-ui/src/environments/environment.ts",
+                  "with": "apps/sloc-ui/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sloc-ui:build",
+            "proxyConfig": "./proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sloc-ui:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sloc-ui:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/sloc-ui/tsconfig.app.json",
+              "apps/sloc-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/sloc-ui/jest.config.js",
+            "tsConfig": "apps/sloc-ui/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/sloc-ui/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "sloc-ui-e2e": {
+      "root": "apps/sloc-ui-e2e",
+      "sourceRoot": "apps/sloc-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/sloc-ui-e2e/cypress.json",
+            "tsConfig": "apps/sloc-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "sloc-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sloc-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/sloc-ui-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui-e2e/**/*"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "sloc-ui"
+}

@@ -1,0 +1,21 @@
+<h1>{{ 'common.visualization' | translate }}</h1>
+
+<form class="sloc-panel-selector" [formGroup]="panelForm">
+    <div>
+        <sloc-dashboards-list
+            formControlName="dashboardUid"
+            [tags]="[ 'sloc' ]"
+        ></sloc-dashboards-list>
+    </div>
+
+    <div>
+        <sloc-panels-list
+            formControlName="panelId"
+            [dashboard]="selectedDashboard$ | async"
+        ></sloc-panels-list>
+    </div>
+</form>
+
+<div *ngIf="panelForm.valid" class="sloc-grafana-panel">
+    <sloc-grafana-panel-host [panelIdentifier]="panelForm.value"></sloc-grafana-panel-host>
+</div>

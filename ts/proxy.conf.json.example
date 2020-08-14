@@ -1,0 +1,8 @@
+{
+    "/grafana": {
+        "target": "http://localhost:30901",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": { "^/grafana" : "" }
+    }
+}

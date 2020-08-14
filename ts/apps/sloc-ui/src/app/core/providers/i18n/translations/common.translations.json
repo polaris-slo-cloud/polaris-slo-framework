@@ -1,0 +1,29 @@
+{
+    "sloc_ui_title": {
+        "en": "SLOC UI"
+    },
+    "control_center": {
+        "en": "Control Center"
+    },
+    "metric": {
+        "en": "Metric"
+    },
+    "metrics": {
+        "en": "Metrics"
+    },
+    "plugins": {
+        "en": "Plugins"
+    },
+    "plugin": {
+        "en": "Plugin"
+    },
+    "slo": {
+        "en": "SLO"
+    },
+    "slos": {
+        "en": "SLOs"
+    },
+    "visualization": {
+        "en": "Visualization"
+    }
+}

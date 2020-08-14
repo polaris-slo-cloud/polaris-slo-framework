@@ -1,0 +1,22 @@
+{
+    "extends": "../../tslint.json",
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            "sloc",
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            "sloc",
+            "kebab-case"
+        ]
+    },
+    "linterOptions": {
+        "exclude": [
+            "!**/*"
+        ]
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "printWidth": 160,
+    "singleQuote": true,
+    "quoteProps": "as-needed",
+    "arrowParens": "avoid"
+}
