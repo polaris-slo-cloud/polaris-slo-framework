@@ -61,8 +61,8 @@ func (this *Dog) Type() string {
 type ElephantOrigin string
 
 const (
-	AFRICA = "Africa"
-	INDIA  = "India"
+	AFRICA ElephantOrigin = "Africa"
+	INDIA  ElephantOrigin = "India"
 )
 
 // Integer variant
