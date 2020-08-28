@@ -1,3 +1,4 @@
 domain: sloc.github.io
+multigroup: true
 repo: sloc.github.io/sloc
 version: "2"
