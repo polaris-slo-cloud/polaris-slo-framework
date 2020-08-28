@@ -3,5 +3,12 @@ kind: TemplateStrategy
 metadata:
   name: templatestrategy-sample
 spec:
-  # Add fields here
-  foo: bar
+  targetRef:
+    kind: Deployment
+    name: twitter-clone
+  horizontalSpec:
+    maxReplicas: 10
+    targetAvgCPUUtilizationPercentage: 70
+  verticalSpec:
+    minMemory: 256Mi
+    maxMemory: 2Gi

@@ -18,6 +18,7 @@ package v1
 
 import (
 	autoscaling "k8s.io/api/autoscaling/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -61,16 +62,12 @@ type HorizontalScalingSpec struct {
 
 // VerticalScalingSpec describes the vertical scaling options in the TemplateStrategy.
 type VerticalScalingSpec struct {
-	// The minimum percentage of its requested memory that a pod must use.
-	// If the usage drops below this threshold, the pod will be scaled down.
-	// +kubebuilder:validation:Minimum=1
-	// +kubebuilder:validation:Maximum=100
-	MinMemoryPercentage int32 `json:"minMemoryPercentage,omitempty"`
+	// The minimum amount of memory that the containers may be scaled down to.
+	// +optional
+	MinMemory *resource.Quantity `json:"minMemory,omitempty"`
 
-	// The maximum percentage of its requested memory that a pod can use before being scaled up.
-	// +kubebuilder:validation:Minimum=1
-	// +kubebuilder:validation:Maximum=100
-	MaxMemoryPercentage int32 `json:"maxMemoryPercentage,omitempty"`
+	// The maximum amount of memory that the containers may be scaled up to.
+	MaxMemory resource.Quantity `json:"maxMemory"`
 
 	// // The minimum CPU resources that a container may be scaled down to.
 	// // +optional

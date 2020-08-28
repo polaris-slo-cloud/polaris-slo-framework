@@ -74,21 +74,24 @@ spec:
               description: The vertical scaling options in this strategy. If this
                 is omitted, no vertical scaling will be performed.
               properties:
-                maxMemoryPercentage:
-                  description: The maximum percentage of its requested memory that
-                    a pod can use before being scaled up.
-                  format: int32
-                  maximum: 100
-                  minimum: 1
-                  type: integer
-                minMemoryPercentage:
-                  description: The minimum percentage of its requested memory that
-                    a pod must use. If the usage drops below this threshold, the pod
-                    will be scaled down.
-                  format: int32
-                  maximum: 100
-                  minimum: 1
-                  type: integer
+                maxMemory:
+                  anyOf:
+                  - type: integer
+                  - type: string
+                  description: The maximum amount of memory that the containers may
+                    be scaled up to.
+                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  x-kubernetes-int-or-string: true
+                minMemory:
+                  anyOf:
+                  - type: integer
+                  - type: string
+                  description: The minimum amount of memory that the containers may
+                    be scaled down to.
+                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                  x-kubernetes-int-or-string: true
+              required:
+              - maxMemory
               type: object
           required:
           - targetRef
