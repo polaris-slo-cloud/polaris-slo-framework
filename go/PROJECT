@@ -1,4 +1,8 @@
 domain: sloc.github.io
 multigroup: true
 repo: sloc.github.io/sloc
+resources:
+- group: elasticitystrategies
+  kind: TemplateStrategy
+  version: v1
 version: "2"

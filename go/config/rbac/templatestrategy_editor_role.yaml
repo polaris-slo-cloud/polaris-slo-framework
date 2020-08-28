@@ -1,0 +1,24 @@
+# permissions for end users to edit templatestrategies.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: templatestrategy-editor-role
+rules:
+- apiGroups:
+  - elasticitystrategies.sloc.github.io
+  resources:
+  - templatestrategies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - elasticitystrategies.sloc.github.io
+  resources:
+  - templatestrategies/status
+  verbs:
+  - get

@@ -1,0 +1,7 @@
+apiVersion: elasticitystrategies.sloc.github.io/v1
+kind: TemplateStrategy
+metadata:
+  name: templatestrategy-sample
+spec:
+  # Add fields here
+  foo: bar
