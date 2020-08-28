@@ -39,7 +39,6 @@ spec:
                 is omitted, no horizontal scaling will be performed.
               properties:
                 maxReplicas:
-                  default: 10
                   description: The maximum number of replicas that should be allowed
                     when scaling out.
                   format: int32
@@ -76,7 +75,6 @@ spec:
                 is omitted, no vertical scaling will be performed.
               properties:
                 maxMemoryPercentage:
-                  default: 90
                   description: The maximum percentage of its requested memory that
                     a pod can use before being scaled up.
                   format: int32
@@ -84,7 +82,6 @@ spec:
                   minimum: 1
                   type: integer
                 minMemoryPercentage:
-                  default: 10
                   description: The minimum percentage of its requested memory that
                     a pod must use. If the usage drops below this threshold, the pod
                     will be scaled down.

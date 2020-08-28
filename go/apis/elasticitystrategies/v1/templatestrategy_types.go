@@ -50,7 +50,6 @@ type HorizontalScalingSpec struct {
 
 	// The maximum number of replicas that should be allowed when scaling out.
 	// +kubebuilder:validation:Minimum=1
-	// +kubebuilder:default=10
 	// +optional
 	MaxReplicas *int32 `json:"maxReplicas,omitempty"`
 
@@ -66,15 +65,11 @@ type VerticalScalingSpec struct {
 	// If the usage drops below this threshold, the pod will be scaled down.
 	// +kubebuilder:validation:Minimum=1
 	// +kubebuilder:validation:Maximum=100
-	// +kubebuilder:default=10
-	// +optional
 	MinMemoryPercentage int32 `json:"minMemoryPercentage,omitempty"`
 
 	// The maximum percentage of its requested memory that a pod can use before being scaled up.
 	// +kubebuilder:validation:Minimum=1
 	// +kubebuilder:validation:Maximum=100
-	// +kubebuilder:default=90
-	// +optional
 	MaxMemoryPercentage int32 `json:"maxMemoryPercentage,omitempty"`
 
 	// // The minimum CPU resources that a container may be scaled down to.
