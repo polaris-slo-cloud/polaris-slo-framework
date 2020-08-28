@@ -17,6 +17,7 @@ limitations under the License.
 package v1
 
 import (
+	autoscaling "k8s.io/api/autoscaling/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -24,6 +25,8 @@ import (
 
 // TemplateStrategySpec defines the desired state of TemplateStrategy
 type TemplateStrategySpec struct {
+	// Specifies the target on which to perform the scaling.
+	TargetRef autoscaling.CrossVersionObjectReference `json:"targetRef"`
 
 	// The horizontal scaling options in this strategy.
 	// If this is omitted, no horizontal scaling will be performed.
