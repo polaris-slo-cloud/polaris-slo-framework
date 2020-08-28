@@ -12,28 +12,75 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// +kubebuilder:validation:Required
+
 package v1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+// Important: Run "make" to regenerate code after modifying this file
 
 // TemplateStrategySpec defines the desired state of TemplateStrategy
 type TemplateStrategySpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of TemplateStrategy. Edit TemplateStrategy_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// The horizontal scaling options in this strategy.
+	// If this is omitted, no horizontal scaling will be performed.
+	// +optional
+	HorizontalSpec *HorizontalScalingSpec `json:"horizontalSpec,omitempty"`
+
+	// The vertical scaling options in this strategy.
+	// If this is omitted, no vertical scaling will be performed.
+	// +optional
+	VerticalSpec *VerticalScalingSpec `json:"verticalSpec,omitempty"`
 }
 
 // TemplateStrategyStatus defines the observed state of TemplateStrategy
 type TemplateStrategyStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+}
+
+// HorizontalScalingSpec describes the horizontal scaling options in the TemplateStrategy.
+type HorizontalScalingSpec struct {
+
+	// The maximum number of replicas that should be allowed when scaling out.
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:default=10
+	// +optional
+	MaxReplicas *int32 `json:"maxReplicas,omitempty"`
+
+	// The target average CPU utilization percentage of the pods (percentage of the allocated CPUs).
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=100
+	TargetAvgCPUUtilizationPercentage int32 `json:"targetAvgCPUUtilizationPercentage"`
+}
+
+// VerticalScalingSpec describes the vertical scaling options in the TemplateStrategy.
+type VerticalScalingSpec struct {
+	// The minimum percentage of its requested memory that a pod must use.
+	// If the usage drops below this threshold, the pod will be scaled down.
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=100
+	// +kubebuilder:default=10
+	// +optional
+	MinMemoryPercentage int32 `json:"minMemoryPercentage,omitempty"`
+
+	// The maximum percentage of its requested memory that a pod can use before being scaled up.
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=100
+	// +kubebuilder:default=90
+	// +optional
+	MaxMemoryPercentage int32 `json:"maxMemoryPercentage,omitempty"`
+
+	// // The minimum CPU resources that a container may be scaled down to.
+	// // +optional
+	// MinCPU *resource.Quantity `json:"minCPU,omitempty"`
+
+	// // The minimum CPU resources that a container may be scaled up to.
+	// // +kubebuilder:default=4
+	// MaxCPU resource.Quantity `json:"maxCPU"`
 }
 
 // +kubebuilder:object:root=true
