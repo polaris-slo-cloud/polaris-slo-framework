@@ -16,9 +16,11 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-logr/logr"
 	autoscaling "k8s.io/api/autoscaling/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -61,6 +63,21 @@ func (r *TemplateStrategyReconciler) Reconcile(req ctrl.Request) (ctrl.Result, e
 
 	// TODO: Fetch the VPAs associated with this strategy.
 
+	// If there is an existing HPA, update it, otherwise create a new one.
+	if len(hpas.Items) > 0 {
+		if err := r.updateHPA(ctx, &hpas.Items[0], &templateStrategy); err != nil {
+			log.Error(err, "Unable to update existing HPA object")
+			return ctrl.Result{}, err
+		}
+		log.Info("Successfully updated HPA")
+	} else {
+		if err := r.createHPA(ctx, &templateStrategy); err != nil {
+			log.Error(err, "Unable to create new HPA object")
+			return ctrl.Result{}, err
+		}
+		log.Info("Successfully created new HPA")
+	}
+
 	return ctrl.Result{}, nil
 }
 
@@ -79,4 +96,49 @@ func (r *TemplateStrategyReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		// Owns() makes sure that a change in an HPA will also trigger a Reconcile() call.
 		Owns(&autoscaling.HorizontalPodAutoscaler{}).
 		Complete(r)
+}
+
+func (r *TemplateStrategyReconciler) constructNewHPA(templateStrategy *elasticityStrategies.TemplateStrategy) (*autoscaling.HorizontalPodAutoscaler, error) {
+	hpaName := fmt.Sprintf("hpa-%s", templateStrategy.Name)
+
+	hpa := autoscaling.HorizontalPodAutoscaler{
+		ObjectMeta: metav1.ObjectMeta{
+			Labels:      make(map[string]string),
+			Annotations: make(map[string]string),
+			Name:        hpaName,
+			Namespace:   templateStrategy.Namespace,
+		},
+	}
+	configureHPA(&hpa, templateStrategy)
+
+	if err := ctrl.SetControllerReference(templateStrategy, &hpa, r.Scheme); err != nil {
+		return nil, err
+	}
+
+	return &hpa, nil
+}
+
+func configureHPA(hpa *autoscaling.HorizontalPodAutoscaler, templateStrategy *elasticityStrategies.TemplateStrategy) {
+	hpa.Spec.ScaleTargetRef = templateStrategy.Spec.TargetRef
+	hpa.Spec.TargetCPUUtilizationPercentage = &templateStrategy.Spec.HorizontalSpec.TargetAvgCPUUtilizationPercentage
+	if templateStrategy.Spec.HorizontalSpec.MaxReplicas != nil {
+		hpa.Spec.MaxReplicas = *templateStrategy.Spec.HorizontalSpec.MaxReplicas
+	} else {
+		hpa.Spec.MaxReplicas = 10
+	}
+}
+
+func (r *TemplateStrategyReconciler) updateHPA(ctx context.Context, hpa *autoscaling.HorizontalPodAutoscaler, templateStrategy *elasticityStrategies.TemplateStrategy) error {
+	configureHPA(hpa, templateStrategy)
+	return r.Client.Update(ctx, hpa)
+}
+
+func (r *TemplateStrategyReconciler) createHPA(ctx context.Context, templateStrategy *elasticityStrategies.TemplateStrategy) error {
+	hpa, err := r.constructNewHPA(templateStrategy)
+	if err != nil {
+		return err
+	}
+
+	// Create the HPA in the cluster
+	return r.Create(ctx, hpa)
 }
