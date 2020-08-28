@@ -20,7 +20,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// Important: Run "make" to regenerate code after modifying this file
+// Important: Run `make` and `make manifests` to regenerate code and YAML files after modifying this file.
 
 // TemplateStrategySpec defines the desired state of TemplateStrategy
 type TemplateStrategySpec struct {
