@@ -35,6 +35,8 @@ type TemplateStrategyReconciler struct {
 // +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=templatestrategies,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=templatestrategies/status,verbs=get;update;patch
 
+// Reconcile is called by the manager, whenever its underlying informers report that an
+// object has been added, updated, or deleted.
 func (r *TemplateStrategyReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	_ = context.Background()
 	_ = r.Log.WithValues("templatestrategy", req.NamespacedName)
@@ -44,6 +46,7 @@ func (r *TemplateStrategyReconciler) Reconcile(req ctrl.Request) (ctrl.Result, e
 	return ctrl.Result{}, nil
 }
 
+// SetupWithManager sets up the TemplateStrategyReconciler.
 func (r *TemplateStrategyReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&elasticitystrategiesv1.TemplateStrategy{}).
