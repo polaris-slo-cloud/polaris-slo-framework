@@ -45,6 +45,7 @@ type TemplateStrategyReconciler struct {
 func (r *TemplateStrategyReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
 	log := r.Log.WithValues("templateStrategy", req.NamespacedName)
+	log.Info("Reconcile() called")
 
 	// Fetch the TemplateStrategy that we need to reconcile
 	var templateStrategy elasticityStrategies.TemplateStrategy
