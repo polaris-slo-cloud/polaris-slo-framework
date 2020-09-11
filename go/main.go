@@ -72,6 +72,14 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "TemplateStrategy")
 		os.Exit(1)
 	}
+	if err = (&elasticitystrategiescontroller.HorizontalElasticityStrategyReconciler{
+		Client: mgr.GetClient(),
+		Log:    ctrl.Log.WithName("controllers").WithName("HorizontalElasticityStrategy"),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "HorizontalElasticityStrategy")
+		os.Exit(1)
+	}
 	// +kubebuilder:scaffold:builder
 
 	setupLog.Info("starting manager")

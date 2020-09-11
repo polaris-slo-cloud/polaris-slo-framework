@@ -1,0 +1,20 @@
+# permissions for end users to view horizontalelasticitystrategies.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: horizontalelasticitystrategy-viewer-role
+rules:
+- apiGroups:
+  - elasticitystrategies.sloc.github.io
+  resources:
+  - horizontalelasticitystrategies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - elasticitystrategies.sloc.github.io
+  resources:
+  - horizontalelasticitystrategies/status
+  verbs:
+  - get
