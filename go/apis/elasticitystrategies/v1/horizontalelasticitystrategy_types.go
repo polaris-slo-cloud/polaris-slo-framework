@@ -12,28 +12,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// +kubebuilder:validation:Required
+
 package v1
 
 import (
+	autoscaling "k8s.io/api/autoscaling/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+// Important: Run `make` and `make manifests` to regenerate code and YAML files after modifying this file.
 
 // HorizontalElasticityStrategySpec defines the desired state of HorizontalElasticityStrategy
 type HorizontalElasticityStrategySpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Specifies the target on which to perform the scaling.
+	TargetRef autoscaling.CrossVersionObjectReference `json:"targetRef"`
 
-	// Foo is an example field of HorizontalElasticityStrategy. Edit HorizontalElasticityStrategy_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// Specifies how much the current state of the system complies with the SLO.
+	//
+	// * If this value is the same as SloTargetValue, the SLO is met exactly.
+	//
+	// * If this value is greater greater than SloTargetValue, the SLO is violated
+	// and scaling out is required.
+	//
+	// * If this value is less than SloTargetValue, the system is performing
+	// better than the SLO demands and scaling in will be performed.
+	CurrSloCompliance *resource.Quantity `json:"currSloCompliance"`
+
+	// Specifies the value at which the SLO is exactly met.
+	// Default: 1.0
+	// +optional
+	SloTargetValue *resource.Quantity `json:"sloTargetValue,omitempty"`
 }
 
 // HorizontalElasticityStrategyStatus defines the observed state of HorizontalElasticityStrategy
 type HorizontalElasticityStrategyStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
 }
 
 // +kubebuilder:object:root=true

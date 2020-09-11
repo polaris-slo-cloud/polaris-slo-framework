@@ -21,6 +21,26 @@ rules:
 - apiGroups:
   - elasticitystrategies.sloc.github.io
   resources:
+  - horizontalelasticitystrategies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - elasticitystrategies.sloc.github.io
+  resources:
+  - horizontalelasticitystrategies/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - elasticitystrategies.sloc.github.io
+  resources:
   - templatestrategies
   verbs:
   - create
