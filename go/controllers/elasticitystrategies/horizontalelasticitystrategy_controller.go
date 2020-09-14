@@ -22,7 +22,8 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	elasticitystrategiesv1 "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	crds "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	"sloc.github.io/sloc/internal/elasticityservices/horizontal"
 )
 
 // HorizontalElasticityStrategyReconciler reconciles a HorizontalElasticityStrategy object
@@ -30,22 +31,43 @@ type HorizontalElasticityStrategyReconciler struct {
 	client.Client
 	Log    logr.Logger
 	Scheme *runtime.Scheme
+
+	horizontalService *horizontal.HorizontalElasticityService
 }
 
 // +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=horizontalelasticitystrategies,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=horizontalelasticitystrategies/status,verbs=get;update;patch
 
-func (r *HorizontalElasticityStrategyReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
-	_ = context.Background()
-	_ = r.Log.WithValues("horizontalelasticitystrategy", req.NamespacedName)
+// Reconcile is triggered whenever a HorizontalElasticityStrategy is added or changed and performs any scaling operations
+// that arise from a violation of the SLO.
+//
+// 1. The SLO creates/updates a HorizontalElasticityStrategy with the current level of SLO compliance
+// 2. This controller gets the corresponding scaling suberesource and checks if the resource version of the last HorizontalElasticityStrategy
+//    stored in the scaling resource matches the current resource version.
+// 3. If the resource versions match, do nothing (an action has already been taken)
+// 4. If the resource versions do not match, check if we need a scaling operation, based on the SLO values,
+//    apply that scaling action, and update the resource version stored in the scaling resource.
+//
+// Note: Maybe we don't even need the resource version check, because Reconcile won't be called again until one of the resources changes.
+func (me *HorizontalElasticityStrategyReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+	ctx := context.Background()
+	log := me.Log.WithValues("HorizontalElasticityStrategy", req.NamespacedName)
+	log.Info("Reconcile() called")
 
-	// your logic here
+	var strategy crds.HorizontalElasticityStrategy
+	if err := me.Get(ctx, req.NamespacedName, &strategy); err != nil {
+		log.Error(err, "Unable to fetch HorizontalElasticityStrategy")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
 
 	return ctrl.Result{}, nil
 }
 
-func (r *HorizontalElasticityStrategyReconciler) SetupWithManager(mgr ctrl.Manager) error {
+// SetupWithManager sets up the HorizontalElasticityStrategyReconciler.
+func (me *HorizontalElasticityStrategyReconciler) SetupWithManager(mgr ctrl.Manager) error {
+	me.horizontalService = horizontal.NewHorizontalElasticityService(context.Background(), me.Client, me.Log)
+
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&elasticitystrategiesv1.HorizontalElasticityStrategy{}).
-		Complete(r)
+		For(&crds.HorizontalElasticityStrategy{}).
+		Complete(me)
 }
