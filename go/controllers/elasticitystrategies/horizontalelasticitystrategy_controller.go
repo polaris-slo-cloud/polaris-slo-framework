@@ -35,8 +35,15 @@ type HorizontalElasticityStrategyReconciler struct {
 	horizontalService *horizontal.HorizontalElasticityService
 }
 
+// ToDo: We need to find a way to request access to all scale subresources.
+// The strategy should be able to work with resource types, which are not known at compile time.
+
 // +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=horizontalelasticitystrategies,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=horizontalelasticitystrategies/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;update;patch;
+// +kubebuilder:rbac:groups=apps,resources=deployments/scale,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps,resources=replicasets,verbs=get;list;watch;update;patch;
+// +kubebuilder:rbac:groups=apps,resources=replicasets/scale,verbs=get;update;patch
 
 // Reconcile is triggered whenever a HorizontalElasticityStrategy is added or changed and performs any scaling operations
 // that arise from a violation of the SLO.
