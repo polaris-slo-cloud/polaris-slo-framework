@@ -17,8 +17,6 @@ limitations under the License.
 package v1
 
 import (
-	autoscaling "k8s.io/api/autoscaling/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -26,24 +24,11 @@ import (
 
 // HorizontalElasticityStrategySpec defines the desired state of HorizontalElasticityStrategy
 type HorizontalElasticityStrategySpec struct {
-	// Specifies the target on which to perform the scaling.
-	TargetRef autoscaling.CrossVersionObjectReference `json:"targetRef"`
+	// Specifies the target on which to execute the elasticity strategy.
+	ElasticityStrategyTarget `json:",inline"`
 
 	// Specifies how much the current state of the system complies with the SLO.
-	//
-	// * If this value is the same as SloTargetValue, the SLO is met exactly.
-	//
-	// * If this value is greater greater than SloTargetValue, the SLO is violated
-	// and scaling out is required.
-	//
-	// * If this value is less than SloTargetValue, the system is performing
-	// better than the SLO demands and scaling in will be performed.
-	CurrSloCompliance *resource.Quantity `json:"currSloCompliance"`
-
-	// Specifies the (decimal) value at which the SLO is exactly met.
-	// Default: 1.0
-	// +optional
-	SloTargetValue *resource.Quantity `json:"sloTargetValue,omitempty"`
+	SloCompliance `json:",inline"`
 }
 
 // HorizontalElasticityStrategyStatus defines the observed state of HorizontalElasticityStrategy
