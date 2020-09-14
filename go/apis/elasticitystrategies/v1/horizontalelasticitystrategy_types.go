@@ -40,7 +40,7 @@ type HorizontalElasticityStrategySpec struct {
 	// better than the SLO demands and scaling in will be performed.
 	CurrSloCompliance *resource.Quantity `json:"currSloCompliance"`
 
-	// Specifies the value at which the SLO is exactly met.
+	// Specifies the (decimal) value at which the SLO is exactly met.
 	// Default: 1.0
 	// +optional
 	SloTargetValue *resource.Quantity `json:"sloTargetValue,omitempty"`
