@@ -4,6 +4,7 @@ metadata:
   name: templatestrategy-sample
 spec:
   targetRef:
+    apiVersion: apps/v1
     kind: Deployment
     name: twitter-clone
   horizontalSpec:

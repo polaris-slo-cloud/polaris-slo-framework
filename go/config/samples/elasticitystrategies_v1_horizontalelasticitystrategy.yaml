@@ -3,5 +3,9 @@ kind: HorizontalElasticityStrategy
 metadata:
   name: horizontalelasticitystrategy-sample
 spec:
-  # Add fields here
-  foo: bar
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: twitter-clone
+  currSloCompliance: 2.0
+
