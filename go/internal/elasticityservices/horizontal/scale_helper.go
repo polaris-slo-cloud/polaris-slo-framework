@@ -5,12 +5,13 @@ import (
 
 	"github.com/go-logr/logr"
 	autoscaling "k8s.io/api/autoscaling/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	scaleClient "k8s.io/client-go/scale"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	crds "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
 
 // scaleHelper is used for obtaining and updating the Scale subresource of a target.
@@ -37,6 +38,12 @@ func newScaleHelper(ctx context.Context, client client.Client, log logr.Logger, 
 	}
 }
 
-func (me *scaleHelper) fetchScale(target *crds.ElasticityStrategyTarget) (*autoscaling.Scale, error) {
+// Gets the Scale subresource for the specified target
+func (me *scaleHelper) getScale(target *eStrategies.NamespacedElasticityStrategyTarget) (*autoscaling.Scale, error) {
+	targetGroupRes, err := target.ExtractGroupResource()
+	if err != nil {
+		return nil, err
+	}
 
+	return me.scaleClient.Scales(target.Namespace).Get(me.ctx, *targetGroupRes, target.TargetRef.Name, metav1.GetOptions{})
 }
