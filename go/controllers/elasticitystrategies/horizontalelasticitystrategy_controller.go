@@ -72,7 +72,7 @@ func (me *HorizontalElasticityStrategyReconciler) Reconcile(req ctrl.Request) (c
 
 // SetupWithManager sets up the HorizontalElasticityStrategyReconciler.
 func (me *HorizontalElasticityStrategyReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	me.horizontalService = horizontal.NewHorizontalElasticityService(context.Background(), me.Client, me.Log)
+	me.horizontalService = horizontal.NewHorizontalElasticityService(context.Background(), me.Client, me.Log, mgr)
 
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&crds.HorizontalElasticityStrategy{}).
