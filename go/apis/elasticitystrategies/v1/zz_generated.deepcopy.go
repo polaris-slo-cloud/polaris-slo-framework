@@ -157,8 +157,13 @@ func (in *SloCompliance) DeepCopyInto(out *SloCompliance) {
 		x := (*in).DeepCopy()
 		*out = &x
 	}
-	if in.SloTargetValue != nil {
-		in, out := &in.SloTargetValue, &out.SloTargetValue
+	if in.SloTargetCompliance != nil {
+		in, out := &in.SloTargetCompliance, &out.SloTargetCompliance
+		x := (*in).DeepCopy()
+		*out = &x
+	}
+	if in.Tolerance != nil {
+		in, out := &in.Tolerance, &out.Tolerance
 		x := (*in).DeepCopy()
 		*out = &x
 	}

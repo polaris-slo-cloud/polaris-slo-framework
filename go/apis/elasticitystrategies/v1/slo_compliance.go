@@ -4,6 +4,14 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 )
 
+const (
+	// SloComplianceDefaultTolerance is the default tolerance for SloCompliance.
+	SloComplianceDefaultTolerance = 0.1
+
+	// SloComplianceDefaultSloTargetCompliance is the default value for SloCompliance.SloTargetCompliance
+	SloComplianceDefaultSloTargetCompliance = 1.0
+)
+
 // SloCompliance contains the information needed for elasticity strategies that require only a single
 // parameter, i.e., the current SLO compliance value.
 //
@@ -23,5 +31,10 @@ type SloCompliance struct {
 	// Specifies the (decimal) value at which the SLO is exactly met.
 	// Default: 1.0
 	// +optional
-	SloTargetValue *resource.Quantity `json:"sloTargetValue,omitempty"`
+	SloTargetCompliance *resource.Quantity `json:"sloTargetValue,omitempty"`
+
+	// Specifies the (decimal) tolerance around SloTargetCompliance, within which no scaling will be performed.
+	// Default: 0.1
+	// +optional
+	Tolerance *resource.Quantity `json:"tolerance,omitempty"`
 }

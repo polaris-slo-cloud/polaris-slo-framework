@@ -73,6 +73,14 @@ spec:
               - kind
               - name
               type: object
+            tolerance:
+              anyOf:
+              - type: integer
+              - type: string
+              description: 'Specifies the (decimal) tolerance around SloTargetCompliance,
+                within which no scaling will be performed. Default: 0.1'
+              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+              x-kubernetes-int-or-string: true
           required:
           - currSloCompliance
           - targetRef
