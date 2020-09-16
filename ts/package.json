@@ -55,6 +55,7 @@
     "@nrwl/angular": "10.2.0",
     "@nrwl/cypress": "10.2.0",
     "@nrwl/jest": "10.2.0",
+    "@nrwl/node": "^10.2.0",
     "@nrwl/workspace": "10.2.0",
     "@types/jest": "26.0.8",
     "@types/lodash-es": "^4.17.3",
