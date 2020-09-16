@@ -3,5 +3,8 @@ kind: CPUUsageSloApplication
 metadata:
   name: cpuusagesloapplication-sample
 spec:
-  # Add fields here
-  foo: bar
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: twitter-clone
+  targetAvgCPUUtilizationPercentage: 70
