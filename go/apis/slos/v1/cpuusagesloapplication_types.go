@@ -18,7 +18,6 @@ package v1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	eStrategiesCrds "sloc.github.io/sloc/apis/elasticitystrategies/v1"
 )
 
 // Important: Run `make` and `make manifests` to regenerate code and YAML files after modifying this file.
@@ -26,7 +25,7 @@ import (
 // CPUUsageSloApplicationSpec is used to apply a CPUUsageSLO to a target workload.
 type CPUUsageSloApplicationSpec struct {
 	// Specifies the target on which to execute the elasticity strategy.
-	eStrategiesCrds.SloTarget `json:",inline"`
+	SloTarget `json:",inline"`
 
 	// The target average CPU utilization percentage of the workload's pods (percentage of the allocated CPUs).
 	// +kubebuilder:validation:Minimum=1

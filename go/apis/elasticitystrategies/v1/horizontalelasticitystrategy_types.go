@@ -18,6 +18,7 @@ package v1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	sloCrds "sloc.github.io/sloc/apis/slos/v1"
 )
 
 // Important: Run `make` and `make manifests` to regenerate code and YAML files after modifying this file.
@@ -25,7 +26,7 @@ import (
 // HorizontalElasticityStrategySpec defines the desired state of HorizontalElasticityStrategy
 type HorizontalElasticityStrategySpec struct {
 	// Specifies the target on which to execute the elasticity strategy.
-	SloTarget `json:",inline"`
+	sloCrds.SloTarget `json:",inline"`
 
 	// Specifies how much the current state of the system complies with the SLO.
 	SloCompliance `json:",inline"`
