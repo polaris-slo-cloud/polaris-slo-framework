@@ -1,0 +1,20 @@
+# permissions for end users to view cpuusagesloapplications.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cpuusagesloapplication-viewer-role
+rules:
+- apiGroups:
+  - slos.sloc.github.io
+  resources:
+  - cpuusagesloapplications
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - slos.sloc.github.io
+  resources:
+  - cpuusagesloapplications/status
+  verbs:
+  - get

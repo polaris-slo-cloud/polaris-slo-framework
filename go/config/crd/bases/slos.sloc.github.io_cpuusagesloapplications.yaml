@@ -1,0 +1,82 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.5
+  creationTimestamp: null
+  name: cpuusagesloapplications.slos.sloc.github.io
+spec:
+  group: slos.sloc.github.io
+  names:
+    kind: CPUUsageSloApplication
+    listKind: CPUUsageSloApplicationList
+    plural: cpuusagesloapplications
+    singular: cpuusagesloapplication
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: CPUUsageSloApplication is the Schema for the cpuusagesloapplications
+        API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: CPUUsageSloApplicationSpec is used to apply a CPUUsageSLO to
+            a target workload.
+          properties:
+            targetAvgCPUUtilizationPercentage:
+              description: The target average CPU utilization percentage of the workload's
+                pods (percentage of the allocated CPUs).
+              format: int32
+              maximum: 100
+              minimum: 1
+              type: integer
+            targetRef:
+              description: Specifies the target on which to execute the elasticity
+                strategy.
+              properties:
+                apiVersion:
+                  description: API version of the referent
+                  type: string
+                kind:
+                  description: 'Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"'
+                  type: string
+                name:
+                  description: 'Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+                  type: string
+              required:
+              - kind
+              - name
+              type: object
+          required:
+          - targetAvgCPUUtilizationPercentage
+          - targetRef
+          type: object
+        status:
+          description: CPUUsageSloApplicationStatus defines the observed state of
+            CPUUsageSloApplication
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

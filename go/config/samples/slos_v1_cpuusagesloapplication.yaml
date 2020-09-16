@@ -1,0 +1,7 @@
+apiVersion: slos.sloc.github.io/v1
+kind: CPUUsageSloApplication
+metadata:
+  name: cpuusagesloapplication-sample
+spec:
+  # Add fields here
+  foo: bar
