@@ -7,5 +7,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: twitter-clone
-  currSloCompliance: 2.0
+  currSloCompliance: 200
+  sloTargetCompliance: 100
+  tolerance: 10
 
