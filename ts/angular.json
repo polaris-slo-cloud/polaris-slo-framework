@@ -21,10 +21,17 @@
             "polyfills": "apps/sloc-ui/src/polyfills.ts",
             "tsConfig": "apps/sloc-ui/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/sloc-ui/src/favicon.ico", "apps/sloc-ui/src/assets"],
-            "styles": ["apps/sloc-ui/src/styles/styles.scss"],
+            "assets": [
+              "apps/sloc-ui/src/favicon.ico",
+              "apps/sloc-ui/src/assets"
+            ],
+            "styles": [
+              "apps/sloc-ui/src/styles/styles.scss"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["apps/sloc-ui/src/styles"]
+              "includePaths": [
+                "apps/sloc-ui/src/styles"
+              ]
             },
             "scripts": []
           },
@@ -80,8 +87,14 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/sloc-ui/tsconfig.app.json", "apps/sloc-ui/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/sloc-ui/**/*"]
+            "tsConfig": [
+              "apps/sloc-ui/tsconfig.app.json",
+              "apps/sloc-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui/**/*"
+            ]
           }
         },
         "test": {
@@ -114,8 +127,73 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/sloc-ui-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/sloc-ui-e2e/**/*"]
+            "tsConfig": [
+              "apps/sloc-ui-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui-e2e/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "cpu-usage-slo-controller": {
+      "root": "apps/cpu-usage-slo-controller",
+      "sourceRoot": "apps/cpu-usage-slo-controller/src",
+      "projectType": "application",
+      "prefix": "cpu-usage-slo-controller",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/cpu-usage-slo-controller",
+            "main": "apps/cpu-usage-slo-controller/src/main.ts",
+            "tsConfig": "apps/cpu-usage-slo-controller/tsconfig.app.json",
+            "assets": [
+              "apps/cpu-usage-slo-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/cpu-usage-slo-controller/src/environments/environment.ts",
+                  "with": "apps/cpu-usage-slo-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "cpu-usage-slo-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/cpu-usage-slo-controller/tsconfig.app.json",
+              "apps/cpu-usage-slo-controller/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cpu-usage-slo-controller/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/cpu-usage-slo-controller/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
