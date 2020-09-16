@@ -38,7 +38,7 @@ func newScaleHelper(ctx context.Context, client client.Client, log logr.Logger, 
 	}
 }
 
-// Gets the Scale subresource for the specified target
+// Gets the Scale subresource for the specified target.
 func (me *scaleHelper) getScale(target *eStrategies.NamespacedElasticityStrategyTarget) (*autoscaling.Scale, error) {
 	targetGroupRes, err := target.ExtractGroupResource()
 	if err != nil {
@@ -46,4 +46,14 @@ func (me *scaleHelper) getScale(target *eStrategies.NamespacedElasticityStrategy
 	}
 
 	return me.scaleClient.Scales(target.Namespace).Get(me.ctx, *targetGroupRes, target.TargetRef.Name, metav1.GetOptions{})
+}
+
+// Updates the Scale subresource on the specified target.
+func (me *scaleHelper) updateScale(target *eStrategies.NamespacedElasticityStrategyTarget, scale *autoscaling.Scale) (*autoscaling.Scale, error) {
+	targetGroupRes, err := target.ExtractGroupResource()
+	if err != nil {
+		return nil, err
+	}
+
+	return me.scaleClient.Scales(target.Namespace).Update(me.ctx, *targetGroupRes, scale, metav1.UpdateOptions{})
 }
