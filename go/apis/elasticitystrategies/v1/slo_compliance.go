@@ -31,7 +31,7 @@ type SloCompliance struct {
 	// Specifies the (decimal) value at which the SLO is exactly met.
 	// Default: 1.0
 	// +optional
-	SloTargetCompliance *resource.Quantity `json:"sloTargetValue,omitempty"`
+	SloTargetCompliance *resource.Quantity `json:"sloTargetCompliance,omitempty"`
 
 	// Specifies the (decimal) tolerance around SloTargetCompliance, within which no scaling will be performed.
 	// Default: 0.1
