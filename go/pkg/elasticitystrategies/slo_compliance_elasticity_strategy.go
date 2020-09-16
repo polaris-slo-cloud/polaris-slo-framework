@@ -8,5 +8,5 @@ import (
 type SloComplianceElasticityStrategy interface {
 
 	// Enforce executes the elasticity strategy on the target, based on the current SLO compliance.
-	Enforce(target *NamespacedElasticityStrategyTarget, sloCompliance *crds.SloCompliance) error
+	Enforce(target *NamespacedSloTarget, sloCompliance *crds.SloCompliance) error
 }
