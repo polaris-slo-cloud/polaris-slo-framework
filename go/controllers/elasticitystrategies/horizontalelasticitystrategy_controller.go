@@ -24,6 +24,7 @@ import (
 
 	crds "sloc.github.io/sloc/apis/elasticitystrategies/v1"
 	"sloc.github.io/sloc/internal/elasticityservices/horizontal"
+	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
 
 // HorizontalElasticityStrategyReconciler reconciles a HorizontalElasticityStrategy object
@@ -65,6 +66,15 @@ func (me *HorizontalElasticityStrategyReconciler) Reconcile(req ctrl.Request) (c
 	if err := me.Get(ctx, req.NamespacedName, &strategy); err != nil {
 		log.Error(err, "Unable to fetch HorizontalElasticityStrategy")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	namespacedTarget := eStrategies.NamespacedElasticityStrategyTarget{
+		Namespace:                req.Namespace,
+		ElasticityStrategyTarget: strategy.Spec.ElasticityStrategyTarget,
+	}
+	if err := me.horizontalService.Enforce(&namespacedTarget, &strategy.Spec.SloCompliance); err != nil {
+		log.Error(err, "Could not enforce HorizontalElasticityStrategy.")
+		return ctrl.Result{}, err
 	}
 
 	return ctrl.Result{}, nil
