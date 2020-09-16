@@ -1,7 +1,16 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "types": ["cypress", "node"]
+        "types": [
+            "cypress",
+            "node"
+        ]
     },
-    "include": ["**/*.ts", "**/*.js"]
+    "include": [],
+    "files": [],
+    "references": [
+        {
+            "path": "./tsconfig.e2e.json"
+        }
+    ]
 }

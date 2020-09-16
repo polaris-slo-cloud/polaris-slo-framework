@@ -21,17 +21,10 @@
             "polyfills": "apps/sloc-ui/src/polyfills.ts",
             "tsConfig": "apps/sloc-ui/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/sloc-ui/src/favicon.ico",
-              "apps/sloc-ui/src/assets"
-            ],
-            "styles": [
-              "apps/sloc-ui/src/styles/styles.scss"
-            ],
+            "assets": ["apps/sloc-ui/src/favicon.ico", "apps/sloc-ui/src/assets"],
+            "styles": ["apps/sloc-ui/src/styles/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "apps/sloc-ui/src/styles"
-              ]
+              "includePaths": ["apps/sloc-ui/src/styles"]
             },
             "scripts": []
           },
@@ -87,23 +80,15 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/sloc-ui/tsconfig.app.json",
-              "apps/sloc-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/sloc-ui/**/*"
-            ]
+            "tsConfig": ["apps/sloc-ui/tsconfig.app.json", "apps/sloc-ui/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/sloc-ui/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/sloc-ui/jest.config.js",
-            "tsConfig": "apps/sloc-ui/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/sloc-ui/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       }
@@ -129,13 +114,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/sloc-ui-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/sloc-ui-e2e/**/*"
-            ]
+            "tsConfig": ["apps/sloc-ui-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/sloc-ui-e2e/**/*"]
           }
         }
       }

@@ -24,7 +24,7 @@
         "paths": {
             "lodash": [
                 "node_modules/lodash-es"
-            ],
+            ]
         }
     },
     "exclude": [
