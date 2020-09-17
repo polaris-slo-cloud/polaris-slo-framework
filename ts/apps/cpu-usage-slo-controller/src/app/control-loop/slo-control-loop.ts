@@ -1,7 +1,7 @@
 import { ServiceLevelObjective, getSloConfiguration } from '../sloc-policy-language';
 import { IndexByKey } from '../util';
-import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
-import { SlocCRD, SLOC_API_VERSION } from '../model';
+import { KubeConfig, KubernetesObjectApi, KubernetesObject } from '@kubernetes/client-node';
+import { SlocCRD, SLOC_API_VERSION, KubernetesObjectWithSpec } from '../model';
 
 export const DEFAULT_INTERVAL = 20000;
 
@@ -57,8 +57,8 @@ export class SloControlLoop {
             }
 
             const sloConfig = getSloConfiguration(slo);
-            const elasticityStrategy: SlocCRD<any, any> = {
-                apiVersion: SLOC_API_VERSION,
+            const elasticityStrategy: KubernetesObjectWithSpec<any> = {
+                apiVersion: sloConfig.elasticityStrategyApiVersion,
                 kind: sloConfig.elasticityStrategyKind,
                 spec: resultSpec,
             };

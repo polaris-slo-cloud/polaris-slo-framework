@@ -25,6 +25,7 @@ export interface ServiceLevelObjective<C, O> {
 }
 
 export interface SloConfiguration {
+    elasticityStrategyApiVersion: string;
     elasticityStrategyKind: string;
 }
 
