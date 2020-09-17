@@ -2,6 +2,7 @@ package v1
 
 import (
 	"k8s.io/apimachinery/pkg/api/resource"
+	sloCrds "sloc.github.io/sloc/apis/slos/v1"
 )
 
 const (
@@ -37,4 +38,14 @@ type SloCompliance struct {
 	// Default: 0.1
 	// +optional
 	Tolerance *resource.Quantity `json:"tolerance,omitempty"`
+}
+
+// SloComplianceElasticityStrategyData describes the input data for any SloCompliance-based elasticity strategy.
+type SloComplianceElasticityStrategyData struct {
+
+	// Specifies the target on which to execute the elasticity strategy.
+	sloCrds.SloTarget `json:",inline"`
+
+	// Specifies how much the current state of the system complies with the SLO.
+	SloCompliance `json:",inline"`
 }

@@ -1,16 +1,6 @@
-import { V1CrossVersionObjectReference } from '@kubernetes/client-node';
 import { SlocCRD } from './sloc-crd';
+import { SloComplianceElasticityStrategyData } from './slo-compliance-elasticity-strategy-data';
 
-export interface HorizontalElasticityStrategySpec {
-
-    targetRef: V1CrossVersionObjectReference;
-
-    currSloCompliance: number;
-
-    sloTargetCompliance?: number;
-
-    tolerance?: number;
-
-}
+export interface HorizontalElasticityStrategySpec extends SloComplianceElasticityStrategyData { }
 
 export interface HorizontalElasticityStrategy extends SlocCRD<'HorizontalElasticityStrategy', HorizontalElasticityStrategySpec> { }
