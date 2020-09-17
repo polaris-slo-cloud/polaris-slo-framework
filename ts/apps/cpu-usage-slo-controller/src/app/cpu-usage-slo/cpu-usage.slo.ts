@@ -7,23 +7,23 @@ const UPPER_BOUND = 200;
 const TOLERANCE = 1;
 
 @SLO({
-    elasticityStrategyApiVersion: SLOC_API_VERSION,
+    elasticityStrategyApiVersion: 'elasticitystrategies.sloc.github.io/v1',
     elasticityStrategyKind: 'HorizontalElasticityStrategy',
 })
 export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloApplication, SloComplianceElasticityStrategyData> {
 
-    private sloApplication: CpuUsageSloApplication
+    config: CpuUsageSloApplication;
     private metricsSrc: MetricsSource;
 
     configure(sloApplication: CpuUsageSloApplication, metricsSource: MetricsSource): Promise<void> {
-        this.sloApplication = sloApplication;
+        this.config = sloApplication;
         this.metricsSrc = metricsSource;
         return Promise.resolve();
     }
 
     evaluate(): Promise<SloComplianceElasticityStrategyData> {
         return Promise.resolve({
-            targetRef: this.sloApplication.spec.targetRef,
+            targetRef: this.config.spec.targetRef,
             sloTargetCompliance: TARGET_COMPLIANCE,
             tolerance: TOLERANCE,
             currSloCompliance: this.calculateSloCompliance(),

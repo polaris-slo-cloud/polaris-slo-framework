@@ -49,7 +49,7 @@ export class SloApplicationController {
         console.log('Adding/updating SloApplication', sloApplication);
 
         const slo = this.createSloInstance(sloApplication);
-        this.controlLoop.registerSlo(sloApplication.metadata.uid, slo);
+        this.controlLoop.registerSlo(slo);
     }
 
     private createSloInstance(config: SloApplication): ServiceLevelObjective<any, any> {
@@ -60,7 +60,7 @@ export class SloApplicationController {
 
     private onSloApplicationDelete(sloApplication: SloApplication): void {
         console.log('Deleting SloApplication', sloApplication);
-        this.controlLoop.unregisterSlo(sloApplication.metadata.uid);
+        this.controlLoop.unregisterSlo(sloApplication);
     }
 
 }

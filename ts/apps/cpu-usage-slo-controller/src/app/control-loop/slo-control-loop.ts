@@ -1,6 +1,6 @@
 import { ServiceLevelObjective, getSloConfiguration } from '../sloc-policy-language';
 import { IndexByKey } from '../util';
-import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
+import { KubeConfig, KubernetesObjectApi, V1ObjectMeta, KubernetesObject } from '@kubernetes/client-node';
 import { KubernetesObjectWithSpec } from '../model';
 
 export const DEFAULT_INTERVAL = 20000;
@@ -32,48 +32,59 @@ export class SloControlLoop {
         this.loopTimer = null;
     }
 
-    registerSlo(sloId: string, sloHandler: ServiceLevelObjective<any, any>): void {
-        this.registeredSlos[sloId] = sloHandler;
+    registerSlo(sloHandler: ServiceLevelObjective<KubernetesObject, any>): void {
+        const fullSloName = this.getFullSloName(sloHandler.config);
+        this.registeredSlos[fullSloName] = sloHandler;
     }
 
-    unregisterSlo(sloId: string): void {
-        delete this.registeredSlos[sloId];
+    unregisterSlo(sloApplication: KubernetesObject): void {
+        const fullSloName = this.getFullSloName(sloApplication);
+        delete this.registeredSlos[fullSloName];
     }
 
     private runLoopIteration(): void {
         Object.keys(this.registeredSlos).forEach(sloId => {
             const slo = this.registeredSlos[sloId];
-            this.evaluateSlo(sloId, slo);
+            this.evaluateSlo(slo);
         });
     }
 
-    private evaluateSlo(sloId: string, slo: ServiceLevelObjective<any, any>): void {
-        console.log(`Evaluating SLO ${sloId}`)
+    private evaluateSlo(slo: ServiceLevelObjective<KubernetesObject, any>): void {
+        const fullSloName = this.getFullSloName(slo.config);
+        console.log(`Evaluating SLO ${fullSloName}`)
 
         slo.evaluate().then(resultSpec => {
             if (!resultSpec) {
-                console.log(`SLO ${sloId} returned null, i.e., no resource changes necessary`);
+                console.log(`SLO ${fullSloName} returned null, i.e., no resource changes necessary`);
                 return;
             }
 
             const sloConfig = getSloConfiguration(slo);
+            const metadata = new V1ObjectMeta();
+            metadata.namespace = slo.config.metadata.namespace;
+            metadata.name = `${fullSloName}-elasticity-strategy`;
             const elasticityStrategy: KubernetesObjectWithSpec<any> = {
                 apiVersion: sloConfig.elasticityStrategyApiVersion,
                 kind: sloConfig.elasticityStrategyKind,
+                metadata: metadata,
                 spec: resultSpec,
             };
 
-            console.log(`SLO ${sloId}: Applying elasticityStrategy`, elasticityStrategy);
+            console.log(`SLO ${slo.config.metadata.name}: Applying elasticityStrategy`, elasticityStrategy);
 
             this.k8sClient.create(
                 elasticityStrategy
             ).catch(err => {
-                console.log(`Create resource failed, trying to replace the resource`, err);
-                return this.k8sClient.replace(elasticityStrategy);
+                console.log(`Create resource failed, trying to replace the resource`);
+                return this.k8sClient.patch(elasticityStrategy);
             }).then(
                 () => console.log('Resource successfully created/replaced')
             ).catch(console.error)
         });
+    }
+
+    private getFullSloName(sloApplication: KubernetesObject): string {
+        return `${sloApplication.metadata.namespace}.${sloApplication.metadata.name}`;
     }
 
 }
