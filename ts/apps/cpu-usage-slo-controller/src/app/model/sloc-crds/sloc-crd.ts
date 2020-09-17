@@ -1,13 +1,11 @@
 import { SLOC_API_VERSION } from './sloc-api';
-import { V1ObjectMeta } from '@kubernetes/client-node';
+import { KubernetesObject } from '@kubernetes/client-node';
 
-export interface SlocCRD<K extends string, T> {
+export interface SlocCRD<K extends string, T> extends KubernetesObject {
 
     apiVersion: typeof SLOC_API_VERSION;
 
     kind: K;
-
-    metadata?: V1ObjectMeta;
 
     spec: T;
 
