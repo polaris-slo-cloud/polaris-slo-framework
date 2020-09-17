@@ -2,6 +2,7 @@ import { KubeConfig, Watch } from '@kubernetes/client-node';
 import { SloControlLoop } from '../control-loop';
 import { CpuUsageSloApplication } from '../model';
 import { ServiceLevelObjective } from '../sloc-policy-language';
+import { CpuUsageSlo } from '../cpu-usage-slo';
 
 type SloApplication = CpuUsageSloApplication;
 
@@ -39,6 +40,7 @@ export class SloApplicationController {
             })
         .then((req) => {
             // watch returns a request object which you can use to abort the watch.
+            console.log('Started watch on /apis/slos.sloc.github.io/v1/cpuusagesloapplications');
         });
 
     }
@@ -51,7 +53,9 @@ export class SloApplicationController {
     }
 
     private createSloInstance(config: SloApplication): ServiceLevelObjective<any, any> {
-        return null;
+        const slo = new CpuUsageSlo();
+        slo.configure(config, null);
+        return slo;
     }
 
     private onSloApplicationDelete(sloApplication: SloApplication): void {

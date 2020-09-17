@@ -1,7 +1,7 @@
 import { ServiceLevelObjective, getSloConfiguration } from '../sloc-policy-language';
 import { IndexByKey } from '../util';
-import { KubeConfig, KubernetesObjectApi, KubernetesObject } from '@kubernetes/client-node';
-import { SlocCRD, SLOC_API_VERSION, KubernetesObjectWithSpec } from '../model';
+import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
+import { KubernetesObjectWithSpec } from '../model';
 
 export const DEFAULT_INTERVAL = 20000;
 
@@ -9,7 +9,7 @@ export class SloControlLoop {
 
     private loopTimer: NodeJS.Timeout;
 
-    private registeredSlos: IndexByKey<ServiceLevelObjective<any, any>>
+    private registeredSlos: IndexByKey<ServiceLevelObjective<any, any>> = {};
 
     private k8sClient: KubernetesObjectApi;
 

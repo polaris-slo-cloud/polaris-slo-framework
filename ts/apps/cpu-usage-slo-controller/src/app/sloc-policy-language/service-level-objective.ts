@@ -41,5 +41,5 @@ export function SLO<T extends ServiceLevelObjective<any, any>>(
 }
 
 export function getSloConfiguration(slo: ServiceLevelObjective<any, any>): SloConfiguration {
-    return (slo as any).prototype[SLO_CONFIG_PROPERTY_NAME];
+    return (slo as Object).constructor[SLO_CONFIG_PROPERTY_NAME];
 }
