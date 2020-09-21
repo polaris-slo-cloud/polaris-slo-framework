@@ -76,7 +76,7 @@ export class SloControlLoop {
                 elasticityStrategy
             ).catch(err => {
                 console.log(`Create resource failed, trying to replace the resource`);
-                return this.k8sClient.patch(elasticityStrategy);
+                this.updateExistingElasticityStrategy(elasticityStrategy);
             }).then(
                 () => console.log('Resource successfully created/replaced')
             ).catch(console.error)
@@ -85,6 +85,25 @@ export class SloControlLoop {
 
     private getFullSloName(sloApplication: KubernetesObject): string {
         return `${sloApplication.metadata.namespace}.${sloApplication.metadata.name}`;
+    }
+
+    private async updateExistingElasticityStrategy(newSpec: KubernetesObject): Promise<void> {
+        const readReq: KubernetesObject = {
+            apiVersion: newSpec.apiVersion,
+            kind: newSpec.kind,
+            metadata: { ...newSpec.metadata },
+        };
+        const readResponse = await this.k8sClient.read(readReq);
+        const currStrategyData = readResponse.body;
+
+        const newStrategyData = { ...newSpec };
+        delete newStrategyData.metadata;
+        const update = {
+            ...currStrategyData,
+            ...newStrategyData,
+        };
+
+        await this.k8sClient.replace(update);
     }
 
 }
