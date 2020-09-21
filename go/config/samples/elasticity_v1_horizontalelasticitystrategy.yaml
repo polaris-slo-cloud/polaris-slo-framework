@@ -1,4 +1,4 @@
-apiVersion: elasticitystrategies.sloc.github.io/v1
+apiVersion: elasticity.sloc.github.io/v1
 kind: HorizontalElasticityStrategy
 metadata:
   name: horizontalelasticitystrategy-sample

@@ -22,7 +22,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	crds "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	crds "sloc.github.io/sloc/apis/elasticity/v1"
 	"sloc.github.io/sloc/internal/elasticityservices/horizontal"
 	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
@@ -39,8 +39,8 @@ type HorizontalElasticityStrategyReconciler struct {
 // ToDo: We need to find a way to request access to all scale subresources.
 // The strategy should be able to work with resource types, which are not known at compile time.
 
-// +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=horizontalelasticitystrategies,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=elasticitystrategies.sloc.github.io,resources=horizontalelasticitystrategies/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=horizontalelasticitystrategies,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=horizontalelasticitystrategies/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;update;patch;
 // +kubebuilder:rbac:groups=apps,resources=deployments/scale,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=replicasets,verbs=get;list;watch;update;patch;

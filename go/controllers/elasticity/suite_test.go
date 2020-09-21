@@ -28,7 +28,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	elasticitystrategiesv1 "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	elasticityv1 "sloc.github.io/sloc/apis/elasticity/v1"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -60,10 +60,10 @@ var _ = BeforeSuite(func(done Done) {
 	Expect(err).ToNot(HaveOccurred())
 	Expect(cfg).ToNot(BeNil())
 
-	err = elasticitystrategiesv1.AddToScheme(scheme.Scheme)
+	err = elasticityv1.AddToScheme(scheme.Scheme)
 	Expect(err).NotTo(HaveOccurred())
 
-	err = elasticitystrategiesv1.AddToScheme(scheme.Scheme)
+	err = elasticityv1.AddToScheme(scheme.Scheme)
 	Expect(err).NotTo(HaveOccurred())
 
 	// +kubebuilder:scaffold:scheme

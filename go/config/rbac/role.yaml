@@ -55,7 +55,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticitystrategies.sloc.github.io
+  - elasticity.sloc.github.io
   resources:
   - horizontalelasticitystrategies
   verbs:
@@ -67,7 +67,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticitystrategies.sloc.github.io
+  - elasticity.sloc.github.io
   resources:
   - horizontalelasticitystrategies/status
   verbs:
@@ -75,7 +75,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - elasticitystrategies.sloc.github.io
+  - elasticity.sloc.github.io
   resources:
   - templatestrategies
   verbs:
@@ -87,7 +87,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticitystrategies.sloc.github.io
+  - elasticity.sloc.github.io
   resources:
   - templatestrategies/status
   verbs:

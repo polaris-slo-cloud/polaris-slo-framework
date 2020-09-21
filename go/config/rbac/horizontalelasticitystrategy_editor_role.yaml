@@ -5,7 +5,7 @@ metadata:
   name: horizontalelasticitystrategy-editor-role
 rules:
 - apiGroups:
-  - elasticitystrategies.sloc.github.io
+  - elasticity.sloc.github.io
   resources:
   - horizontalelasticitystrategies
   verbs:
@@ -17,7 +17,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticitystrategies.sloc.github.io
+  - elasticity.sloc.github.io
   resources:
   - horizontalelasticitystrategies/status
   verbs:

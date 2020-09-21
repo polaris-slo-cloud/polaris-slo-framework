@@ -2,10 +2,10 @@ domain: sloc.github.io
 multigroup: true
 repo: sloc.github.io/sloc
 resources:
-- group: elasticitystrategies
+- group: elasticity
   kind: TemplateStrategy
   version: v1
-- group: elasticitystrategies
+- group: elasticity
   kind: HorizontalElasticityStrategy
   version: v1
 - group: slos

@@ -24,9 +24,9 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	elasticitystrategiesv1 "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	elasticityv1 "sloc.github.io/sloc/apis/elasticity/v1"
 	slosv1 "sloc.github.io/sloc/apis/slos/v1"
-	elasticitystrategiescontroller "sloc.github.io/sloc/controllers/elasticitystrategies"
+	elasticitycontroller "sloc.github.io/sloc/controllers/elasticity"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -38,7 +38,7 @@ var (
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 
-	_ = elasticitystrategiesv1.AddToScheme(scheme)
+	_ = elasticityv1.AddToScheme(scheme)
 	_ = slosv1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }
@@ -66,7 +66,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&elasticitystrategiescontroller.TemplateStrategyReconciler{
+	if err = (&elasticitycontroller.TemplateStrategyReconciler{
 		Client: mgr.GetClient(),
 		Log:    ctrl.Log.WithName("controllers").WithName("TemplateStrategy"),
 		Scheme: mgr.GetScheme(),
@@ -74,7 +74,7 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "TemplateStrategy")
 		os.Exit(1)
 	}
-	if err = (&elasticitystrategiescontroller.HorizontalElasticityStrategyReconciler{
+	if err = (&elasticitycontroller.HorizontalElasticityStrategyReconciler{
 		Client: mgr.GetClient(),
 		Log:    ctrl.Log.WithName("controllers").WithName("HorizontalElasticityStrategy"),
 		Scheme: mgr.GetScheme(),

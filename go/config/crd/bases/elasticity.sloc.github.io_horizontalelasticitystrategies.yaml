@@ -6,9 +6,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.2.5
   creationTimestamp: null
-  name: horizontalelasticitystrategies.elasticitystrategies.sloc.github.io
+  name: horizontalelasticitystrategies.elasticity.sloc.github.io
 spec:
-  group: elasticitystrategies.sloc.github.io
+  group: elasticity.sloc.github.io
   names:
     kind: HorizontalElasticityStrategy
     listKind: HorizontalElasticityStrategyList

@@ -9,7 +9,7 @@ import (
 	autoscaling "k8s.io/api/autoscaling/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	crds "sloc.github.io/sloc/apis/elasticitystrategies/v1"
+	crds "sloc.github.io/sloc/apis/elasticity/v1"
 	"sloc.github.io/sloc/internal/util"
 	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
