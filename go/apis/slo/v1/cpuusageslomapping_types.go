@@ -22,8 +22,8 @@ import (
 
 // Important: Run `make` and `make manifests` to regenerate code and YAML files after modifying this file.
 
-// CPUUsageSloApplicationSpec is used to apply a CPUUsageSLO to a target workload.
-type CPUUsageSloApplicationSpec struct {
+// CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to a target workload.
+type CPUUsageSloMappingSpec struct {
 	// Specifies the target on which to execute the elasticity strategy.
 	SloTarget `json:",inline"`
 
@@ -33,30 +33,30 @@ type CPUUsageSloApplicationSpec struct {
 	TargetAvgCPUUtilizationPercentage int32 `json:"targetAvgCPUUtilizationPercentage"`
 }
 
-// CPUUsageSloApplicationStatus defines the observed state of CPUUsageSloApplication
-type CPUUsageSloApplicationStatus struct {
+// CPUUsageSloMappingStatus defines the observed state of CPUUsageSloMapping
+type CPUUsageSloMappingStatus struct {
 }
 
 // +kubebuilder:object:root=true
 
-// CPUUsageSloApplication is the Schema for the cpuusagesloapplications API
-type CPUUsageSloApplication struct {
+// CPUUsageSloMapping is the Schema for the cpuusageslomappings API
+type CPUUsageSloMapping struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CPUUsageSloApplicationSpec   `json:"spec,omitempty"`
-	Status CPUUsageSloApplicationStatus `json:"status,omitempty"`
+	Spec   CPUUsageSloMappingSpec   `json:"spec,omitempty"`
+	Status CPUUsageSloMappingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// CPUUsageSloApplicationList contains a list of CPUUsageSloApplication
-type CPUUsageSloApplicationList struct {
+// CPUUsageSloMappingList contains a list of CPUUsageSloMapping
+type CPUUsageSloMappingList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []CPUUsageSloApplication `json:"items"`
+	Items           []CPUUsageSloMapping `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&CPUUsageSloApplication{}, &CPUUsageSloApplicationList{})
+	SchemeBuilder.Register(&CPUUsageSloMapping{}, &CPUUsageSloMappingList{})
 }

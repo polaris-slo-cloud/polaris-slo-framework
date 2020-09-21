@@ -6,19 +6,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.2.5
   creationTimestamp: null
-  name: cpuusagesloapplications.slo.sloc.github.io
+  name: cpuusageslomappings.slo.sloc.github.io
 spec:
   group: slo.sloc.github.io
   names:
-    kind: CPUUsageSloApplication
-    listKind: CPUUsageSloApplicationList
-    plural: cpuusagesloapplications
-    singular: cpuusagesloapplication
+    kind: CPUUsageSloMapping
+    listKind: CPUUsageSloMappingList
+    plural: cpuusageslomappings
+    singular: cpuusageslomapping
   scope: Namespaced
   validation:
     openAPIV3Schema:
-      description: CPUUsageSloApplication is the Schema for the cpuusagesloapplications
-        API
+      description: CPUUsageSloMapping is the Schema for the cpuusageslomappings API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -33,8 +32,8 @@ spec:
         metadata:
           type: object
         spec:
-          description: CPUUsageSloApplicationSpec is used to apply a CPUUsageSLO to
-            a target workload.
+          description: CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to a
+            target workload.
           properties:
             targetAvgCPUUtilizationPercentage:
               description: The target average CPU utilization percentage of the workload's
@@ -65,8 +64,7 @@ spec:
           - targetRef
           type: object
         status:
-          description: CPUUsageSloApplicationStatus defines the observed state of
-            CPUUsageSloApplication
+          description: CPUUsageSloMappingStatus defines the observed state of CPUUsageSloMapping
           type: object
       type: object
   version: v1

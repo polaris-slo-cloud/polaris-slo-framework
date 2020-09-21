@@ -1,24 +1,20 @@
-# permissions for end users to edit cpuusagesloapplications.
+# permissions for end users to view cpuusageslomappings.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: cpuusagesloapplication-editor-role
+  name: cpuusageslomapping-viewer-role
 rules:
 - apiGroups:
   - slo.sloc.github.io
   resources:
-  - cpuusagesloapplications
+  - cpuusageslomappings
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
   - slo.sloc.github.io
   resources:
-  - cpuusagesloapplications/status
+  - cpuusageslomappings/status
   verbs:
   - get

@@ -1,7 +1,7 @@
 apiVersion: slo.sloc.github.io/v1
-kind: CPUUsageSloApplication
+kind: CPUUsageSloMapping
 metadata:
-  name: cpuusagesloapplication-sample
+  name: cpuusageslomapping-sample
 spec:
   targetRef:
     apiVersion: apps/v1

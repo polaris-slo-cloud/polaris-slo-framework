@@ -9,6 +9,6 @@ resources:
   kind: HorizontalElasticityStrategy
   version: v1
 - group: slo
-  kind: CPUUsageSloApplication
+  kind: CPUUsageSloMapping
   version: v1
 version: "2"
