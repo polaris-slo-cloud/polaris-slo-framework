@@ -1,9 +1,7 @@
-import { V1CrossVersionObjectReference } from '@kubernetes/client-node';
 import { SlocCRD } from './sloc-crd';
+import { SloMapping } from './slo-mapping';
 
-export interface CpuUsageSloMappingSpec {
-
-    targetRef: V1CrossVersionObjectReference;
+export interface CpuUsageSloMappingSpec extends SloMapping {
 
     targetAvgCPUUtilizationPercentage: number;
 

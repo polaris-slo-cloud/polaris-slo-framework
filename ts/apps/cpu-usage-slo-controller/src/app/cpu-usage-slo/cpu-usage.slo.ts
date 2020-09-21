@@ -6,10 +6,7 @@ const TARGET_COMPLIANCE = 100;
 const UPPER_BOUND = 200;
 const TOLERANCE = 1;
 
-@SLO({
-    elasticityStrategyApiVersion: 'elasticity.sloc.github.io/v1',
-    elasticityStrategyKind: 'HorizontalElasticityStrategy',
-})
+@SLO({})
 export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloMapping, SloComplianceElasticityStrategyData> {
 
     config: CpuUsageSloMapping;

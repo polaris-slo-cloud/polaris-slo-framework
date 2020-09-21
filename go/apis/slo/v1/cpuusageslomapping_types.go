@@ -24,8 +24,7 @@ import (
 
 // CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to a target workload.
 type CPUUsageSloMappingSpec struct {
-	// Specifies the target on which to execute the elasticity strategy.
-	SloTarget `json:",inline"`
+	SloMapping SloMapping `json:",inline"`
 
 	// The target average CPU utilization percentage of the workload's pods (percentage of the allocated CPUs).
 	// +kubebuilder:validation:Minimum=1

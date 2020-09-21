@@ -1,7 +1,7 @@
 import { ServiceLevelObjective, getSloConfiguration } from '../sloc-policy-language';
 import { IndexByKey } from '../util';
 import { KubeConfig, KubernetesObjectApi, V1ObjectMeta, KubernetesObject } from '@kubernetes/client-node';
-import { KubernetesObjectWithSpec } from '../model';
+import { KubernetesObjectWithSpec, SloMapping } from '../model';
 
 export const DEFAULT_INTERVAL = 20000;
 
@@ -32,7 +32,7 @@ export class SloControlLoop {
         this.loopTimer = null;
     }
 
-    registerSlo(sloHandler: ServiceLevelObjective<KubernetesObject, any>): void {
+    registerSlo(sloHandler: ServiceLevelObjective<KubernetesObjectWithSpec<SloMapping>, any>): void {
         const fullSloName = this.getFullSloName(sloHandler.config);
         this.registeredSlos[fullSloName] = sloHandler;
     }
@@ -49,7 +49,7 @@ export class SloControlLoop {
         });
     }
 
-    private evaluateSlo(slo: ServiceLevelObjective<KubernetesObject, any>): void {
+    private evaluateSlo(slo: ServiceLevelObjective<KubernetesObjectWithSpec<SloMapping>, any>): void {
         const fullSloName = this.getFullSloName(slo.config);
         console.log(`Evaluating SLO ${fullSloName}`)
 
@@ -64,8 +64,8 @@ export class SloControlLoop {
             metadata.namespace = slo.config.metadata.namespace;
             metadata.name = `${fullSloName}-elasticity-strategy`;
             const elasticityStrategy: KubernetesObjectWithSpec<any> = {
-                apiVersion: sloConfig.elasticityStrategyApiVersion,
-                kind: sloConfig.elasticityStrategyKind,
+                apiVersion: slo.config.spec.elasticityStrategy.apiVersion,
+                kind: slo.config.spec.elasticityStrategy.kind,
                 metadata: metadata,
                 spec: resultSpec,
             };

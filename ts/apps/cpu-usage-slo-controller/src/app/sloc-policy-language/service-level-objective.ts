@@ -1,6 +1,6 @@
 import { MetricsSource } from './metrics-source';
 import { Constructor } from '../util';
-import { KubernetesObject } from '@kubernetes/client-node';
+import { SloMapping, KubernetesObjectWithSpec } from '../model';
 
 const SLO_CONFIG_PROPERTY_NAME = '__slocSloConfig';
 
@@ -10,7 +10,7 @@ const SLO_CONFIG_PROPERTY_NAME = '__slocSloConfig';
  * @param C The type of the SloMapping CRD.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
-export interface ServiceLevelObjective<C extends KubernetesObject, O> {
+export interface ServiceLevelObjective<C extends KubernetesObjectWithSpec<SloMapping>, O> {
 
     /**
      * The SloMapping resource used to configure this SLO instance.
@@ -31,8 +31,6 @@ export interface ServiceLevelObjective<C extends KubernetesObject, O> {
 }
 
 export interface SloConfiguration {
-    elasticityStrategyApiVersion: string;
-    elasticityStrategyKind: string;
 }
 
 /**

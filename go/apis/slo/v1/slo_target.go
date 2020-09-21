@@ -1,5 +1,7 @@
 package v1
 
+// +kubebuilder:validation:Required
+
 import (
 	autoscaling "k8s.io/api/autoscaling/v1"
 )

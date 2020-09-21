@@ -7,4 +7,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: twitter-clone
+  elasticityStrategy:
+    apiVersion: elasticity.sloc.github.io/v1
+    kind: HorizontalElasticityStrategy
   targetAvgCPUUtilizationPercentage: 70

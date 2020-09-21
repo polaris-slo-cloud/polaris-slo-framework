@@ -35,6 +35,21 @@ spec:
           description: CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to a
             target workload.
           properties:
+            elasticityStrategy:
+              description: Specifies the type of ElasticityStrategy to use for this
+                SLO mapping. The strategy spec must have an SloCompliance embedded
+                inline.
+              properties:
+                apiVersion:
+                  description: The API group and version of the ElasticityStrategy.
+                  type: string
+                kind:
+                  description: The kind of ElasticityStrategy.
+                  type: string
+              required:
+              - apiVersion
+              - kind
+              type: object
             targetAvgCPUUtilizationPercentage:
               description: The target average CPU utilization percentage of the workload's
                 pods (percentage of the allocated CPUs).
@@ -60,6 +75,7 @@ spec:
               - name
               type: object
           required:
+          - elasticityStrategy
           - targetAvgCPUUtilizationPercentage
           - targetRef
           type: object
