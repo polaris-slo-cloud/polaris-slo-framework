@@ -1,12 +1,12 @@
 import { KubeConfig, Watch } from '@kubernetes/client-node';
 import { SloControlLoop } from '../control-loop';
-import { CpuUsageSloApplication } from '../model';
+import { CpuUsageSloMapping } from '../model';
 import { ServiceLevelObjective } from '../sloc-policy-language';
 import { CpuUsageSlo } from '../cpu-usage-slo';
 
-type SloApplication = CpuUsageSloApplication;
+type SloMapping = CpuUsageSloMapping;
 
-export class SloApplicationController {
+export class SloMappingController {
 
     private controlLoop: SloControlLoop;
 
@@ -16,7 +16,7 @@ export class SloApplicationController {
 
         const watch = new Watch(k8sConfig);
         watch.watch(
-            '/apis/slos.sloc.github.io/v1/cpuusagesloapplications',
+            '/apis/slo.sloc.github.io/v1/cpuusageslomappings',
             {
                 allowWatchBookmarks: false,
             },
@@ -24,10 +24,10 @@ export class SloApplicationController {
                 switch (type) {
                     case 'ADDED':
                     case 'MODIFIED':
-                        this.onSloApplicationAddOrUpdate(apiObj);
+                        this.onSloMappingAddOrUpdate(apiObj);
                         break;
                     case 'DELETED':
-                        this.onSloApplicationDelete(apiObj);
+                        this.onSloMappingDelete(apiObj);
                         break;
                     default:
                         break;
@@ -40,27 +40,27 @@ export class SloApplicationController {
             })
         .then((req) => {
             // watch returns a request object which you can use to abort the watch.
-            console.log('Started watch on /apis/slos.sloc.github.io/v1/cpuusagesloapplications');
+            console.log('Started watch on /apis/slo.sloc.github.io/v1/cpuusageslomappings');
         });
 
     }
 
-    private onSloApplicationAddOrUpdate(sloApplication: SloApplication): void {
-        console.log('Adding/updating SloApplication', sloApplication);
+    private onSloMappingAddOrUpdate(sloMapping: SloMapping): void {
+        console.log('Adding/updating SloMapping', sloMapping);
 
-        const slo = this.createSloInstance(sloApplication);
+        const slo = this.createSloInstance(sloMapping);
         this.controlLoop.registerSlo(slo);
     }
 
-    private createSloInstance(config: SloApplication): ServiceLevelObjective<any, any> {
+    private createSloInstance(config: SloMapping): ServiceLevelObjective<any, any> {
         const slo = new CpuUsageSlo();
         slo.configure(config, null);
         return slo;
     }
 
-    private onSloApplicationDelete(sloApplication: SloApplication): void {
-        console.log('Deleting SloApplication', sloApplication);
-        this.controlLoop.unregisterSlo(sloApplication);
+    private onSloMappingDelete(sloMapping: SloMapping): void {
+        console.log('Deleting SloMapping', sloMapping);
+        this.controlLoop.unregisterSlo(sloMapping);
     }
 
 }

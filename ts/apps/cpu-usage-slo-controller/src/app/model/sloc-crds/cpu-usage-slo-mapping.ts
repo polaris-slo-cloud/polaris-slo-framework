@@ -1,7 +1,7 @@
 import { V1CrossVersionObjectReference } from '@kubernetes/client-node';
 import { SlocCRD } from './sloc-crd';
 
-export interface CpuUsageSloApplicationSpec {
+export interface CpuUsageSloMappingSpec {
 
     targetRef: V1CrossVersionObjectReference;
 
@@ -9,4 +9,4 @@ export interface CpuUsageSloApplicationSpec {
 
 }
 
-export interface CpuUsageSloApplication extends SlocCRD<'CPUUsageSloApplication', CpuUsageSloApplicationSpec> { }
+export interface CpuUsageSloMapping extends SlocCRD<'CpuUsageSloMapping', CpuUsageSloMappingSpec> { }

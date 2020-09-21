@@ -37,8 +37,8 @@ export class SloControlLoop {
         this.registeredSlos[fullSloName] = sloHandler;
     }
 
-    unregisterSlo(sloApplication: KubernetesObject): void {
-        const fullSloName = this.getFullSloName(sloApplication);
+    unregisterSlo(sloMapping: KubernetesObject): void {
+        const fullSloName = this.getFullSloName(sloMapping);
         delete this.registeredSlos[fullSloName];
     }
 
@@ -83,8 +83,8 @@ export class SloControlLoop {
         });
     }
 
-    private getFullSloName(sloApplication: KubernetesObject): string {
-        return `${sloApplication.metadata.namespace}.${sloApplication.metadata.name}`;
+    private getFullSloName(sloMapping: KubernetesObject): string {
+        return `${sloMapping.metadata.namespace}.${sloMapping.metadata.name}`;
     }
 
     private async updateExistingElasticityStrategy(newSpec: KubernetesObject): Promise<void> {

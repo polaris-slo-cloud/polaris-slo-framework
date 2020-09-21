@@ -1,5 +1,5 @@
 import { ServiceLevelObjective, MetricsSource, SLO } from '../sloc-policy-language';
-import { CpuUsageSloApplication, SloComplianceElasticityStrategyData, SLOC_API_VERSION } from '../model';
+import { CpuUsageSloMapping, SloComplianceElasticityStrategyData, SLOC_API_VERSION } from '../model';
 
 const LOWER_BOUND = 1;
 const TARGET_COMPLIANCE = 100;
@@ -7,16 +7,16 @@ const UPPER_BOUND = 200;
 const TOLERANCE = 1;
 
 @SLO({
-    elasticityStrategyApiVersion: 'elasticitystrategies.sloc.github.io/v1',
+    elasticityStrategyApiVersion: 'elasticity.sloc.github.io/v1',
     elasticityStrategyKind: 'HorizontalElasticityStrategy',
 })
-export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloApplication, SloComplianceElasticityStrategyData> {
+export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloMapping, SloComplianceElasticityStrategyData> {
 
-    config: CpuUsageSloApplication;
+    config: CpuUsageSloMapping;
     private metricsSrc: MetricsSource;
 
-    configure(sloApplication: CpuUsageSloApplication, metricsSource: MetricsSource): Promise<void> {
-        this.config = sloApplication;
+    configure(sloMapping: CpuUsageSloMapping, metricsSource: MetricsSource): Promise<void> {
+        this.config = sloMapping;
         this.metricsSrc = metricsSource;
         return Promise.resolve();
     }
@@ -32,7 +32,7 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloApplication
 
     private calculateSloCompliance(): number {
         // Get some metrics.
-        // Do some calculations, based on sloApplication.spec
+        // Do some calculations, based on sloMapping.spec
 
         const currSloCompliance = Math.ceil(Math.random() * UPPER_BOUND);
         return currSloCompliance || LOWER_BOUND;

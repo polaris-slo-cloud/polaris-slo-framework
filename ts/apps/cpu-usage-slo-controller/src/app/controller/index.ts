@@ -1,1 +1,1 @@
-export * from './slo-application.controller';
+export * from './slo-mapping.controller';

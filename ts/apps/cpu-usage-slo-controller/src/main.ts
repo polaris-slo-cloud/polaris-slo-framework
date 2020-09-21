@@ -1,8 +1,8 @@
 import { KubeConfig } from "@kubernetes/client-node";
-import { SloApplicationController } from './app/controller';
+import { SloMappingController } from './app/controller';
 
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
 
-const controller = new SloApplicationController();
+const controller = new SloMappingController();
 controller.run(k8sConfig);

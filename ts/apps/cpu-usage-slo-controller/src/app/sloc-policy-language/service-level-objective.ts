@@ -7,21 +7,21 @@ const SLO_CONFIG_PROPERTY_NAME = '__slocSloConfig';
 /**
  * Interface that every SLO must implement.
  *
- * @param C The type of the SloApplication CRD.
+ * @param C The type of the SloMapping CRD.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
 export interface ServiceLevelObjective<C extends KubernetesObject, O> {
 
     /**
-     * The SloApplication resource used to configure this SLO instance.
+     * The SloMapping resource used to configure this SLO instance.
      */
     readonly config: C;
 
     /**
-     * Configures this SLO using an SloApplication resource and a metrics source.
-     * @param sloApplication The SloApplication that describes the configuration for this instance.
+     * Configures this SLO using an SloMapping resource and a metrics source.
+     * @param sloMapping The SloMapping that describes the configuration for this instance.
      */
-    configure(sloApplication: C, metricsSource: MetricsSource): Promise<void>;
+    configure(sloMapping: C, metricsSource: MetricsSource): Promise<void>;
 
     /**
      * Evaluates the SLO on the current system state
