@@ -6,9 +6,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.2.5
   creationTimestamp: null
-  name: cpuusagesloapplications.slos.sloc.github.io
+  name: cpuusagesloapplications.slo.sloc.github.io
 spec:
-  group: slos.sloc.github.io
+  group: slo.sloc.github.io
   names:
     kind: CPUUsageSloApplication
     listKind: CPUUsageSloApplicationList

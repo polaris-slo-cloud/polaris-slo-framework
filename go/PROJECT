@@ -8,7 +8,7 @@ resources:
 - group: elasticity
   kind: HorizontalElasticityStrategy
   version: v1
-- group: slos
+- group: slo
   kind: CPUUsageSloApplication
   version: v1
 version: "2"

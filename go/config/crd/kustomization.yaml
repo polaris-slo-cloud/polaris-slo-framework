@@ -4,7 +4,7 @@
 resources:
 - bases/elasticity.sloc.github.io_templatestrategies.yaml
 - bases/elasticity.sloc.github.io_horizontalelasticitystrategies.yaml
-- bases/slos.sloc.github.io_cpuusagesloapplications.yaml
+- bases/slo.sloc.github.io_cpuusagesloapplications.yaml
 # +kubebuilder:scaffold:crdkustomizeresource
 
 patchesStrategicMerge:

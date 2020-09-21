@@ -25,7 +25,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	elasticityv1 "sloc.github.io/sloc/apis/elasticity/v1"
-	slosv1 "sloc.github.io/sloc/apis/slos/v1"
+	slov1 "sloc.github.io/sloc/apis/slo/v1"
 	elasticitycontroller "sloc.github.io/sloc/controllers/elasticity"
 	// +kubebuilder:scaffold:imports
 )
@@ -39,7 +39,7 @@ func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 
 	_ = elasticityv1.AddToScheme(scheme)
-	_ = slosv1.AddToScheme(scheme)
+	_ = slov1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }
 

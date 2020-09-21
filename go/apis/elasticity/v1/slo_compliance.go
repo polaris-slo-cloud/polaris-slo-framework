@@ -2,7 +2,7 @@ package v1
 
 import (
 	"k8s.io/apimachinery/pkg/api/resource"
-	sloCrds "sloc.github.io/sloc/apis/slos/v1"
+	sloCrds "sloc.github.io/sloc/apis/slo/v1"
 )
 
 const (

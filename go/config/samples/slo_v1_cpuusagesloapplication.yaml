@@ -1,4 +1,4 @@
-apiVersion: slos.sloc.github.io/v1
+apiVersion: slo.sloc.github.io/v1
 kind: CPUUsageSloApplication
 metadata:
   name: cpuusagesloapplication-sample
