@@ -29,6 +29,17 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "10.1.1",
@@ -71,10 +82,13 @@
     "cypress": "^4.1.0",
     "dotenv": "6.2.0",
     "eslint": "6.8.0",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsdoc": "^30.5.1",
     "eslint-plugin-prefer-arrow": "^1.2.2",
+    "husky": "^4.3.0",
     "jest": "26.2.2",
     "jest-preset-angular": "8.2.1",
+    "lint-staged": "^10.4.0",
     "prettier": "2.0.4",
     "ts-jest": "26.1.4",
     "ts-node": "~7.0.0",

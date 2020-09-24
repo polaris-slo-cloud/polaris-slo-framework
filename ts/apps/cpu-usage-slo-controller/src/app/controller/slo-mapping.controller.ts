@@ -1,8 +1,8 @@
 import { KubeConfig, Watch } from '@kubernetes/client-node';
 import { SloControlLoop } from '../control-loop';
+import { CpuUsageSlo } from '../cpu-usage-slo';
 import { CpuUsageSloMapping } from '../model';
 import { ServiceLevelObjective } from '../sloc-policy-language';
-import { CpuUsageSlo } from '../cpu-usage-slo';
 
 type SloMapping = CpuUsageSloMapping;
 
@@ -38,10 +38,10 @@ export class SloMappingController {
                 console.log(err);
                 this.controlLoop.stop();
             })
-        .then((req) => {
+            .then((req) => {
             // watch returns a request object which you can use to abort the watch.
-            console.log('Started watch on /apis/slo.sloc.github.io/v1/cpuusageslomappings');
-        });
+                console.log('Started watch on /apis/slo.sloc.github.io/v1/cpuusageslomappings');
+            });
 
     }
 
@@ -64,3 +64,5 @@ export class SloMappingController {
     }
 
 }
+
+

@@ -19,6 +19,7 @@ module.exports = {
         "node": true
     },
     "plugins": [
+        "eslint-plugin-import",
         "eslint-plugin-jsdoc",
         "@angular-eslint/eslint-plugin",
         "@angular-eslint/eslint-plugin-template",
@@ -180,6 +181,15 @@ module.exports = {
                     "undefined"
                 ],
                 "id-match": "error",
+                "import/order": [
+                    "error",
+                    {
+                        alphabetize: {
+                            order: 'asc',
+                            caseInsensitive: true,
+                        }
+                    }
+                ],
                 "jsdoc/check-alignment": "error",
                 "jsdoc/check-indentation": "error",
                 "jsdoc/newline-after-description": "error",
@@ -260,7 +270,13 @@ module.exports = {
                     "as-needed"
                 ],
                 "radix": "error",
-                "sort-imports": "error",
+                "sort-imports": [
+                    "error",
+                    {
+                        // Sorting of multiple imports from one module is provided by sort-imports, sorting the order of the modules is provided by import/order
+                        "ignoreDeclarationSort": true,
+                    }
+                ],
                 "spaced-comment": [
                     "error",
                     "always",
