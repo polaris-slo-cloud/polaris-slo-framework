@@ -6,7 +6,7 @@ It represents the closest reasonable ESLint configuration to this
 project's original TSLint configuration.
 
 We recommend eventually switching this configuration to extend from
-the recommended rulesets in typescript-eslint. 
+the recommended rulesets in typescript-eslint.
 https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FAQs.md
 
 Happy linting! 💖
@@ -18,12 +18,13 @@ module.exports = {
         "node": true
     },
     "extends": [
+        "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "tsconfig.json",
+        "project": "tsconfig.base.json",
         "sourceType": "module"
     },
     "plugins": [
@@ -32,8 +33,8 @@ module.exports = {
         "@angular-eslint/eslint-plugin",
         "@angular-eslint/eslint-plugin-template",
         "eslint-plugin-prefer-arrow",
-        "@typescript-eslint",
-        "@typescript-eslint/tslint"
+        "@nrwl/nx",
+        "@typescript-eslint"
     ],
     "rules": {
         "@angular-eslint/component-class-suffix": "error",
@@ -50,6 +51,16 @@ module.exports = {
         "@angular-eslint/template/no-negated-async": "error",
         "@angular-eslint/use-lifecycle-interface": "error",
         "@angular-eslint/use-pipe-transform-interface": "error",
+        "@nrwl/nx/enforce-module-boundaries": [
+            "error",
+            {
+                "enforceBuildableLibDependency": true,
+                "allow": [],
+                "depConstraints": [
+                    { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
+                ]
+            }
+        ],
         "@typescript-eslint/array-type": [
             "error",
             {
@@ -80,6 +91,7 @@ module.exports = {
         ],
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/explicit-function-return-type": "off", // Disabled globally, because we may also have .js files, but enabled in overrides for .ts files.
         "@typescript-eslint/explicit-member-accessibility": [
             "off",
             {
@@ -101,8 +113,8 @@ module.exports = {
         "@typescript-eslint/no-non-null-assertion": "error",
         "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-unused-expressions": "error",
-        "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-var-requires": "error",
         "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/prefer-function-type": "error",
         "@typescript-eslint/quotes": [
@@ -115,6 +127,13 @@ module.exports = {
                 "path": "always",
                 "types": "prefer-import",
                 "lib": "always"
+            }
+        ],
+        "@typescript-eslint/typedef": [
+            "error",
+            {
+                "parameter": true,
+                "propertyDeclaration": true
             }
         ],
         "@typescript-eslint/unified-signatures": "error",
@@ -222,6 +241,7 @@ module.exports = {
         "no-underscore-dangle": "error",
         "no-unsafe-finally": "error",
         "no-unused-labels": "error",
+        "no-use-before-define": "off", // Must be off, because we use the @typescript-eslint rule
         "object-shorthand": "error",
         "one-var": [
             "error",
@@ -244,46 +264,42 @@ module.exports = {
         ],
         "use-isnan": "error",
         "valid-typeof": "off",
-        "@typescript-eslint/tslint/config": [
-            "error",
-            {
-                "rules": {
-                    "nx-enforce-module-boundaries": [
-                        true,
-                        {
-                            "enforceBuildableLibDependency": true,
-                            "allow": [],
-                            "depConstraints": [
-                                {
-                                    "sourceTag": "*",
-                                    "onlyDependOnLibsWithTags": [
-                                        "*"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "typedef": [
-                        true,
-                        "call-signature",
-                        "parameter",
-                        "property-declaration"
-                    ],
-                    "whitespace": [
-                        true,
-                        "check-branch",
-                        "check-decl",
-                        "check-module",
-                        "check-operator",
-                        "check-separator",
-                        "check-rest-spread",
-                        "check-type",
-                        "check-typecast",
-                        "check-type-operator",
-                        "check-preblock"
-                    ]
-                }
+        // The following are TSLint rule is not (yet) supported by ESLint.
+        // It could be run by enabling TSLint integration.
+        // "@typescript-eslint/tslint/config": [
+        //     "error",
+        //     {
+        //         "rules": {
+        //             "whitespace": [
+        //                 true,
+        //                 "check-branch",
+        //                 "check-decl",
+        //                 "check-module",
+        //                 "check-operator",
+        //                 "check-separator",
+        //                 "check-rest-spread",
+        //                 "check-type",
+        //                 "check-typecast",
+        //                 "check-type-operator",
+        //                 "check-preblock"
+        //             ]
+        //         }
+        //     }
+        // ]
+    },
+    "overrides": [
+        {
+            // enable the rule specifically for TypeScript files
+            "files": ["*.ts", "*.tsx"],
+            "rules": {
+                "@typescript-eslint/explicit-function-return-type": ["error"]
             }
-        ]
-    }
+        },
+        {
+            "files": ["*.tsx"],
+            "rules": {
+                "@typescript-eslint/no-unused-vars": "off"
+            }
+        }
+    ]
 };
