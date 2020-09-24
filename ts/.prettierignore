@@ -3,5 +3,6 @@
 /dist
 /coverage
 
-# Formatted by TSLint
+# Formatted by ESLint
 *.ts
+*.js
