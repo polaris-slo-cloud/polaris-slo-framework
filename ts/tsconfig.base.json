@@ -11,6 +11,7 @@
         "target": "es2015",
         "module": "esnext",
         "resolveJsonModule": true,
+        "noImplicitAny": true,
         "typeRoots": [
             "node_modules/@types"
         ],
