@@ -49,7 +49,7 @@ export class LocalTranslateLoader implements TranslateLoader {
         const singleLang: SingleLanguageTranslations = {};
 
         Object.keys(ALL_TRANSLATIONS).forEach(sectionKey => {
-            singleLang[sectionKey] = this.buildSingleLanguageSection(ALL_TRANSLATIONS[sectionKey], lang);
+            singleLang[sectionKey] = this.buildSingleLanguageSection((ALL_TRANSLATIONS as any)[sectionKey], lang);
         });
 
         return singleLang;
