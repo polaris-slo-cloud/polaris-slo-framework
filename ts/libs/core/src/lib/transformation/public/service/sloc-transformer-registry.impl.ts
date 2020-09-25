@@ -10,8 +10,8 @@ export class SlocTransformerRegistryImpl implements SlocTransformerRegistry {
 
     private registry: IndexByKey<SlocTransformer<any, any>> = {};
 
-    registerTransformer(transformer: SlocTransformer<any, any>): void {
-        this.registry[transformer.handledSlocTypeId] = transformer;
+    registerTransformer(slocTypeId: string, transformer: SlocTransformer<any, any>): void {
+        this.registry[slocTypeId] = transformer;
     }
 
     getTransformer<S>(slocObj: S): SlocTransformer<S, any> {

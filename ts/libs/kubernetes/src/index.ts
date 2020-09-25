@@ -1,1 +1,1 @@
-export * from './lib/kubernetes';
+export * from './lib/kubernetes-init';

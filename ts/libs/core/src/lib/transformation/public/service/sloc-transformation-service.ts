@@ -10,8 +10,11 @@ export interface SlocTransformationService {
 
     /**
      * Registers the specified transformer with this `SlocTransformationService`.
+     *
+     * @param slocTypeId The unique ID of the SLOC type, for which to register the transformer.
+     * @param transformer The `SlocTransformer` for the type.
      */
-    registerTransformer(transformer: SlocTransformer<any, any>): void;
+    registerTransformer(slocTypeId: string, transformer: SlocTransformer<any, any>): void;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
