@@ -80,6 +80,9 @@ module.exports = {
                             // A Kubernetes-specific SLO would e.g., have the tags "scope:slo" and "orchestrator:kubernetes"
                             { "sourceTag": "orchestrator:kubernetes", "onlyDependOnLibsWithTags": [ "scope:core", "orchestrator:kubernetes" ] },
 
+                            // CLI apps may only depend on core and the respective orchestrator library that they define using "orchestrator:*".
+                            { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "scope:core" ] },
+
                             // UI projects may depend on any library project.
                             { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": [ "*" ] },
                         ]

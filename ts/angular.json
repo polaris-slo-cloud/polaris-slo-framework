@@ -279,6 +279,66 @@
           }
         }
       }
+    },
+    "cli-sloc-k8s-serializer": {
+      "root": "apps/cli/sloc-k8s-serializer",
+      "sourceRoot": "apps/cli/sloc-k8s-serializer/src",
+      "projectType": "application",
+      "prefix": "cli-sloc-k8s-serializer",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/cli/sloc-k8s-serializer",
+            "main": "apps/cli/sloc-k8s-serializer/src/main.ts",
+            "tsConfig": "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
+            "assets": [
+              "apps/cli/sloc-k8s-serializer/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/cli/sloc-k8s-serializer/src/environments/environment.ts",
+                  "with": "apps/cli/sloc-k8s-serializer/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "cli-sloc-k8s-serializer:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
+              "apps/cli/sloc-k8s-serializer/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cli/sloc-k8s-serializer/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/cli/sloc-k8s-serializer/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

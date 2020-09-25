@@ -51,6 +51,11 @@
       "tags": [
         "scope:slo"
       ]
+    },
+    "cli-sloc-k8s-serializer": {
+      "tags": [
+        "scope:cli"
+      ]
     }
   },
   "affected": {
