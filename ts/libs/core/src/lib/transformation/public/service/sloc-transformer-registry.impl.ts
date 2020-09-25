@@ -1,4 +1,4 @@
-import { IndexByKey, SlocMetadataUtils } from '../../util';
+import { IndexByKey, SlocMetadataUtils } from '../../../util';
 import { NotSlocTransformableError } from '../sloc-transformable';
 import { SlocTransformer } from '../sloc-transformer';
 import { SlocTransformerRegistry } from './sloc-transformer-registry';

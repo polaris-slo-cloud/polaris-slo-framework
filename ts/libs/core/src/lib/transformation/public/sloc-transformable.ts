@@ -1,5 +1,5 @@
 import { isEqual as _isEqual } from 'lodash';
-import { ClassDecoratorFn, Constructor, SlocMetadataUtils } from '../util';
+import { ClassDecoratorFn, Constructor, SlocMetadataUtils } from '../../util';
 
 /**
  * Describes a SLOC type that is transformable to/from an orchestrator-specific object.
