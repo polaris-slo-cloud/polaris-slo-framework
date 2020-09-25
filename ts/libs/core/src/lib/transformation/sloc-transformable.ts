@@ -45,8 +45,37 @@ export class NotSlocTransformableError extends Error {
     constructor(obj: any) {
         super(
             'The specified object is not SlocTransformable. ' +
-            `Make sure that it is an instance of a class with that has the @SlocTransformable decorator applied. ${obj}`,
+            `Make sure that it is an instance of a class that has the @SlocTransformable decorator applied. ${obj}`,
         );
     }
+
+}
+
+/**
+ * This error is thrown when applying supplying a type that is not `SlocTransformable` to the `@SlocProperty` decorator.
+ */
+export class NotSlocTransformableTypeError extends Error {
+
+    constructor(type: Constructor<any>) {
+        super(
+            `The type ${type.name} is not SlocTransformable. ` +
+            'Make sure that it is a class that has the @SlocTransformable decorator applied.',
+        );
+    }
+
+}
+
+/**
+ * Used to decorate a property of a class that uses a `SlocTransformable` type.
+ */
+export function SlocProperty(slocTransformableType: Constructor<any>): PropertyDecorator {
+    const transformableMetadata = SlocMetadataUtils.getSlocTransformableMetadata(slocTransformableType);
+    if (!transformableMetadata) {
+        throw new NotSlocTransformableTypeError(slocTransformableType);
+    }
+
+    return (prototype: any, propertyKey: string | symbol) => {
+
+    };
 
 }

@@ -1,7 +1,7 @@
 import { SlocTransformer } from '../sloc-transformer';
 
 /**
- * Implementations of this service should be used for transforming between orchestrator-independent SLOC objects
+ * Implementations of this service should be used for converting between orchestrator-independent SLOC objects
  * and orchestrator-specific plain objects, which can be serialized.
  *
  * A `SlocTransformationService` uses the `SlocTransformers` that have been registered with it to transform complex objects.
