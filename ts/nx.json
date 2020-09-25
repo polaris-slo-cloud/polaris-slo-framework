@@ -6,7 +6,7 @@
       "dependencies": "*",
       "devDependencies": "*"
     },
-    "tslint.json": "*",
+    ".eslintrc.js": "*",
     "nx.json": "*",
     "tsconfig.base.json": "*"
   },
@@ -20,17 +20,17 @@
   },
   "projects": {
     "sloc-ui": {
-      "tags": []
+      "tags": ["scope:ui"]
     },
     "sloc-ui-e2e": {
-      "tags": [],
+      "tags": ["scope:ui"],
       "implicitDependencies": ["sloc-ui"]
     },
     "cpu-usage-slo-controller": {
-      "tags": []
+      "tags": ["scope:slo"]
     },
     "core": {
-      "tags": []
+      "tags": ["scope:core"]
     }
   },
   "affected": {

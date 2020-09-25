@@ -62,7 +62,26 @@ module.exports = {
                         "enforceBuildableLibDependency": true,
                         "allow": [],
                         "depConstraints": [
-                            { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
+                            // Orchestrator-independent core libraries may only depend on each other.
+                            { "sourceTag": "scope:core", "onlyDependOnLibsWithTags": [ "scope:core" ] },
+
+                            // Metrics may only depend on core libraries and other metrics.
+                            { "sourceTag": "scope:metric", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric" ] },
+
+                            // SLOs may depend on core, metrics, and other SLOs.
+                            // If an SLO only has "scope:slo", it must be orchestrator-independent.
+                            // If it should be orchestrator-specific, the tag of the respective orchestrator must be added.
+                            { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo" ] },
+
+                            // ElasticityStrategies may depend on core, metrics, SLOs, and other strategies.
+                            { "sourceTag": "scope:elasticity-strategy", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo", "scope:elasticity-strategy" ] },
+
+                            // Kubernetes-specific libraries may only depend on core libraries and other K8s libraries.
+                            // A Kubernetes-specific SLO would e.g., have the tags "scope:slo" and "orchestrator:k8s"
+                            { "sourceTag": "orchestrator:k8s", "onlyDependOnLibsWithTags": [ "scope:core", "orchestrator:k8s" ] },
+
+                            // UI projects may depend on any library project.
+                            { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": [ "*" ] },
                         ]
                     }
                 ],
