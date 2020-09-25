@@ -55,8 +55,9 @@
     "@grafana/data": "^7.0.4",
     "@kubernetes/client-node": "^0.12.2",
     "@ngx-translate/core": "^12.1.2",
-    "class-transformer": "*0.3.1",
+    "class-transformer": "~0.3.1",
     "lodash-es": "^4.17.15",
+    "reflect-metadata": "~0.1.13",
     "rxjs": "6.5.5",
     "zone.js": "^0.10.2"
   },
