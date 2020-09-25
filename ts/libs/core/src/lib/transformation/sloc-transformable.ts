@@ -1,8 +1,8 @@
 import { isEqual as _isEqual } from 'lodash';
-import { ClassDecoratorFn, Constructor, SLOC_METADATA_KEYS } from '../util';
+import { ClassDecoratorFn, Constructor, SlocMetadataUtils } from '../util';
 
 /**
- * Describes a SlocTransformable type.
+ * Describes a SLOC type that is transformable to/from an orchestrator-specific object.
  */
 export interface SlocTransformableMetadata {
 
@@ -29,9 +29,24 @@ export function SlocTransformable(metadataOrSlocTypeId: SlocTransformableMetadat
     }
 
     return (target: Constructor<any>) => {
-        const existingMetada = Reflect.getMetadata(SLOC_METADATA_KEYS.TRANSFORMABLE, target);
+        const existingMetada = SlocMetadataUtils.getSlocTransformableMetadata(target);
         if (!_isEqual(metadata, existingMetada)) {
-            Reflect.defineMetadata(SLOC_METADATA_KEYS.TRANSFORMABLE, metadata, target);
+            SlocMetadataUtils.setSlocTransformableMetadata(metadata, target);
         }
     }
+}
+
+/**
+ * This error is thrown when attempting a SLOC -> orchestrator-specific transformation
+ * on an object that is not `SlocTransformable`.
+ */
+export class NotSlocTransformableError extends Error {
+
+    constructor(obj: any) {
+        super(
+            'The specified object is not SlocTransformable. ' +
+            `Make sure that it is an instance of a class with that has the @SlocTransformable decorator applied. ${obj}`,
+        );
+    }
+
 }
