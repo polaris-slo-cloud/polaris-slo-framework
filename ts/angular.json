@@ -1,30 +1,211 @@
 {
   "version": 1,
   "projects": {
-    "sloc-ui": {
+    "sloc-ui-e2e": {
+      "root": "apps/sloc-ui-e2e",
+      "sourceRoot": "apps/sloc-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/sloc-ui-e2e/cypress.json",
+            "tsConfig": "apps/sloc-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ui-sloc-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ui-sloc-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/sloc-ui-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sloc-ui-e2e/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "cpu-usage-slo-controller": {
+      "root": "apps/cpu-usage-slo-controller",
+      "sourceRoot": "apps/cpu-usage-slo-controller/src",
+      "projectType": "application",
+      "prefix": "cpu-usage-slo-controller",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/cpu-usage-slo-controller",
+            "main": "apps/cpu-usage-slo-controller/src/main.ts",
+            "tsConfig": "apps/cpu-usage-slo-controller/tsconfig.app.json",
+            "assets": [
+              "apps/cpu-usage-slo-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/cpu-usage-slo-controller/src/environments/environment.ts",
+                  "with": "apps/cpu-usage-slo-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "cpu-usage-slo-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/cpu-usage-slo-controller/tsconfig.app.json",
+              "apps/cpu-usage-slo-controller/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/cpu-usage-slo-controller/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/cpu-usage-slo-controller/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/core/tsconfig.lib.json",
+              "libs/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/core/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/core",
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "packageJson": "libs/core/package.json",
+            "main": "libs/core/src/index.ts",
+            "assets": [
+              "libs/core/*.md"
+            ]
+          }
+        }
+      }
+    },
+    "kubernetes": {
+      "root": "libs/kubernetes",
+      "sourceRoot": "libs/kubernetes/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/kubernetes/tsconfig.lib.json",
+              "libs/kubernetes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/kubernetes/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/kubernetes/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/kubernetes",
+            "tsConfig": "libs/kubernetes/tsconfig.lib.json",
+            "packageJson": "libs/kubernetes/package.json",
+            "main": "libs/kubernetes/src/index.ts",
+            "assets": [
+              "libs/kubernetes/*.md"
+            ]
+          }
+        }
+      }
+    },
+    "ui-sloc-ui": {
       "projectType": "application",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
       },
-      "root": "apps/sloc-ui",
-      "sourceRoot": "apps/sloc-ui/src",
+      "root": "apps/ui/sloc-ui",
+      "sourceRoot": "apps/ui/sloc-ui/src",
       "prefix": "sloc",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/sloc-ui",
-            "index": "apps/sloc-ui/src/index.html",
-            "main": "apps/sloc-ui/src/main.ts",
-            "polyfills": "apps/sloc-ui/src/polyfills.ts",
-            "tsConfig": "apps/sloc-ui/tsconfig.app.json",
+            "outputPath": "dist/apps/ui/sloc-ui",
+            "index": "apps/ui/sloc-ui/src/index.html",
+            "main": "apps/ui/sloc-ui/src/main.ts",
+            "polyfills": "apps/ui/sloc-ui/src/polyfills.ts",
+            "tsConfig": "apps/ui/sloc-ui/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/sloc-ui/src/favicon.ico", "apps/sloc-ui/src/assets"],
-            "styles": ["apps/sloc-ui/src/styles/styles.scss"],
+            "assets": [
+              "apps/ui/sloc-ui/src/favicon.ico",
+              "apps/ui/sloc-ui/src/assets"
+            ],
+            "styles": [
+              "apps/ui/sloc-ui/src/styles/styles.scss"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["apps/sloc-ui/src/styles"]
+              "includePaths": [
+                "apps/ui/sloc-ui/src/styles"
+              ]
             },
             "scripts": []
           },
@@ -32,8 +213,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/sloc-ui/src/environments/environment.ts",
-                  "with": "apps/sloc-ui/src/environments/environment.prod.ts"
+                  "replace": "apps/ui/sloc-ui/src/environments/environment.ts",
+                  "with": "apps/ui/sloc-ui/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -62,178 +243,39 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sloc-ui:build",
+            "browserTarget": "ui-sloc-ui:build",
             "proxyConfig": "./proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sloc-ui:build:production"
+              "browserTarget": "ui-sloc-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sloc-ui:build"
+            "browserTarget": "ui-sloc-ui:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/sloc-ui/tsconfig.app.json", "apps/sloc-ui/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/sloc-ui/**/*"]
+            "tsConfig": [
+              "apps/ui/sloc-ui/tsconfig.app.json",
+              "apps/ui/sloc-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/ui/sloc-ui/**/*"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/sloc-ui/jest.config.js",
+            "jestConfig": "apps/ui/sloc-ui/jest.config.js",
             "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "sloc-ui-e2e": {
-      "root": "apps/sloc-ui-e2e",
-      "sourceRoot": "apps/sloc-ui-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/sloc-ui-e2e/cypress.json",
-            "tsConfig": "apps/sloc-ui-e2e/tsconfig.e2e.json",
-            "devServerTarget": "sloc-ui:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "sloc-ui:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/sloc-ui-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/sloc-ui-e2e/**/*"]
-          }
-        }
-      }
-    },
-    "cpu-usage-slo-controller": {
-      "root": "apps/cpu-usage-slo-controller",
-      "sourceRoot": "apps/cpu-usage-slo-controller/src",
-      "projectType": "application",
-      "prefix": "cpu-usage-slo-controller",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/cpu-usage-slo-controller",
-            "main": "apps/cpu-usage-slo-controller/src/main.ts",
-            "tsConfig": "apps/cpu-usage-slo-controller/tsconfig.app.json",
-            "assets": ["apps/cpu-usage-slo-controller/src/assets"]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/cpu-usage-slo-controller/src/environments/environment.ts",
-                  "with": "apps/cpu-usage-slo-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "cpu-usage-slo-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": ["apps/cpu-usage-slo-controller/tsconfig.app.json", "apps/cpu-usage-slo-controller/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/cpu-usage-slo-controller/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/cpu-usage-slo-controller/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "core": {
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": ["libs/core/tsconfig.lib.json", "libs/core/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/core/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/core",
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "packageJson": "libs/core/package.json",
-            "main": "libs/core/src/index.ts",
-            "assets": ["libs/core/*.md"]
-          }
-        }
-      }
-    },
-    "kubernetes": {
-      "root": "libs/kubernetes",
-      "sourceRoot": "libs/kubernetes/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": ["libs/kubernetes/tsconfig.lib.json", "libs/kubernetes/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/kubernetes/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/kubernetes/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/kubernetes",
-            "tsConfig": "libs/kubernetes/tsconfig.lib.json",
-            "packageJson": "libs/kubernetes/package.json",
-            "main": "libs/kubernetes/src/index.ts",
-            "assets": ["libs/kubernetes/*.md"]
           }
         }
       }
@@ -251,5 +293,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "sloc-ui"
+  "defaultProject": "ui-sloc-ui"
 }

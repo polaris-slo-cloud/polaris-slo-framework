@@ -144,7 +144,7 @@ module.exports = {
                 "@typescript-eslint/no-non-null-assertion": "error",
                 "@typescript-eslint/no-parameter-properties": "off",
                 "@typescript-eslint/no-unused-expressions": "error",
-                "@typescript-eslint/no-use-before-define": ["error"],
+                "@typescript-eslint/no-use-before-define": "off",
                 "@typescript-eslint/no-var-requires": "error",
                 "@typescript-eslint/prefer-for-of": "error",
                 "@typescript-eslint/prefer-function-type": "error",
@@ -171,6 +171,12 @@ module.exports = {
                         "propertyDeclaration": true,
                         "variableDeclaration": false,
                         "variableDeclarationIgnoreFunction": false,
+                    }
+                ],
+                "@typescript-eslint/unbound-method": [
+                    "error",
+                    {
+                        "ignoreStatic": true
                     }
                 ],
                 "@typescript-eslint/unified-signatures": "error",
@@ -205,7 +211,6 @@ module.exports = {
                     "Boolean",
                     "boolean",
                     "Undefined",
-                    "undefined"
                 ],
                 "id-match": "error",
                 "import/order": [
@@ -218,7 +223,6 @@ module.exports = {
                     }
                 ],
                 "jsdoc/check-alignment": "error",
-                "jsdoc/check-indentation": "error",
                 "jsdoc/newline-after-description": "error",
                 "jsdoc/no-types": "error",
                 "linebreak-style": [
@@ -227,7 +231,7 @@ module.exports = {
                 ],
                 "max-classes-per-file": "off",
                 "max-len": [
-                    "error",
+                    "warn",
                     {
                         "code": 160
                     }
@@ -285,7 +289,7 @@ module.exports = {
                 "no-underscore-dangle": "error",
                 "no-unsafe-finally": "error",
                 "no-unused-labels": "error",
-                "no-use-before-define": "off", // Must be off, because we use the @typescript-eslint rule
+                "no-use-before-define": "off",
                 "object-shorthand": "error",
                 "one-var": [
                     "error",

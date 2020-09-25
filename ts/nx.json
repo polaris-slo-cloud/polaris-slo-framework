@@ -14,26 +14,43 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
   "projects": {
-    "sloc-ui": {
-      "tags": ["scope:ui"]
-    },
     "sloc-ui-e2e": {
-      "tags": ["scope:ui"],
-      "implicitDependencies": ["sloc-ui"]
+      "tags": [
+        "scope:ui"
+      ],
+      "implicitDependencies": [
+        "ui-sloc-ui"
+      ]
     },
     "cpu-usage-slo-controller": {
-      "tags": ["scope:slo"]
+      "tags": [
+        "scope:slo"
+      ]
     },
     "core": {
-      "tags": ["scope:core"]
+      "tags": [
+        "scope:core"
+      ]
     },
     "kubernetes": {
-      "tags": ["orchestrator:kubernetes"]
+      "tags": [
+        "orchestrator:kubernetes"
+      ]
+    },
+    "ui-sloc-ui": {
+      "tags": [
+        "scope:ui"
+      ]
     }
   },
   "affected": {
