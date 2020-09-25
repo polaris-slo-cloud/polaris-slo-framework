@@ -1,6 +1,6 @@
+import { Constructor } from '@sloc/core';
+import { KubernetesObjectWithSpec, SloMapping } from '../model';
 import { MetricsSource } from './metrics-source';
-import { Constructor } from '../util';
-import { SloMapping, KubernetesObjectWithSpec } from '../model';
 
 const SLO_CONFIG_PROPERTY_NAME = '__slocSloConfig';
 
@@ -19,6 +19,7 @@ export interface ServiceLevelObjective<C extends KubernetesObjectWithSpec<SloMap
 
     /**
      * Configures this SLO using an SloMapping resource and a metrics source.
+     *
      * @param sloMapping The SloMapping that describes the configuration for this instance.
      */
     configure(sloMapping: C, metricsSource: MetricsSource): Promise<void>;
@@ -45,5 +46,5 @@ export function SLO<T extends ServiceLevelObjective<any, any>>(
 }
 
 export function getSloConfiguration(slo: ServiceLevelObjective<any, any>): SloConfiguration {
-    return (slo as Object).constructor[SLO_CONFIG_PROPERTY_NAME];
+    return ((slo as object).constructor as any)[SLO_CONFIG_PROPERTY_NAME];
 }

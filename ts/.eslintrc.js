@@ -96,7 +96,14 @@ module.exports = {
                 ],
                 "@typescript-eslint/consistent-type-definitions": "error",
                 "@typescript-eslint/dot-notation": "off",
-                "@typescript-eslint/explicit-function-return-type": ["error"],
+                "@typescript-eslint/explicit-function-return-type": [
+                    "error",
+                    {
+                        "allowExpressions": true,
+                        "allowTypedFunctionExpressions": true,
+                        "allowHigherOrderFunctions": true,
+                    }
+                ],
                 "@typescript-eslint/explicit-member-accessibility": [
                     "off",
                     {

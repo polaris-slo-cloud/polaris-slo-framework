@@ -1,7 +1,7 @@
-import { ServiceLevelObjective, getSloConfiguration } from '../sloc-policy-language';
-import { IndexByKey } from '../util';
-import { KubeConfig, KubernetesObjectApi, V1ObjectMeta, KubernetesObject } from '@kubernetes/client-node';
+import { KubeConfig, KubernetesObject, KubernetesObjectApi, V1ObjectMeta } from '@kubernetes/client-node';
+import { IndexByKey } from '@sloc/core';
 import { KubernetesObjectWithSpec, SloMapping } from '../model';
+import { ServiceLevelObjective, getSloConfiguration } from '../sloc-policy-language';
 
 export const DEFAULT_INTERVAL = 20000;
 
@@ -66,19 +66,19 @@ export class SloControlLoop {
             const elasticityStrategy: KubernetesObjectWithSpec<any> = {
                 apiVersion: slo.config.spec.elasticityStrategy.apiVersion,
                 kind: slo.config.spec.elasticityStrategy.kind,
-                metadata: metadata,
+                metadata,
                 spec: resultSpec,
             };
 
             console.log(`SLO ${slo.config.metadata.name}: Applying elasticityStrategy`, elasticityStrategy);
 
             this.k8sClient.create(
-                elasticityStrategy
+                elasticityStrategy,
             ).catch(err => {
-                console.log(`Create resource failed, trying to replace the resource`);
+                console.log('Create resource failed, trying to replace the resource');
                 this.updateExistingElasticityStrategy(elasticityStrategy);
             }).then(
-                () => console.log('Resource successfully created/replaced')
+                () => console.log('Resource successfully created/replaced'),
             ).catch(console.error)
         });
     }

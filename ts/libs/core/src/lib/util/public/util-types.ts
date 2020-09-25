@@ -11,4 +11,4 @@ export interface IndexById<V> {
     [id: number]: V;
 }
 
-export type Constructor<T> = { new(...args: any[]): T }
+export type Constructor<T> = new(...args: any[]) => T
