@@ -25,6 +25,9 @@
         "paths": {
             "lodash": [
                 "node_modules/lodash-es"
+            ],
+            "@sloc/core": [
+                "libs/core/src/index.ts"
             ]
         }
     },

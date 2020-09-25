@@ -40,7 +40,8 @@ module.exports = {
                 "project": [
                     "tsconfig.*?.json"
                 ],
-                "sourceType": "module"
+                "sourceType": "module",
+                "ecmaVersion": 2018,
             },
             "rules": {
                 "@angular-eslint/component-class-suffix": "error",
@@ -264,7 +265,12 @@ module.exports = {
                     "error",
                     "never"
                 ],
-                "prefer-arrow/prefer-arrow-functions": "error",
+                "prefer-arrow/prefer-arrow-functions": [
+                    "error",
+                    {
+                        "allowStandaloneDeclarations": true,
+                    }
+                ],
                 "quote-props": [
                     "error",
                     "as-needed"

@@ -21,17 +21,10 @@
             "polyfills": "apps/sloc-ui/src/polyfills.ts",
             "tsConfig": "apps/sloc-ui/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/sloc-ui/src/favicon.ico",
-              "apps/sloc-ui/src/assets"
-            ],
-            "styles": [
-              "apps/sloc-ui/src/styles/styles.scss"
-            ],
+            "assets": ["apps/sloc-ui/src/favicon.ico", "apps/sloc-ui/src/assets"],
+            "styles": ["apps/sloc-ui/src/styles/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "apps/sloc-ui/src/styles"
-              ]
+              "includePaths": ["apps/sloc-ui/src/styles"]
             },
             "scripts": []
           },
@@ -87,14 +80,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/sloc-ui/tsconfig.app.json",
-              "apps/sloc-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/sloc-ui/**/*"
-            ]
+            "tsConfig": ["apps/sloc-ui/tsconfig.app.json", "apps/sloc-ui/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/sloc-ui/**/*"]
           }
         },
         "test": {
@@ -127,13 +114,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/sloc-ui-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/sloc-ui-e2e/**/*"
-            ]
+            "tsConfig": ["apps/sloc-ui-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/sloc-ui-e2e/**/*"]
           }
         }
       }
@@ -151,9 +133,7 @@
             "outputPath": "dist/apps/cpu-usage-slo-controller",
             "main": "apps/cpu-usage-slo-controller/src/main.ts",
             "tsConfig": "apps/cpu-usage-slo-controller/tsconfig.app.json",
-            "assets": [
-              "apps/cpu-usage-slo-controller/src/assets"
-            ]
+            "assets": ["apps/cpu-usage-slo-controller/src/assets"]
           },
           "configurations": {
             "production": {
@@ -179,14 +159,8 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/cpu-usage-slo-controller/tsconfig.app.json",
-              "apps/cpu-usage-slo-controller/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/cpu-usage-slo-controller/**/*"
-            ]
+            "tsConfig": ["apps/cpu-usage-slo-controller/tsconfig.app.json", "apps/cpu-usage-slo-controller/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/cpu-usage-slo-controller/**/*"]
           }
         },
         "test": {
@@ -194,6 +168,39 @@
           "options": {
             "jestConfig": "apps/cpu-usage-slo-controller/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/core/tsconfig.lib.json", "libs/core/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/core/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/core",
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "packageJson": "libs/core/package.json",
+            "main": "libs/core/src/index.ts",
+            "assets": ["libs/core/*.md"]
           }
         }
       }
