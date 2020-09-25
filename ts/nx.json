@@ -31,6 +31,9 @@
     },
     "core": {
       "tags": ["scope:core"]
+    },
+    "kubernetes": {
+      "tags": ["orchestrator:kubernetes"]
     }
   },
   "affected": {

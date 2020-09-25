@@ -204,6 +204,39 @@
           }
         }
       }
+    },
+    "kubernetes": {
+      "root": "libs/kubernetes",
+      "sourceRoot": "libs/kubernetes/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["libs/kubernetes/tsconfig.lib.json", "libs/kubernetes/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/kubernetes/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/kubernetes/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/kubernetes",
+            "tsConfig": "libs/kubernetes/tsconfig.lib.json",
+            "packageJson": "libs/kubernetes/package.json",
+            "main": "libs/kubernetes/src/index.ts",
+            "assets": ["libs/kubernetes/*.md"]
+          }
+        }
+      }
     }
   },
   "cli": {

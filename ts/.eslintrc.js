@@ -76,9 +76,9 @@ module.exports = {
                             // ElasticityStrategies may depend on core, metrics, SLOs, and other strategies.
                             { "sourceTag": "scope:elasticity-strategy", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo", "scope:elasticity-strategy" ] },
 
-                            // Kubernetes-specific libraries may only depend on core libraries and other K8s libraries.
-                            // A Kubernetes-specific SLO would e.g., have the tags "scope:slo" and "orchestrator:k8s"
-                            { "sourceTag": "orchestrator:k8s", "onlyDependOnLibsWithTags": [ "scope:core", "orchestrator:k8s" ] },
+                            // Kubernetes-specific libraries may only depend on core libraries and other Kubernetes libraries.
+                            // A Kubernetes-specific SLO would e.g., have the tags "scope:slo" and "orchestrator:kubernetes"
+                            { "sourceTag": "orchestrator:kubernetes", "onlyDependOnLibsWithTags": [ "scope:core", "orchestrator:kubernetes" ] },
 
                             // UI projects may depend on any library project.
                             { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": [ "*" ] },

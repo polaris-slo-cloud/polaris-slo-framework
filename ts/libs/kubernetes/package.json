@@ -1,0 +1,7 @@
+{
+  "name": "@sloc/kubernetes",
+  "version": "0.0.1",
+  "dependencies": {
+    "@sloc/core": "^0.0.1"
+  }
+}
