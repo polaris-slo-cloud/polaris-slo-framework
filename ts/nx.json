@@ -24,14 +24,6 @@
     }
   },
   "projects": {
-    "sloc-ui-e2e": {
-      "tags": [
-        "scope:ui"
-      ],
-      "implicitDependencies": [
-        "ui-sloc-ui"
-      ]
-    },
     "cpu-usage-slo-controller": {
       "tags": [
         "scope:slo"
@@ -50,6 +42,14 @@
     "ui-sloc-ui": {
       "tags": [
         "scope:ui"
+      ]
+    },
+    "ui-sloc-ui-e2e": {
+      "tags": [
+        "scope:ui"
+      ],
+      "implicitDependencies": [
+        "ui-sloc-ui"
       ]
     }
   },
