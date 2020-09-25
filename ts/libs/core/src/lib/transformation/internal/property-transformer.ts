@@ -1,12 +1,13 @@
 import { TransformationType } from 'class-transformer';
 import { getSlocRuntimeOrThrow } from '../../runtime';
+import { Constructor } from '../../util';
 
 /**
  * This provides a wrapper around the transformation logic required by `class-transformer` and integrates it with the `SlocTransformationService`.
  */
-export class PropertyTransformer {
+export class PropertyTransformer<T> {
 
-    constructor(private slocTypeId: string) {}
+    constructor(private slocType: Constructor<T>) {}
 
     /**
      * Transform method called by `class-transformer`
@@ -24,7 +25,7 @@ export class PropertyTransformer {
             case TransformationType.CLASS_TO_PLAIN:
                 return runtime.transformer.transformToOrchestratorPlainObject(value);
             case TransformationType.PLAIN_TO_CLASS:
-                return runtime.transformer.transformToSlocObject(this.slocTypeId, value);
+                return runtime.transformer.transformToSlocObject(this.slocType, value);
             default:
                 throw new Error(`Unexpected SlocRuntime: ${transformationType}`);
         }

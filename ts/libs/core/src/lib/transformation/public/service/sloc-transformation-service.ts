@@ -1,3 +1,4 @@
+import { Constructor } from '../../../util';
 import { SlocTransformer } from '../sloc-transformer';
 
 /**
@@ -5,25 +6,27 @@ import { SlocTransformer } from '../sloc-transformer';
  * and orchestrator-specific plain objects, which can be serialized.
  *
  * A `SlocTransformationService` uses the `SlocTransformers` that have been registered with it to transform complex objects.
+ *
+ * If no transformer has been registered for a particular type, the `DefaultSlocTransformer` will be used.
  */
 export interface SlocTransformationService {
 
     /**
      * Registers the specified transformer with this `SlocTransformationService`.
      *
-     * @param slocTypeId The unique ID of the SLOC type, for which to register the transformer.
+     * @param slocTypeId The SLOC type for which to register the transformer.
      * @param transformer The `SlocTransformer` for the type.
      */
-    registerTransformer(slocTypeId: string, transformer: SlocTransformer<any, any>): void;
+    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>): void;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
      *
-     * @param slocTypeId The unique ID of the SLOC type into which the orchestrator-specific plain object should be transformed.
+     * @param slocType The SLOC type into which the plain object should be transformed.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
      * @retuns A new SLOC object that results from transforming `orchPlainObj`.
      */
-    transformToSlocObject(slocTypeId: string, orchPlainObj: any): any;
+    transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T;
 
     /**
      * Transforms the specified SLOC object into an orchestrator-specific plain object that may be serialized without any further changes.

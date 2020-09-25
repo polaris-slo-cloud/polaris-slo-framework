@@ -1,12 +1,13 @@
-import { SlocTransformableMetadata } from '../../transformation';
+import { SlocTransformationMetadata } from '../../transformation';
+import { Constructor } from '../public/util-types';
 
 /**
  * Defines the keys used store SLOC metadata using the Reflect API.
  */
 const SLOC_METADATA_KEYS = {
 
-    /** The key for storing `SlocTransformableMetadata`. */
-    TRANSFORMABLE: 'sloc:transformable',
+    /** The key for storing `SlocTransformationMetadata`. */
+    TRANSFORMABLE: 'sloc:transformation',
 
 };
 
@@ -16,16 +17,16 @@ const SLOC_METADATA_KEYS = {
 export class SlocMetadataUtils {
 
     /**
-     * @returns The `SlocTransformableMetadata` of the `target` object or `undefined` if `target` does not have this metadata.
+     * @returns The `SlocTransformationMetadata` of the `target` object or `undefined` if `target` does not have this metadata.
      */
-    static getSlocTransformableMetadata(target: any): SlocTransformableMetadata {
+    static getSlocTransformationMetadata<T>(target: T | Constructor<T>): SlocTransformationMetadata<T> {
         return Reflect.getMetadata(SLOC_METADATA_KEYS.TRANSFORMABLE, target);
     }
 
     /**
-     * Sets the specified `SlocTransformableMetadata` on the `target` object.
+     * Sets the specified `SlocTransformationMetadata` on the `target` object.
      */
-    static setSlocTransformableMetadata(metadata: SlocTransformableMetadata, target: any): void {
+    static setSlocTransformationMetadata<T>(metadata: SlocTransformationMetadata<T>, target: Constructor<T>): void {
         Reflect.defineMetadata(SLOC_METADATA_KEYS.TRANSFORMABLE, metadata, target);
     }
 

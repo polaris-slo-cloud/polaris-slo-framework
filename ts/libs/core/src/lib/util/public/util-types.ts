@@ -16,3 +16,5 @@ export type Constructor<T> = new(...args: any[]) => T
 export type ClassDecoratorFn = (target: Constructor<any>) => void;
 
 export type InterfaceOf<T> = { [K in keyof T]: T[K]; };
+
+export type TypeFn<T> = () => Constructor<T>;

@@ -1,1 +1,1 @@
-export * from './no-op.transformer';
+export * from './default-transformer';

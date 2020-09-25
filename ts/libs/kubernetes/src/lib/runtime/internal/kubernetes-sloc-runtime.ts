@@ -1,7 +1,6 @@
-import { SlocRuntime, SlocTransformationService } from '@sloc/core';
+import { SlocRuntimeBase } from '@sloc/core';
 
-export class KubernetesSlocRuntime implements SlocRuntime {
+export class KubernetesSlocRuntime extends SlocRuntimeBase {
 
-    transformer: SlocTransformationService;
 
 }

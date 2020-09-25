@@ -1,4 +1,4 @@
-import { NoOpTransformer, SlocRuntime, initSlocRuntime } from '@sloc/core';
+import { DefaultTransformer, ObjectReference, SlocRuntime, initSlocRuntime } from '@sloc/core';
 import { KubernetesSlocRuntime } from './runtime';
 
 /**
@@ -12,5 +12,6 @@ export function initSlocKubernetes(): SlocRuntime {
 }
 
 function registerTransformers(runtime: SlocRuntime): void {
-    runtime.transformer.registerTransformer('test', new NoOpTransformer());
+    // Registering the DefaultTransformer is actually not necessary.
+    runtime.transformer.registerTransformer(ObjectReference, new DefaultTransformer());
 }
