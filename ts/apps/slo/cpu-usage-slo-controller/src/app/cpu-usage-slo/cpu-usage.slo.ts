@@ -1,5 +1,5 @@
-import { ServiceLevelObjective, MetricsSource, SLO } from '../sloc-policy-language';
-import { CpuUsageSloMapping, SloComplianceElasticityStrategyData, SLOC_API_VERSION } from '../model';
+import { CpuUsageSloMapping, SLOC_API_VERSION, SloComplianceElasticityStrategyData } from '../model';
+import { MetricsSource, SLO, ServiceLevelObjective } from '../sloc-policy-language';
 
 const LOWER_BOUND = 1;
 const TARGET_COMPLIANCE = 100;

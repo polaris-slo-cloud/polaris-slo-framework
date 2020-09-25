@@ -1,5 +1,5 @@
-import { SLOC_API_VERSION } from './sloc-api';
 import { KubernetesObject } from '@kubernetes/client-node';
+import { SLOC_API_VERSION } from './sloc-api';
 
 export interface KubernetesObjectWithSpec<T> extends KubernetesObject {
     spec: T;

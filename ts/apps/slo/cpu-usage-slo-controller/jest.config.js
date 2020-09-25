@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'cpu-usage-slo-controller',
-    preset: '../../jest.config.js',
+    name: 'slo-cpu-usage-slo-controller',
+    preset: '../../../jest.config.js',
     globals: {
         'ts-jest': {
             tsConfig: '<rootDir>/tsconfig.spec.json',
@@ -10,5 +10,5 @@ module.exports = {
         '^.+\\.[tj]s$': 'ts-jest'
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../coverage/apps/cpu-usage-slo-controller'
+    coverageDirectory: '../../../coverage/apps/slo/cpu-usage-slo-controller'
 };

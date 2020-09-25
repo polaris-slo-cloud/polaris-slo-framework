@@ -24,11 +24,6 @@
     }
   },
   "projects": {
-    "cpu-usage-slo-controller": {
-      "tags": [
-        "scope:slo"
-      ]
-    },
     "core": {
       "tags": [
         "scope:core"
@@ -50,6 +45,11 @@
       ],
       "implicitDependencies": [
         "ui-sloc-ui"
+      ]
+    },
+    "slo-cpu-usage-slo-controller": {
+      "tags": [
+        "scope:slo"
       ]
     }
   },

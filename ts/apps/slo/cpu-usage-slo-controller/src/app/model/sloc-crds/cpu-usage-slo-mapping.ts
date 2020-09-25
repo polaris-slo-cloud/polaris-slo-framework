@@ -1,5 +1,5 @@
-import { SlocCRD } from './sloc-crd';
 import { SloMapping } from './slo-mapping';
+import { SlocCRD } from './sloc-crd';
 
 export interface CpuUsageSloMappingSpec extends SloMapping {
 

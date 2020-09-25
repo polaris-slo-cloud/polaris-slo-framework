@@ -1,5 +1,5 @@
-import { SlocCRD } from './sloc-crd';
 import { SloComplianceElasticityStrategyData } from './slo-compliance-elasticity-strategy-data';
+import { SlocCRD } from './sloc-crd';
 
 export interface HorizontalElasticityStrategySpec extends SloComplianceElasticityStrategyData { }
 

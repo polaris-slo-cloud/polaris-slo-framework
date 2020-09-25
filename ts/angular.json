@@ -1,66 +1,6 @@
 {
   "version": 1,
   "projects": {
-    "cpu-usage-slo-controller": {
-      "root": "apps/cpu-usage-slo-controller",
-      "sourceRoot": "apps/cpu-usage-slo-controller/src",
-      "projectType": "application",
-      "prefix": "cpu-usage-slo-controller",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/cpu-usage-slo-controller",
-            "main": "apps/cpu-usage-slo-controller/src/main.ts",
-            "tsConfig": "apps/cpu-usage-slo-controller/tsconfig.app.json",
-            "assets": [
-              "apps/cpu-usage-slo-controller/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/cpu-usage-slo-controller/src/environments/environment.ts",
-                  "with": "apps/cpu-usage-slo-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "cpu-usage-slo-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "apps/cpu-usage-slo-controller/tsconfig.app.json",
-              "apps/cpu-usage-slo-controller/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/cpu-usage-slo-controller/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/cpu-usage-slo-controller/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "core": {
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
@@ -276,6 +216,66 @@
               "**/node_modules/**",
               "!apps/ui/sloc-ui-e2e/**/*"
             ]
+          }
+        }
+      }
+    },
+    "slo-cpu-usage-slo-controller": {
+      "root": "apps/slo/cpu-usage-slo-controller",
+      "sourceRoot": "apps/slo/cpu-usage-slo-controller/src",
+      "projectType": "application",
+      "prefix": "cpu-usage-slo-controller",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
+            "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
+            "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
+            "assets": [
+              "apps/slo/cpu-usage-slo-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/slo/cpu-usage-slo-controller/src/environments/environment.ts",
+                  "with": "apps/slo/cpu-usage-slo-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "slo-cpu-usage-slo-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
+              "apps/slo/cpu-usage-slo-controller/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/slo/cpu-usage-slo-controller/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/slo/cpu-usage-slo-controller/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

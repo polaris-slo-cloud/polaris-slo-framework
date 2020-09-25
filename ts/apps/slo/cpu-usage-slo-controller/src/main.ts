@@ -1,4 +1,4 @@
-import { KubeConfig } from "@kubernetes/client-node";
+import { KubeConfig } from '@kubernetes/client-node';
 import { SloMappingController } from './app/controller';
 
 const k8sConfig = new KubeConfig();
