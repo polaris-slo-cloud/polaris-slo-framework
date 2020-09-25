@@ -3,9 +3,21 @@ import { SlocTransformationService } from '../../transformation';
 let slocRuntimeSingleton: SlocRuntime;
 
 /**
- * @returns The instance of the `SlocRuntime` singleton.
+ * @returns The instance of the `SlocRuntime` singleton or `undefined` if it has not been initialized yet.
  */
 export function getSlocRuntime(): SlocRuntime {
+    return slocRuntimeSingleton;
+}
+
+
+/**
+ * @returns The instance of the `SlocRuntime` singleton.
+ * @throws An error if the `SlocRuntime` singleton has not yet been initialized.
+ */
+export function getSlocRuntimeOrThrow(): SlocRuntime {
+    if (!slocRuntimeSingleton) {
+        throw new Error(`The SlocRuntime singleton's value is ${slocRuntimeSingleton}. Did you forget to initialize it?`);
+    }
     return slocRuntimeSingleton;
 }
 

@@ -1,5 +1,7 @@
+import { Transform } from 'class-transformer';
 import { isEqual as _isEqual } from 'lodash';
 import { ClassDecoratorFn, Constructor, SlocMetadataUtils } from '../../util';
+import { PropertyTransformer } from '../internal';
 
 /**
  * Describes a SLOC type that is transformable to/from an orchestrator-specific object.
@@ -74,8 +76,9 @@ export function SlocProperty(slocTransformableType: Constructor<any>): PropertyD
         throw new NotSlocTransformableTypeError(slocTransformableType);
     }
 
-    return (prototype: any, propertyKey: string | symbol) => {
-
+    return (prototype: any, propertyKey: string) => {
+        const propertyTransformer = new PropertyTransformer(transformableMetadata.slocTypeId);
+        const origDecorator = Transform((value, obj, type) => propertyTransformer.transform(value, obj, type));
+        origDecorator(prototype, propertyKey);
     };
-
 }
