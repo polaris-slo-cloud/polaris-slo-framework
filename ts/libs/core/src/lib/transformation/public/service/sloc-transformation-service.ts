@@ -60,4 +60,14 @@ export interface SlocTransformationService {
      */
     transformToOrchestratorPlainObject(slocObj: any): any;
 
+    /**
+     * Gets the type that has been defined for the property `propertyKey` of the class `slocType` using
+     * the `@SlocType` decorator.
+     *
+     * @param slocType The SLOC type that owns the property.
+     * @param propertyKey The name of the property.
+     * @returns The type that has been defined for the specified property or `undefined` if this information is not available.
+     */
+    getPropertyType<T>(slocType: Constructor<T>, propertyKey: keyof T & string): Constructor<any>;
+
 }

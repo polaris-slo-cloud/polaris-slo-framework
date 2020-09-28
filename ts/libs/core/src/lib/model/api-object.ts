@@ -5,8 +5,15 @@ import { ObjectKind } from './object-kind';
 
 /**
  * Common superclass for an object that can be added/read/changed/deleted using the orchestrator's API.
+ *
+ * It is recommended to subclass `ApiObject` for each specific concrete API object and to provide
+ * default initialization logic, e.g., for `objectKind`.
+ *
+ * When registering a `SlocTransformer` for `ApiObject` for a specific orchestrator, it is recommended
+ * to set `SlocTransformationConfig.inheritable` to `true`, because most subclasses of `ApiObject` will
+ * not add additional properties, but just customize the existing ones.
  */
-export abstract class ApiObject<T> {
+export class ApiObject<T> {
 
     /**
      * Indicates the type of the object.

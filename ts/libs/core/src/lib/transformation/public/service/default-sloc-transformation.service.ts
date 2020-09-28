@@ -48,6 +48,10 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         return transformer.transformToOrchestratorPlainObject(slocObj, this);
     }
 
+    getPropertyType<T>(slocType: Constructor<T>, propertyKey: keyof T & string): Constructor<any> {
+        return SlocMetadataUtils.getPropertySlocType(slocType, propertyKey);
+    }
+
     private getTransformer<T>(slocObjOrType: T | Constructor<T>): SlocTransformer<T, any> {
         const transformMeta = SlocMetadataUtils.getSlocTransformationMetadata(slocObjOrType);
         return transformMeta ? transformMeta.transformer : this.defaultTransformer;
