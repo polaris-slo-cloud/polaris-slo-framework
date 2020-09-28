@@ -17,10 +17,18 @@ const SLOC_METADATA_KEYS = {
 export class SlocMetadataUtils {
 
     /**
+     * Gets the `SlocTransformationMetadata` that has been applied to the constructor of the type `T`.
+     *
+     * This intentionally does not traverse the prototype chain of `T`, because we assume that a subclass needs to
+     * be transformed differently than its parent class.
+     *
+     * If the same transformer should be used for the parent- and the subclass, it needs to be registered for both of them.
+     *
      * @returns The `SlocTransformationMetadata` of the `target` object or `undefined` if `target` does not have this metadata.
      */
     static getSlocTransformationMetadata<T>(target: T | Constructor<T>): SlocTransformationMetadata<T> {
-        return Reflect.getMetadata(SLOC_METADATA_KEYS.TRANSFORMABLE, target);
+        const ctor: Constructor<T> = target instanceof Function ? (target as any) : (target as any).constructor;
+        return Reflect.getOwnMetadata(SLOC_METADATA_KEYS.TRANSFORMABLE, ctor);
     }
 
     /**
