@@ -1,4 +1,4 @@
-import { Constructor, ObjectKind, OrchestratorToSlocTransformationError, SlocTransformationService, SlocTransformer } from '@sloc/core';
+import { Constructor, ObjectKind, OrchestratorToSlocTransformationError, ReusableSlocTransformer, SlocTransformationService } from '@sloc/core';
 import { ApiVersionKind } from '../../../model';
 
 /**
@@ -10,10 +10,10 @@ import { ApiVersionKind } from '../../../model';
  * }
  * ```
  */
-export class ObjectKindTransformer implements SlocTransformer<ObjectKind, ApiVersionKind> {
+export class ObjectKindTransformer implements ReusableSlocTransformer<ObjectKind, ApiVersionKind> {
 
     transformToSlocObject(slocType: Constructor<ObjectKind>, orchPlainObj: ApiVersionKind, transformationService: SlocTransformationService): ObjectKind {
-        const data = this.extractDataFromOrchestratorPlainObject(slocType, orchPlainObj);
+        const data = this.extractSlocObjectInitData(slocType, orchPlainObj, transformationService);
         return new ObjectKind(data);
     }
 
@@ -30,12 +30,7 @@ export class ObjectKindTransformer implements SlocTransformer<ObjectKind, ApiVer
         return ret;
     }
 
-    /**
-     * Extracts the initialization data for an `ObjectKind` from an `ApiVersionKind` object.
-     *
-     * This method is meant to be reused by transformers of subclasses of `ObjectKind`.
-     */
-    extractDataFromOrchestratorPlainObject(slocType: Constructor<ObjectKind>, orchPlainObj: ApiVersionKind): Partial<ObjectKind> {
+    extractSlocObjectInitData(slocType: Constructor<ObjectKind>, orchPlainObj: ApiVersionKind, transformationService: SlocTransformationService): Partial<ObjectKind> {
         const data: Partial<ObjectKind> = {
             kind: orchPlainObj.kind,
         };

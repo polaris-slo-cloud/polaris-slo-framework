@@ -1,6 +1,6 @@
 import { Constructor, SlocMetadataUtils } from '../../../util';
 import { SlocTransformationMetadata } from '../../internal';
-import { SlocTransformer } from '../sloc-transformer';
+import { SlocTransformer } from '../common';
 import { DefaultTransformer } from '../transformers';
 import { SlocTransformationService } from './sloc-transformation-service';
 

@@ -1,7 +1,7 @@
 import { classToPlain, plainToClass } from 'class-transformer';
 import { Constructor, InterfaceOf } from '../../../util';
+import { SlocTransformer } from '../common';
 import { SlocTransformationService } from '../service';
-import { SlocTransformer } from '../sloc-transformer';
 
 /**
  * This transformer does not alter the structure of the objects, it just performs a simple
