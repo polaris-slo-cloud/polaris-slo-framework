@@ -1,3 +1,5 @@
+export * from './api-object';
+export * from './api-object-metadata';
 export * from './elasticity-strategy-kind';
 export * from './object-kind';
 export * from './object-reference';

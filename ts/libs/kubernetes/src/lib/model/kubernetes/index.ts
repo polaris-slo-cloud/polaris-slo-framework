@@ -1,1 +1,1 @@
-export * from './object-references';
+export * from './kubernetes-object';

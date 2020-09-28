@@ -2,6 +2,7 @@
   "name": "@sloc/kubernetes",
   "version": "0.0.1",
   "dependencies": {
-    "@sloc/core": "^0.0.1"
+    "@sloc/core": "^0.0.1",
+    "@kubernetes/client-node": "^0.12.2"
   }
 }

@@ -1,3 +1,4 @@
+import { KubernetesObject } from '@kubernetes/client-node';
 
 export interface ApiVersionKind {
     apiVersion?: string;
@@ -6,4 +7,10 @@ export interface ApiVersionKind {
 
 export interface CrossVersionObjectReference extends ApiVersionKind {
     name: string;
+}
+
+export interface KubernetesObjectWithSpec<T> extends KubernetesObject {
+
+    spec: T;
+
 }
