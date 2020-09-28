@@ -22,12 +22,12 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
 
     transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T {
         const transformer = this.getTransformer(slocType);
-        return transformer.transformToSlocObject(slocType, orchPlainObj);
+        return transformer.transformToSlocObject(slocType, orchPlainObj, this);
     }
 
     transformToOrchestratorPlainObject(slocObj: any): any {
         const transformer = this.getTransformer(slocObj);
-        return transformer.transformToOrchestratorPlainObject(slocObj);
+        return transformer.transformToOrchestratorPlainObject(slocObj, this);
     }
 
     private getTransformer<T>(slocObjOrType: T | Constructor<T>): SlocTransformer<T, any> {

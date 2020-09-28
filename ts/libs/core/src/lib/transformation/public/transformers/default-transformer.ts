@@ -1,5 +1,6 @@
 import { classToPlain, plainToClass } from 'class-transformer';
 import { Constructor, InterfaceOf } from '../../../util';
+import { SlocTransformationService } from '../service';
 import { SlocTransformer } from '../sloc-transformer';
 
 /**
@@ -10,11 +11,11 @@ import { SlocTransformer } from '../sloc-transformer';
  */
 export class DefaultTransformer<T> implements SlocTransformer<T, InterfaceOf<T>> {
 
-    transformToSlocObject(slocType: Constructor<T>, orchPlainObj: InterfaceOf<T>): T {
+    transformToSlocObject(slocType: Constructor<T>, orchPlainObj: InterfaceOf<T>, transformationService: SlocTransformationService): T {
         return plainToClass(slocType, orchPlainObj);
     }
 
-    transformToOrchestratorPlainObject(slocObj: T): InterfaceOf<T> {
+    transformToOrchestratorPlainObject(slocObj: T, transformationService: SlocTransformationService): InterfaceOf<T> {
         return classToPlain(slocObj) as any;
     }
 
