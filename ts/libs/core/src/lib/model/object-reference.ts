@@ -1,3 +1,4 @@
+import { initSelf } from '../util';
 
 export class ObjectReference {
 
@@ -6,5 +7,9 @@ export class ObjectReference {
     kind: string;
 
     name: string;
+
+    constructor(initData?: Partial<ObjectReference>) {
+        initSelf(this, initData);
+    }
 
 }
