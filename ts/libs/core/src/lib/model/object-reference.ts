@@ -1,14 +1,16 @@
 import { initSelf } from '../util';
+import { ObjectKind } from './object-kind';
 
-export class ObjectReference {
+/**
+ * Identifies a particular object instance in the orchestrator.
+ */
+export class ObjectReference extends ObjectKind {
 
-    apiVersion?: string;
-
-    kind: string;
-
+    /** The name of the instance. */
     name: string;
 
     constructor(initData?: Partial<ObjectReference>) {
+        super(initData);
         initSelf(this, initData);
     }
 
