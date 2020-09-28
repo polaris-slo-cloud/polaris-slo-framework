@@ -1,5 +1,5 @@
-import { Constructor } from '../../util';
-import { SlocTransformationService } from './service';
+import { Constructor } from '../../../util';
+import { SlocTransformationService } from './../service';
 
 /**
  * A SlocTransformer is used to convert between orchestrator-independent SLOC objects
