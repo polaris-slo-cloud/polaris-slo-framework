@@ -11,7 +11,15 @@ import { SlocTransformationService } from './sloc-transformation-service';
  */
 export class DefaultSlocTransformationService implements SlocTransformationService {
 
-    private defaultTransformer: SlocTransformer<any, any> = new DefaultTransformer<any>();
+    private _defaultTransformer: SlocTransformer<any, any> = new DefaultTransformer<any>();
+
+    get defaultTransformer(): SlocTransformer<any, any> {
+        return this._defaultTransformer;
+    }
+
+    changeDefaultTransformer(newDefaultTransformer: SlocTransformer<any, any>): void {
+        this._defaultTransformer = newDefaultTransformer;
+    }
 
     registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>): void {
         const transformMeta: SlocTransformationMetadata<T> = {

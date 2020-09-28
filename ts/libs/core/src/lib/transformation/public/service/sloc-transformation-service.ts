@@ -12,6 +12,16 @@ import { SlocTransformer } from '../sloc-transformer';
 export interface SlocTransformationService {
 
     /**
+     * The default `SlocTransformer` that is used if no specific transformer has been registered for a particular type.
+     */
+    readonly defaultTransformer: SlocTransformer<any, any>;
+
+    /**
+     * Replaces the current default `SlocTransformer` with the one provided.
+     */
+    changeDefaultTransformer(newDefaultTransformer: SlocTransformer<any, any>): void;
+
+    /**
      * Registers the specified transformer with this `SlocTransformationService`.
      *
      * @param slocTypeId The SLOC type for which to register the transformer.
