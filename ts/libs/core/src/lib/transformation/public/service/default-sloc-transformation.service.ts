@@ -29,11 +29,19 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
     }
 
     transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T {
+        if (orchPlainObj === null || orchPlainObj === undefined) {
+            return null;
+        }
+
         const transformer = this.getTransformer(slocType);
         return transformer.transformToSlocObject(slocType, orchPlainObj, this);
     }
 
     transformToOrchestratorPlainObject(slocObj: any): any {
+        if (slocObj === null || slocObj === undefined) {
+            return null;
+        }
+
         const transformer = this.getTransformer(slocObj);
         return transformer.transformToOrchestratorPlainObject(slocObj, this);
     }

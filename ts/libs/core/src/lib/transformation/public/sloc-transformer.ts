@@ -16,7 +16,7 @@ export interface SlocTransformer<T, P = any> {
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
      *
      * @param slocType The type of SLOC object that should be created.
-     * @param orchPlainObj The orchestrator-specific plain object to be transformed.
+     * @param orchPlainObj The orchestrator-specific plain object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `SlocTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
      * @retuns A new SLOC object that results from transforming `orchPlainObj`.
@@ -26,7 +26,7 @@ export interface SlocTransformer<T, P = any> {
     /**
      * Transforms the specified SLOC object into an orchestrator-specific plain object that may be serialized without any further changes.
      *
-     * @param slocObj The SLOC object to be transformed.
+     * @param slocObj The SLOC object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `SlocTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
      * @retuns A new orchestrator-specific plain object that may be serialized without any further changes.

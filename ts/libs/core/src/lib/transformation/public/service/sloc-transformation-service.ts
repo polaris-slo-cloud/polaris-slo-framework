@@ -43,7 +43,7 @@ export interface SlocTransformationService {
      *
      * @param slocType The SLOC type into which the plain object should be transformed.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
-     * @retuns A new SLOC object that results from transforming `orchPlainObj`.
+     * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined.
      */
     transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T;
 
@@ -51,7 +51,7 @@ export interface SlocTransformationService {
      * Transforms the specified SLOC object into an orchestrator-specific plain object that may be serialized without any further changes.
      *
      * @param slocObj The SLOC object to be transformed.
-     * @retuns A new orchestrator-specific plain object that may be serialized without any further changes.
+     * @retuns A new orchestrator-specific plain object that may be serialized without any further changes or `null` if `slocObj` was `null` or `undefined.
      */
     transformToOrchestratorPlainObject(slocObj: any): any;
 
