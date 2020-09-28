@@ -4,6 +4,6 @@ export interface ApiVersionKind {
     kind: string;
 }
 
-export interface ObjectReference extends ApiVersionKind {
+export interface CrossVersionObjectReference extends ApiVersionKind {
     name: string;
 }

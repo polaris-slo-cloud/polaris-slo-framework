@@ -30,7 +30,11 @@ export class ObjectKindTransformer implements ReusableSlocTransformer<ObjectKind
         return ret;
     }
 
-    extractSlocObjectInitData(slocType: Constructor<ObjectKind>, orchPlainObj: ApiVersionKind, transformationService: SlocTransformationService): Partial<ObjectKind> {
+    extractSlocObjectInitData(
+        slocType: Constructor<ObjectKind>,
+        orchPlainObj: ApiVersionKind,
+        transformationService: SlocTransformationService,
+    ): Partial<ObjectKind> {
         const data: Partial<ObjectKind> = {
             kind: orchPlainObj.kind,
         };
