@@ -1,5 +1,5 @@
 import { Constructor } from '../../../util';
-import { SlocTransformer } from '../common';
+import { SlocTransformationConfig, SlocTransformer } from '../common';
 
 /**
  * Implementations of this service should be used for converting between orchestrator-independent SLOC objects
@@ -9,13 +9,17 @@ import { SlocTransformer } from '../common';
  *
  * If no transformer has been registered for a particular type, the `DefaultSlocTransformer` will be used.
  *
- * A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
- * If the same transformer should be used for a parent- and a subclass, it needs to be registered for both of them.
+ * By default a transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
  * This is an intentional design decision, because model subclasses often add additional properties and they thus need
  * to be transformed differently than their parents.
  *
  * Typically a transformer for a subclass would also contain an instance of the transformer of the parent class, such
  * that the transformation of the parent's properties can be delegated.
+ *
+ * If the same transformer should be used for a parent- and a subclass, there are two possibilities:
+ * - it can be registered for both of them or
+ * - `SlocTransformationConfig.inheritable` can be set to `true`, which will make all subclasses inherit the
+ * transformer, unless they register their own.
  */
 export interface SlocTransformationService {
 
@@ -35,8 +39,9 @@ export interface SlocTransformationService {
      * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
      * @param slocTypeId The SLOC type for which to register the transformer.
      * @param transformer The `SlocTransformer` for the type.
+     * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
      */
-    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>): void;
+    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.

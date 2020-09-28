@@ -1,6 +1,6 @@
 import { Constructor, SlocMetadataUtils } from '../../../util';
 import { SlocTransformationMetadata } from '../../internal';
-import { SlocTransformer } from '../common';
+import { SlocTransformationConfig, SlocTransformer } from '../common';
 import { DefaultTransformer } from '../transformers';
 import { SlocTransformationService } from './sloc-transformation-service';
 
@@ -21,9 +21,11 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         this._defaultTransformer = newDefaultTransformer;
     }
 
-    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>): void {
+    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>, config: SlocTransformationConfig = {}): void {
         const transformMeta: SlocTransformationMetadata<T> = {
+            ...config,
             transformer,
+            typeRegistered: slocType,
         };
         SlocMetadataUtils.setSlocTransformationMetadata(transformMeta, slocType);
     }
