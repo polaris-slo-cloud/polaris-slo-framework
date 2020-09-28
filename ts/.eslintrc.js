@@ -147,6 +147,12 @@ module.exports = {
                 "@typescript-eslint/no-non-null-assertion": "error",
                 "@typescript-eslint/no-parameter-properties": "off",
                 "@typescript-eslint/no-unused-expressions": "error",
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    {
+                        "args": "none",
+                    }
+                ],
                 "@typescript-eslint/no-use-before-define": "off",
                 "@typescript-eslint/no-var-requires": "error",
                 "@typescript-eslint/prefer-for-of": "error",
@@ -289,7 +295,7 @@ module.exports = {
                 "no-throw-literal": "error",
                 "no-trailing-spaces": "error",
                 "no-undef-init": "error",
-                "no-underscore-dangle": "error",
+                "no-underscore-dangle": "off",
                 "no-unsafe-finally": "error",
                 "no-unused-labels": "error",
                 "no-use-before-define": "off",
