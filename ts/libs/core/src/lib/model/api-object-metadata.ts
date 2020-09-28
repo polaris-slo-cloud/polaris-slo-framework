@@ -1,5 +1,5 @@
 import { SlocType } from '../transformation';
-import { IndexByKey } from '../util';
+import { IndexByKey, initSelf } from '../util';
 
 /**
  * Provides metadata about an `ApiObject`.
@@ -45,5 +45,9 @@ export class ApiObjectMetadata {
      * UID is the unique in time and space value for this object.
      */
     uid?: string;
+
+    constructor(initData?: Partial<ApiObjectMetadata>) {
+        initSelf(this, initData);
+    }
 
 }
