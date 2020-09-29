@@ -15,6 +15,6 @@ export function initSlocKubernetes(): SlocRuntime {
 
 function registerTransformers(runtime: SlocRuntime): void {
     runtime.transformer.registerTransformer(ObjectKind, new ObjectKindTransformer());
-    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer());
+    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer(), { inheritable: true });
     runtime.transformer.registerTransformer(ApiObject, new ApiObjectTransformer<any>(), { inheritable: true });
 }

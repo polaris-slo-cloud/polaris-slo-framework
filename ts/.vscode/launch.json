@@ -16,7 +16,8 @@
             "runtimeArgs": [
                 "nx",
                 "serve",
-                "cli-sloc-k8s-serializer"
+                "cli-sloc-k8s-serializer",
+                "--with-deps=true"
             ],
             // "program": "${workspaceFolder}/serve",
             "outFiles": [

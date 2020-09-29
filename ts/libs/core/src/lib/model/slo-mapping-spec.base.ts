@@ -1,7 +1,7 @@
 import { SlocType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
 import { ElasticityStrategyKind } from './elasticity-strategy-kind';
-import { ObjectReference } from './object-reference';
+import { SloTarget } from './slo-target';
 
 /**
  * Common superclass for SloMappingSpecs.
@@ -9,8 +9,8 @@ import { ObjectReference } from './object-reference';
 export abstract class SloMappingSpecBase {
 
     /** Specifies the target on which to execute the elasticity strategy. */
-    @SlocType(() => ObjectReference)
-    targetRef: ObjectReference;
+    @SlocType(() => SloTarget)
+    targetRef: SloTarget;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
     @SlocType(() => ElasticityStrategyKind)
