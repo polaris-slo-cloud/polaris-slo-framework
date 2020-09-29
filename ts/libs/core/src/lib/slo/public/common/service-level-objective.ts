@@ -1,4 +1,5 @@
-import { SloMappingSpecBase } from '../../model';
+import { SloMappingSpecBase } from '../../../model';
+import { SlocRuntime } from '../../../runtime';
 import { SloOutput } from './slo-output';
 
 /**
@@ -19,9 +20,10 @@ export interface ServiceLevelObjective<S extends SloMappingSpecBase, E> {
      *
      * @param spec The SloMappingSpec that describes the configuration for this instance.
      * @param metricsSource The `MetricsSource` that should be used for querying the observed metrics.
+     * @param slocRuntime The `SlocRuntime` instance.
      * @returns A Promise that resolves when the SLO has finished its configuration.
      */
-    configure(spec: S, metricsSource: any): Promise<void>;
+    configure(spec: S, metricsSource: any, slocRuntime: SlocRuntime): Promise<void>;
 
     /**
      * Evaluates the SLO on the current system state.
@@ -31,5 +33,12 @@ export interface ServiceLevelObjective<S extends SloMappingSpecBase, E> {
      * - `null`, if no action should be taken (i.e., elasticity strategy requires no change).
      */
     evaluate(): Promise<SloOutput<E> | null>;
+
+    /**
+     * This method is called by the control loop when this SLO is about to be destroyed.
+     *
+     * Its implementation is optional and it can be used to for cleanup.
+     */
+    onDestroy?(): void;
 
 }
