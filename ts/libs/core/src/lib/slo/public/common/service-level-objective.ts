@@ -1,3 +1,4 @@
+import { MetricsSource } from '../../../metrics';
 import { SloMappingSpec } from '../../../model';
 import { SlocRuntime } from '../../../runtime';
 import { SloOutput } from './slo-output';
@@ -23,7 +24,7 @@ export interface ServiceLevelObjective<S extends SloMappingSpec, E> {
      * @param slocRuntime The `SlocRuntime` instance.
      * @returns A Promise that resolves when the SLO has finished its configuration.
      */
-    configure(spec: S, metricsSource: any, slocRuntime: SlocRuntime): Promise<void>;
+    configure(spec: S, metricsSource: MetricsSource, slocRuntime: SlocRuntime): Promise<void>;
 
     /**
      * Evaluates the SLO on the current system state.
