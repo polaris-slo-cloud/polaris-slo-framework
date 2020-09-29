@@ -5,7 +5,7 @@ import { PropertyTransformer } from '../../internal/property-transformer';
 export function SlocType(typeFn: TypeFn<any>): PropertyDecorator {
     return (prototype: any, propertyKey: string) => {
         const slocType = typeFn();
-        SlocMetadataUtils.setPropertySlocType(prototype, propertyKey, slocType);
+        SlocMetadataUtils.setPropertySlocType(prototype.constructor, propertyKey, slocType);
 
         const propertyTransformer = new PropertyTransformer(slocType);
         const origDecorator = Transform((value, obj, transformationType) => propertyTransformer.transform(value, obj, transformationType));

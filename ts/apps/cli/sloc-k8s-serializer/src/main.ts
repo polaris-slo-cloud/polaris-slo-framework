@@ -1,6 +1,6 @@
 import { ApiObjectMetadata, ElasticityStrategyKind, ObjectReference } from '@sloc/core';
 import { initSlocKubernetes } from '@sloc/kubernetes';
-import { cloneDeep as _cloneDeep, isEqual as _isEqual } from 'lodash';
+import { isEqual as _isEqual } from 'lodash';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec } from './app/model/cpu-usage-slo-mapping';
 
 const slocRuntime = initSlocKubernetes();
@@ -25,14 +25,14 @@ const cpuSlo = new CpuUsageSloMapping({
     }),
 });
 
-console.log('Initial SLOC object: ', JSON.stringify(cpuSlo, null, '    '));
+console.log('Initial SLOC object: ', cpuSlo);
 
 const orchSpecific = slocRuntime.transformer.transformToOrchestratorPlainObject(cpuSlo);
-
-console.log('Orchestrator-specific plain object: ', JSON.stringify(orchSpecific, null, '    '));
+console.log('Orchestrator-specific plain object: ', orchSpecific);
 
 const slocObj = slocRuntime.transformer.transformToSlocObject(CpuUsageSloMapping, orchSpecific);
+console.log('Parsed SLOC object: ', slocObj);
 
-console.log('Parsed SLOC object: ', JSON.stringify(slocObj, null, '    '));
+const objectsAreEqual = _isEqual(cpuSlo, slocObj);
+console.log('Parsed SLOC object is equal to initial SLOC object: ', objectsAreEqual);
 
-console.log('Parsed SLOC object is equal to initial object: ', _isEqual(_cloneDeep(cpuSlo), _cloneDeep(slocObj)));
