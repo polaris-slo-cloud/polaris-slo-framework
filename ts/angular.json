@@ -314,7 +314,8 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "cli-sloc-k8s-serializer:build"
+            "buildTarget": "cli-sloc-k8s-serializer:build",
+            "inspect": true
           }
         },
         "lint": {
