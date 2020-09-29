@@ -1,6 +1,6 @@
-import { ApiObject, ObjectKind, SloMappingBase, SlocType, initSelf } from '@sloc/core';
+import { ApiObject, ObjectKind, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
 
-export class CpuUsageSloMappingSpec extends SloMappingBase {
+export class CpuUsageSloMappingSpec extends SloMappingSpecBase {
 
     targetAvgCPUUtilizationPercentage: number;
 

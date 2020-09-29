@@ -4,9 +4,9 @@ import { ElasticityStrategyKind } from './elasticity-strategy-kind';
 import { ObjectReference } from './object-reference';
 
 /**
- * Common superclass for SloMappings.
+ * Common superclass for SloMappingSpecs.
  */
-export abstract class SloMappingBase {
+export abstract class SloMappingSpecBase {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     @SlocType(() => ObjectReference)
@@ -41,7 +41,7 @@ export abstract class SloMappingBase {
      */
     staticElasticityStrategyParams?: IndexByKey<any>;
 
-    constructor(initData?: Partial<SloMappingBase>) {
+    constructor(initData?: Partial<SloMappingSpecBase>) {
         initSelf(this, initData);
     }
 
