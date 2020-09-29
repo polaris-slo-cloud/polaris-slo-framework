@@ -81,7 +81,10 @@ module.exports = {
                             { "sourceTag": "orchestrator:kubernetes", "onlyDependOnLibsWithTags": [ "scope:core", "orchestrator:kubernetes" ] },
 
                             // CLI apps may only depend on core and the respective orchestrator library that they define using "orchestrator:*".
-                            { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "scope:core" ] },
+                            // { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "scope:core" ] },
+                            // There appears to be a bug in the ESLint plugin that uses the intersection of the allowed libraries of the applied source tags instead of the union.
+                            // ToDo: Check if this is fixed in a new version.
+                            { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "*" ] },
 
                             // UI projects may depend on any library project.
                             { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": [ "*" ] },

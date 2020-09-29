@@ -54,7 +54,8 @@
     },
     "cli-sloc-k8s-serializer": {
       "tags": [
-        "scope:cli"
+        "scope:cli",
+        "orchestrator:kubernetes"
       ]
     }
   },
