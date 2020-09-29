@@ -1,4 +1,4 @@
-import { ApiObject, ObjectKind, ObjectReference, SlocRuntime, initSlocRuntime } from '@sloc/core';
+import { ApiObject, ObjectKind, ObjectReference, SloTarget, SlocRuntime, initSlocRuntime } from '@sloc/core';
 import { KubernetesSlocRuntime } from './runtime';
 import { ObjectKindTransformer, ObjectReferenceTransformer } from './transformation';
 import { ApiObjectTransformer } from './transformation/public/transformers/api-object.transformer';
@@ -15,6 +15,7 @@ export function initSlocKubernetes(): SlocRuntime {
 
 function registerTransformers(runtime: SlocRuntime): void {
     runtime.transformer.registerTransformer(ObjectKind, new ObjectKindTransformer());
-    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer(), { inheritable: true });
+    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer());
+    runtime.transformer.registerTransformer(SloTarget, new ObjectReferenceTransformer());
     runtime.transformer.registerTransformer(ApiObject, new ApiObjectTransformer<any>(), { inheritable: true });
 }
