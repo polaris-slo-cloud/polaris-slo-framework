@@ -15,7 +15,7 @@ export interface SloMappingSpec {
     elasticityStrategy: ElasticityStrategyKind;
 
     /**
-     * Any static parameters, which are unknown to the SLO, but which may be required to configure
+     * Any static configuration parameters, which are unknown to the SLO, but which may be required to configure
      * the chosen kind of elasticity strategy should be specified here. They will be copied over
      * into the spec of the elasticity strategy.
      *
@@ -30,14 +30,14 @@ export interface SloMappingSpec {
      *          ...
      *      }),
      *      ...,
-     *      staticElasticityStrategyParams: {
-     *          // Anything in here will be copied over to the spec of the elasticity strategy.
+     *      staticElasticityStrategyConfig: {
+     *          // Anything in here will be copied over to the `staticConfig` property of the elasticity strategy spec.
      *          maxReplicas: 100,
      *      },
      * });
      * ```
      */
-    staticElasticityStrategyParams?: IndexByKey<any>;
+    staticElasticityStrategyConfig?: IndexByKey<any>;
 
 }
 
@@ -52,7 +52,7 @@ export abstract class SloMappingSpecBase implements SloMappingSpec {
     @SlocType(() => ElasticityStrategyKind)
     elasticityStrategy: ElasticityStrategyKind;
 
-    staticElasticityStrategyParams?: IndexByKey<any>;
+    staticElasticityStrategyConfig?: IndexByKey<any>;
 
     constructor(initData?: Partial<SloMappingSpecBase>) {
         initSelf(this, initData);
