@@ -4,16 +4,14 @@ import { ElasticityStrategyKind } from './elasticity-strategy-kind';
 import { SloTarget } from './slo-target';
 
 /**
- * Common superclass for SloMappingSpecs.
+ * Defines the minimum configuration data that is needed for an SLO mapping.
  */
-export abstract class SloMappingSpecBase {
+export interface SloMappingSpec {
 
     /** Specifies the target on which to execute the elasticity strategy. */
-    @SlocType(() => SloTarget)
     targetRef: SloTarget;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
-    @SlocType(() => ElasticityStrategyKind)
     elasticityStrategy: ElasticityStrategyKind;
 
     /**
@@ -39,6 +37,21 @@ export abstract class SloMappingSpecBase {
      * });
      * ```
      */
+    staticElasticityStrategyParams?: IndexByKey<any>;
+
+}
+
+/**
+ * Common superclass for SloMappingSpecs.
+ */
+export abstract class SloMappingSpecBase implements SloMappingSpec {
+
+    @SlocType(() => SloTarget)
+    targetRef: SloTarget;
+
+    @SlocType(() => ElasticityStrategyKind)
+    elasticityStrategy: ElasticityStrategyKind;
+
     staticElasticityStrategyParams?: IndexByKey<any>;
 
     constructor(initData?: Partial<SloMappingSpecBase>) {
