@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { SlocMetadataUtils, TypeFn } from '../../../util';
-import { PropertyTransformer } from '../../internal';
+import { PropertyTransformer } from '../../internal/property-transformer';
 
 export function SlocType(typeFn: TypeFn<any>): PropertyDecorator {
     return (prototype: any, propertyKey: string) => {
