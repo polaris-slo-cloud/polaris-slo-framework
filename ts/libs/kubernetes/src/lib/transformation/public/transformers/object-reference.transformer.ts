@@ -22,7 +22,7 @@ export class ObjectReferenceTransformer implements ReusableSlocTransformer<Objec
         transformationService: SlocTransformationService,
     ): ObjectReference {
         const initData = this.extractSlocObjectInitData(slocType, orchPlainObj, transformationService);
-        return new ObjectReference(initData);
+        return new slocType(initData);
     }
 
     transformToOrchestratorPlainObject(slocObj: ObjectReference, transformationService: SlocTransformationService): CrossVersionObjectReference {
