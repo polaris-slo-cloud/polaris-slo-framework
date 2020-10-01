@@ -1,3 +1,5 @@
+import { SlocRuntime } from '../runtime/public/sloc-runtime';
+import { ServiceLevelObjective } from '../slo';
 import { SlocType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
 import { ElasticityStrategyKind } from './elasticity-strategy-kind';
@@ -5,14 +7,24 @@ import { SloTarget } from './slo-target';
 
 /**
  * Defines the minimum configuration data that is needed for an SLO mapping.
+ *
+ * @param T The type that describes the SLO's required configuration.
  */
-export interface SloMappingSpec {
+export interface SloMappingSpec<T> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     targetRef: SloTarget;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
     elasticityStrategy: ElasticityStrategyKind;
+
+    /**
+     * Configuration parameters for the SLO.
+     *
+     * @note If `T` is a class, the `@SlocType` decorator needs to be applied in the
+     * concrete class that implements `SloMappingSpec`.
+     */
+    sloConfig: T;
 
     /**
      * Any static configuration parameters, which are unknown to the SLO, but which may be required to configure
@@ -39,12 +51,22 @@ export interface SloMappingSpec {
      */
     staticElasticityStrategyConfig?: IndexByKey<any>;
 
+    /**
+     * Creates a new instance of the `ServiceLevelObjective` class associated with this spec.
+     *
+     * The `ServiceLevelObjective.configure()` method is NOT called by this factory method.
+     *
+     * @param slocRuntime The `SlocRuntime` instance.
+     * @returns A `ServiceLevelObjective` instance of the type of SLO associated with this spec.
+     */
+    createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<this, any>;
+
 }
 
 /**
  * Common superclass for SloMappingSpecs.
  */
-export abstract class SloMappingSpecBase implements SloMappingSpec {
+export abstract class SloMappingSpecBase<T = IndexByKey<any>> implements SloMappingSpec<T> {
 
     @SlocType(() => SloTarget)
     targetRef: SloTarget;
@@ -52,10 +74,14 @@ export abstract class SloMappingSpecBase implements SloMappingSpec {
     @SlocType(() => ElasticityStrategyKind)
     elasticityStrategy: ElasticityStrategyKind;
 
+    sloConfig: T;
+
     staticElasticityStrategyConfig?: IndexByKey<any>;
 
     constructor(initData?: Partial<SloMappingSpecBase>) {
         initSelf(this, initData);
     }
+
+    abstract createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<this, any>;
 
 }

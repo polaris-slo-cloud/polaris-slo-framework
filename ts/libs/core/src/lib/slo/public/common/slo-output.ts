@@ -10,7 +10,7 @@ export interface SloOutput<T> {
      *
      * This contains information on the SLO target and the elasticity strategy to be used.
      */
-    spec: SloMappingSpec;
+    spec: SloMappingSpec<any>;
 
     /**
      * The `ElasticityStrategySpec.sloOutputParams` that should be submitted to the cluster.

@@ -1,12 +1,20 @@
-import { ApiObject, ObjectKind, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { ApiObject, ObjectKind, ServiceLevelObjective, SloMappingSpecBase, SlocRuntime, SlocType, initSelf } from '@sloc/core';
 
-export class CpuUsageSloMappingSpec extends SloMappingSpecBase {
+export interface CpuUsageSloConfig {
 
     targetAvgCPUUtilizationPercentage: number;
+
+}
+
+export class CpuUsageSloMappingSpec extends SloMappingSpecBase<CpuUsageSloConfig> {
 
     constructor(initData?: Partial<CpuUsageSloMappingSpec>) {
         super(initData);
         initSelf(this, initData);
+    }
+
+    createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<this, any> {
+        throw new Error('Method not implemented.');
     }
 
 }

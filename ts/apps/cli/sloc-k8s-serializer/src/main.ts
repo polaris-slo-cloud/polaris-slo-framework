@@ -21,7 +21,9 @@ const cpuSlo = new CpuUsageSloMapping({
             kind: 'Deployment',
             name: 'twitter-clone',
         }),
-        targetAvgCPUUtilizationPercentage: 80,
+        sloConfig: {
+            targetAvgCPUUtilizationPercentage: 80,
+        },
     }),
 });
 
