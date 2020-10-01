@@ -2,6 +2,7 @@ import { ApiObjectMetadata, ElasticityStrategyKind, SloTarget } from '@sloc/core
 import { initSlocKubernetes } from '@sloc/kubernetes';
 import { isEqual as _isEqual } from 'lodash';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec } from './app/model/cpu-usage-slo-mapping';
+import { HorizontalElasticityStrategyKind } from './app/model/horizontal-elasticity-strategy-kind';
 
 const slocRuntime = initSlocKubernetes();
 
@@ -13,11 +14,7 @@ const cpuSlo = new CpuUsageSloMapping({
         name: 'my-slo',
     }),
     spec: new CpuUsageSloMappingSpec({
-        elasticityStrategy: new ElasticityStrategyKind({
-            group: 'elasticity.sloc.github.io',
-            version: 'v1',
-            kind: 'HorizontalElasticityStrategy',
-        }),
+        elasticityStrategy: new HorizontalElasticityStrategyKind(),
         targetRef: new SloTarget({
             group: 'apps',
             version: 'v1',
