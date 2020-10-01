@@ -5,6 +5,9 @@ import { CpuUsageSloMapping, CpuUsageSloMappingSpec } from './app/model/cpu-usag
 
 const slocRuntime = initSlocKubernetes();
 
+// There could be a specific init() function for every library, which could be used to register its custom types with the TransformationService.
+slocRuntime.transformer.registerObjectKind(new CpuUsageSloMapping().objectKind, CpuUsageSloMapping);
+
 const cpuSlo = new CpuUsageSloMapping({
     metadata: new ApiObjectMetadata({
         name: 'my-slo',

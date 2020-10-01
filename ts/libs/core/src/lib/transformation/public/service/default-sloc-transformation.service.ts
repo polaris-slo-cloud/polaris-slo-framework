@@ -1,6 +1,7 @@
-import { Constructor, SlocMetadataUtils } from '../../../util';
+import { ObjectKind } from '../../../model';
+import { Constructor, IndexByKey, SlocMetadataUtils } from '../../../util';
 import { SlocTransformationMetadata } from '../../internal';
-import { SlocTransformationConfig, SlocTransformer } from '../common';
+import { OrchestratorToSlocTransformationError, SlocTransformationConfig, SlocTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
 import { SlocTransformationService } from './sloc-transformation-service';
 
@@ -12,6 +13,8 @@ import { SlocTransformationService } from './sloc-transformation-service';
 export class DefaultSlocTransformationService implements SlocTransformationService {
 
     private _defaultTransformer: SlocTransformer<any, any> = new DefaultTransformer<any>();
+
+    private knownObjectKinds: IndexByKey<Constructor<any>> = {};
 
     get defaultTransformer(): SlocTransformer<any, any> {
         return this._defaultTransformer;
@@ -30,9 +33,30 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         SlocMetadataUtils.setSlocTransformationMetadata(transformMeta, slocType);
     }
 
-    transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T {
+    registerObjectKind<T>(kind: ObjectKind, slocType: Constructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void {
+        const kindStr = kind.toString();
+        this.knownObjectKinds[kindStr] = slocType;
+
+        if (transformer) {
+            this.registerTransformer(slocType, transformer, config);
+        }
+    }
+
+    transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T;
+    transformToSlocObject(kind: ObjectKind, orchPlainObj: any): any;
+    transformToSlocObject<T = any>(slocTypeOrKind: Constructor<T> | ObjectKind, orchPlainObj: any): T {
         if (orchPlainObj === null || orchPlainObj === undefined) {
             return null;
+        }
+
+        let slocType: Constructor<T>;
+        if (slocTypeOrKind instanceof Function) {
+            slocType = slocTypeOrKind;
+        } else {
+            slocType = this.getSlocType(slocTypeOrKind);
+            if (!slocType) {
+                throw new UnknownObjectKindError(slocTypeOrKind, orchPlainObj, `The ObjectKind '${slocTypeOrKind} has not been registered.`);
+            }
         }
 
         const transformer = this.getTransformer(slocType);
@@ -50,6 +74,11 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
 
     getPropertyType<T>(slocType: Constructor<T>, propertyKey: keyof T & string): Constructor<any> {
         return SlocMetadataUtils.getPropertySlocType(slocType, propertyKey);
+    }
+
+    private getSlocType(kind: ObjectKind): Constructor<any> {
+        const kindStr = kind.toString();
+        return this.knownObjectKinds[kindStr];
     }
 
     private getTransformer<T>(slocObjOrType: T | Constructor<T>): SlocTransformer<T, any> {

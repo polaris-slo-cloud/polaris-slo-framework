@@ -1,3 +1,4 @@
+import { ObjectKind } from '../../../model';
 import { Constructor } from '../../../util';
 import { SlocTransformationConfig, SlocTransformer } from '../common';
 
@@ -6,8 +7,12 @@ import { SlocTransformationConfig, SlocTransformer } from '../common';
  * and orchestrator-specific plain objects, which can be serialized.
  *
  * A `SlocTransformationService` uses the `SlocTransformers` that have been registered with it to transform complex objects.
- *
  * If no transformer has been registered for a particular type, the `DefaultSlocTransformer` will be used.
+ *
+ * Transformation from an orchestrator-specific plain object to a SLOC object can be done either by
+ * - specifying the class of the SLOC object, or
+ * - specifying the `ObjectKind` from the orchestrator-specific plain object (in this case, the `ObjectKind` must have been
+ * registered with the `SlocTransformationService` first).
  *
  * By default a transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
  * This is an intentional design decision, because model subclasses often add additional properties and they thus need
@@ -37,20 +42,43 @@ export interface SlocTransformationService {
      * Registers the specified transformer with this `SlocTransformationService`.
      *
      * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
-     * @param slocTypeId The SLOC type for which to register the transformer.
+     * @param slocType The SLOC type for which to register the transformer.
      * @param transformer The `SlocTransformer` for the type.
      * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
      */
     registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
 
     /**
+     * Associates the specified object kind with a SLOC type and optionally also with a transformer.
+     *
+     * This allows the `SlocTransformationService` to automatically instantiate the appropriate class for a raw orchestrator object,
+     * based on the kind information that it provides.
+     *
+     * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
+     * @param kind The `ObjectKind` that should be registered.
+     * @param slocType The SLOC type to be associated with the object kind.
+     * @param transformer The `SlocTransformer` for the type.
+     * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
+     */
+    registerObjectKind<T>(kind: ObjectKind, slocType: Constructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
+
+    /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
      *
      * @param slocType The SLOC type into which the plain object should be transformed.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
-     * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined.
+     * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
      */
     transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T;
+
+    /**
+     * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
+     *
+     * @param kind The registered `ObjectKind` that can be used to deduce the SLOC type of the object.
+     * @param orchPlainObj The orchestrator-specific plain object to be transformed.
+     * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
+     */
+    transformToSlocObject(kind: ObjectKind, orchPlainObj: any): any;
 
     /**
      * Transforms the specified SLOC object into an orchestrator-specific plain object that may be serialized without any further changes.

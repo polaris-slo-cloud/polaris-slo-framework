@@ -1,3 +1,4 @@
+import { ObjectKind } from '../../../model';
 import { Constructor } from '../../../util';
 
 export class SlocTransformationError extends Error {}
@@ -22,6 +23,22 @@ export class OrchestratorToSlocTransformationError extends SlocTransformationErr
 
     constructor(
         public slocType: Constructor<any>,
+        public orchPlainObj: any,
+        message: string,
+    ) {
+        super(message);
+    }
+
+}
+
+/**
+ * This type of error is thrown when trying to derive the SLOC type that corresponds to the `ObjectKind`
+ * specified in the orchestrator-specific plain object.
+ */
+export class UnknownObjectKindError extends SlocTransformationError {
+
+    constructor(
+        public kind: ObjectKind,
         public orchPlainObj: any,
         message: string,
     ) {

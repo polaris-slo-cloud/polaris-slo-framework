@@ -18,4 +18,11 @@ export class ObjectKind {
         initSelf(this, initData);
     }
 
+    /**
+     * @returns A string that uniquely identifies this object kind.
+     */
+    toString(): string {
+        return `${this.group}/${this.version}/${this.kind}`;
+    }
+
 }
