@@ -6,9 +6,13 @@ package v1
 // It includes the properties required by most SLO mappings.
 type SloMapping struct {
 	// Specifies the target on which to execute the elasticity strategy.
-	SloTarget `json:",inline"`
+	TargetRef SloTarget `json:"targetRef"`
 
 	// Specifies the type of ElasticityStrategy to use for this SLO mapping.
-	// The strategy spec must have an SloCompliance embedded inline.
 	ElasticityStrategy ElasticityStrategyKind `json:"elasticityStrategy"`
+
+	// Any static configuration parameters, which are unknown to the SLO, but which may be required to configure
+	// the chosen kind of elasticity strategy should be specified here. They will be copied over
+	// into the spec of the elasticity strategy.
+	StaticElasticityStrategyConfig interface{} `json:staticElasticityStrategyConfig,omitempty`
 }

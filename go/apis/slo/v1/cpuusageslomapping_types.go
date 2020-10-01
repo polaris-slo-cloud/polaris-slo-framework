@@ -22,14 +22,19 @@ import (
 
 // Important: Run `make` and `make manifests` to regenerate code and YAML files after modifying this file.
 
-// CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to a target workload.
-type CPUUsageSloMappingSpec struct {
-	SloMapping SloMapping `json:",inline"`
-
+// CPUUsageSloConfig contains the configuration for a CPUUsageSloMappingSpec.
+type CPUUsageSloConfig struct {
 	// The target average CPU utilization percentage of the workload's pods (percentage of the allocated CPUs).
 	// +kubebuilder:validation:Minimum=1
 	// +kubebuilder:validation:Maximum=100
 	TargetAvgCPUUtilizationPercentage int32 `json:"targetAvgCPUUtilizationPercentage"`
+}
+
+// CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to a target workload.
+type CPUUsageSloMappingSpec struct {
+	SloMapping SloMapping `json:",inline"`
+
+	SloConfig CPUUsageSloConfig `json:"sloConfig"`
 }
 
 // CPUUsageSloMappingStatus defines the observed state of CPUUsageSloMapping
