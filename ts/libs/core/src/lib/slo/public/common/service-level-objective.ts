@@ -7,9 +7,9 @@ import { SloOutput } from './slo-output';
  * This interface must be implemented by every SLO.
  *
  * @param S The type of the `SloMappingSpec`.
- * @param E The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
+ * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
-export interface ServiceLevelObjective<S extends SloMappingSpec<any>, E> {
+export interface ServiceLevelObjective<S extends SloMappingSpec<any>, O> {
 
     /**
      * The SloMappingSpec that was used to configure this SLO instance.
@@ -33,7 +33,7 @@ export interface ServiceLevelObjective<S extends SloMappingSpec<any>, E> {
      * - the output that should be used for configuring the elasticity strategy or
      * - `null`, if no action should be taken (i.e., elasticity strategy requires no change).
      */
-    evaluate(): Promise<SloOutput<E> | null>;
+    evaluate(): Promise<SloOutput<O> | null>;
 
     /**
      * This method is called by the control loop when this SLO is about to be destroyed.
