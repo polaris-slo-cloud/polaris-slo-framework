@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { SloMappingSpec } from '../../../model';
 import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloEvaluator } from './slo-evaluator';
@@ -35,15 +36,17 @@ export interface SloControlLoop {
     isActive: boolean;
 
     /**
-     * Adds the specified `slo` under the `key`, such that it will be evaluated on every loop iteration,
+     * Creates a new SLO instance using the specified `sloMapping` and adds that instance
+     * under the `key`, such that it will be evaluated on every loop iteration,
      * starting with the next one.
      *
      * If an SLO with the same `key` already exists, it will be replaced.
      *
      * @param key The key that should be used to identify the SLO.
-     * @param slo The `ServiceLevelObjective` object.
+     * @param sloMapping The `SloMappingSpec` that describes the SLO.
+     * @returns The created `ServiceLevelObjective` object.
      */
-    addSlo(key: string, slo: ServiceLevelObjective<any, any>): void;
+    addSlo(key: string, sloMapping: SloMappingSpec<any>): ServiceLevelObjective<any, any>;
 
     /**
      * @returns The `ServiceLevelObjective` that has been added under the specified `key`

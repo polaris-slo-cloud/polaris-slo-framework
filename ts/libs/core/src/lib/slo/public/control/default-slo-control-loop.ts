@@ -1,3 +1,4 @@
+import { SloMappingSpec } from '../../../model';
 import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloControlLoop, SloControlLoopConfig } from './slo-control-loop';
@@ -9,7 +10,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     isActive: boolean;
 
-    addSlo(key: string, slo: ServiceLevelObjective<any, any>): void {
+    addSlo(key: string, sloMapping: SloMappingSpec<any>): ServiceLevelObjective<any, any> {
         throw new Error('Method not implemented.');
     }
 
