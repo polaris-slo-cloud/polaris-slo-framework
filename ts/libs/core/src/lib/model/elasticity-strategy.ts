@@ -15,6 +15,8 @@ import { SloTarget } from './slo-target';
  * The type of this property determines if an elasticity strategy is compatible with a certain SLO.
  *
  * `staticConfig` should be used for other configuration data, which is not changed by the SLO.
+ *
+ * @param T The type of output parameters from the SLO/input parameters of the elasticity strategy.
  */
 export class ElasticityStrategySpec<T> {
 
@@ -40,6 +42,8 @@ export class ElasticityStrategySpec<T> {
 
 /**
  * Used to submit/retrieve an elasticity strategy to/from the orchestrator.
+ *
+ * @param T The type of output parameters from the SLO/input parameters of the elasticity strategy.
  */
 export class ElasticityStrategy<T> extends ApiObject<ElasticityStrategySpec<T>> {
 
