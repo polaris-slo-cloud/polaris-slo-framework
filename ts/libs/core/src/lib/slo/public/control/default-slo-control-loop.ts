@@ -10,7 +10,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     isActive: boolean;
 
-    addSlo(key: string, sloMapping: SloMappingSpec<any>): ServiceLevelObjective<any, any> {
+    addSlo(key: string, sloMapping: SloMappingSpec<any, any>): ServiceLevelObjective<any, any> {
         throw new Error('Method not implemented.');
     }
 

@@ -1,4 +1,4 @@
-import { ApiObject, ObjectKind, ServiceLevelObjective, SloMappingSpecBase, SlocRuntime, SlocType, initSelf } from '@sloc/core';
+import { ApiObject, ObjectKind, ServiceLevelObjective, SloCompliance, SloMappingSpecBase, SlocRuntime, SlocType, initSelf } from '@sloc/core';
 
 export interface CpuUsageSloConfig {
 
@@ -6,7 +6,7 @@ export interface CpuUsageSloConfig {
 
 }
 
-export class CpuUsageSloMappingSpec extends SloMappingSpecBase<CpuUsageSloConfig> {
+export class CpuUsageSloMappingSpec extends SloMappingSpecBase<CpuUsageSloConfig, SloCompliance> {
 
     constructor(initData?: Partial<CpuUsageSloMappingSpec>) {
         super(initData);

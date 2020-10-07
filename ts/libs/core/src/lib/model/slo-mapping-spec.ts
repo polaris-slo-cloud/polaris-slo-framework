@@ -8,15 +8,16 @@ import { SloTarget } from './slo-target';
 /**
  * Defines the minimum configuration data that is needed for an SLO mapping.
  *
- * @param T The type that describes the SLO's required configuration.
+ * @param C The type that describes the SLO's required configuration.
+ * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
-export interface SloMappingSpec<T> {
+export interface SloMappingSpec<C, O> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     targetRef: SloTarget;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
-    elasticityStrategy: ElasticityStrategyKind;
+    elasticityStrategy: ElasticityStrategyKind<O>;
 
     /**
      * Configuration parameters for the SLO.
@@ -24,7 +25,7 @@ export interface SloMappingSpec<T> {
      * @note If `T` is a class, the `@SlocType` decorator needs to be applied in the
      * concrete class that implements `SloMappingSpec`.
      */
-    sloConfig: T;
+    sloConfig: C;
 
     /**
      * Any static configuration parameters, which are unknown to the SLO, but which may be required to configure
@@ -65,20 +66,23 @@ export interface SloMappingSpec<T> {
 
 /**
  * Common superclass for SloMappingSpecs.
+ *
+ * @param C The type that describes the SLO's required configuration.
+ * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
-export abstract class SloMappingSpecBase<T = IndexByKey<any>> implements SloMappingSpec<T> {
+export abstract class SloMappingSpecBase<C, O> implements SloMappingSpec<C, O> {
 
     @SlocType(() => SloTarget)
     targetRef: SloTarget;
 
     @SlocType(() => ElasticityStrategyKind)
-    elasticityStrategy: ElasticityStrategyKind;
+    elasticityStrategy: ElasticityStrategyKind<O>;
 
-    sloConfig: T;
+    sloConfig: C;
 
     staticElasticityStrategyConfig?: IndexByKey<any>;
 
-    constructor(initData?: Partial<SloMappingSpecBase>) {
+    constructor(initData?: Partial<SloMappingSpecBase<C, O>>) {
         initSelf(this, initData);
     }
 

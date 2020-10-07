@@ -1,6 +1,6 @@
-import { ElasticityStrategyKind } from '@sloc/core';
+import { ElasticityStrategyKind, SloCompliance } from '@sloc/core';
 
-export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind {
+export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind<SloCompliance> {
 
     constructor() {
         super({

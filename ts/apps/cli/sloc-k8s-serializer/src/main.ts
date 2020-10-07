@@ -1,4 +1,4 @@
-import { ApiObjectMetadata, ElasticityStrategyKind, SloTarget } from '@sloc/core';
+import { ApiObjectMetadata, SloTarget } from '@sloc/core';
 import { initSlocKubernetes } from '@sloc/kubernetes';
 import { isEqual as _isEqual } from 'lodash';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec } from './app/model/cpu-usage-slo-mapping';

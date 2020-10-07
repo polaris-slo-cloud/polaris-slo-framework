@@ -9,7 +9,7 @@ import { SloOutput } from './slo-output';
  * @param S The type of the `SloMappingSpec`.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
-export interface ServiceLevelObjective<S extends SloMappingSpec<any>, O> {
+export interface ServiceLevelObjective<S extends SloMappingSpec<any, O>, O> {
 
     /**
      * The SloMappingSpec that was used to configure this SLO instance.
