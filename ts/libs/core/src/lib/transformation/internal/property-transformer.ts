@@ -1,5 +1,5 @@
 import { TransformationType } from 'class-transformer';
-import { getSlocRuntimeOrThrow } from '../../runtime';
+import { getSlocRuntimeOrThrow } from '../../runtime/public/sloc-runtime';
 import { Constructor } from '../../util';
 
 /**
