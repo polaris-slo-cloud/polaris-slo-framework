@@ -6,15 +6,15 @@ import { SloOutput } from './slo-output';
 /**
  * This interface must be implemented by every SLO.
  *
- * @param S The type of the `SloMappingSpec`.
+ * @param C The type that describes the SLO's required configuration.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
  */
-export interface ServiceLevelObjective<S extends SloMappingSpec<any, O>, O> {
+export interface ServiceLevelObjective<C, O> {
 
     /**
      * The SloMappingSpec that was used to configure this SLO instance.
      */
-    readonly spec: S;
+    readonly spec: SloMappingSpec<C, O>;
 
     /**
      * Configures this SLO using an `SloMappingSpec` and a metrics source.
@@ -24,7 +24,7 @@ export interface ServiceLevelObjective<S extends SloMappingSpec<any, O>, O> {
      * @param slocRuntime The `SlocRuntime` instance.
      * @returns A Promise that resolves when the SLO has finished its configuration.
      */
-    configure(spec: S, metricsSource: MetricsSource, slocRuntime: SlocRuntime): Promise<void>;
+    configure(spec: SloMappingSpec<C, O>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): Promise<void>;
 
     /**
      * Evaluates the SLO on the current system state.
