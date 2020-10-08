@@ -46,7 +46,7 @@ export interface SloControlLoop {
      * @param sloMapping The `SloMappingSpec` that describes the SLO.
      * @returns The created `ServiceLevelObjective` object.
      */
-    addSlo(key: string, sloMapping: SloMappingSpec<any>): ServiceLevelObjective<any, any>;
+    addSlo(key: string, sloMapping: SloMappingSpec<any, any>): ServiceLevelObjective<any, any>;
 
     /**
      * @returns The `ServiceLevelObjective` that has been added under the specified `key`
