@@ -36,26 +36,32 @@ spec:
           description: HorizontalElasticityStrategySpec defines the desired state
             of HorizontalElasticityStrategy
           properties:
-            currSloCompliance:
-              anyOf:
-              - type: integer
-              - type: string
-              description: "Specifies how much the current state of the system complies
-                with the SLO. \n * If this value is the same as SloTargetValue, the
-                SLO is met exactly. \n * If this value is greater greater than SloTargetValue,
-                the SLO is violated and scaling out is required. \n * If this value
-                is less than SloTargetValue, the system is performing better than
-                the SLO demands and scaling in will be performed."
-              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
-              x-kubernetes-int-or-string: true
-            sloTargetCompliance:
-              anyOf:
-              - type: integer
-              - type: string
-              description: 'Specifies the (decimal) value at which the SLO is exactly
-                met. Default: 1.0'
-              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
-              x-kubernetes-int-or-string: true
+            sloOutputParams:
+              description: Specifies how much the current state of the system complies
+                with the SLO.
+              properties:
+                currSloCompliancePercentage:
+                  description: "Specifies how much the current state of the system
+                    complies with the SLO. \n This value must be specified as an integer,
+                    e.g., `50` meaning 50%, `100` meaning 100%, `200` meaning 200%.
+                    \n If this value is `100`, the SLO is met exactly and no scaling
+                    action is required. \n If this value is greater than `100`, the
+                    SLO is violated and scaling out/up is required. \n If this value
+                    is less than `100`, the system is performing better than the SLO
+                    demands and scaling in/down will be performed."
+                  format: int32
+                  type: integer
+                tolerance:
+                  description: "Specifies the tolerance around 100%, within which
+                    no scaling will be performed. \n For example, if tolerance is
+                    `10`, no scaling will be performed as long as `currSloCompliancePercentage`
+                    is between `90` and `110`."
+                  format: int32
+                  type: integer
+              type: object
+            staticConfig:
+              description: Static configuration that was supplied using `SloMapping.StaticElasticityStrategyConfig`.
+              type: object
             targetRef:
               description: Specifies the target on which to execute the elasticity
                 strategy.
@@ -73,16 +79,8 @@ spec:
               - kind
               - name
               type: object
-            tolerance:
-              anyOf:
-              - type: integer
-              - type: string
-              description: 'Specifies the (decimal) tolerance around SloTargetCompliance,
-                within which no scaling will be performed. Default: 0.1'
-              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
-              x-kubernetes-int-or-string: true
           required:
-          - currSloCompliance
+          - sloOutputParams
           - targetRef
           type: object
         status:

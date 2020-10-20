@@ -70,9 +70,9 @@ func (me *HorizontalElasticityStrategyReconciler) Reconcile(req ctrl.Request) (c
 
 	namespacedTarget := eStrategies.NamespacedSloTarget{
 		Namespace: req.Namespace,
-		SloTarget: strategy.Spec.SloTarget,
+		SloTarget: strategy.Spec.TargetRef,
 	}
-	if err := me.horizontalService.Enforce(&namespacedTarget, &strategy.Spec.SloCompliance); err != nil {
+	if err := me.horizontalService.Enforce(&namespacedTarget, &strategy.Spec.SloOutputParams); err != nil {
 		log.Error(err, "Could not enforce HorizontalElasticityStrategy.")
 		return ctrl.Result{}, err
 	}

@@ -24,7 +24,10 @@ import (
 
 // HorizontalElasticityStrategySpec defines the desired state of HorizontalElasticityStrategy
 type HorizontalElasticityStrategySpec struct {
-	SloComplianceElasticityStrategyData `json:",inline"`
+	ElasticityStrategySpecBase `json:",inline"`
+
+	// Specifies how much the current state of the system complies with the SLO.
+	SloOutputParams SloCompliance `json:"sloOutputParams"`
 }
 
 // HorizontalElasticityStrategyStatus defines the observed state of HorizontalElasticityStrategy

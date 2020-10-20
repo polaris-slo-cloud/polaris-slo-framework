@@ -10,4 +10,12 @@ spec:
   elasticityStrategy:
     apiVersion: elasticity.sloc.github.io/v1
     kind: HorizontalElasticityStrategy
-  targetAvgCPUUtilizationPercentage: 70
+  sloConfig:
+    targetAvgCPUUtilizationPercentage: 70
+  staticElasticityStrategyConfig:
+    test: 0
+    test1: abc
+    complexObj:
+      a: 1
+      b: test
+

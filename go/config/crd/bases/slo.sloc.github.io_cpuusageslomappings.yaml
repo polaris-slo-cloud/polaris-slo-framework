@@ -37,8 +37,7 @@ spec:
           properties:
             elasticityStrategy:
               description: Specifies the type of ElasticityStrategy to use for this
-                SLO mapping. The strategy spec must have an SloCompliance embedded
-                inline.
+                SLO mapping.
               properties:
                 apiVersion:
                   description: The API group and version of the ElasticityStrategy.
@@ -50,13 +49,27 @@ spec:
               - apiVersion
               - kind
               type: object
-            targetAvgCPUUtilizationPercentage:
-              description: The target average CPU utilization percentage of the workload's
-                pods (percentage of the allocated CPUs).
-              format: int32
-              maximum: 100
-              minimum: 1
-              type: integer
+            sloConfig:
+              description: CPUUsageSloConfig contains the configuration for a CPUUsageSloMappingSpec.
+              properties:
+                targetAvgCPUUtilizationPercentage:
+                  description: The target average CPU utilization percentage of the
+                    workload's pods (percentage of the allocated CPUs).
+                  format: int32
+                  maximum: 100
+                  minimum: 1
+                  type: integer
+              required:
+              - targetAvgCPUUtilizationPercentage
+              type: object
+            staticElasticityStrategyConfig:
+              description: "Any static configuration parameters, which are unknown
+                to the SLO, but which may be required to configure the chosen kind
+                of elasticity strategy should be specified here. They will be copied
+                over into the spec of the elasticity strategy. \n // Note that the
+                Go deepCopy() method will only be able to create shallow copies of
+                this field, because it does not know its internal structure."
+              type: object
             targetRef:
               description: Specifies the target on which to execute the elasticity
                 strategy.
@@ -76,7 +89,7 @@ spec:
               type: object
           required:
           - elasticityStrategy
-          - targetAvgCPUUtilizationPercentage
+          - sloConfig
           - targetRef
           type: object
         status:

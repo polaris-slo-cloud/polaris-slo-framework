@@ -14,5 +14,9 @@ type SloMapping struct {
 	// Any static configuration parameters, which are unknown to the SLO, but which may be required to configure
 	// the chosen kind of elasticity strategy should be specified here. They will be copied over
 	// into the spec of the elasticity strategy.
-	StaticElasticityStrategyConfig interface{} `json:staticElasticityStrategyConfig,omitempty`
+	//
+	// // Note that the Go deepCopy() method will only be able to create shallow copies of this field,
+	// because it does not know its internal structure.
+	// +optional
+	StaticElasticityStrategyConfig *ArbitraryConfigObject `json:"staticElasticityStrategyConfig,omitempty"`
 }

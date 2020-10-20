@@ -10,7 +10,6 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	crds "sloc.github.io/sloc/apis/elasticity/v1"
-	"sloc.github.io/sloc/internal/util"
 	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
 
@@ -67,9 +66,14 @@ func (me *HorizontalElasticityService) Enforce(target *eStrategies.NamespacedSlo
 
 // Returns true if the SLO is currently fulfilled, otherwise false.
 func (me *HorizontalElasticityService) isSloFulfilled(sloState *crds.SloCompliance) bool {
-	currCompliance := util.ConvertQuantityToFloat(sloState.CurrSloCompliance)
-	sloTargetCompliance := util.ConvertQuantityToFloatOrDefault(sloState.SloTargetCompliance, crds.SloComplianceDefaultSloTargetCompliance)
-	sloTolerance := util.ConvertQuantityToFloatOrDefault(sloState.Tolerance, crds.SloComplianceDefaultTolerance)
+	currCompliance := sloState.CurrSloCompliancePercentage
+	sloTargetCompliance := crds.SloComplianceDefaultSloTargetCompliance
+	var sloTolerance int32
+	if sloState.Tolerance != nil {
+		sloTolerance = *sloState.Tolerance
+	} else {
+		sloTolerance = crds.SloComplianceDefaultTolerance
+	}
 
 	lowerBound := sloTargetCompliance - sloTolerance
 	upperBound := sloTargetCompliance + sloTolerance
@@ -81,8 +85,8 @@ func (me *HorizontalElasticityService) isSloFulfilled(sloState *crds.SloComplian
 // See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details
 // desiredReplicas = ceil[currentReplicas * ( currSloCompliance / desiredSloCompliance )]
 func (me *HorizontalElasticityService) calculateDesiredReplicas(sloState *crds.SloCompliance, currScale *autoscaling.Scale) int32 {
-	currCompliance := util.ConvertQuantityToFloat(sloState.CurrSloCompliance)
-	sloTargetCompliance := util.ConvertQuantityToFloatOrDefault(sloState.SloTargetCompliance, crds.SloComplianceDefaultSloTargetCompliance)
+	currCompliance := float64(sloState.CurrSloCompliancePercentage)
+	sloTargetCompliance := float64(crds.SloComplianceDefaultSloTargetCompliance)
 
 	scaleFactor := currCompliance / sloTargetCompliance
 	desiredReplicas := float64(currScale.Spec.Replicas) * scaleFactor
