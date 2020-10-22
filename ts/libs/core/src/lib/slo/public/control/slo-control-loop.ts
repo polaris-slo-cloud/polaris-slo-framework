@@ -4,6 +4,9 @@ import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloEvaluator } from './slo-evaluator';
 
+/** The default timeout period for SLO evaluations. */
+export const SLO_DEFAULT_TIMEOUT_MS = 20 * 1000;
+
 /**
  * Configuration needed for starting an `SloControlLoop`.
  */
@@ -23,6 +26,13 @@ export interface SloControlLoopConfig {
      */
     evaluator: SloEvaluator;
 
+    /**
+     * The number of milliseconds after which an SLO evaluation should time out.
+     *
+     * If this is not specified, `SLO_DEFAULT_TIMEOUT_MS` is used.
+     */
+    sloTimeoutMs?: number;
+
 }
 
 /**
@@ -33,7 +43,7 @@ export interface SloControlLoop {
     /**
      * `true` when the control loop is running, otherwise `false`.
      */
-    isActive: boolean;
+    readonly isActive: boolean;
 
     /**
      * Creates a new SLO instance using the specified `sloMapping` and adds that instance
@@ -44,9 +54,10 @@ export interface SloControlLoop {
      *
      * @param key The key that should be used to identify the SLO.
      * @param sloMapping The `SloMappingSpec` that describes the SLO.
-     * @returns The created `ServiceLevelObjective` object.
+     * @returns A Promise that resolves to the created `ServiceLevelObjective` object or rejects
+     * if an error occurs.
      */
-    addSlo(key: string, sloMapping: SloMappingSpec<any, any>): ServiceLevelObjective<any, any>;
+    addSlo(key: string, sloMapping: SloMappingSpec<any, any>): Promise<ServiceLevelObjective<any, any>>;
 
     /**
      * @returns The `ServiceLevelObjective` that has been added under the specified `key`
