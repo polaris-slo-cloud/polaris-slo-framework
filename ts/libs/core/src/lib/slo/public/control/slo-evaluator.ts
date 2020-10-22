@@ -1,3 +1,4 @@
+import { ObservableOrPromise } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 
 /**
@@ -10,11 +11,14 @@ export interface SloEvaluator {
     /**
      * Executes the specified SLO and applies its output to the orchestrator.
      *
+     * If this returns an observalbe, it is possible to cancel the evaluation of the SLO
+     * by unsubscribing from the observable (e.g., after a timeout).
+     *
      * @param key The key used to identify the SLO.
      * @param slo The `ServiceLevelObjective` that should be evaluated.
-     * @returns A Promise that resolves when the evaluation of the SLO has finished
+     * @returns An observable that emits and completes or a Promise that resolves when the evaluation of the SLO has finished
      * and its output has been applied to the orchestrator if necessary.
      */
-    evaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): Promise<void>;
+    evaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): ObservableOrPromise<void>;
 
 }

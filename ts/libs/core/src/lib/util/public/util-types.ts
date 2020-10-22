@@ -1,3 +1,4 @@
+import { Subscribable } from 'rxjs';
 
 /**
  * Convenience type for a map object.
@@ -41,3 +42,16 @@ export type InterfaceOf<T> = { [K in keyof T]: T[K]; };
  * A function that returns a class/constructor.
  */
 export type TypeFn<T> = () => Constructor<T>;
+
+/**
+ * Convenience type used for describing a key-value pair.
+ */
+export interface KeyValuePair<K, V> {
+    key: K;
+    value: V;
+}
+
+/**
+ * Convenience type to indicate that something may have an interface like an `Observable` or like a `Promise`.
+ */
+export type ObservableOrPromise<T> = Subscribable<T> | PromiseLike<T>;

@@ -1,3 +1,6 @@
+import { Observable, of as observableOf } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+import { ObservableOrPromise } from '../../../util';
 import { ServiceLevelObjective, SloOutput } from '../common';
 import { SloEvaluator } from './slo-evaluator';
 
@@ -19,11 +22,11 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
      *
      * @param key The key used to identify the SLO.
      * @param slo The `ServiceLevelObjective` that should be evaluated.
-     * @returns A Promise that resolves to an optional context object that will be passed
+     * @returns An observable that emits or a Promise that resolves to an optional context object that will be passed
      * to `onAfterEvaluateSlo()`.
      */
-    onBeforeEvaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): Promise<C> {
-        return Promise.resolve(null);
+    onBeforeEvaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): ObservableOrPromise<C> {
+        return observableOf(null);
     }
 
     /**
@@ -32,17 +35,21 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
      *
      * @param currContext The context object that was created by `onBeforeEvaluateSlo()`.
      * @param sloOutput The output that `slo.evaluate()` has resolved to.
-     * @returns A Promise that resolves when SLO output has been applied to the orchestrator if necessary.
+     * @returns An observable or a Promise that emits/resolves when SLO output has been applied to the orchestrator if necessary.
      */
-    abstract onAfterEvaluateSlo(currContext: C, sloOutput: SloOutput<any>): Promise<void>;
+    abstract onAfterEvaluateSlo(currContext: C, sloOutput: SloOutput<any>): ObservableOrPromise<void>;
 
-    evaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): Promise<void> {
+    evaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): Observable<void> {
         let context: C;
-        return this.onBeforeEvaluateSlo(key, slo)
-            .then(ctx => {
+        return observableOf(true).pipe(
+            switchMap(() => this.onBeforeEvaluateSlo(key, slo)),
+            switchMap(ctx => {
                 context = ctx;
                 return slo.evaluate();
-            }).then(output => this.onAfterEvaluateSlo(context, output));
+            }),
+            switchMap(output => this.onAfterEvaluateSlo(context, output)),
+            take(1),
+        );
     }
 
 }
