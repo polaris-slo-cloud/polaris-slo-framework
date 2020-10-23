@@ -23,8 +23,9 @@ export class SloEvaluationError extends Error {
         public sloKey: string,
         public slo: ServiceLevelObjective<any, any>,
         public sloEvaluationError: any,
+        msg?: string,
     ) {
-        super('An error occured while evaluating the SLO.');
+        super(msg || 'An error occured while evaluating the SLO.');
     }
 
 }

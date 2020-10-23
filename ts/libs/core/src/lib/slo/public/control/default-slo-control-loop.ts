@@ -1,10 +1,26 @@
-import { Subscription, interval, of as observableOf, throwError} from 'rxjs';
+import { of as observableOf, throwError} from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
 import { SloMappingSpec } from '../../../model';
 import { getSlocRuntime } from '../../../runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
 import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig } from './slo-control-loop';
+
+interface RegisteredSlo {
+
+    /** The SLO object that has been registered. */
+    slo: ServiceLevelObjective<any, any>;
+
+    /** Used to stop a pending evaluation of the SLO, if the SLO should be removed.  */
+    stopper: ObservableStopper;
+
+    /** The time the last evaluation of the SLO has started. */
+    lastEvaluationStarted?: Date;
+
+    /** The time the last evaluation of the SLO has successfully finished. */
+    lastEvaluationFinished?: Date;
+
+}
 
 /**
  * The default SLO control loop implementation, which can be used for most orchestrators.
@@ -15,9 +31,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private loopConfig: SloControlLoopConfig;
 
-    private registeredSlos: Map<string, ServiceLevelObjective<any, any>> = new Map();
-
-    private pendingSloEvaluations: Map<string, Subscription> = new Map();
+    private registeredSlos: Map<string, RegisteredSlo> = new Map();
 
     private slocRuntime = getSlocRuntime();
 
@@ -26,7 +40,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
     }
 
     addSlo(key: string, sloMapping: SloMappingSpec<any, any>): Promise<ServiceLevelObjective<any, any>> {
-        if (this.getSlo(key)) {
+        if (this.registeredSlos.has(key)) {
             this.removeSlo(key);
         }
 
@@ -44,7 +58,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
                 throw new SloControlLoopError(this, errorMsg);
             }),
             map(() => {
-                this.registeredSlos.set(key, slo);
+                this.registeredSlos.set(key, { slo, stopper: new ObservableStopper() });
                 console.log(`Control loop: Successfully added new SLO: ${key}`);
                 return slo;
             }),
@@ -55,19 +69,15 @@ export class DefaultSloControlLoop implements SloControlLoop {
     }
 
     getSlo(key: string): ServiceLevelObjective<any, any> {
-        return this.registeredSlos.get(key);
+        return this.registeredSlos.get(key)?.slo;
     }
 
     removeSlo(key: string): boolean {
-        const slo = this.getSlo(key);
+        const slo = this.registeredSlos.get(key);
         if (slo) {
-            const pendingEval = this.pendingSloEvaluations.get(key);
-            if (pendingEval) {
-                pendingEval.unsubscribe();
-                this.pendingSloEvaluations.delete(key);
-            }
-            if (slo.onDestroy) {
-                this.executeSafely(() => slo.onDestroy());
+            slo.stopper.stop();
+            if (slo.slo.onDestroy) {
+                this.executeSafely(() => slo.slo.onDestroy());
             }
             this.registeredSlos.delete(key);
             return true;
@@ -77,7 +87,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     getAllSlos(): IndexByKey<ServiceLevelObjective<any, any>> {
         const allSlos: IndexByKey<ServiceLevelObjective<any, any>> = {};
-        this.registeredSlos.forEach((slo, key) => allSlos[key] = slo);
+        this.registeredSlos.forEach((slo, key) => allSlos[key] = slo.slo);
         return allSlos;
     }
 
@@ -87,21 +97,12 @@ export class DefaultSloControlLoop implements SloControlLoop {
         }
 
         this.stopper = new ObservableStopper();
-        this.loopConfig = config;
-
-        if (this.loopConfig.sloTimeoutMs) {
-            interval(this.loopConfig.sloTimeoutMs).pipe(
-                takeUntil(this.stopper.stopper$),
-            ).subscribe(() => this.stopPendingSloEvaluations());
-        }
+        this.loopConfig = {
+            ...config,
+            sloTimeoutMs: config.sloTimeoutMs || SLO_DEFAULT_TIMEOUT_MS,
+        };
 
         this.loopConfig.interval$.pipe(
-            tap(() => {
-                // If no distinct timeout has been specified, stop pending SLO evaluations now.
-                if (!this.loopConfig.sloTimeoutMs) {
-                    this.stopPendingSloEvaluations();
-                }
-            }),
             takeUntil(this.stopper.stopper$),
         ).subscribe({
             next: () => this.executeLoopIteration(),
@@ -118,7 +119,6 @@ export class DefaultSloControlLoop implements SloControlLoop {
         }
 
         this.stopper.stop();
-        this.stopPendingSloEvaluations();
         this.stopper = null;
         this.loopConfig = null;
     }
@@ -126,23 +126,28 @@ export class DefaultSloControlLoop implements SloControlLoop {
     private executeLoopIteration(): void {
         this.registeredSlos.forEach((slo, key) => {
             const sloEval$ = observableOf(null).pipe(
-                switchMap(() => this.loopConfig.evaluator.evaluateSlo(key, slo)),
-                catchError(err => throwError(new SloEvaluationError(this, key, slo, err))),
+                tap(() => slo.lastEvaluationStarted = new Date()),
+                switchMap(() => this.loopConfig.evaluator.evaluateSlo(key, slo.slo)),
+                tap(() => slo.lastEvaluationFinished = new Date()),
+                catchError(err => throwError(new SloEvaluationError(this, key, slo.slo, err))),
+
+                timeout(this.loopConfig.sloTimeoutMs),
+                catchError(err => throwError(new SloEvaluationError(this, key, slo.slo, err, 'The SLO evaluation has timed out.'))),
+
+                // Allow stopping the evaluation if the SLO should be removed.
+                takeUntil(slo.stopper.stopper$),
+                // Allow stopping the evaluation if the control loop is stopped.
+                takeUntil(this.stopper.stopper$),
+
                 take(1),
             );
-            this.pendingSloEvaluations.set(key, sloEval$.subscribe({
-                next: () => console.log(`SLO ${key} evaluated successfully.`),
+            sloEval$.subscribe({
+                next: () => console.log(
+                    `SLO ${key} evaluated successfully in ${slo.lastEvaluationFinished.valueOf() - slo.lastEvaluationStarted.valueOf()}ms.`,
+                ),
                 error: err => console.error(err),
-            }))
+            });
         });
-    }
-
-    private stopPendingSloEvaluations(): void {
-        this.pendingSloEvaluations.forEach((pendingEval, key) => {
-            pendingEval.unsubscribe();
-            console.warn(`SLO evaluation of ${key} timed out.`);
-        });
-        this.pendingSloEvaluations.clear();
     }
 
     private executeSafely(fn: () => void): boolean {
