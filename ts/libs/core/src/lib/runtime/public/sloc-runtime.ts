@@ -1,3 +1,4 @@
+import { ElasticityStrategyService } from '../../elasticity';
 import { SlocTransformationService } from '../../transformation';
 
 let slocRuntimeSingleton: SlocRuntime;
@@ -42,5 +43,10 @@ export interface SlocRuntime {
      * and orchestrator-specific plain objects, which can be serialized.
      */
     transformer: SlocTransformationService;
+
+    /**
+     * The `ElasticityStrategyService` that should be used for creating and configuring elasticity strategies.
+     */
+    elasticityStrategyService: ElasticityStrategyService;
 
 }

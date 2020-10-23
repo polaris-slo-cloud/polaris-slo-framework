@@ -76,7 +76,7 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         return SlocMetadataUtils.getPropertySlocType(slocType, propertyKey);
     }
 
-    private getSlocType(kind: ObjectKind): SlocConstructor<any> {
+    getSlocType(kind: ObjectKind): SlocConstructor<any> {
         const kindStr = kind.toString();
         return this.knownObjectKinds[kindStr];
     }

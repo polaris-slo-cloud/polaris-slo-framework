@@ -33,6 +33,9 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
      * This method is called after the SLO has been evaluated.
      * It is responsible for applying the output to the orchestrator if necessary.
      *
+     * @note Normally, the `ServiceLevelObjective` is not needed by this method. If a specific implementation
+     * does require the `ServiceLevelObjective` instance, it can be packed into the context object in `onBeforeEvaluateSlo()`.
+     *
      * @param currContext The context object that was created by `onBeforeEvaluateSlo()`.
      * @param sloOutput The output that `slo.evaluate()` has resolved to.
      * @returns An observable or a Promise that emits/resolves when SLO output has been applied to the orchestrator if necessary.

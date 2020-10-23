@@ -98,4 +98,12 @@ export interface SlocTransformationService {
      */
     getPropertyType<T>(slocType: SlocConstructor<T>, propertyKey: keyof T & string): SlocConstructor<any>;
 
+    /**
+     * Gets the SLOC type that has been registered for the specified `ObjectKind`.
+     *
+     * @param kind The registered `ObjectKind` that can be used to deduce the SLOC type.
+     * @returns The type that has been defined for the specified `ObjectKind` or `undefined` if this information is not available.
+     */
+    getSlocType(kind: ObjectKind): SlocConstructor<any>;
+
 }

@@ -1,20 +1,20 @@
-import { SloOutput } from '../slo/public/common/slo-output';
 import { SlocType } from '../transformation';
 import { initSelf } from '../util';
 import { ApiObject } from './api-object';
-import { ApiObjectMetadata } from './api-object-metadata';
-import { ObjectKind } from './object-kind';
 import { SloTarget } from './slo-target';
 
 /**
  * A generic class that is used to set up specs for an elasticity strategy.
  *
- * All elasticity strategies should adhere to this class' layout.
+ * A concrete `ElasticityStrategy` may use `ElasticityStrategySpec<T>` directly as the type for
+ * its spec, or a class dervived from this one, if, e.g., the transformation needs to be customized.
  *
  * Parameters that are defined by the output of the SLO are stored in `sloOutputParams`.
  * The type of this property determines if an elasticity strategy is compatible with a certain SLO.
  *
  * `staticConfig` should be used for other configuration data, which is not changed by the SLO.
+ *
+ * @note All elasticity strategy specs, no matter if they are define in TypeScript or not, must adhere to this class' layout.
  *
  * @param T The type of output parameters from the SLO/input parameters of the elasticity strategy.
  */
@@ -43,35 +43,19 @@ export class ElasticityStrategySpec<T> {
 /**
  * Used to submit/retrieve an elasticity strategy to/from the orchestrator.
  *
+ * For elasticity strategies defined in TypeScript or elasticity strategies that require custom transformation,
+ * a subclass of `ElasticityStrategy` should be created.
+ *
+ * However, this class is not defined as abstract to allow using elasticity strategies, which are not
+ * defined in TypeScript, without creating a subclass - an `ElasticityStrategyKind` subclass is recommended though
+ * to avoid forcing users to manually configure the kind data.
+ *
  * @param T The type of output parameters from the SLO/input parameters of the elasticity strategy.
  */
 export class ElasticityStrategy<T> extends ApiObject<ElasticityStrategySpec<T>> {
 
     @SlocType(() => ElasticityStrategySpec)
     spec: ElasticityStrategySpec<T>;
-
-    /**
-     * Creates a new `ElasticityStrategy` based on the `sloOutput`.
-     *
-     * This sets up the elasticity strategy kind, the SLO target ref, and the elasticity strategy spec automatically.
-     *
-     * @param name The name that should be assigned to `metadata.name`.
-     * @param sloOutput The SLO ouput that should be used for setting up this `ElaticityStrategy`.
-     * @returns A new `ElasticityStrategy` instance.
-     */
-    static fromSloOutput<T>(name: string, sloOutput: SloOutput<T>): ElasticityStrategy<T> {
-        return new ElasticityStrategy({
-            objectKind: new ObjectKind(sloOutput.spec.elasticityStrategy),
-            metadata: new ApiObjectMetadata({
-                name,
-            }),
-            spec: new ElasticityStrategySpec({
-                targetRef: sloOutput.spec.targetRef,
-                sloOutputParams: sloOutput.elasticityStrategyParams,
-                staticConfig: sloOutput.spec.staticElasticityStrategyConfig,
-            }),
-        });
-    }
 
     constructor(initData?: Partial<ElasticityStrategy<T>>) {
         super(initData);
