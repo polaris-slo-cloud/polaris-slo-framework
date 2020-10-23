@@ -1,7 +1,7 @@
 import { ObjectKind } from '../../../model';
-import { Constructor, IndexByKey, SlocMetadataUtils } from '../../../util';
+import { IndexByKey, SlocConstructor, SlocMetadataUtils } from '../../../util';
 import { SlocTransformationMetadata } from '../../internal';
-import { OrchestratorToSlocTransformationError, SlocTransformationConfig, SlocTransformer, UnknownObjectKindError } from '../common';
+import { SlocTransformationConfig, SlocTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
 import { SlocTransformationService } from './sloc-transformation-service';
 
@@ -14,7 +14,7 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
 
     private _defaultTransformer: SlocTransformer<any, any> = new DefaultTransformer<any>();
 
-    private knownObjectKinds: IndexByKey<Constructor<any>> = {};
+    private knownObjectKinds: IndexByKey<SlocConstructor<any>> = {};
 
     get defaultTransformer(): SlocTransformer<any, any> {
         return this._defaultTransformer;
@@ -24,7 +24,7 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         this._defaultTransformer = newDefaultTransformer;
     }
 
-    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>, config: SlocTransformationConfig = {}): void {
+    registerTransformer<T>(slocType: SlocConstructor<T>, transformer: SlocTransformer<T, any>, config: SlocTransformationConfig = {}): void {
         const transformMeta: SlocTransformationMetadata<T> = {
             ...config,
             transformer,
@@ -33,7 +33,7 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         SlocMetadataUtils.setSlocTransformationMetadata(transformMeta, slocType);
     }
 
-    registerObjectKind<T>(kind: ObjectKind, slocType: Constructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void {
+    registerObjectKind<T>(kind: ObjectKind, slocType: SlocConstructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void {
         const kindStr = kind.toString();
         this.knownObjectKinds[kindStr] = slocType;
 
@@ -42,14 +42,14 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         }
     }
 
-    transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T;
+    transformToSlocObject<T>(slocType: SlocConstructor<T>, orchPlainObj: any): T;
     transformToSlocObject(kind: ObjectKind, orchPlainObj: any): any;
-    transformToSlocObject<T = any>(slocTypeOrKind: Constructor<T> | ObjectKind, orchPlainObj: any): T {
+    transformToSlocObject<T = any>(slocTypeOrKind: SlocConstructor<T> | ObjectKind, orchPlainObj: any): T {
         if (orchPlainObj === null || orchPlainObj === undefined) {
             return null;
         }
 
-        let slocType: Constructor<T>;
+        let slocType: SlocConstructor<T>;
         if (slocTypeOrKind instanceof Function) {
             slocType = slocTypeOrKind;
         } else {
@@ -72,16 +72,16 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         return transformer.transformToOrchestratorPlainObject(slocObj, this);
     }
 
-    getPropertyType<T>(slocType: Constructor<T>, propertyKey: keyof T & string): Constructor<any> {
+    getPropertyType<T>(slocType: SlocConstructor<T>, propertyKey: keyof T & string): SlocConstructor<any> {
         return SlocMetadataUtils.getPropertySlocType(slocType, propertyKey);
     }
 
-    private getSlocType(kind: ObjectKind): Constructor<any> {
+    private getSlocType(kind: ObjectKind): SlocConstructor<any> {
         const kindStr = kind.toString();
         return this.knownObjectKinds[kindStr];
     }
 
-    private getTransformer<T>(slocObjOrType: T | Constructor<T>): SlocTransformer<T, any> {
+    private getTransformer<T>(slocObjOrType: T | SlocConstructor<T>): SlocTransformer<T, any> {
         const transformMeta = SlocMetadataUtils.getSlocTransformationMetadata(slocObjOrType);
         return transformMeta ? transformMeta.transformer : this.defaultTransformer;
     }

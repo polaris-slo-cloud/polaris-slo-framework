@@ -27,6 +27,12 @@ export interface IndexById<V> {
 export type Constructor<T> = new(...args: any[]) => T
 
 /**
+ * A class or constructor function that creates an instance of `T` and initializes it
+ * with the optional `initData`.
+ */
+export type SlocConstructor<T> = new(initData?: Partial<T>) => T
+
+/**
  * A class of type `T` that has the static properties defined in `P`.
  */
 export type ConstructorWithStaticProperties<T, P> = (new(...args: any[]) => T) & P

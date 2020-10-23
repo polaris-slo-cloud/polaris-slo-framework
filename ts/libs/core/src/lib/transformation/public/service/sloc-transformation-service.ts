@@ -1,5 +1,5 @@
 import { ObjectKind } from '../../../model';
-import { Constructor } from '../../../util';
+import { SlocConstructor } from '../../../util';
 import { SlocTransformationConfig, SlocTransformer } from '../common';
 
 /**
@@ -46,7 +46,7 @@ export interface SlocTransformationService {
      * @param transformer The `SlocTransformer` for the type.
      * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
      */
-    registerTransformer<T>(slocType: Constructor<T>, transformer: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
+    registerTransformer<T>(slocType: SlocConstructor<T>, transformer: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
 
     /**
      * Associates the specified object kind with a SLOC type and optionally also with a transformer.
@@ -60,7 +60,7 @@ export interface SlocTransformationService {
      * @param transformer The `SlocTransformer` for the type.
      * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
      */
-    registerObjectKind<T>(kind: ObjectKind, slocType: Constructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
+    registerObjectKind<T>(kind: ObjectKind, slocType: SlocConstructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
@@ -69,7 +69,7 @@ export interface SlocTransformationService {
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
      * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
      */
-    transformToSlocObject<T>(slocType: Constructor<T>, orchPlainObj: any): T;
+    transformToSlocObject<T>(slocType: SlocConstructor<T>, orchPlainObj: any): T;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
@@ -96,6 +96,6 @@ export interface SlocTransformationService {
      * @param propertyKey The name of the property.
      * @returns The type that has been defined for the specified property or `undefined` if this information is not available.
      */
-    getPropertyType<T>(slocType: Constructor<T>, propertyKey: keyof T & string): Constructor<any>;
+    getPropertyType<T>(slocType: SlocConstructor<T>, propertyKey: keyof T & string): SlocConstructor<any>;
 
 }
