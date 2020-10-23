@@ -2,6 +2,7 @@ import { SlocRuntime } from '../runtime/public/sloc-runtime';
 import { ServiceLevelObjective } from '../slo';
 import { SlocType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
+import { ApiObject } from './api-object';
 import { ElasticityStrategyKind } from './elasticity-strategy-kind';
 import { SloTarget } from './slo-target';
 
@@ -87,5 +88,21 @@ export abstract class SloMappingSpecBase<C, O> implements SloMappingSpec<C, O> {
     }
 
     abstract createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<C, O>;
+
+}
+
+/**
+ * Common superclass for SloMappings.
+ *
+ * @important The `spec` must be decorated with `@SlocType` if `T` is a class.
+ *
+ * @param T The type of `SloMappingSpec`.
+ */
+export abstract class SloMappingBase<T extends SloMappingSpec<any, any>> extends ApiObject<T> {
+
+    constructor(initData?: Partial<SloMappingBase<T>>) {
+        super(initData);
+        initSelf(this, initData);
+    }
 
 }
