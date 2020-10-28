@@ -20,7 +20,7 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
      * This method is called before an SLO is evaluated.
      * It may be used to do pre-processing, etc.
      *
-     * @param key The key used to identify the SLO.
+     * @param key The key used to uniquely identify the SLO within the cluster.
      * @param slo The `ServiceLevelObjective` that should be evaluated.
      * @returns An observable that emits or a Promise that resolves to an optional context object that will be passed
      * to `onAfterEvaluateSlo()`.
@@ -36,11 +36,12 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
      * @note Normally, the `ServiceLevelObjective` is not needed by this method. If a specific implementation
      * does require the `ServiceLevelObjective` instance, it can be packed into the context object in `onBeforeEvaluateSlo()`.
      *
+     * @param key The key used to uniquely identify the SLO within the cluster.
      * @param currContext The context object that was created by `onBeforeEvaluateSlo()`.
      * @param sloOutput The output that `slo.evaluate()` has resolved to.
      * @returns An observable or a Promise that emits/resolves when SLO output has been applied to the orchestrator if necessary.
      */
-    abstract onAfterEvaluateSlo(currContext: C, sloOutput: SloOutput<any>): ObservableOrPromise<void>;
+    abstract onAfterEvaluateSlo(key: string, currContext: C, sloOutput: SloOutput<any>): ObservableOrPromise<void>;
 
     evaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): Observable<void> {
         let context: C;
@@ -50,7 +51,7 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
                 context = ctx;
                 return slo.evaluate();
             }),
-            switchMap(output => this.onAfterEvaluateSlo(context, output)),
+            switchMap(output => this.onAfterEvaluateSlo(key, context, output)),
             take(1),
         );
     }

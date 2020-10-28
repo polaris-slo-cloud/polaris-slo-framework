@@ -53,6 +53,7 @@ export interface SloControlLoop {
      * If an SLO with the same `key` already exists, it will be replaced.
      *
      * @param key The key that should be used to identify the SLO.
+     * This must be unique within the cluster.
      * @param sloMapping The `SloMappingSpec` that describes the SLO.
      * @returns A Promise that resolves to the created `ServiceLevelObjective` object or rejects
      * if an error occurs.
