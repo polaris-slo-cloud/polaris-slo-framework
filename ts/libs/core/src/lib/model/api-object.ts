@@ -12,6 +12,8 @@ import { ObjectKind } from './object-kind';
  * When registering a `SlocTransformer` for `ApiObject` for a specific orchestrator, it is recommended
  * to set `SlocTransformationConfig.inheritable` to `true`, because most subclasses of `ApiObject` will
  * not add additional properties, but just customize the existing ones.
+ *
+ * @param T Defines the type of the `spec` property.
  */
 export class ApiObject<T> {
 
