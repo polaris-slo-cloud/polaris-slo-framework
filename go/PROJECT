@@ -1,0 +1,14 @@
+domain: sloc.github.io
+multigroup: true
+repo: sloc.github.io/sloc
+resources:
+- group: elasticity
+  kind: TemplateStrategy
+  version: v1
+- group: elasticity
+  kind: HorizontalElasticityStrategy
+  version: v1
+- group: slo
+  kind: CPUUsageSloMapping
+  version: v1
+version: "2"

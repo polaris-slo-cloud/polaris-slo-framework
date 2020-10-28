@@ -1,0 +1,101 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.5
+  creationTimestamp: null
+  name: horizontalelasticitystrategies.elasticity.sloc.github.io
+spec:
+  group: elasticity.sloc.github.io
+  names:
+    kind: HorizontalElasticityStrategy
+    listKind: HorizontalElasticityStrategyList
+    plural: horizontalelasticitystrategies
+    singular: horizontalelasticitystrategy
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: HorizontalElasticityStrategy is the Schema for the horizontalelasticitystrategies
+        API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: HorizontalElasticityStrategySpec defines the desired state
+            of HorizontalElasticityStrategy
+          properties:
+            sloOutputParams:
+              description: Specifies how much the current state of the system complies
+                with the SLO.
+              properties:
+                currSloCompliancePercentage:
+                  description: "Specifies how much the current state of the system
+                    complies with the SLO. \n This value must be specified as an integer,
+                    e.g., `50` meaning 50%, `100` meaning 100%, `200` meaning 200%.
+                    \n If this value is `100`, the SLO is met exactly and no scaling
+                    action is required. \n If this value is greater than `100`, the
+                    SLO is violated and scaling out/up is required. \n If this value
+                    is less than `100`, the system is performing better than the SLO
+                    demands and scaling in/down will be performed."
+                  format: int32
+                  type: integer
+                tolerance:
+                  description: "Specifies the tolerance around 100%, within which
+                    no scaling will be performed. \n For example, if tolerance is
+                    `10`, no scaling will be performed as long as `currSloCompliancePercentage`
+                    is between `90` and `110`."
+                  format: int32
+                  type: integer
+              type: object
+            staticConfig:
+              description: Static configuration that was supplied using `SloMapping.StaticElasticityStrategyConfig`.
+              type: object
+            targetRef:
+              description: Specifies the target on which to execute the elasticity
+                strategy.
+              properties:
+                apiVersion:
+                  description: API version of the referent
+                  type: string
+                kind:
+                  description: 'Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"'
+                  type: string
+                name:
+                  description: 'Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+                  type: string
+              required:
+              - kind
+              - name
+              type: object
+          required:
+          - sloOutputParams
+          - targetRef
+          type: object
+        status:
+          description: HorizontalElasticityStrategyStatus defines the observed state
+            of HorizontalElasticityStrategy
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

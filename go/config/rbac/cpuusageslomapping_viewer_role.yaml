@@ -1,0 +1,20 @@
+# permissions for end users to view cpuusageslomappings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cpuusageslomapping-viewer-role
+rules:
+- apiGroups:
+  - slo.sloc.github.io
+  resources:
+  - cpuusageslomappings
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - slo.sloc.github.io
+  resources:
+  - cpuusageslomappings/status
+  verbs:
+  - get

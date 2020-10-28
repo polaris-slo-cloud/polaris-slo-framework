@@ -6,25 +6,60 @@
       "dependencies": "*",
       "devDependencies": "*"
     },
-    "tsconfig.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*"
+    ".eslintrc.js": "*",
+    "nx.json": "*",
+    "tsconfig.base.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
   "projects": {
-    "sloc-ui": {
-      "tags": []
+    "core": {
+      "tags": [
+        "scope:core"
+      ]
     },
-    "sloc-ui-e2e": {
-      "tags": [],
-      "implicitDependencies": ["sloc-ui"]
+    "kubernetes": {
+      "tags": [
+        "orchestrator:kubernetes"
+      ]
+    },
+    "ui-sloc-ui": {
+      "tags": [
+        "scope:ui"
+      ]
+    },
+    "ui-sloc-ui-e2e": {
+      "tags": [
+        "scope:ui"
+      ],
+      "implicitDependencies": [
+        "ui-sloc-ui"
+      ]
+    },
+    "slo-cpu-usage-slo-controller": {
+      "tags": [
+        "scope:slo"
+      ]
+    },
+    "cli-sloc-k8s-serializer": {
+      "tags": [
+        "scope:cli",
+        "orchestrator:kubernetes"
+      ]
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }

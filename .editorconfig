@@ -32,3 +32,12 @@ trim_trailing_whitespace = false
 [*.yaml]
 indent_size = 2
 indent_style = space
+
+[*.go]
+indent_style = tab
+
+[go.mod]
+indent_style = tab
+
+[go.sum]
+indent_style = tab

@@ -1,0 +1,24 @@
+# permissions for end users to edit horizontalelasticitystrategies.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: horizontalelasticitystrategy-editor-role
+rules:
+- apiGroups:
+  - elasticity.sloc.github.io
+  resources:
+  - horizontalelasticitystrategies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - elasticity.sloc.github.io
+  resources:
+  - horizontalelasticitystrategies/status
+  verbs:
+  - get

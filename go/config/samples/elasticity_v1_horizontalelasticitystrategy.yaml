@@ -1,0 +1,13 @@
+apiVersion: elasticity.sloc.github.io/v1
+kind: HorizontalElasticityStrategy
+metadata:
+  name: horizontalelasticitystrategy-sample
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: twitter-clone
+  currSloCompliance: 200
+  sloTargetCompliance: 100
+  tolerance: 10
+
