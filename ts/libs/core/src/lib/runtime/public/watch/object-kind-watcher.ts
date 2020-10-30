@@ -21,7 +21,7 @@ export interface ObjectKindWatcher {
     /**
      * The handler that receives events from this watcher.
      */
-    readonly handler: WatchHandler<any>;
+    readonly handler: WatchHandler;
 
     /**
      * Starts a watch on the specified `ObjectKind`.
@@ -29,7 +29,7 @@ export interface ObjectKindWatcher {
      * @param kinds The `ObjectKind` instance that describe the type of objects that should be watched.
      * @param handler The `WatchHandler` that will receive events from this watcher.
      */
-    startWatch(kind: ObjectKind, handler: WatchHandler<any>): void;
+    startWatch(kind: ObjectKind, handler: WatchHandler): void;
 
     /**
      * Stops the watch.

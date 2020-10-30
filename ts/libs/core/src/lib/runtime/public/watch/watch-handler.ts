@@ -7,7 +7,7 @@ import { ApiObject } from '../../../model';
  *
  * @param T The type of `ApiObject` that is handled by this `WatchHandler`.
  */
-export interface WatchHandler<T extends ApiObject<any>> {
+export interface WatchHandler<T extends ApiObject<any> = ApiObject<any>> {
 
     /**
      * Called when the watch detects that a new `ApiObject` has been added to the orchestrator.
