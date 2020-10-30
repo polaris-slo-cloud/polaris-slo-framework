@@ -18,13 +18,11 @@ export class DefaultWatchManager implements WatchManager {
     async startWatchers(kinds: ObjectKind[], handler: WatchEventsHandler<ApiObject<any>>): Promise<ObjectKindWatcher[]> {
         this.assertNoExistingWatchers(kinds);
 
-        const watchers = kinds.map(kind => {
+        const watchers = kinds.map(async kind => {
             const watcher = this.slocRuntime.createObjectKindWatcher();
-            return watcher.startWatch(kind, handler)
-                .then(() => {
-                    this.watchers.set(kind.toString(), watcher);
-                    return watcher;
-                });
+            await watcher.startWatch(kind, handler);
+            this.watchers.set(kind.toString(), watcher);
+            return watcher;
         });
 
         return Promise.all(watchers);
