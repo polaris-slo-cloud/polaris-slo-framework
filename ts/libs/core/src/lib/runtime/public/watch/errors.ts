@@ -1,5 +1,6 @@
 import { ObjectKind } from '../../../model';
 import { ObjectKindWatcher } from './object-kind-watcher';
+import { WatchManager } from './watch-manager';
 
 /**
  * Error that is thrown by the `ObjectKindWatcher` implementations.
@@ -34,6 +35,17 @@ export class WatchAlreadyStartedError extends ObjectKindWatcherError {
 
     constructor(public watcher: ObjectKindWatcher) {
         super(watcher, 'Cannot start a watch, because this watcher has already been started.');
+    }
+
+}
+
+/**
+ * Error that is thrown if `WatchManager.startWatchers()` is called with one or more `ObjectKinds`, for which a watch has already been started.
+ */
+export class ObjectKindsAlreadyWatchedError extends Error {
+
+    constructor(public watchManager: WatchManager, public watchedKinds: ObjectKind[]) {
+        super(`The following ObjectKinds are already being watched by this WatchManager: ${watchedKinds.map(kind => kind.toString()).join(',\n')}`)
     }
 
 }

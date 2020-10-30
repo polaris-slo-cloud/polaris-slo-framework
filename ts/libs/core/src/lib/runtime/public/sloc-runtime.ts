@@ -1,7 +1,7 @@
 import { ElasticityStrategyService } from '../../elasticity';
 import { SloControlLoop, SloEvaluator } from '../../slo';
 import { SlocTransformationService } from '../../transformation';
-import { ObjectKindWatcher } from './watch';
+import { ObjectKindWatcher, WatchManager } from './watch';
 
 let slocRuntimeSingleton: SlocRuntime;
 
@@ -65,5 +65,10 @@ export interface SlocRuntime {
      * Creates an `ObjectKindWatcher` specific to this runtime implementation.
      */
     createObjectKindWatcher(): ObjectKindWatcher;
+
+    /**
+     * Creates a new `WatchManager` for watching multiple `ObjectKinds`.
+     */
+    createWatchManager(): WatchManager;
 
 }
