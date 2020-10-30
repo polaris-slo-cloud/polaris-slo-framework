@@ -1,3 +1,4 @@
+import { KubeConfig } from '@kubernetes/client-node';
 import { ApiObject, ObjectKind, ObjectReference, SloTarget, SlocRuntime, initSlocRuntime } from '@sloc/core';
 import { KubernetesSlocRuntime } from './runtime';
 import { ObjectKindTransformer, ObjectReferenceTransformer } from './transformation';
@@ -5,9 +6,11 @@ import { ApiObjectTransformer } from './transformation/public/transformers/api-o
 
 /**
  * Initializes the Kubernetes SLOC runtime and sets it as the global singleton.
+ *
+ * @param kubeConfig The Kubernetes configuration that should be used to configure the `KubernetesSlocRuntime`.
  */
-export function initSlocKubernetes(): SlocRuntime {
-    const runtime = new KubernetesSlocRuntime();
+export function initSlocKubernetes(kubeConfig: KubeConfig): SlocRuntime {
+    const runtime = new KubernetesSlocRuntime(kubeConfig);
     registerTransformers(runtime);
     initSlocRuntime(runtime);
     return runtime;

@@ -1,5 +1,7 @@
 import { ElasticityStrategyService } from '../../elasticity';
+import { SloControlLoop, SloEvaluator } from '../../slo';
 import { SlocTransformationService } from '../../transformation';
+import { ObjectKindWatcher } from './watch';
 
 let slocRuntimeSingleton: SlocRuntime;
 
@@ -48,5 +50,20 @@ export interface SlocRuntime {
      * The `ElasticityStrategyService` that should be used for creating and configuring elasticity strategies.
      */
     elasticityStrategyService: ElasticityStrategyService;
+
+    /**
+     * Creates an instance of the `SloEvaluator` specific to this runtime implementation.
+     */
+    createSloEvaluator(): SloEvaluator;
+
+    /**
+     * Creates an instance of the `SloControlLoop` specific to this runtime implementation.
+     */
+    createSloControlLoop(): SloControlLoop;
+
+    /**
+     * Creates an `ObjectKindWatcher` specific to this runtime implementation.
+     */
+    createObjectKindWatcher(): ObjectKindWatcher;
 
 }
