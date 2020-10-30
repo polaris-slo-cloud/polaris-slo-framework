@@ -44,7 +44,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
         private transformer: SlocTransformationService,
     ) { }
 
-    startWatch(kind: ObjectKind, handler: WatchHandler<any>): void {
+    async startWatch(kind: ObjectKind, handler: WatchHandler<any>): Promise<void> {
         if (this.isActive) {
             throw new WatchAlreadyStartedError(this);
         }
@@ -55,7 +55,8 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
         const watch = new Watch(this.kubeConfig);
         const path = this.getWatchPath(kind);
 
-        watch.watch(
+        // watch() returns a request object which can be used to abort the watch.
+        const watchReq: WatchRequest = await watch.watch(
             path,
             {
                 allowWatchBookmarks: false,
@@ -70,11 +71,10 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                 this.watchReq = null;
                 this.stopWatch();
             },
-        ).then((watchReq: WatchRequest) => {
-            // watch() returns a request object which you can use to abort the watch.
-            console.log(`Started watch on ${path}`);
-            this.watchReq = watchReq;
-        });
+        );
+
+        console.log(`Started watch on ${path}`);
+        this.watchReq = watchReq;
     }
 
     stopWatch(): void {

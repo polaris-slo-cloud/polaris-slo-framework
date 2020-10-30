@@ -28,8 +28,9 @@ export interface ObjectKindWatcher {
      *
      * @param kinds The `ObjectKind` instance that describe the type of objects that should be watched.
      * @param handler The `WatchHandler` that will receive events from this watcher.
+     * @returns A Promise that resolves when the watch has been successfully started or rejects, if there is an error.
      */
-    startWatch(kind: ObjectKind, handler: WatchHandler): void;
+    startWatch(kind: ObjectKind, handler: WatchHandler): Promise<void>;
 
     /**
      * Stops the watch.
