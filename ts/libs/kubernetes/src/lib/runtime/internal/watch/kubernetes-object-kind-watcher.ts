@@ -6,7 +6,7 @@ import {
     ObjectKindWatcher,
     SlocTransformationService,
     WatchAlreadyStartedError,
-    WatchHandler,
+    WatchEventsHandler,
 } from '@sloc/core';
 
 const REQUIRED_OBJECT_KIND_PROPERTIES: (keyof ObjectKind)[] = [ 'version', 'kind' ];
@@ -25,7 +25,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
 
     private watchReq: WatchRequest;
     private _kind: ObjectKind;
-    private _handler: WatchHandler;
+    private _handler: WatchEventsHandler;
 
     get isActive(): boolean {
         return !!this.watchReq && !!this._kind && !!this._handler;
@@ -35,7 +35,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
         return this._kind;
     }
 
-    get handler(): WatchHandler {
+    get handler(): WatchEventsHandler {
         return this._handler;
     }
 
@@ -44,7 +44,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
         private transformer: SlocTransformationService,
     ) { }
 
-    async startWatch(kind: ObjectKind, handler: WatchHandler<any>): Promise<void> {
+    async startWatch(kind: ObjectKind, handler: WatchEventsHandler<any>): Promise<void> {
         if (this.isActive) {
             throw new WatchAlreadyStartedError(this);
         }

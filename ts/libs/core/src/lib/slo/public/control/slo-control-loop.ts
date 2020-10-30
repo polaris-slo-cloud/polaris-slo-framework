@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { SloMappingBase, SloMappingSpec } from '../../../model';
-import { WatchHandler } from '../../../runtime/public/watch';
+import { WatchEventsHandler } from '../../../runtime/public/watch';
 import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloEvaluator } from './slo-evaluator';
@@ -39,7 +39,7 @@ export interface SloControlLoopConfig {
 /**
  * Used to connect an `ObjectKindWatcher` to an `SloControlLoop`.
  */
-export interface SloControlLoopWatchHandler extends WatchHandler<SloMappingBase<any>> {}
+export interface SloWatchEventsHandler extends WatchEventsHandler<SloMappingBase<any>> {}
 
 /**
  * This interface must be implemented by classes that run an SLO control loop.
@@ -52,11 +52,11 @@ export interface SloControlLoop {
     readonly isActive: boolean;
 
     /**
-     * The `WatchHandler` that can be used to connect this control loop to an `ObjectKindWatcher`.
+     * The `WatchEventsHandler` that can be used to connect this control loop to an `ObjectKindWatcher`.
      *
      * @note This property is only set if the control loop is currently active.
      */
-    readonly watchHandler: SloControlLoopWatchHandler;
+    readonly watchHandler: SloWatchEventsHandler;
 
     /**
      * Creates a new SLO instance using the specified `sloMapping` and adds that instance

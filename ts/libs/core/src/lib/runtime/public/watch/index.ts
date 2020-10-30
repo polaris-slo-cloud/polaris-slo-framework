@@ -1,3 +1,3 @@
 export * from './errors';
 export * from './object-kind-watcher';
-export * from './watch-handler';
+export * from './watch-events-handler';

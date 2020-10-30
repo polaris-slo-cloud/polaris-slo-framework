@@ -4,8 +4,8 @@ import { SloMappingSpec } from '../../../model';
 import { getSlocRuntime } from '../../../runtime/public/sloc-runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
-import { DefaultSloControlLoopWatchHandler } from './default-slo-control-loop-watch-handler';
-import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloControlLoopWatchHandler } from './slo-control-loop';
+import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
+import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from './slo-control-loop';
 
 interface RegisteredSlo {
 
@@ -36,13 +36,13 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private slocRuntime = getSlocRuntime();
 
-    private _watchHandler: SloControlLoopWatchHandler;
+    private _watchHandler: SloWatchEventsHandler;
 
     get isActive(): boolean {
         return !!this.loopConfig;
     }
 
-    get watchHandler(): SloControlLoopWatchHandler {
+    get watchHandler(): SloWatchEventsHandler {
         return this._watchHandler;
     }
 
@@ -109,7 +109,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
             sloTimeoutMs: config.sloTimeoutMs || SLO_DEFAULT_TIMEOUT_MS,
         };
 
-        this._watchHandler = new DefaultSloControlLoopWatchHandler(this);
+        this._watchHandler = new DefaultSloWatchEventsHandler(this);
 
         this.loopConfig.interval$.pipe(
             takeUntil(this.stopper.stopper$),

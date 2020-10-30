@@ -1,10 +1,10 @@
 import { SloMappingBase } from '../../../model';
-import { SloControlLoop, SloControlLoopWatchHandler } from './slo-control-loop';
+import { SloControlLoop, SloWatchEventsHandler } from './slo-control-loop';
 
 /**
- * Default `SloControlLoopWatchHandler` implementation for connecting an `ObjectKindWatcher` to an `SloControlLoop`.
+ * Default `SloWatchEventsHandler` implementation for connecting an `ObjectKindWatcher` to an `SloControlLoop`.
  */
-export class DefaultSloControlLoopWatchHandler implements SloControlLoopWatchHandler {
+export class DefaultSloWatchEventsHandler implements SloWatchEventsHandler {
 
     constructor(private controlLoop: SloControlLoop) { }
 
