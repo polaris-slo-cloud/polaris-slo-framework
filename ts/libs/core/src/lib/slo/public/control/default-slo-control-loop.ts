@@ -1,10 +1,11 @@
 import { of as observableOf, throwError} from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
 import { SloMappingSpec } from '../../../model';
-import { getSlocRuntime } from '../../../runtime';
+import { getSlocRuntime } from '../../../runtime/public/sloc-runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
-import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig } from './slo-control-loop';
+import { DefaultSloControlLoopWatchHandler } from './default-slo-control-loop-watch-handler';
+import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloControlLoopWatchHandler } from './slo-control-loop';
 
 interface RegisteredSlo {
 
@@ -35,8 +36,14 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private slocRuntime = getSlocRuntime();
 
+    private _watchHandler: SloControlLoopWatchHandler;
+
     get isActive(): boolean {
         return !!this.loopConfig;
+    }
+
+    get watchHandler(): SloControlLoopWatchHandler {
+        return this._watchHandler;
     }
 
     addSlo(key: string, sloMapping: SloMappingSpec<any, any>): Promise<ServiceLevelObjective<any, any>> {
@@ -102,6 +109,8 @@ export class DefaultSloControlLoop implements SloControlLoop {
             sloTimeoutMs: config.sloTimeoutMs || SLO_DEFAULT_TIMEOUT_MS,
         };
 
+        this._watchHandler = new DefaultSloControlLoopWatchHandler(this);
+
         this.loopConfig.interval$.pipe(
             takeUntil(this.stopper.stopper$),
         ).subscribe({
@@ -121,6 +130,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
         this.stopper.stop();
         this.stopper = null;
         this.loopConfig = null;
+        this._watchHandler = null;
     }
 
     private executeLoopIteration(): void {
