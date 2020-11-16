@@ -29,11 +29,6 @@
         "scope:core"
       ]
     },
-    "kubernetes": {
-      "tags": [
-        "orchestrator:kubernetes"
-      ]
-    },
     "ui-sloc-ui": {
       "tags": [
         "scope:ui"
@@ -55,6 +50,11 @@
     "cli-sloc-k8s-serializer": {
       "tags": [
         "scope:cli",
+        "orchestrator:kubernetes"
+      ]
+    },
+    "orchestrators-kubernetes": {
+      "tags": [
         "orchestrator:kubernetes"
       ]
     }

@@ -12,16 +12,30 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "noImplicitAny": true,
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "lodash": ["node_modules/lodash-es"],
-      "@sloc/core": ["libs/core/src/index.ts"],
-      "@sloc/kubernetes": ["libs/kubernetes/src/index.ts"]
+      "lodash": [
+        "node_modules/lodash-es"
+      ],
+      "@sloc/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@sloc/kubernetes": [
+        "libs/orchestrators/kubernetes/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

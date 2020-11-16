@@ -21,14 +21,14 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
             k8sElasticityStrat,
         ).catch(err => {
             console.log('Create resource failed, trying to replace the resource');
-            this.updateExistingElasticityStrategy(k8sElasticityStrat);
+            return this.updateExistingElasticityStrategy(k8sElasticityStrat);
         }).then(
             () => console.log('Resource successfully created/replaced'),
         );
     }
 
     private transformToKubernetesObject(obj: ApiObject<any>): KubernetesObjectWithSpec<any> {
-        return this.slocRuntime.transformer.transformToOrchestratorPlainObject(obj);
+        return this.slocRuntime.transformer.transformToOrchestratorPlainObject(obj) as KubernetesObjectWithSpec<any>;
     }
 
     private async updateExistingElasticityStrategy(newSpec: KubernetesObjectWithSpec<any>): Promise<void> {
