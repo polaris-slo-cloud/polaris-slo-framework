@@ -1,1 +1,1 @@
-export * from './lib/slo-slo-generic';
+export * from './lib/slo';
