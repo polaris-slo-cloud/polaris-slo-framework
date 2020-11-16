@@ -34,6 +34,9 @@
             ],
             "@sloc/slo-generic": [
                 "libs/slo/slo-generic/src/index.ts"
+            ],
+            "@sloc/elasticity/elasticity-generic": [
+                "libs/elasticity/elasticity-generic/src/index.ts"
             ]
         }
     },
