@@ -8,16 +8,15 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/core/tsconfig.lib.json",
-              "libs/core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/core/**/*"
+            "lintFilePatterns": [
+              "libs/core/**/*.ts",
+              "libs/core/**/*.spec.ts",
+              "libs/core/**/*.spec.tsx",
+              "libs/core/**/*.spec.js",
+              "libs/core/**/*.spec.jsx",
+              "libs/core/**/*.d.ts"
             ]
           }
         },
@@ -49,16 +48,15 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/kubernetes/tsconfig.lib.json",
-              "libs/kubernetes/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/kubernetes/**/*"
+            "lintFilePatterns": [
+              "libs/kubernetes/**/*.ts",
+              "libs/kubernetes/**/*.spec.ts",
+              "libs/kubernetes/**/*.spec.tsx",
+              "libs/kubernetes/**/*.spec.js",
+              "libs/kubernetes/**/*.spec.jsx",
+              "libs/kubernetes/**/*.d.ts"
             ]
           }
         },
@@ -258,16 +256,12 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
-              "apps/slo/cpu-usage-slo-controller/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/slo/cpu-usage-slo-controller/**/*"
+            "lintFilePatterns": [
+              "apps/slo/cpu-usage-slo-controller/**/*.ts",
+              "apps/slo/cpu-usage-slo-controller/**/*.spec.ts",
+              "apps/slo/cpu-usage-slo-controller/**/*.d.ts"
             ]
           }
         },
@@ -319,16 +313,12 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
-              "apps/cli/sloc-k8s-serializer/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/cli/sloc-k8s-serializer/**/*"
+            "lintFilePatterns": [
+              "apps/cli/sloc-k8s-serializer/**/*.ts",
+              "apps/cli/sloc-k8s-serializer/**/*.spec.ts",
+              "apps/cli/sloc-k8s-serializer/**/*.d.ts"
             ]
           }
         },

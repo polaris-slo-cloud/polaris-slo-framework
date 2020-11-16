@@ -70,6 +70,7 @@
     "@angular/compiler-cli": "10.2.3",
     "@angular/language-service": "10.2.3",
     "@nrwl/angular": "10.3.3",
+    "@nrwl/cli": "10.3.3",
     "@nrwl/cypress": "10.3.3",
     "@nrwl/eslint-plugin-nx": "10.3.3",
     "@nrwl/jest": "10.3.3",
