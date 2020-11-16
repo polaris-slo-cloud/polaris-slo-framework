@@ -1,10 +1,13 @@
+import { KubeConfig } from '@kubernetes/client-node';
 import { ApiObjectMetadata, SloTarget } from '@sloc/core';
 import { initSlocKubernetes } from '@sloc/kubernetes';
 import { isEqual as _isEqual } from 'lodash';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec } from './app/model/cpu-usage-slo-mapping';
 import { HorizontalElasticityStrategyKind } from './app/model/horizontal-elasticity-strategy-kind';
 
-const slocRuntime = initSlocKubernetes();
+const k8sConfig = new KubeConfig();
+k8sConfig.loadFromDefault();
+const slocRuntime = initSlocKubernetes(k8sConfig);
 
 // There could be a specific init() function for every library, which could be used to register its custom types with the TransformationService.
 slocRuntime.transformer.registerObjectKind(new CpuUsageSloMapping().objectKind, CpuUsageSloMapping);
@@ -29,6 +32,7 @@ const cpuSlo = new CpuUsageSloMapping({
 
 console.log('Initial SLOC object: ', cpuSlo);
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const orchSpecific = slocRuntime.transformer.transformToOrchestratorPlainObject(cpuSlo);
 console.log('Orchestrator-specific plain object: ', orchSpecific);
 
