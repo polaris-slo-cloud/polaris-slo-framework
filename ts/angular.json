@@ -34,9 +34,7 @@
             "tsConfig": "libs/core/tsconfig.lib.json",
             "packageJson": "libs/core/package.json",
             "main": "libs/core/src/index.ts",
-            "assets": [
-              "libs/core/*.md"
-            ]
+            "assets": ["libs/core/*.md"]
           }
         }
       }
@@ -61,17 +59,10 @@
             "polyfills": "apps/ui/sloc-ui/src/polyfills.ts",
             "tsConfig": "apps/ui/sloc-ui/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/ui/sloc-ui/src/favicon.ico",
-              "apps/ui/sloc-ui/src/assets"
-            ],
-            "styles": [
-              "apps/ui/sloc-ui/src/styles/styles.scss"
-            ],
+            "assets": ["apps/ui/sloc-ui/src/favicon.ico", "apps/ui/sloc-ui/src/assets"],
+            "styles": ["apps/ui/sloc-ui/src/styles/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "apps/ui/sloc-ui/src/styles"
-              ]
+              "includePaths": ["apps/ui/sloc-ui/src/styles"]
             },
             "scripts": []
           },
@@ -127,14 +118,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/ui/sloc-ui/tsconfig.app.json",
-              "apps/ui/sloc-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ui/sloc-ui/**/*"
-            ]
+            "tsConfig": ["apps/ui/sloc-ui/tsconfig.app.json", "apps/ui/sloc-ui/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/ui/sloc-ui/**/*"]
           }
         },
         "test": {
@@ -167,13 +152,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/ui/sloc-ui-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ui/sloc-ui-e2e/**/*"
-            ]
+            "tsConfig": ["apps/ui/sloc-ui-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/ui/sloc-ui-e2e/**/*"]
           }
         }
       }
@@ -191,9 +171,7 @@
             "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
             "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
-            "assets": [
-              "apps/slo/cpu-usage-slo-controller/src/assets"
-            ]
+            "assets": ["apps/slo/cpu-usage-slo-controller/src/assets"]
           },
           "configurations": {
             "production": {
@@ -247,9 +225,7 @@
             "outputPath": "dist/apps/cli/sloc-k8s-serializer",
             "main": "apps/cli/sloc-k8s-serializer/src/main.ts",
             "tsConfig": "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
-            "assets": [
-              "apps/cli/sloc-k8s-serializer/src/assets"
-            ]
+            "assets": ["apps/cli/sloc-k8s-serializer/src/assets"]
           },
           "configurations": {
             "production": {
@@ -275,11 +251,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/cli/sloc-k8s-serializer/**/*.ts",
-              "apps/cli/sloc-k8s-serializer/**/*.spec.ts",
-              "apps/cli/sloc-k8s-serializer/**/*.d.ts"
-            ]
+            "lintFilePatterns": ["apps/cli/sloc-k8s-serializer/**/*.ts", "apps/cli/sloc-k8s-serializer/**/*.spec.ts", "apps/cli/sloc-k8s-serializer/**/*.d.ts"]
           }
         },
         "test": {
@@ -324,9 +296,28 @@
             "tsConfig": "libs/orchestrators/kubernetes/tsconfig.lib.json",
             "packageJson": "libs/orchestrators/kubernetes/package.json",
             "main": "libs/orchestrators/kubernetes/src/index.ts",
-            "assets": [
-              "libs/orchestrators/kubernetes/*.md"
-            ]
+            "assets": ["libs/orchestrators/kubernetes/*.md"]
+          }
+        }
+      }
+    },
+    "slo-slo-generic": {
+      "root": "libs/slo/slo-generic",
+      "sourceRoot": "libs/slo/slo-generic/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/slo/slo-generic/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/slo/slo-generic/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

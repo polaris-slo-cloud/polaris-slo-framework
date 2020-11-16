@@ -1,41 +1,44 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "resolveJsonModule": true,
-    "noImplicitAny": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "lodash": [
-        "node_modules/lodash-es"
-      ],
-      "@sloc/core": [
-        "libs/core/src/index.ts"
-      ],
-      "@sloc/kubernetes": [
-        "libs/orchestrators/kubernetes/src/index.ts"
-      ]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "resolveJsonModule": true,
+        "noImplicitAny": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2017",
+            "dom"
+        ],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "lodash": [
+                "node_modules/lodash-es"
+            ],
+            "@sloc/core": [
+                "libs/core/src/index.ts"
+            ],
+            "@sloc/kubernetes": [
+                "libs/orchestrators/kubernetes/src/index.ts"
+            ],
+            "@sloc/slo-generic": [
+                "libs/slo/slo-generic/src/index.ts"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "tmp"
+    ]
 }

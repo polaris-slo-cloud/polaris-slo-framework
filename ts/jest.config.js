@@ -5,5 +5,6 @@ module.exports = {
         '<rootDir>/apps/ui/sloc-ui',
         '<rootDir>/apps/slo/cpu-usage-slo-controller',
         '<rootDir>/apps/cli/sloc-k8s-serializer',
+        '<rootDir>/libs/slo/slo-generic',
     ],
 };

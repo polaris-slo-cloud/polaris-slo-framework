@@ -57,6 +57,11 @@
       "tags": [
         "orchestrator:kubernetes"
       ]
+    },
+    "slo-slo-generic": {
+      "tags": [
+        "scope:slo"
+      ]
     }
   },
   "affected": {
