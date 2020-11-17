@@ -5,6 +5,7 @@ import { Constructor } from '../public/util-types';
  * Defines the keys used store SLOC metadata using the Reflect API.
  */
 const SLOC_METADATA_KEYS = {
+/* eslint-disable @typescript-eslint/naming-convention */
 
     /** The key for storing `SlocTransformationMetadata`. */
     CLASS_TRANSFORMATION: 'sloc:transformation',
@@ -12,6 +13,7 @@ const SLOC_METADATA_KEYS = {
     /** The key for storing the Type of a property. */
     PROPERTY_TYPE: 'sloc:property-type:',
 
+/* eslint-enable @typescript-eslint/naming-convention */
 };
 
 /**
@@ -27,6 +29,7 @@ export class SlocMetadataUtils {
      * @returns The `SlocTransformationMetadata` of the `target` object or `undefined` if `target` does not have this metadata.
      */
     static getSlocTransformationMetadata<T>(target: T | Constructor<T>): SlocTransformationMetadata<T> {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const ctor: Constructor<T> = target instanceof Function ? (target as any) : (target as any).constructor;
         const metadata: SlocTransformationMetadata<T> = Reflect.getMetadata(SLOC_METADATA_KEYS.CLASS_TRANSFORMATION, ctor);
 
@@ -55,7 +58,7 @@ export class SlocMetadataUtils {
      */
     static getPropertySlocType<T>(target: Constructor<T>, propertyKey: keyof T & string): Constructor<any> {
         const metadataKey = this.getPropertyMetadataKey(propertyKey);
-        return Reflect.getMetadata(metadataKey, target);
+        return Reflect.getMetadata(metadataKey, target) as Constructor<any>;
     }
 
     /**
