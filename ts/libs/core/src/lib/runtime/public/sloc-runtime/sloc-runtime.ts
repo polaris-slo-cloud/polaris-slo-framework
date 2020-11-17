@@ -1,7 +1,7 @@
-import { ElasticityStrategyService } from '../../elasticity';
-import { SloControlLoop, SloEvaluator } from '../../slo';
-import { SlocTransformationService } from '../../transformation';
-import { ObjectKindWatcher, WatchManager } from './watch';
+import { ElasticityStrategyService } from '../../../elasticity';
+import { SloControlLoop, SloEvaluator } from '../../../slo';
+import { SlocTransformationService } from '../../../transformation';
+import { ObjectKindWatcher, WatchManager } from '../watch';
 
 let slocRuntimeSingleton: SlocRuntime;
 
@@ -19,6 +19,7 @@ export function getSlocRuntime(): SlocRuntime {
  */
 export function getSlocRuntimeOrThrow(): SlocRuntime {
     if (!slocRuntimeSingleton) {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         throw new Error(`The SlocRuntime singleton's value is ${slocRuntimeSingleton}. Did you forget to initialize it?`);
     }
     return slocRuntimeSingleton;

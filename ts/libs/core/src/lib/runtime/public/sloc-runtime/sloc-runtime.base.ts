@@ -1,8 +1,8 @@
-import { DefaultElasticityStrategyService, ElasticityStrategyService } from '../../elasticity';
-import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../slo';
-import { DefaultSlocTransformationService, SlocTransformationService } from '../../transformation/public/service';
+import { DefaultElasticityStrategyService, ElasticityStrategyService } from '../../../elasticity';
+import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../../slo';
+import { DefaultSlocTransformationService, SlocTransformationService } from '../../../transformation/public/service';
+import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from '../watch';
 import { SlocRuntime } from './sloc-runtime';
-import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from './watch';
 
 export abstract class SlocRuntimeBase implements SlocRuntime {
 
