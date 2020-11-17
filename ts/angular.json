@@ -331,29 +331,6 @@
         }
       }
     },
-    "slo-slo-generic": {
-      "root": "libs/slo/slo-generic",
-      "sourceRoot": "libs/slo/slo-generic/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/slo/slo-generic/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/slo/slo-generic/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "elasticity-elasticity-generic": {
       "root": "libs/elasticity/elasticity-generic",
       "sourceRoot": "libs/elasticity/elasticity-generic/src",

@@ -58,11 +58,6 @@
         "orchestrator:kubernetes"
       ]
     },
-    "slo-slo-generic": {
-      "tags": [
-        "scope:slo"
-      ]
-    },
     "elasticity-elasticity-generic": {
       "tags": [
         "scope:elasticity"
