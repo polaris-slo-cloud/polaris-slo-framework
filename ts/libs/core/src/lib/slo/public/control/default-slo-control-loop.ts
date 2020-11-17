@@ -1,6 +1,7 @@
 import { of as observableOf, throwError} from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
 import { SloMappingSpec } from '../../../model';
+import { DefaultMicrocontrollerFactory, MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { getSlocRuntime } from '../../../runtime/public/sloc-runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
@@ -38,6 +39,8 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private _watchHandler: SloWatchEventsHandler;
 
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any>, ServiceLevelObjective<any, any>> = new DefaultMicrocontrollerFactory();
+
     get isActive(): boolean {
         return !!this.loopConfig;
     }
@@ -53,7 +56,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
         let slo: ServiceLevelObjective<any, any>;
         const configAndAdd$ = observableOf(null).pipe(
-            map(() => sloMapping.createSloInstance(this.slocRuntime)),
+            map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping)),
             switchMap(sloInstance => {
                 slo = sloInstance;
                 return slo.configure(sloMapping, null, this.slocRuntime);

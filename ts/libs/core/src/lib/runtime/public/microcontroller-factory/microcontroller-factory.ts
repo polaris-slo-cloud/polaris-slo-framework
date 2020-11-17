@@ -13,6 +13,12 @@ export type FactoryFn<I, O> = (input: I) => O;
  * @important Since registering a factory function may involve modification of constructor metadata,
  * the factory registrations may be shared among all `MicrocontrollerFactories`.
  *
+ * Originally an SLO mapping contained a factory method for the `ServiceLevelObjective`, but this proved to be
+ * too restrictive, because it required the SLO mapping to be compiled together with the `ServiceLevelObjective`
+ * implementation.
+ * This would have made the public SLOC libraries larger and would have prevented the packaging of implementations
+ * into proprietary applications.
+ *
  * @param S The type of input spec.
  * @param C The type of microcontroller created by the factory.
  */

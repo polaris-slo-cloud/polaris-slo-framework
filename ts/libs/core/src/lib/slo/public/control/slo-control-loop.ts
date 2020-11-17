@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { SloMappingBase, SloMappingSpec } from '../../../model';
+import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { WatchEventsHandler } from '../../../runtime/public/watch';
 import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
@@ -57,6 +58,15 @@ export interface SloControlLoop {
      * @note This property is only set if the control loop is currently active.
      */
     readonly watchHandler: SloWatchEventsHandler;
+
+    /**
+     * This factory is used to instantiate a new `ServiceLevelObjective` when an SLO mapping is received.
+     * Before starting the control loop, factories for all watched SLO mapping kinds must be registered.
+     *
+     * @important The factory should only instantiate a `ServiceLevelObjective`.
+     * The factory MUST NOT call the `ServiceLevelObjective.configure()` method.
+     */
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any>, ServiceLevelObjective<any, any>>;
 
     /**
      * Creates a new SLO instance using the specified `sloMapping` and adds that instance
