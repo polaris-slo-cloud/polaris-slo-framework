@@ -31,9 +31,6 @@
             ],
             "@sloc/kubernetes": [
                 "libs/orchestrators/kubernetes/src/index.ts"
-            ],
-            "@sloc/elasticity/elasticity-generic": [
-                "libs/elasticity/elasticity-generic/src/index.ts"
             ]
         }
     },

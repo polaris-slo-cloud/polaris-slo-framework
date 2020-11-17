@@ -57,11 +57,6 @@
       "tags": [
         "orchestrator:kubernetes"
       ]
-    },
-    "elasticity-elasticity-generic": {
-      "tags": [
-        "scope:elasticity"
-      ]
     }
   },
   "affected": {
