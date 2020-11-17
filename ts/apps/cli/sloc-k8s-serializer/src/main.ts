@@ -1,16 +1,14 @@
 import { KubeConfig } from '@kubernetes/client-node';
+import { CpuUsageSloMapping, CpuUsageSloMappingSpec, HorizontalElasticityStrategyKind, initSlocLib as initCommonMappingsLib } from '@sloc/common-mappings';
 import { ApiObjectMetadata, SloTarget } from '@sloc/core';
 import { initSlocKubernetes } from '@sloc/kubernetes';
 import { isEqual as _isEqual } from 'lodash';
-import { CpuUsageSloMapping, CpuUsageSloMappingSpec } from './app/model/cpu-usage-slo-mapping';
-import { HorizontalElasticityStrategyKind } from './app/model/horizontal-elasticity-strategy-kind';
 
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
 const slocRuntime = initSlocKubernetes(k8sConfig);
 
-// There could be a specific init() function for every library, which could be used to register its custom types with the TransformationService.
-slocRuntime.transformer.registerObjectKind(new CpuUsageSloMapping().objectKind, CpuUsageSloMapping);
+initCommonMappingsLib(slocRuntime);
 
 const cpuSlo = new CpuUsageSloMapping({
     metadata: new ApiObjectMetadata({

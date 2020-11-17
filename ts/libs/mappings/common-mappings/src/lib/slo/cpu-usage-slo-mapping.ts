@@ -1,4 +1,4 @@
-import { ObjectKind, ServiceLevelObjective, SloCompliance, SloMappingBase, SloMappingSpecBase, SlocRuntime, SlocType, initSelf } from '@sloc/core';
+import { ObjectKind, SloCompliance, SloMappingBase, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
 
 export interface CpuUsageSloConfig {
 
@@ -11,10 +11,6 @@ export class CpuUsageSloMappingSpec extends SloMappingSpecBase<CpuUsageSloConfig
     constructor(initData?: Partial<CpuUsageSloMappingSpec>) {
         super(initData);
         initSelf(this, initData);
-    }
-
-    createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<CpuUsageSloConfig, SloCompliance> {
-        throw new Error('Method not implemented.');
     }
 
 }
