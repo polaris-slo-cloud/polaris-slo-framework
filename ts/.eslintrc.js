@@ -150,6 +150,7 @@ module.exports = {
                 "@typescript-eslint/no-non-null-assertion": "error",
                 "@typescript-eslint/no-parameter-properties": "off",
                 "@typescript-eslint/no-unsafe-assignment": "off",
+                "@typescript-eslint/no-unsafe-return": "off",
                 "@typescript-eslint/no-unused-expressions": "error",
                 "@typescript-eslint/no-unused-vars": [
                     "warn",
