@@ -31,6 +31,9 @@
             ],
             "@sloc/kubernetes": [
                 "libs/orchestrators/kubernetes/src/index.ts"
+            ],
+            "@sloc/common-mappings": [
+                "libs/mappings/common-mappings/src/index.ts"
             ]
         }
     },

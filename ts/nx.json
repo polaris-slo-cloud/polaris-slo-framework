@@ -57,6 +57,11 @@
       "tags": [
         "orchestrator:kubernetes"
       ]
+    },
+    "mappings-common-mappings": {
+      "tags": [
+        "scope:core"
+      ]
     }
   },
   "affected": {
