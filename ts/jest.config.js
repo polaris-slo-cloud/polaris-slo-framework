@@ -1,9 +1,10 @@
 module.exports = {
-    testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
-    transform: {
-        '^.+\\.(ts|js|html)$': 'ts-jest',
-    },
-    resolver: '@nrwl/jest/plugins/resolver',
-    moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageReporters: ['html'],
+    projects: [
+        '<rootDir>/libs/core',
+        '<rootDir>/libs/kubernetes',
+        '<rootDir>/apps/ui/sloc-ui',
+        '<rootDir>/apps/slo/cpu-usage-slo-controller',
+        '<rootDir>/apps/cli/sloc-k8s-serializer',
+        '<rootDir>/libs/mappings/common-mappings',
+    ],
 };

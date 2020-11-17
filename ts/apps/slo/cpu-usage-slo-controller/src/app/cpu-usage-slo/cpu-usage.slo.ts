@@ -1,29 +1,28 @@
-import { CpuUsageSloMapping, SLOC_API_VERSION, SloComplianceElasticityStrategyData } from '../model';
-import { MetricsSource, SLO, ServiceLevelObjective } from '../sloc-policy-language';
+import { CostEfficiencySloConfig } from '@sloc/common-mappings';
+import { MetricsSource, ObservableOrPromise, ServiceLevelObjective, SloCompliance, SloMappingSpec, SloOutput, SlocRuntime } from '@sloc/core';
+import { of as observableOf } from 'rxjs';
 
 const LOWER_BOUND = 1;
-const TARGET_COMPLIANCE = 100;
 const UPPER_BOUND = 200;
-const TOLERANCE = 1;
 
-@SLO({})
-export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloMapping, SloComplianceElasticityStrategyData> {
+export class CpuUsageSlo implements ServiceLevelObjective<CostEfficiencySloConfig, SloCompliance>  {
 
-    config: CpuUsageSloMapping;
-    private metricsSrc: MetricsSource;
+    spec: SloMappingSpec<CostEfficiencySloConfig, SloCompliance>;
 
-    configure(sloMapping: CpuUsageSloMapping, metricsSource: MetricsSource): Promise<void> {
-        this.config = sloMapping;
-        this.metricsSrc = metricsSource;
-        return Promise.resolve();
+    private metricsSource: MetricsSource;
+
+    configure(spec: SloMappingSpec<CostEfficiencySloConfig, SloCompliance>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): ObservableOrPromise<void> {
+        this.spec = spec;
+        this.metricsSource = metricsSource;
+        return observableOf(null);
     }
 
-    evaluate(): Promise<SloComplianceElasticityStrategyData> {
+    evaluate(): ObservableOrPromise<SloOutput<SloCompliance>> {
         return Promise.resolve({
-            targetRef: this.config.spec.targetRef,
-            sloTargetCompliance: TARGET_COMPLIANCE,
-            tolerance: TOLERANCE,
-            currSloCompliance: this.calculateSloCompliance(),
+            spec: this.spec,
+            elasticityStrategyParams: {
+                currSloCompliancePercentage: this.calculateSloCompliance(),
+            },
         });
     }
 

@@ -1,5 +1,7 @@
 import { Observable } from 'rxjs';
-import { SloMappingSpec } from '../../../model';
+import { SloMappingBase, SloMappingSpec } from '../../../model';
+import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
+import { WatchEventsHandler } from '../../../runtime/public/watch';
 import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloEvaluator } from './slo-evaluator';
@@ -15,8 +17,10 @@ export interface SloControlLoopConfig {
     /**
      * This observable defines the interval of the control loop.
      * Whenever it emits, a loop iteration is executed.
+     *
+     * The emitted value is not used.
      */
-    interval$: Observable<void>;
+    interval$: Observable<any>;
 
     /**
      * This is used to actually evaluate an SLO during an iteration
@@ -36,6 +40,11 @@ export interface SloControlLoopConfig {
 }
 
 /**
+ * Used to connect an `ObjectKindWatcher` to an `SloControlLoop`.
+ */
+export interface SloWatchEventsHandler extends WatchEventsHandler<SloMappingBase<any>> {}
+
+/**
  * This interface must be implemented by classes that run an SLO control loop.
  */
 export interface SloControlLoop {
@@ -44,6 +53,22 @@ export interface SloControlLoop {
      * `true` when the control loop is running, otherwise `false`.
      */
     readonly isActive: boolean;
+
+    /**
+     * The `WatchEventsHandler` that can be used to connect this control loop to an `ObjectKindWatcher`.
+     *
+     * @note This property is only set if the control loop is currently active.
+     */
+    readonly watchHandler: SloWatchEventsHandler;
+
+    /**
+     * This factory is used to instantiate a new `ServiceLevelObjective` when an SLO mapping is received.
+     * Before starting the control loop, factories for all watched SLO mapping kinds must be registered.
+     *
+     * @important The factory should only instantiate a `ServiceLevelObjective`.
+     * The factory MUST NOT call the `ServiceLevelObjective.configure()` method.
+     */
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any>, ServiceLevelObjective<any, any>>;
 
     /**
      * Creates a new SLO instance using the specified `sloMapping` and adds that instance

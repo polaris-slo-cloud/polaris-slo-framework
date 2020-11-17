@@ -29,11 +29,6 @@
         "scope:core"
       ]
     },
-    "kubernetes": {
-      "tags": [
-        "orchestrator:kubernetes"
-      ]
-    },
     "ui-sloc-ui": {
       "tags": [
         "scope:ui"
@@ -49,13 +44,24 @@
     },
     "slo-cpu-usage-slo-controller": {
       "tags": [
-        "scope:slo"
+        "scope:slo",
+        "orchestrator:kubernetes"
       ]
     },
     "cli-sloc-k8s-serializer": {
       "tags": [
         "scope:cli",
         "orchestrator:kubernetes"
+      ]
+    },
+    "orchestrators-kubernetes": {
+      "tags": [
+        "orchestrator:kubernetes"
+      ]
+    },
+    "mappings-common-mappings": {
+      "tags": [
+        "scope:core"
       ]
     }
   },

@@ -1,14 +1,14 @@
 module.exports = {
-    name: 'cli-sloc-k8s-serializer',
-    preset: '../../../jest.config.js',
+    preset: '../../../jest.preset.js',
     globals: {
         'ts-jest': {
             tsConfig: '<rootDir>/tsconfig.spec.json',
-        }
+        },
     },
     transform: {
-        '^.+\\.[tj]s$': 'ts-jest'
+        '^.+\\.[tj]s$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../../coverage/apps/cli/sloc-k8s-serializer'
+    coverageDirectory: '../../../coverage/apps/cli/sloc-k8s-serializer',
+    displayName: 'cli-sloc-k8s-serializer',
 };

@@ -8,16 +8,15 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/core/tsconfig.lib.json",
-              "libs/core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/core/**/*"
+            "lintFilePatterns": [
+              "libs/core/**/*.ts",
+              "libs/core/**/*.spec.ts",
+              "libs/core/**/*.spec.tsx",
+              "libs/core/**/*.spec.js",
+              "libs/core/**/*.spec.jsx",
+              "libs/core/**/*.d.ts"
             ]
           }
         },
@@ -37,47 +36,6 @@
             "main": "libs/core/src/index.ts",
             "assets": [
               "libs/core/*.md"
-            ]
-          }
-        }
-      }
-    },
-    "kubernetes": {
-      "root": "libs/kubernetes",
-      "sourceRoot": "libs/kubernetes/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "libs/kubernetes/tsconfig.lib.json",
-              "libs/kubernetes/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/kubernetes/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/kubernetes/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/kubernetes",
-            "tsConfig": "libs/kubernetes/tsconfig.lib.json",
-            "packageJson": "libs/kubernetes/package.json",
-            "main": "libs/kubernetes/src/index.ts",
-            "assets": [
-              "libs/kubernetes/*.md"
             ]
           }
         }
@@ -258,16 +216,12 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
-              "apps/slo/cpu-usage-slo-controller/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/slo/cpu-usage-slo-controller/**/*"
+            "lintFilePatterns": [
+              "apps/slo/cpu-usage-slo-controller/**/*.ts",
+              "apps/slo/cpu-usage-slo-controller/**/*.spec.ts",
+              "apps/slo/cpu-usage-slo-controller/**/*.d.ts"
             ]
           }
         },
@@ -319,16 +273,12 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
-              "apps/cli/sloc-k8s-serializer/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/cli/sloc-k8s-serializer/**/*"
+            "lintFilePatterns": [
+              "apps/cli/sloc-k8s-serializer/**/*.ts",
+              "apps/cli/sloc-k8s-serializer/**/*.spec.ts",
+              "apps/cli/sloc-k8s-serializer/**/*.d.ts"
             ]
           }
         },
@@ -337,6 +287,81 @@
           "options": {
             "jestConfig": "apps/cli/sloc-k8s-serializer/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "orchestrators-kubernetes": {
+      "root": "libs/orchestrators/kubernetes",
+      "sourceRoot": "libs/orchestrators/kubernetes/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/orchestrators/kubernetes/**/*.ts",
+              "libs/orchestrators/kubernetes/**/*.spec.ts",
+              "libs/orchestrators/kubernetes/**/*.spec.tsx",
+              "libs/orchestrators/kubernetes/**/*.spec.js",
+              "libs/orchestrators/kubernetes/**/*.spec.jsx",
+              "libs/orchestrators/kubernetes/**/*.d.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/orchestrators/kubernetes/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/orchestrators/kubernetes",
+            "tsConfig": "libs/orchestrators/kubernetes/tsconfig.lib.json",
+            "packageJson": "libs/orchestrators/kubernetes/package.json",
+            "main": "libs/orchestrators/kubernetes/src/index.ts",
+            "assets": [
+              "libs/orchestrators/kubernetes/*.md"
+            ]
+          }
+        }
+      }
+    },
+    "mappings-common-mappings": {
+      "root": "libs/mappings/common-mappings",
+      "sourceRoot": "libs/mappings/common-mappings/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/mappings/common-mappings/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/mappings/common-mappings/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/mappings/common-mappings",
+            "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
+            "packageJson": "libs/mappings/common-mappings/package.json",
+            "main": "libs/mappings/common-mappings/src/index.ts",
+            "assets": [
+              "libs/mappings/common-mappings/*.md"
+            ]
           }
         }
       }

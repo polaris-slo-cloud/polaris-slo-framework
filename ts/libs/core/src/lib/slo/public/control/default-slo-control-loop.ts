@@ -1,10 +1,12 @@
 import { of as observableOf, throwError} from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
 import { SloMappingSpec } from '../../../model';
-import { getSlocRuntime } from '../../../runtime';
+import { DefaultMicrocontrollerFactory, MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
+import { getSlocRuntime } from '../../../runtime/public/sloc-runtime/sloc-runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
-import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig } from './slo-control-loop';
+import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
+import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from './slo-control-loop';
 
 interface RegisteredSlo {
 
@@ -35,8 +37,16 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private slocRuntime = getSlocRuntime();
 
+    private _watchHandler: SloWatchEventsHandler;
+
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any>, ServiceLevelObjective<any, any>> = new DefaultMicrocontrollerFactory();
+
     get isActive(): boolean {
         return !!this.loopConfig;
+    }
+
+    get watchHandler(): SloWatchEventsHandler {
+        return this._watchHandler;
     }
 
     addSlo(key: string, sloMapping: SloMappingSpec<any, any>): Promise<ServiceLevelObjective<any, any>> {
@@ -46,7 +56,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
         let slo: ServiceLevelObjective<any, any>;
         const configAndAdd$ = observableOf(null).pipe(
-            map(() => sloMapping.createSloInstance(this.slocRuntime)),
+            map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping)),
             switchMap(sloInstance => {
                 slo = sloInstance;
                 return slo.configure(sloMapping, null, this.slocRuntime);
@@ -102,6 +112,8 @@ export class DefaultSloControlLoop implements SloControlLoop {
             sloTimeoutMs: config.sloTimeoutMs || SLO_DEFAULT_TIMEOUT_MS,
         };
 
+        this._watchHandler = new DefaultSloWatchEventsHandler(this);
+
         this.loopConfig.interval$.pipe(
             takeUntil(this.stopper.stopper$),
         ).subscribe({
@@ -121,6 +133,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
         this.stopper.stop();
         this.stopper = null;
         this.loopConfig = null;
+        this._watchHandler = null;
     }
 
     private executeLoopIteration(): void {

@@ -1,5 +1,3 @@
-import { SlocRuntime } from '../runtime/public/sloc-runtime';
-import { ServiceLevelObjective } from '../slo';
 import { SlocType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
 import { ApiObject } from './api-object';
@@ -53,16 +51,6 @@ export interface SloMappingSpec<C, O> {
      */
     staticElasticityStrategyConfig?: IndexByKey<any>;
 
-    /**
-     * Creates a new instance of the `ServiceLevelObjective` class associated with this spec.
-     *
-     * The `ServiceLevelObjective.configure()` method is NOT called by this factory method.
-     *
-     * @param slocRuntime The `SlocRuntime` instance.
-     * @returns A `ServiceLevelObjective` instance of the type of SLO associated with this spec.
-     */
-    createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<C, O>;
-
 }
 
 /**
@@ -86,8 +74,6 @@ export abstract class SloMappingSpecBase<C, O> implements SloMappingSpec<C, O> {
     constructor(initData?: Partial<SloMappingSpecBase<C, O>>) {
         initSelf(this, initData);
     }
-
-    abstract createSloInstance(slocRuntime: SlocRuntime): ServiceLevelObjective<C, O>;
 
 }
 
