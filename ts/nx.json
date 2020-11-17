@@ -44,7 +44,8 @@
     },
     "slo-cpu-usage-slo-controller": {
       "tags": [
-        "scope:slo"
+        "scope:slo",
+        "orchestrator:kubernetes"
       ]
     },
     "cli-sloc-k8s-serializer": {

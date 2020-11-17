@@ -71,7 +71,10 @@ module.exports = {
                             // SLOs may depend on core, metrics, and other SLOs.
                             // If an SLO only has "scope:slo", it must be orchestrator-independent.
                             // If it should be orchestrator-specific, the tag of the respective orchestrator must be added.
-                            { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo" ] },
+                            // There appears to be a bug in the ESLint plugin that uses the intersection of the allowed libraries of the applied source tags instead of the union.
+                            // ToDo: Check if this is fixed in a new version.
+                            // { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo" ] },
+                            { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "*" ] },
 
                             // ElasticityStrategies may depend on core, metrics, SLOs, and other strategies.
                             { "sourceTag": "scope:elasticity-strategy", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo", "scope:elasticity-strategy" ] },

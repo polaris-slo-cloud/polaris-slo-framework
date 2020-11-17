@@ -17,8 +17,10 @@ export interface SloControlLoopConfig {
     /**
      * This observable defines the interval of the control loop.
      * Whenever it emits, a loop iteration is executed.
+     *
+     * The emitted value is not used.
      */
-    interval$: Observable<void>;
+    interval$: Observable<any>;
 
     /**
      * This is used to actually evaluate an SLO during an iteration
