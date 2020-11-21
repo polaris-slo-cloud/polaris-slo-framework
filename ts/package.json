@@ -57,6 +57,7 @@
     "@kubernetes/client-node": "^0.12.3",
     "@ngx-translate/core": "^13.0.0",
     "class-transformer": "~0.3.1",
+    "js-yaml": "^3.14.0",
     "lodash-es": "^4.17.15",
     "reflect-metadata": "~0.1.13",
     "rxjs": "6.5.5",
