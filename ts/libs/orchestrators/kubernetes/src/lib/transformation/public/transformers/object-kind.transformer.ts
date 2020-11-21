@@ -14,7 +14,8 @@ export class ObjectKindTransformer implements ReusableSlocTransformer<ObjectKind
 
     transformToSlocObject(slocType: Constructor<ObjectKind>, orchPlainObj: ApiVersionKind, transformationService: SlocTransformationService): ObjectKind {
         const data = this.extractSlocObjectInitData(slocType, orchPlainObj, transformationService);
-        return new ObjectKind(data);
+        // Using `new slocType()` allows this transformer to work also for subclasses.
+        return new slocType(data);
     }
 
     transformToOrchestratorPlainObject(slocObj: ObjectKind, transformationService: SlocTransformationService): ApiVersionKind {

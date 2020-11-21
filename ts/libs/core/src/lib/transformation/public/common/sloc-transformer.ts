@@ -15,6 +15,9 @@ export interface SlocTransformer<T, P = any> {
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
      *
+     * @note If this transformer should be inheritable, it is recommended to not instantiate a hardcoded SLOC type in this method,
+     * but to use `new slocType(...)` instead.
+     *
      * @param slocType The type of SLOC object that should be created.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `SlocTransformationService` that issued this call. It can be used to delegate the
