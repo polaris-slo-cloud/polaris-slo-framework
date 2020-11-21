@@ -9,5 +9,5 @@ import (
 // SloTarget specifies the target entity for an elasticity strategy and SLO.
 type SloTarget struct {
 	// Specifies the target on which to execute the elasticity strategy.
-	TargetRef autoscaling.CrossVersionObjectReference `json:"targetRef,inline"`
+	autoscaling.CrossVersionObjectReference `json:",inline"`
 }

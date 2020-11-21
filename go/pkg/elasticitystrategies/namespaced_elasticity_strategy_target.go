@@ -15,14 +15,14 @@ type NamespacedSloTarget struct {
 
 // ExtractGroupResource extracts a GroupResource from this target.
 func (me *NamespacedSloTarget) ExtractGroupResource() (*schema.GroupResource, error) {
-	targetGroupVersion, err := schema.ParseGroupVersion(me.TargetRef.APIVersion)
+	targetGroupVersion, err := schema.ParseGroupVersion(me.APIVersion)
 	if err != nil {
 		return nil, fmt.Errorf("Could not determine GroupVersion from APIVersion: %v", err)
 	}
 
 	targetGroupRes := schema.GroupResource{
 		Group:    targetGroupVersion.Group,
-		Resource: me.TargetRef.Kind,
+		Resource: me.Kind,
 	}
 	return &targetGroupRes, nil
 }

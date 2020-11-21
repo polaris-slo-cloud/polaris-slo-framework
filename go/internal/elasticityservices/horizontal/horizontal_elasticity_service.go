@@ -34,7 +34,7 @@ func NewHorizontalElasticityService(ctx context.Context, client client.Client, l
 
 // Enforce performs horizontal scaling on target if necessary, based on the current SLO compliance.
 func (me *HorizontalElasticityService) Enforce(target *eStrategies.NamespacedSloTarget, sloState *crds.SloCompliance) error {
-	log := me.log.WithValues("target", fmt.Sprintf("%s/%s", target.TargetRef.Kind, target.TargetRef.Name))
+	log := me.log.WithValues("target", fmt.Sprintf("%s/%s", target.Kind, target.Name))
 
 	if me.isSloFulfilled(sloState) {
 		log.Info("SLO is currently fulfilled")

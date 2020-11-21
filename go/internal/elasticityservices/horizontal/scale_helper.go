@@ -45,7 +45,7 @@ func (me *scaleHelper) getScale(target *eStrategies.NamespacedSloTarget) (*autos
 		return nil, err
 	}
 
-	return me.scaleClient.Scales(target.Namespace).Get(me.ctx, *targetGroupRes, target.TargetRef.Name, metav1.GetOptions{})
+	return me.scaleClient.Scales(target.Namespace).Get(me.ctx, *targetGroupRes, target.Name, metav1.GetOptions{})
 }
 
 // Updates the Scale subresource on the specified target.
