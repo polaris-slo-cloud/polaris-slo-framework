@@ -1,3 +1,4 @@
+import { TypeFn } from '../util';
 import { ObjectKind } from './object-kind';
 
 /**
@@ -7,6 +8,12 @@ import { ObjectKind } from './object-kind';
  * match the type of output data of the SLO.
  */
 export class ElasticityStrategyKind<T> extends ObjectKind {
+
+    /**
+     * This property is needed to trigger type checking for the `T` parameter
+     * when assigning an `ElasticityStrategyKind` to an `SloMappingSpec`.
+     */
+    private _sloOutputType: TypeFn<T>;
 
     constructor(initData?: Partial<ElasticityStrategyKind<T>>) {
         super(initData);
