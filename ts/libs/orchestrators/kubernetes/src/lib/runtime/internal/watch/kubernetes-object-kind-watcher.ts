@@ -114,7 +114,8 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
 
     private getWatchPath(kind: ObjectKind): string {
         const pathStart = kind.group ? `/apis/${kind.group}` : '/api';
-        return `${pathStart}/${kind.version}/${kind.kind}s`;
+        const path = `${pathStart}/${kind.version}/${kind.kind}s`;
+        return path.toLowerCase();
     }
 
     private checkIfRequiredPropsArePresent(kind: ObjectKind): void {

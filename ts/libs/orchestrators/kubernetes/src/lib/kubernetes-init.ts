@@ -17,8 +17,8 @@ export function initSlocKubernetes(kubeConfig: KubeConfig): SlocRuntime {
 }
 
 function registerTransformers(runtime: SlocRuntime): void {
-    runtime.transformer.registerTransformer(ObjectKind, new ObjectKindTransformer());
-    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer());
-    runtime.transformer.registerTransformer(SloTarget, new ObjectReferenceTransformer());
+    runtime.transformer.registerTransformer(ObjectKind, new ObjectKindTransformer(), { inheritable: true });
+    // Registering ObjectReferenceTransformer as inheritable for the ObjectReference class makes it available for SloTarget as well.
+    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer(), { inheritable: true });
     runtime.transformer.registerTransformer(ApiObject, new ApiObjectTransformer<any>(), { inheritable: true });
 }

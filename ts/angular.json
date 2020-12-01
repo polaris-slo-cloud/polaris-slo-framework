@@ -191,6 +191,7 @@
             "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
             "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
+            "externalDependencies": "none",
             "assets": [
               "apps/slo/cpu-usage-slo-controller/src/assets"
             ]
@@ -247,6 +248,7 @@
             "outputPath": "dist/apps/cli/sloc-k8s-serializer",
             "main": "apps/cli/sloc-k8s-serializer/src/main.ts",
             "tsConfig": "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
+            "externalDependencies": "none",
             "assets": [
               "apps/cli/sloc-k8s-serializer/src/assets"
             ]

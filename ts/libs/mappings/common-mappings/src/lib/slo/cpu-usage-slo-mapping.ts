@@ -2,6 +2,9 @@ import { ObjectKind, SloCompliance, SloMappingBase, SloMappingSpecBase, SlocType
 
 export interface CpuUsageSloConfig {
 
+    /**
+     * The average CPU utilization that should be achieved across all instances of the target.
+     */
     targetAvgCPUUtilizationPercentage: number;
 
 }

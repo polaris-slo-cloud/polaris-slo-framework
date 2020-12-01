@@ -2,6 +2,7 @@ import { KubeConfig } from '@kubernetes/client-node';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec, HorizontalElasticityStrategyKind, initSlocLib as initCommonMappingsLib } from '@sloc/common-mappings';
 import { ApiObjectMetadata, SloTarget } from '@sloc/core';
 import { initSlocKubernetes } from '@sloc/kubernetes';
+import * as Yaml from 'js-yaml';
 import { isEqual as _isEqual } from 'lodash';
 
 const k8sConfig = new KubeConfig();
@@ -30,7 +31,6 @@ const cpuSlo = new CpuUsageSloMapping({
 
 console.log('Initial SLOC object: ', cpuSlo);
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const orchSpecific = slocRuntime.transformer.transformToOrchestratorPlainObject(cpuSlo);
 console.log('Orchestrator-specific plain object: ', orchSpecific);
 
@@ -40,3 +40,4 @@ console.log('Parsed SLOC object: ', slocObj);
 const objectsAreEqual = _isEqual(cpuSlo, slocObj);
 console.log('Parsed SLOC object is equal to initial SLOC object: ', objectsAreEqual);
 
+console.log('Orchestrator-specific YAML:\n', Yaml.dump(orchSpecific, { indent: 2 }));
