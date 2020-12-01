@@ -138,7 +138,8 @@ module.exports = {
                         "accessibility": "explicit"
                     }
                 ],
-                "@typescript-eslint/indent": "error",
+                // I had to turn this off, because it is currently buggy (https://github.com/typescript-eslint/typescript-eslint/issues/1824 ).
+                "@typescript-eslint/indent": "off",
                 "@typescript-eslint/member-ordering": "error",
                 "@typescript-eslint/naming-convention": "error",
                 "@typescript-eslint/no-empty-function": "off",

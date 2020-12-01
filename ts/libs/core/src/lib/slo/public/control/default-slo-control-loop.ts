@@ -39,7 +39,8 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private _watchHandler: SloWatchEventsHandler;
 
-    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any>, ServiceLevelObjective<any, any>> = new DefaultMicrocontrollerFactory();
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any>> =
+        new DefaultMicrocontrollerFactory();
 
     get isActive(): boolean {
         return !!this.loopConfig;
@@ -49,7 +50,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
         return this._watchHandler;
     }
 
-    addSlo(key: string, sloMapping: SloMappingSpec<any, any>): Promise<ServiceLevelObjective<any, any>> {
+    addSlo(key: string, sloMapping: SloMappingSpec<any, any, any>): Promise<ServiceLevelObjective<any, any>> {
         if (this.registeredSlos.has(key)) {
             this.removeSlo(key);
         }
