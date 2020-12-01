@@ -68,7 +68,7 @@ export interface SloControlLoop {
      * @important The factory should only instantiate a `ServiceLevelObjective`.
      * The factory MUST NOT call the `ServiceLevelObjective.configure()` method.
      */
-    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any>, ServiceLevelObjective<any, any>>;
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any, any>>;
 
     /**
      * Creates a new SLO instance using the specified `sloMapping` and adds that instance
@@ -83,7 +83,7 @@ export interface SloControlLoop {
      * @returns A Promise that resolves to the created `ServiceLevelObjective` object or rejects
      * if an error occurs.
      */
-    addSlo(key: string, sloMapping: SloMappingSpec<any, any>): Promise<ServiceLevelObjective<any, any>>;
+    addSlo(key: string, sloMapping: SloMappingSpec<any, any, any>): Promise<ServiceLevelObjective<any, any, any>>;
 
     /**
      * @returns The `ServiceLevelObjective` that has been added under the specified `key`

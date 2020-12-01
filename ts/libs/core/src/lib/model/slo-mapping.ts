@@ -9,11 +9,12 @@ import { SloTarget } from './slo-target';
  *
  * @param C The type that describes the SLO's required configuration.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
+ * @param T (optional) The type of `SloTarget` that the SLO can operate on.
  */
-export interface SloMappingSpec<C, O> {
+export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
-    targetRef: SloTarget;
+    targetRef: T;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
     elasticityStrategy: ElasticityStrategyKind<O>;
@@ -56,13 +57,17 @@ export interface SloMappingSpec<C, O> {
 /**
  * Common superclass for SloMappingSpecs.
  *
+ * @important If the generic parameter `T` is specified (a subclass of `SloTarget`), make sure
+ * that you override the `@SlocType` decorator of `targetRef` with the correct type.
+ *
  * @param C The type that describes the SLO's required configuration.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
+ * @param T (optional) The type of `SloTarget` that the SLO can operate on.
  */
-export abstract class SloMappingSpecBase<C, O> implements SloMappingSpec<C, O> {
+export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> implements SloMappingSpec<C, O, T> {
 
     @SlocType(() => SloTarget)
-    targetRef: SloTarget;
+    targetRef: T;
 
     @SlocType(() => ElasticityStrategyKind)
     elasticityStrategy: ElasticityStrategyKind<O>;
@@ -84,7 +89,7 @@ export abstract class SloMappingSpecBase<C, O> implements SloMappingSpec<C, O> {
  *
  * @param T The type of `SloMappingSpec`.
  */
-export abstract class SloMappingBase<T extends SloMappingSpec<any, any>> extends ApiObject<T> {
+export abstract class SloMappingBase<T extends SloMappingSpec<any, any, any>> extends ApiObject<T> {
 
     constructor(initData?: Partial<SloMappingBase<T>>) {
         super(initData);
