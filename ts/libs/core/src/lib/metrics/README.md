@@ -14,6 +14,20 @@
 
 ## Data Types
 
+### DB Assumptions
+We assume the following data model in the time series DB:
+* Every time series can have labels, e.g.,
+    * Labels in Prometheus
+    * Text columns in InfluxDB (e.g., _measurement, _field)
+    * Time series identifier labels in MQL (https://cloud.google.com/monitoring/mql/reference#tables)
+* Every sample of a time series has a single value
+    * The value in Prometheus
+    * _value field in InfluxDB
+    * The first value column in MQL
+    * If the DB supports multiple values, the value is represented by an object in a SLOC TimeSeries
+
+
+### SLOC Query API Data Types
 PromQL:
 * InstantVector 
     * (PromQL: a set of time series containing a single sample for each time series, all sharing the same timestamp)
@@ -49,7 +63,8 @@ We need to distinguish between TimeSeries that can contain only a single value (
 
 * `select(metricName)` => `TimeSeriesInstant[]` with ONLY the LATEST sample for each time series that has this metric.
 * `select(metricName, range: {start, end})` => `TimeSeries[]` with multiple samples for each time series that has this metric.
-* `filter` => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
+* `filterLabels` (applies a filter on a label) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
+* `filterValues` (applies a filter on the value) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
 
 /////////////////// This part needs work!!!
 * group by => multiple range vectors
