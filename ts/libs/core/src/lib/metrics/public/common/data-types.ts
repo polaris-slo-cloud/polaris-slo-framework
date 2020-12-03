@@ -21,7 +21,7 @@ export enum DataType {
 }
 
 /**
- * Maps the members of the `DataType` enum the TypeScript types
+ * Index type for mapping the members of the `DataType` enum the TypeScript types
  * used to represent them.
  */
 export interface DataTypeMappings {

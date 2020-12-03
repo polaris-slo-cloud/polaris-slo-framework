@@ -51,6 +51,7 @@ We need to distinguish between TimeSeries that can contain only a single value (
 * `range({start, end})` => `TimeSeries[]` with multiple samples for each time series.
 * `filter` => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
 
+/////////////////// This part needs work!!!
 * group by => multiple range vectors
 * aggregate (a single range vector) in time window => instant vector/range vector/scalar
     * count
@@ -64,6 +65,7 @@ We need to distinguish between TimeSeries that can contain only a single value (
     * Nth percentile
 * join???
 
+/////////////////// End of part that needs work!!! (I need to add further examples)
 
 Here are some examples of what a query could look like:
 
