@@ -31,10 +31,10 @@ export interface TimeSeries<D extends DataType, T = DataTypeMappings[D]> {
      */
     recordingIntervalMs?: number;
 
-    /** Unix timestamp of the first sample of the TimeSeries. */
+    /** Unix timestamp in milliseconds precision of the first sample of the TimeSeries. */
     start: number;
 
-    /** Unix timestamp of the last sample of the TimeSeries. */
+    /** Unix timestamp in milliseconds precision of the last sample of the TimeSeries. */
     end: number;
 
     /** The type of data stored by the samples in this TimeSeries. */

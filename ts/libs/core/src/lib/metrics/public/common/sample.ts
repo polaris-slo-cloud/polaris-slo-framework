@@ -4,7 +4,7 @@
  */
 export interface Sample<T> {
 
-    /** The Unix timestamp when this sample was taken. */
+    /** The Unix timestamp in milliseconds precision when this sample was taken. */
     timestamp: number;
 
     /** The value of this sample. */
