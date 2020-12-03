@@ -141,7 +141,29 @@ module.exports = {
                 // I had to turn this off, because it is currently buggy (https://github.com/typescript-eslint/typescript-eslint/issues/1824 ).
                 "@typescript-eslint/indent": "off",
                 "@typescript-eslint/member-ordering": "error",
-                "@typescript-eslint/naming-convention": "error",
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        selector: 'default',
+                        format: ['camelCase'],
+                        leadingUnderscore: 'allow',
+                        trailingUnderscore: 'allow',
+                    },
+                    {
+                        selector: 'variable',
+                        format: ['camelCase', 'UPPER_CASE'],
+                        leadingUnderscore: 'allow',
+                        trailingUnderscore: 'allow',
+                    },
+                    {
+                        selector: 'typeLike',
+                        format: ['PascalCase'],
+                    },
+                    {
+                        selector: 'enumMember',
+                        format: ['PascalCase']
+                    },
+                ],
                 "@typescript-eslint/no-empty-function": "off",
                 "@typescript-eslint/no-empty-interface": "off",
                 "@typescript-eslint/no-explicit-any": "off",
