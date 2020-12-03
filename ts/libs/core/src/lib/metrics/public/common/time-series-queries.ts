@@ -1,4 +1,3 @@
-import { DataType, DataTypeMappings } from './data-types';
 import { SlocQuery } from './sloc-query';
 import { TimeRange } from './time-range';
 import { TimeSeries, TimeSeriesInstant } from './time-series';
@@ -17,10 +16,7 @@ export interface TimeSeriesSource {
      * @param metricName The name of the metric that should be selected.
      * @returns A new `TimeInstantQuery`.
      */
-    select<
-        D extends DataType = any,
-        T = DataTypeMappings[D]
-    >(metricName: string): TimeInstantQuery<D, T>;
+    select<T = any>(metricName: string): TimeInstantQuery<T>;
 
     /**
      * Creates a new `TimeRangeQuery` that selects all `TimeSeries` within the specified time range that have the specified `metricName`.
@@ -29,18 +25,17 @@ export interface TimeSeriesSource {
      * @param range The `TimeRange` within which the selected samples of the `TimeSeries` should lie.
      * @returns A new `TimeRangeQuery`.
      */
-    select<
-        D extends DataType = any,
-        T = DataTypeMappings[D]
-    >(metricName: string, range: TimeRange): TimeRangeQuery<D, T>;
+    select<T = any>(metricName: string, range: TimeRange): TimeRangeQuery<T>;
 
 }
 
 /**
  * A query that rsults in `TimeSeries` and which provides operations that are
  * applicable to all `TimeSeries` queries.
+ *
+ * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
  */
-export interface TimeSeriesQuery<T extends TimeSeries<any, any>> extends SlocQuery<T> {
+export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> {
 
     /**
      * Filters the input `TimeSeries` using the provided `predicate`, i.e., only
@@ -58,21 +53,25 @@ export interface TimeSeriesQuery<T extends TimeSeries<any, any>> extends SlocQue
  * A query that results in `TimeSeries` that cover a range of time, i.e., they normally contain
  * multiple samples.
  *
+ * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
+ *
  * @note Some methods may return a query of a different type, e.g., a `TimeInstantQuery`.
  */
-export interface TimeRangeQuery<D extends DataType, T> extends TimeSeriesQuery<TimeSeries<D, T>> {
+export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 
-    filter(predicate: TimeSeriesFilter): TimeRangeQuery<D, T>;
+    filter(predicate: TimeSeriesFilter): TimeRangeQuery<T>;
 
 }
 
 /**
  * A query that results in `TimeSeriesInstants`, i.e., each contains only a single sample.
  *
+ * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
+ *
  * @note Some methods may return a query of a different type, e.g., a `TimeRangeQuery`.
  */
-export interface TimeInstantQuery<D extends DataType, T> extends TimeSeriesQuery<TimeSeriesInstant<D, T>> {
+export interface TimeInstantQuery<T> extends TimeSeriesQuery<TimeSeriesInstant<T>> {
 
-    filter(predicate: TimeSeriesFilter): TimeInstantQuery<D, T>;
+    filter(predicate: TimeSeriesFilter): TimeInstantQuery<T>;
 
 }

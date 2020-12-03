@@ -23,6 +23,11 @@ export enum DataType {
 /**
  * Index type for mapping the members of the `DataType` enum the TypeScript types
  * used to represent them.
+ *
+ * @example
+ * ```
+ * export interface TimeSeries<D extends DataType = DataType, T = DataTypeMappings[D]> { ... }
+ * ```
  */
 export interface DataTypeMappings {
     int: number;

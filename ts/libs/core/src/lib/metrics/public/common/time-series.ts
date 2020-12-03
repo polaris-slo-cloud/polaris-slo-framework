@@ -1,5 +1,5 @@
 import { IndexByKey } from '../../../util';
-import { DataType, DataTypeMappings } from './data-types';
+import { DataType } from './data-types';
 import { Sample } from './sample';
 
 /**
@@ -8,13 +8,9 @@ import { Sample } from './sample';
  * The samples begin at the time denoted by `start` and are ordered chronologically until
  * the time denoted by `end`.
  *
- * @param D The name of the data type that is stored in the samples.
  * @param T The TypeScript type used to represent the data in the samples.
- *
- * @note The default value of `T` is determined by the selected `DataType`, but may be overriden if necessary,
- * e.g., if `DataType.Object` is used, a specifict interface may be used as `T`.
  */
-export interface TimeSeries<D extends DataType, T = DataTypeMappings[D]> {
+export interface TimeSeries<T> {
 
     /**
      * The name of the metric that is recorded in this TimeSeries.
@@ -38,7 +34,7 @@ export interface TimeSeries<D extends DataType, T = DataTypeMappings[D]> {
     end: number;
 
     /** The type of data stored by the samples in this TimeSeries. */
-    dataType: D;
+    dataType: DataType;
 
     /**
      * The samples contained in this TimeSeries.
@@ -49,8 +45,10 @@ export interface TimeSeries<D extends DataType, T = DataTypeMappings[D]> {
 
 /**
  * Represents a `TimeSeries` with only a single sample.
+ *
+ * @param T The TypeScript type used to represent the data in the sample.
  */
-export interface TimeSeriesInstant<D extends DataType, T = DataTypeMappings[D]> extends TimeSeries<D, T> {
+export interface TimeSeriesInstant<T> extends TimeSeries<T> {
 
     samples: [ Sample<T> ]
 
