@@ -79,6 +79,14 @@ export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 
     filterOnLabel(predicate: LabelFilter): TimeRangeQuery<T>;
 
+    /**
+     * Counts the number of times the value changes for each `TimeSeries` and returns that
+     * count as a `TimeSeriesInstant`.
+     *
+     * @returns A `TimeInstantQuery`.
+     */
+    countChanges(): TimeInstantQuery<T>; // ToDo Check if this exists in MQL and Flux!
+
 }
 
 /**
@@ -91,5 +99,10 @@ export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 export interface TimeInstantQuery<T> extends TimeSeriesQuery<TimeSeriesInstant<T>> {
 
     filterOnLabel(predicate: LabelFilter): TimeInstantQuery<T>;
+
+    /**
+     * Converts the value of all `TimeSeries` to the absolute value.
+     */
+    abs(): TimeInstantQuery<T>;
 
 }
