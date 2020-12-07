@@ -1,7 +1,7 @@
 /* eslint-disable id-blacklist */
 
 /**
- * Defines the names of the data types that a sample may have.
+ * Defines the names of the data types that the content of a `SlocQueryResult` may have.
  */
 // eslint-disable-next-line no-shadow
 export enum DataType {

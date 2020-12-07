@@ -1,4 +1,4 @@
-import { TimeSeriesSource } from './time-series-source';
+import { TimeSeriesSource } from '../common/time-series-source';
 
 /**
  * Encapsulates a source for obtaining metrics.
