@@ -50,6 +50,11 @@ export interface TimeSeries<T> {
  */
 export interface TimeSeriesInstant<T> extends TimeSeries<T> {
 
+    /**
+     * The samples contained in this TimeSeries.
+     *
+     * @note A `TimeSeriesInstant` contains by definition only a single sample.
+     */
     samples: [ Sample<T> ]
 
 }
