@@ -6,6 +6,9 @@ import { LabelFilter } from './time-series-filter';
  * A query that rsults in `TimeSeries` and which provides operations that are
  * applicable to all `TimeSeries` queries.
  *
+ * A `TimeSeriesQuery` realization is immutable to allow query objects to be reused
+ * in multiple places.
+ *
  * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
  */
 export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> {
@@ -44,6 +47,9 @@ export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T>
  * A query that results in `TimeSeries` that cover a range of time, i.e., they normally contain
  * multiple samples.
  *
+ * A `TimeRangeQuery` realization is immutable to allow query objects to be reused
+ * in multiple places.
+ *
  * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
  *
  * @note Some methods may return a query of a different type, e.g., a `TimeInstantQuery`.
@@ -64,6 +70,9 @@ export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 
 /**
  * A query that results in `TimeSeriesInstants`, i.e., each contains only a single sample.
+ *
+ * A `TimeInstantQuery` realization is immutable to allow query objects to be reused
+ * in multiple places.
  *
  * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
  *

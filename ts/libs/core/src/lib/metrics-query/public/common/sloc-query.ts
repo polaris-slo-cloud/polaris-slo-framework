@@ -16,6 +16,9 @@ export interface SlocQueryResult<T> {
 
 /**
  * Represents a metrics query in SLOC.
+ *
+ * A realization of this interface should be immutable to allow query objects to be reused
+ * in multiple places.
  */
 export interface SlocQuery<T> {
 
