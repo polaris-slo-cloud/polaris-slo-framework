@@ -1,4 +1,4 @@
-import { SlocQuery } from '../generic';
+import { SlocQuery } from '../../generic';
 import { TimeSeries, TimeSeriesInstant } from './time-series';
 import { LabelFilter } from './time-series-filter';
 

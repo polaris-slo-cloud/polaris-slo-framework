@@ -1,5 +1,5 @@
-import { IndexByKey } from '../../../util';
-import { DataType } from '../generic/data-types';
+import { IndexByKey } from '../../../../util';
+import { DataType } from '../../generic/data-types';
 import { Sample } from './sample';
 
 /**
