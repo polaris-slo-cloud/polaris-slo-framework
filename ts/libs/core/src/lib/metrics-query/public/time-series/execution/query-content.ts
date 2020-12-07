@@ -10,23 +10,23 @@ import { LabelFilter, TimeRange } from '../query-model';
 export enum QueryContentType {
 
     /** A query that selects a metric with a particular name, optionally within a time range. */
-    Select,
+    Select = 'select',
 
     /** A query that applies a filter on the labels of the `TimeSeries`. */
-    FilterOnLabel,
+    FilterOnLabel = 'filterOnLabel',
 
     /** A query that applies a filter on the value(s) of the `TimeSeries`. */
-    FilterOnValue,
+    FilterOnValue = 'filterOnValue',
 
     /** A query that applies a DB-native function to the `TimeSeries`. */
-    Function,
+    Function = 'function',
 
     /**
      * A query that applies a function to the `TimeSeries`,
      * which is not natively supported by the DB and thus needs to be
      * executed by SLOC code.
      */
-    NonNativeFunction,
+    NonNativeFunction = 'nonNativeFunction',
 
 }
 
@@ -68,7 +68,7 @@ export interface FilterOnLabelQueryContent extends QueryContent {
 // }
 
 
-export interface FunctionQuery extends QueryContent {
+export interface FunctionQueryContent extends QueryContent {
 
     contentType: QueryContentType.Function;
 
@@ -78,10 +78,22 @@ export interface FunctionQuery extends QueryContent {
 
 }
 
-export interface NonNativeFunctionQuery extends QueryContent {
+export interface NonNativeFunctionQueryContent extends QueryContent {
 
     contentType: QueryContentType.NonNativeFunction;
 
     // ToDo
 
+}
+
+
+/**
+ * Maps the QueryContentTypes to their respective interfaces.
+ */
+export interface QueryContentTypeMapping {
+    select: SelectQueryContent;
+    filterOnLabel: FilterOnLabelQueryContent;
+    filterOnValue: any;
+    function: FunctionQueryContent
+    nonNativeFunction: NonNativeFunctionQueryContent;
 }
