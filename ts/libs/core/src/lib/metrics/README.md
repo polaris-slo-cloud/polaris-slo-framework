@@ -63,8 +63,8 @@ We need to distinguish between TimeSeries that can contain only a single value (
 
 * `select(metricName)` => `TimeSeriesInstant[]` with ONLY the LATEST sample for each time series that has this metric.
 * `select(metricName, range: {start, end})` => `TimeSeries[]` with multiple samples for each time series that has this metric.
-* `filterLabels` (applies a filter on a label) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
-* `filterValues` (applies a filter on the value) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
+* `filterOnLabel(filter)` (applies a filter on a label) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
+* `filterOnValue(filter)` (applies a filter on the value) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
 
 /////////////////// This part needs work!!!
 * group by => multiple range vectors
@@ -104,8 +104,8 @@ metrics.from(PROMETHEUS)
 // PromQL:
 // kubelet_http_requests_total{method='POST', node='rainbow0'}[1h]
 metrics.from(PROMETHEUS)
-    .select('kubelet_http_requests_total', TimeRange.fromHours(-1)) // fromHours(-1) returns e.g., { start: timeStamp, end: timeStamp }
-    .filter(Filters.regexEq('method', 'POST.*'))
+    .select('kubelet_http_requests_total', TimeRange.fromDuration(Duration.fromHours(1))) // fromHours(-1) returns e.g., { start: timeStamp, end: timeStamp }
+    .filterOnLabel(LabelFilters.regex('method', 'POST.*'))
 ```
 **PromQL Output:** a single RangeVector, which is made up of an array of sample values for each time series.
 

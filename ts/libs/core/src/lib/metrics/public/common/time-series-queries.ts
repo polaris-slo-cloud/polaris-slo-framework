@@ -1,7 +1,7 @@
 import { SlocQuery } from './sloc-query';
 import { TimeRange } from './time-range';
 import { TimeSeries, TimeSeriesInstant } from './time-series';
-import { TimeSeriesFilter } from './time-series-filter';
+import { LabelFilter } from './time-series-filter';
 
 /**
  * Encapsulates a source for `TimeSeries` - allows creating new `TimeSeriesQueries`.
@@ -38,13 +38,31 @@ export interface TimeSeriesSource {
 export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> {
 
     /**
-     * Filters the input `TimeSeries` using the provided `predicate`, i.e., only
+     * Filters the input `TimeSeries`, based on their labels using the provided `predicate`, i.e., only
      * `TimeSeries` that fulfill the `predicate` constitute the output of the filter operation.
      *
-     * @param predicate The predicate that all output `TimeSeries` must fulfill.
+     * Chaining multiple `filterOnLabel()` calls will result in a combination of these filters using
+     * the `AND` operator, i.e., all the predicates must be fulfilled.
+     *
+     * @param predicate The label predicate that all output `TimeSeries` must fulfill.
      * @returns A new `TimeSeriesQuery`, whose results are all the input `TimeSeries` that fulfill the `predicate`.
      */
-    filter(predicate: TimeSeriesFilter): TimeSeriesQuery<T>;
+    // If necessary, we can introduce other combinations later on by allowing the predicate to contain
+    // a complex filter (e.g., predicates combined with OR).
+    filterOnLabel(predicate: LabelFilter): TimeSeriesQuery<T>;
+
+    // ToDo:
+    // /**
+    //  * Filters the input `TimeSeries`, based on their values using the provided `predicate`, i.e., only
+    //  * `TimeSeries` that fulfill the `predicate` constitute the output of the filter operation.
+    //  *
+    //  * Chaining multiple `filterOnLabel()` calls will result in a combination of these filters using
+    //  * the `AND` operator, i.e., all the predicates must be fulfilled.
+    //  *
+    //  * @param predicate The value predicate that all output `TimeSeries` must fulfill.
+    //  * @returns A new `TimeSeriesQuery`, whose results are all the input `TimeSeries` that fulfill the `predicate`.
+    //  */
+    // filterOnValue(predicate: TimeSeriesFilter): TimeSeriesQuery<T>;
 
 }
 
@@ -59,7 +77,7 @@ export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T>
  */
 export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 
-    filter(predicate: TimeSeriesFilter): TimeRangeQuery<T>;
+    filterOnLabel(predicate: LabelFilter): TimeRangeQuery<T>;
 
 }
 
@@ -72,6 +90,6 @@ export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
  */
 export interface TimeInstantQuery<T> extends TimeSeriesQuery<TimeSeriesInstant<T>> {
 
-    filter(predicate: TimeSeriesFilter): TimeInstantQuery<T>;
+    filterOnLabel(predicate: LabelFilter): TimeInstantQuery<T>;
 
 }
