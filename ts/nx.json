@@ -63,6 +63,11 @@
       "tags": [
         "scope:core"
       ]
+    },
+    "query-backends-prometheus": {
+      "tags": [
+        "query:prometheus"
+      ]
     }
   },
   "affected": {

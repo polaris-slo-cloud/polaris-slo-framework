@@ -34,6 +34,9 @@
             ],
             "@sloc/common-mappings": [
                 "libs/mappings/common-mappings/src/index.ts"
+            ],
+            "@sloc/prometheus": [
+                "libs/query-backends/prometheus/src/index.ts"
             ]
         }
     },
