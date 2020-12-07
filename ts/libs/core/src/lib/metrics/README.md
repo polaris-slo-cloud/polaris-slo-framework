@@ -8,7 +8,7 @@
     sources.streamSight.select()
     sources.prometheus.select()
     // or
-    metrics.from('StreamSight').select()
+    metrics.getTimeSeriesSource('StreamSight').select()
     ```
 
 
