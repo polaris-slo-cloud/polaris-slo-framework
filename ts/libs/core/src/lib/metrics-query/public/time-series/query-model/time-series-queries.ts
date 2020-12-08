@@ -124,6 +124,15 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      */
     abs(): TimeInstantQuery<T>;
 
+    /**
+     * Adds the resulting values of another `TimeInstantQuery` to this one.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param addend The query, whose results should be added.
+     */
+    add(addend: TimeInstantQuery<T>): TimeInstantQuery<T>;
+
 }
 
 
