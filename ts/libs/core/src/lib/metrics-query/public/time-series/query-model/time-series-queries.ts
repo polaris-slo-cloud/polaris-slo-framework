@@ -3,15 +3,42 @@ import { TimeSeries, TimeSeriesInstant } from './time-series';
 import { LabelFilter } from './time-series-filter';
 
 /**
- * A query that rsults in `TimeSeries` and which provides operations that are
+ * A query that results in `TimeSeries` and which provides operations that are
  * applicable to all `TimeSeries` queries.
+ *
+ * There are two basic types of TimeSeriesQueries:
+ * - `TimeRangeQuery`, whose execution results in an array of `TimeSeries`, each normally containing multiple samples.
+ * - `TimeInstantQuery`, whose execution results in an array of `TimeSeriesInstant` objects, each containing a single sample.
+ *
+ * These two basic types may be combined with `LabelFilterableQuery` and `ValueFilterableQuery`,
+ * which allow filtering on labels and values respectively.
+ * A query resulting from a `TimeSeriesSource.select()` will be either
+ * - a `TimeRangeQuery & LabelFilterableQuery & ValueFilterableQuery`, if a `TimeRange` was specified, or
+ * - a `TimeInstantQuery & LabelFilterableQuery & ValueFilterableQuery`, if no `TimeRange` was specified.
+ *
+ * The use of one of the methods that apply a non-filter function to the query, will usually
+ * result in the loss of the label-filterable functionality for the rest of the query, because
+ * some DBs only support label filtering on the stored data, but not on computed data.
  *
  * A `TimeSeriesQuery` realization is immutable to allow query objects to be reused
  * in multiple places.
  *
- * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
+ * @param T The type of `TimeSeries` that is returned by this query.
  */
-export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> {
+export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> { }
+
+/**
+ * A `TimeSeriesQuery` that allows filtering on the labels.
+ *
+ * A `TimeSeriesQuery` realization is immutable to allow query objects to be reused
+ * in multiple places.
+ *
+ * @param T The type of `TimeSeries` that is returned by this query.
+ * @param Q Used to capture the type of `this` for every interface realization, because the filter() method must return
+ * a new instance of the realizing class and TypeScript's polymorphic `this` return type does not allow capturing this so far
+ * (see https://github.com/Microsoft/TypeScript/issues/283#issuecomment-194034654).
+ */
+export interface LabelFilterableQuery<T extends TimeSeries<any>, Q extends LabelFilterableQuery<T, any>> extends TimeSeriesQuery<T> {
 
     /**
      * Filters the input `TimeSeries`, based on their labels using the provided `predicate`, i.e., only
@@ -25,7 +52,23 @@ export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T>
      */
     // If necessary, we can introduce other combinations later on by allowing the predicate to contain
     // a complex filter (e.g., predicates combined with OR).
-    filterOnLabel(predicate: LabelFilter): TimeSeriesQuery<T>;
+    filterOnLabel(predicate: LabelFilter): Q;
+
+}
+
+
+/**
+ * A `TimeSeriesQuery` that allows filtering on the values.
+ *
+ * A `TimeSeriesQuery` realization is immutable to allow query objects to be reused
+ * in multiple places.
+ *
+ * @param T The type of `TimeSeries` that is returned by this query.
+ * @param Q Used to capture the type of `this` for every interface realization, because the filter() method must return
+ * a new instance of the realizing class and TypeScript's polymorphic `this` return type does not allow capturing this so far
+ * (see https://github.com/Microsoft/TypeScript/issues/283#issuecomment-194034654).
+ */
+export interface ValueFilterableQuery<T extends TimeSeries<any>, Q extends ValueFilterableQuery<T, any>> extends TimeSeriesQuery<T> {
 
     // ToDo:
     // /**
@@ -38,14 +81,14 @@ export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T>
     //  * @param predicate The value predicate that all output `TimeSeries` must fulfill.
     //  * @returns A new `TimeSeriesQuery`, whose results are all the input `TimeSeries` that fulfill the `predicate`.
     //  */
-    // filterOnValue(predicate: TimeSeriesFilter): TimeSeriesQuery<T>;
+    // filterOnValue(predicate: ValueFilter): Q;
 
 }
 
 
 /**
- * A query that results in `TimeSeries` that cover a range of time, i.e., they normally contain
- * multiple samples.
+ * A query, whose exection results in one or more `TimeSeries` that cover a range of time,
+ * i.e., they normally contain multiple samples.
  *
  * A `TimeRangeQuery` realization is immutable to allow query objects to be reused
  * in multiple places.
@@ -55,8 +98,6 @@ export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T>
  * @note Some methods may return a query of a different type, e.g., a `TimeInstantQuery`.
  */
 export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
-
-    filterOnLabel(predicate: LabelFilter): TimeRangeQuery<T>;
 
     /**
      * Counts the number of times the value changes for each `TimeSeries` and returns that
@@ -69,7 +110,7 @@ export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 }
 
 /**
- * A query that results in `TimeSeriesInstants`, i.e., each contains only a single sample.
+ * A query, whose execution results in one or more `TimeSeriesInstants`, i.e., each contains only a single sample.
  *
  * A `TimeInstantQuery` realization is immutable to allow query objects to be reused
  * in multiple places.
@@ -79,8 +120,6 @@ export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
  * @note Some methods may return a query of a different type, e.g., a `TimeRangeQuery`.
  */
 export interface TimeInstantQuery<T> extends TimeSeriesQuery<TimeSeriesInstant<T>> {
-
-    filterOnLabel(predicate: LabelFilter): TimeInstantQuery<T>;
 
     /**
      * Converts the value of all `TimeSeries` to the absolute value.
