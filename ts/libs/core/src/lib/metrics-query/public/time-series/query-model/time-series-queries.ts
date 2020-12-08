@@ -1,6 +1,6 @@
 import { SlocQuery } from '../../generic';
+import { LabelFilter } from './label-filter';
 import { TimeSeries, TimeSeriesInstant } from './time-series';
-import { LabelFilter } from './time-series-filter';
 
 /**
  * A query that results in `TimeSeries` and which provides operations that are
