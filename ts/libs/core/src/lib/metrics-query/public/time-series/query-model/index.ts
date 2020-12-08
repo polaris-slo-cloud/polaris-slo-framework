@@ -4,3 +4,4 @@ export * from './time-range';
 export * from './time-series-queries';
 export * from './time-series-source';
 export * from './time-series';
+export * from './value-filter';

@@ -4,7 +4,7 @@
  */
 
 import { IndexByKey } from '../../../../util';
-import { LabelFilter, TimeRange } from '../query-model';
+import { LabelFilter, TimeRange, ValueFilter } from '../query-model';
 
 // eslint-disable-next-line no-shadow
 export enum QueryContentType {
@@ -61,11 +61,13 @@ export interface FilterOnLabelQueryContent extends QueryContent {
 
 }
 
-// ToDo
-// export interface FilterOnValueQuery extends QueryContent {
-//     contentType: QueryContentType.FilterOnValue;
-//     // ToDo
-// }
+export interface FilterOnValueQuery extends QueryContent {
+
+    contentType: QueryContentType.FilterOnValue;
+
+    filter: ValueFilter;
+
+}
 
 
 export interface FunctionQueryContent extends QueryContent {
