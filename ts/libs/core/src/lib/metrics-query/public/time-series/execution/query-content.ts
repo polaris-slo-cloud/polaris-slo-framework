@@ -44,6 +44,9 @@ export interface SelectQueryContent extends QueryContent {
 
     contentType: QueryContentType.Select;
 
+    /** The name of the app for which the metric should be selected. */
+    appName: string;
+
     /** The name of the metric that should be selected. */
     metricName: string;
 
