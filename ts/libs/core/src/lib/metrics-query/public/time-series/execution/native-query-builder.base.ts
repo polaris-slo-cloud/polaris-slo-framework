@@ -1,7 +1,7 @@
 import { QueryError } from '../../generic';
 import { TimeSeriesQuery } from '../query-model';
 import { NativeQueryBuilder } from './native-query-builder';
-import { QueryContent, QueryContentType, QueryContentTypeMapping, SelectQueryContent } from './query-content';
+import { QueryContent, QueryContentType, SelectQueryContent } from './query-content';
 
 /**
  * Common superclass for a `NativeQueryBuilder` implementation.
@@ -11,34 +11,24 @@ import { QueryContent, QueryContentType, QueryContentTypeMapping, SelectQueryCon
 export abstract class NativeQueryBuilderBase implements NativeQueryBuilder {
 
     /**
-     * The query chain that has been assembled through `addQuery()` calls.
+     * The first segment of the query is a select query.
      */
-    protected queryChain: QueryContent[] = [];
-
     protected selectSegment: SelectQueryContent;
 
-    protected segmentsByType: { [K in Exclude<QueryContentType, QueryContentType.Select>]: QueryContentTypeMapping[K][]; } = {
-        filterOnLabel: [],
-        filterOnValue: [],
-        function: [],
-        nonNativeFunction: [],
-    };
+    /**
+     * The chain of query segments that come after the `selectSegment`.
+     */
+    protected queryChainAfterSelect: QueryContent[] = [];
 
     abstract buildQuery(): TimeSeriesQuery<any>;
 
     addQuery(queryContent: QueryContent): void {
-        if (this.queryChain.length > 0) {
+        if (this.selectSegment) {
             // Not first query segment.
             if (queryContent.contentType === QueryContentType.Select) {
-                throw new QueryError('Only first query segment may be of `QueryContentType.Select`.', queryContent)
+                throw new QueryError('Only the first query segment may be of `QueryContentType.Select`.', queryContent)
             }
-
-            const segmentTypeChain = this.segmentsByType[queryContent.contentType];
-            if (!segmentTypeChain) {
-                throw new QueryError(`Unknown QueryContentType: ${queryContent.contentType}`, queryContent);
-            }
-
-            segmentTypeChain.push(queryContent);
+            this.queryChainAfterSelect.push(queryContent);
         } else {
             // First query segment.
             if (queryContent.contentType === QueryContentType.Select) {
@@ -46,8 +36,6 @@ export abstract class NativeQueryBuilderBase implements NativeQueryBuilder {
             }
             this.selectSegment = queryContent as SelectQueryContent;
         }
-
-        this.queryChain.push(queryContent);
     }
 
 }

@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { SlocQueryBase, SlocQueryResult } from '../../generic';
-import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQuery } from '../query-model';
+import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery } from '../query-model';
 import { NativeQueryBuilderFactoryFn } from './native-query-builder';
-import { QueryContent } from './query-content';
+import { QueryContent, QueryContentType, QueryContentTypeMapping } from './query-content';
 
 /**
  * Common superclass for all `TimeSeriesQuery` implementations.
@@ -26,7 +26,7 @@ export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends Slo
      * @param queryContent The actual content of this query.
      * @param queryBuilderFactoryFn The factory used to create a new NativeQueryBuilder instance.
      */
-    constructor(predecessor: TimeSeriesQueryBase<T>, queryContent: QueryContent, queryBuilderFactoryFn: NativeQueryBuilderFactoryFn) {
+    constructor(predecessor: TimeSeriesQueryBase<any>, queryContent: QueryContent, queryBuilderFactoryFn: NativeQueryBuilderFactoryFn) {
         super(predecessor);
         this.queryContent = queryContent;
         this.queryBuilderFactoryFn = queryBuilderFactoryFn;
@@ -35,12 +35,12 @@ export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends Slo
     /**
      * Creates a new instance of a `TimeRangeQuery` and sets its query content.
      */
-    protected abstract createTimeRangeQuery(queryContent: QueryContent): TimeRangeQuery<T> & TimeSeriesQueryBase<T>;
+    protected abstract createTimeRangeQuery(queryContent: QueryContent): TimeRangeQuery<any> & TimeSeriesQueryBase<TimeSeries<any>>;
 
     /**
      * Creates a new instance of a `TimeInstantQuery` and sets its query content.
      */
-    protected abstract createTimeInstantQuery(queryContent: QueryContent): TimeInstantQuery<T> & TimeSeriesQueryBase<T>;
+    protected abstract createTimeInstantQuery(queryContent: QueryContent): TimeInstantQuery<any> & TimeSeriesQueryBase<TimeSeriesInstant<any>>;
 
     protected executeInternal(queryChain: TimeSeriesQueryBase<T>[]): Promise<SlocQueryResult<T>> {
         const query = this.buildNativeQuery(queryChain);

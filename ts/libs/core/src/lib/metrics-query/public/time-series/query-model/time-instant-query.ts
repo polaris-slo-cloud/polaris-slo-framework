@@ -1,6 +1,10 @@
 import { TimeSeriesInstant } from './time-series';
 import { LabelFilterableQuery, ValueFilterableQuery } from './time-series-query';
 
+// Important: If we ever add a method that returns a TimeRangeQuery, we need to use a similar approach to
+// the one used for `TimeInstantQueryBase`, `TimeInstantQueryImpl`, `TimeRangeQueryBase`, and `TimeRangeQueryImpl` to avoid
+// circular dependencies between .ts files.
+
 /**
  * A query, whose execution results in one or more `TimeSeriesInstants`, i.e., each contains only a single sample.
  *
