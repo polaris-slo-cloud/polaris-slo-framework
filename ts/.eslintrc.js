@@ -138,6 +138,16 @@ module.exports = {
                         "accessibility": "explicit"
                     }
                 ],
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "warn",
+                    {
+                        "allowArgumentsExplicitlyTypedAsAny": true,
+                        "allowDirectConstAssertionInArrowFunctions": true,
+                        "allowedNames": [],
+                        "allowHigherOrderFunctions": true,
+                        "allowTypedFunctionExpressions": true,
+                    },
+                ],
                 // I had to turn this off, because it is currently buggy (https://github.com/typescript-eslint/typescript-eslint/issues/1824 ).
                 "@typescript-eslint/indent": "off",
                 "@typescript-eslint/member-ordering": "error",
