@@ -1,13 +1,14 @@
 import { QueryError } from '../../generic';
+import { TimeSeriesQuery } from '../query-model';
+import { NativeQueryBuilder } from './native-query-builder';
 import { QueryContent, QueryContentType, QueryContentTypeMapping, SelectQueryContent } from './query-content';
-import { TimeSeriesQueryBuilder } from './time-series-query-builder';
 
 /**
- * Common superclass for a `TimeSeriesQueryBuilder` implementation.
+ * Common superclass for a `NativeQueryBuilder` implementation.
  *
  * Handles the building of a query chain and a separate chains by `QueryContentType`.
  */
-export abstract class TimeSeriesQueryBuilderBase<Q> implements TimeSeriesQueryBuilder<Q> {
+export abstract class NativeQueryBuilderBase implements NativeQueryBuilder {
 
     /**
      * The query chain that has been assembled through `addQuery()` calls.
@@ -23,7 +24,7 @@ export abstract class TimeSeriesQueryBuilderBase<Q> implements TimeSeriesQueryBu
         nonNativeFunction: [],
     };
 
-    abstract buildQuery(): Q;
+    abstract buildQuery(): TimeSeriesQuery<any>;
 
     addQuery(queryContent: QueryContent): void {
         if (this.queryChain.length > 0) {
