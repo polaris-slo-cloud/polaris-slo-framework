@@ -38,6 +38,11 @@ export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T>
  * @param Q Used to capture the type of `this` for every interface realization, because the filter() method must return
  * a new instance of the realizing class and TypeScript's polymorphic `this` return type does not allow capturing this so far
  * (see https://github.com/Microsoft/TypeScript/issues/283#issuecomment-194034654).
+ *
+ * @note An alternative to the `Q` class parameter would have been a generic parameter on every method:
+ * `filterOnValue<Q extends this>(predicate: ValueFilter): Q;`
+ * But this would have allowed the user to (incorrectly) change the typing of the return value of a method:
+ * `query.filterOnValue<SomeOtherQueryType>()`.
  */
 export interface ValueFilterableQuery<T extends TimeSeries<any>, Q extends ValueFilterableQuery<T, any>> extends TimeSeriesQuery<T> {
 
@@ -65,6 +70,11 @@ export interface ValueFilterableQuery<T extends TimeSeries<any>, Q extends Value
  * @param Q Used to capture the type of `this` for every interface realization, because the filter() method must return
  * a new instance of the realizing class and TypeScript's polymorphic `this` return type does not allow capturing this so far
  * (see https://github.com/Microsoft/TypeScript/issues/283#issuecomment-194034654).
+ *
+ * @note An alternative to the `Q` class parameter would have been a generic parameter on every method:
+ * `filterOnLabel<Q extends this>(predicate: LabelFilter): Q;`
+ * But this would have allowed the user to (incorrectly) change the typing of the return value of a method:
+ * `query.filterOnLabel<SomeOtherQueryType>()`.
  */
 export interface LabelFilterableQuery<T extends TimeSeries<any>, Q extends LabelFilterableQuery<T, any>> extends TimeSeriesQuery<T> {
 
