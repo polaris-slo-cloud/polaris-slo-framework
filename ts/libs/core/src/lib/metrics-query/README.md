@@ -92,7 +92,7 @@ We need to distinguish between TimeSeries that can contain only a single value (
 * Joins seem to exist in Flux and MQL, but not in PromQL.
 * FilterByValue is only possible for InstantVectors in PromQL, but for all types in Flux
     * **Either offer filterByValue only on TimeInstantQueries (ask Stefan)** or throw an error if someone uses them in a RangeQuery when using a PromQL backend?
-
+* PromQL to Flux transpiler: https://www.slideshare.net/influxdata/creating-the-promql-transpiler-for-flux-by-julius-volz-cofounder-prometheus
 !!!!!!!!!!!!!!!!!!!!!!!!!
 
 Here are some examples of what a query could look like:
