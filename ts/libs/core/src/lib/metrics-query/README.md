@@ -53,7 +53,7 @@ SLOC:
         * **Important:** If a sample has multiple values (possible in Google MQL, called value columns), `T` should be an interface that contains a property for each possible value column.
 * `T`
     * any basic TypeScript data type
-    * any interface in case of multi-valued samples (possible in MQL)
+    * any interface in case of multi-valued samples (possible in MQL or a field set with multiple values in [Flux](https://docs.influxdata.com/influxdb/cloud/reference/key-concepts/data-elements/#fields))
 
 
 ## Operations
@@ -65,6 +65,12 @@ We need to distinguish between TimeSeries that can contain only a single value (
 * `select(metricName, range: {start, end})` => `TimeSeries[]` with multiple samples for each time series that has this metric.
 * `filterOnLabel(filter)` (applies a filter on a label) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
 * `filterOnValue(filter)` (applies a filter on the value) => `TimeSeriesInstant[]` or `TimeSeries[]`, depending on input
+    * PromQL supports filtering only on `InstantVectors` and scalars, while Flux supports filtering on ranges as well. This gives us three options for supporting value filtering:
+        1. Support value filtering on both query types, allows the use of more query features when using a more powerful backend, like InfluxDB. But it requires us to throw an error when using value filters on a range query with the Prometheus backend.
+        2. Support value filtering only on TimeInstantQueries avoids throwing runtime errors, but limits our query API to the least common denominator.
+        3. Another option is to explicitly map the supported DBs in our MetricsSource to the interfaces that the DBs support. We would lose the DB-independent argument a little bit, because we explicitly list each supported DB and provide a slightly different interface for each.
+    * For now, we have chosen option 2.
+
 
 /////////////////// This part needs work!!!
 * group by => multiple range vectors
@@ -81,6 +87,13 @@ We need to distinguish between TimeSeries that can contain only a single value (
 * join???
 
 /////////////////// End of part that needs work!!! (I need to add further examples)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!
+* Joins seem to exist in Flux and MQL, but not in PromQL.
+* FilterByValue is only possible for InstantVectors in PromQL, but for all types in Flux
+    * **Either offer filterByValue only on TimeInstantQueries (ask Stefan)** or throw an error if someone uses them in a RangeQuery when using a PromQL backend?
+
+!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Here are some examples of what a query could look like:
 

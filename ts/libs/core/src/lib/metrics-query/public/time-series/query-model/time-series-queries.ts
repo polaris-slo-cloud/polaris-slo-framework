@@ -11,9 +11,9 @@ import { ValueFilter } from './value-filter';
  * - `TimeRangeQuery`, whose execution results in an array of `TimeSeries`, each normally containing multiple samples.
  * - `TimeInstantQuery`, whose execution results in an array of `TimeSeriesInstant` objects, each containing a single sample.
  *
- * Both main query types extend `ValueFilterableQuery`, meaning that they allow filtering on values of the TimeSeries' samples.
+ * `TimeInstantQuery` also allows applying filters on the values of the `TimeSeries`.
  *
- * The two main query types may be combined with `LabelFilterableQuery`, which allows filtering on labels.
+ * Both main query types may be combined with `LabelFilterableQuery`, which allows filtering on labels.
  * A query resulting from a `TimeSeriesSource.select()` will be either
  * - a `LabelFilterableTimeRangeQuery = TimeRangeQuery & LabelFilterableQuery`, if a `TimeRange` was specified, or
  * - a `LabelFilterableTimeInstantQueryQuery = TimeInstantQuery & LabelFilterableQuery`, if no `TimeRange` was specified.
@@ -95,7 +95,7 @@ export interface LabelFilterableQuery<T extends TimeSeries<any>, Q extends Label
  *
  * @note Some methods may return a query of a different type, e.g., a `TimeInstantQuery`.
  */
-export interface TimeRangeQuery<T> extends ValueFilterableQuery<TimeSeries<T>, TimeRangeQuery<T>> {
+export interface TimeRangeQuery<T> extends TimeSeriesQuery<TimeSeries<T>> {
 
     /**
      * Counts the number of times the value changes for each `TimeSeries` and returns that
