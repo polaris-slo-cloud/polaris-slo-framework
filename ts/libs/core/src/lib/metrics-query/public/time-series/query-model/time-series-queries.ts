@@ -157,7 +157,9 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
  *
  * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
  */
-export interface LabelFilterableTimeRangeQuery<T> extends TimeRangeQuery<T>, LabelFilterableQuery<TimeSeries<T>, LabelFilterableTimeRangeQuery<T>> { }
+export interface LabelFilterableTimeRangeQuery<T> extends
+    TimeRangeQuery<T>,
+    LabelFilterableQuery<TimeSeries<T>, LabelFilterableTimeRangeQuery<T>> { }
 
 
 /**
@@ -171,5 +173,6 @@ export interface LabelFilterableTimeRangeQuery<T> extends TimeRangeQuery<T>, Lab
  *
  * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
  */
-export interface LabelFilterableTimeInstantQuery<T>
-    extends TimeInstantQuery<T>, LabelFilterableQuery<TimeSeriesInstant<T>, LabelFilterableTimeInstantQuery<T>> { }
+export interface LabelFilterableTimeInstantQuery<T> extends
+    TimeInstantQuery<T>,
+    LabelFilterableQuery<TimeSeriesInstant<T>, LabelFilterableTimeInstantQuery<T>> { }
