@@ -1,6 +1,6 @@
 import { SlocQuery } from '../../generic';
 import { LabelFilter } from './label-filter';
-import { TimeSeries, TimeSeriesInstant } from './time-series';
+import { TimeSeries } from './time-series';
 import { ValueFilter } from './value-filter';
 
 /**
@@ -93,86 +93,3 @@ export interface LabelFilterableQuery<T extends TimeSeries<any>, Q extends Label
     filterOnLabel(predicate: LabelFilter): Q;
 
 }
-
-
-/**
- * A query, whose exection results in one or more `TimeSeries` that cover a range of time,
- * i.e., they normally contain multiple samples.
- *
- * A `TimeRangeQuery` realization is immutable to allow query objects to be reused in multiple places.
- *
- * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
- *
- * @note Some methods may return a query of a different type, e.g., a `TimeInstantQuery`.
- */
-export interface TimeRangeQuery<T> extends ValueFilterableQuery<TimeSeries<T>, TimeRangeQuery<T>> {
-
-    /**
-     * Counts the number of times the value changes for each `TimeSeries` and returns that
-     * count as a `TimeSeriesInstant`.
-     *
-     * @returns A `TimeInstantQuery`.
-     */
-    countChanges(): TimeInstantQuery<T>; // ToDo Check if this exists in MQL and Flux!
-
-}
-
-
-/**
- * A query, whose execution results in one or more `TimeSeriesInstants`, i.e., each contains only a single sample.
- *
- * A `TimeInstantQuery` realization is immutable to allow query objects to be reused in multiple places.
- *
- * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
- *
- * @note Some methods may return a query of a different type, e.g., a `TimeRangeQuery`.
- */
-export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInstant<T>, TimeInstantQuery<T>> {
-
-    /**
-     * Converts the value of all `TimeSeries` to the absolute value.
-     */
-    abs(): TimeInstantQuery<T>;
-
-    /**
-     * Adds the resulting values of another `TimeInstantQuery` to this one.
-     *
-     * @note The results of both queries must match.
-     *
-     * @param addend The query, whose results should be added.
-     */
-    add(addend: TimeInstantQuery<T>): TimeInstantQuery<T>;
-
-}
-
-
-/**
- * A `TimeRangeQuery` that allows filtering on labels.
- *
- * The use of one of any method other than `filterOnLabel()`, will usually
- * result in the loss of the label-filterable functionality for the rest of the query, because
- * some DBs only support label filtering on the stored data, but not on computed data.
- *
- * A `LabelFilterableTimeRangeQuery` realization is immutable to allow query objects to be reused in multiple places.
- *
- * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
- */
-export interface LabelFilterableTimeRangeQuery<T> extends
-    TimeRangeQuery<T>,
-    LabelFilterableQuery<TimeSeries<T>, LabelFilterableTimeRangeQuery<T>> { }
-
-
-/**
- * A `TimeInstantQuery` that allows filtering on labels.
- *
- * The use of one of any method other than `filterOnLabel()`, will usually
- * result in the loss of the label-filterable functionality for the rest of the query, because
- * some DBs only support label filtering on the stored data, but not on computed data.
- *
- * A `LabelFilterableTimeInstantQuery` realization is immutable to allow query objects to be reused in multiple places.
- *
- * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
- */
-export interface LabelFilterableTimeInstantQuery<T> extends
-    TimeInstantQuery<T>,
-    LabelFilterableQuery<TimeSeriesInstant<T>, LabelFilterableTimeInstantQuery<T>> { }

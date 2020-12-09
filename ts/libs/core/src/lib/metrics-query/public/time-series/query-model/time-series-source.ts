@@ -1,5 +1,6 @@
+import { LabelFilterableTimeInstantQuery } from './time-instant-query';
 import { TimeRange } from './time-range';
-import { LabelFilterableTimeInstantQuery, LabelFilterableTimeRangeQuery } from './time-series-queries';
+import { LabelFilterableTimeRangeQuery } from './time-range-query';
 
 /**
  * Encapsulates a source for `TimeSeries` - allows creating new `TimeSeriesQueries`.
