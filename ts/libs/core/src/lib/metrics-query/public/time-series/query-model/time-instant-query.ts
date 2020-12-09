@@ -7,8 +7,6 @@ import { LabelFilterableQuery, ValueFilterableQuery } from './time-series-query'
  * A `TimeInstantQuery` realization is immutable to allow query objects to be reused in multiple places.
  *
  * @param T The TypeScript type used to represent the data in the samples of the `TimeSeries`.
- *
- * @note Some methods may return a query of a different type, e.g., a `TimeRangeQuery`.
  */
 export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInstant<T>, TimeInstantQuery<T>> {
 
