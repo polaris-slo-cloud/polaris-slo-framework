@@ -402,6 +402,60 @@
           }
         }
       }
+    },
+    "slo-cost-efficiency-slo-controller": {
+      "root": "apps/slo/cost-efficiency-slo-controller",
+      "sourceRoot": "apps/slo/cost-efficiency-slo-controller/src",
+      "projectType": "application",
+      "prefix": "slo-cost-efficiency-slo-controller",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
+            "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
+            "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
+            "assets": [
+              "apps/slo/cost-efficiency-slo-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.ts",
+                  "with": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "slo-cost-efficiency-slo-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/slo/cost-efficiency-slo-controller/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
