@@ -6,11 +6,12 @@ import { TimeSeriesSource } from '../time-series';
 export interface MetricsSource {
 
     /**
-     * Gets the `TimeSeriesSource` with the specified `name`.
+     * Gets the `TimeSeriesSource` with the specified `name` or the
+     * default one, if no `name` is specified.
      *
-     * @param name The fully qualified name of the `TimeSeriesSource`.
+     * @param name The fully qualified name of the `TimeSeriesSource`. If not specified, the default `TimeSeriesSource` is returned.
      * @returns The `TimeSeriesSource` with the specified `name` or `undefined` if the `name` is unknown.
      */
-    getTimeSeriesSource(name: string): TimeSeriesSource;
+    getTimeSeriesSource(name?: string): TimeSeriesSource;
 
 }
