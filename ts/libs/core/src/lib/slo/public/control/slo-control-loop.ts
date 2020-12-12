@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { SloMappingBase, SloMappingSpec } from '../../../model';
+import { SloMappingBase, SloMappingSpec, SloTarget } from '../../../model';
 import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { WatchEventsHandler } from '../../../runtime/public/watch';
 import { IndexByKey } from '../../../util';
@@ -42,7 +42,7 @@ export interface SloControlLoopConfig {
 /**
  * Used to connect an `ObjectKindWatcher` to an `SloControlLoop`.
  */
-export interface SloWatchEventsHandler extends WatchEventsHandler<SloMappingBase<any>> {}
+export interface SloWatchEventsHandler extends WatchEventsHandler<SloMappingBase<SloMappingSpec<any, any, SloTarget>>> {}
 
 /**
  * This interface must be implemented by classes that run an SLO control loop.
