@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { SloMapping, SloMappingSpec, SloTarget } from '../../../model';
+import { SloMapping, SloMappingSpec } from '../../../model';
 import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { WatchEventsHandler } from '../../../runtime/public/watch';
 import { IndexByKey } from '../../../util';
