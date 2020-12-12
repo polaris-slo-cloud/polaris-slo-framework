@@ -1,4 +1,4 @@
-import { SloMappingSpec } from '../../../model';
+import { SloMapping } from '../../../model';
 
 /**
  * Describes the output of `ServiceLevelObjective.execute()`.
@@ -8,11 +8,11 @@ import { SloMappingSpec } from '../../../model';
 export interface SloOutput<T> {
 
     /**
-     * The `SloMappingSpec` that was used to configure this SLO.
+     * The `SloMapping` that was used to configure this SLO.
      *
      * This contains information on the SLO target and the elasticity strategy to be used.
      */
-    spec: SloMappingSpec<any, T, any>;
+    sloMapping: SloMapping<any, T>;
 
     /**
      * The `ElasticityStrategySpec.sloOutputParams` that should be submitted to the cluster.

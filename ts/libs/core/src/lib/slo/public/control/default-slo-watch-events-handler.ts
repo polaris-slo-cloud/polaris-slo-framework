@@ -1,4 +1,4 @@
-import { SloMappingBase, SloMappingSpec, SloTarget } from '../../../model';
+import { SloMapping } from '../../../model';
 import { SloControlLoop, SloWatchEventsHandler } from './slo-control-loop';
 
 /**
@@ -8,26 +8,26 @@ export class DefaultSloWatchEventsHandler implements SloWatchEventsHandler {
 
     constructor(private controlLoop: SloControlLoop) { }
 
-    onObjectAdded(obj: SloMappingBase<SloMappingSpec<any, any, SloTarget>>): void {
+    onObjectAdded(obj: SloMapping<any, any>): void {
         this.onSloMappingAddedOrModified(obj);
     }
 
-    onObjectModified(obj: SloMappingBase<SloMappingSpec<any, any, SloTarget>>): void {
+    onObjectModified(obj: SloMapping<any, any>): void {
         this.onSloMappingAddedOrModified(obj);
     }
 
-    onObjectDeleted(obj: SloMappingBase<SloMappingSpec<any, any, SloTarget>>): void {
+    onObjectDeleted(obj: SloMapping<any, any>): void {
         const key = this.getFullSloName(obj);
         this.controlLoop.removeSlo(key);
     }
 
-    private getFullSloName(sloMapping: SloMappingBase<SloMappingSpec<any, any, SloTarget>>): string {
+    private getFullSloName(sloMapping: SloMapping<any, any>): string {
         return `${sloMapping.metadata.namespace}.${sloMapping.metadata.name}`;
     }
 
-    private onSloMappingAddedOrModified(sloMapping: SloMappingBase<SloMappingSpec<any, any, SloTarget>>): void {
+    private onSloMappingAddedOrModified(sloMapping: SloMapping<any, any>): void {
         const key = this.getFullSloName(sloMapping);
-        this.controlLoop.addSlo(key, sloMapping.spec)
+        this.controlLoop.addSlo(key, sloMapping)
             .then()
             .catch(err => console.error(err));
     }

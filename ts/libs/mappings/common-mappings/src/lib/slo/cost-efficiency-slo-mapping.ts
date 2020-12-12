@@ -1,4 +1,4 @@
-import { ApiObject, ObjectKind, SloCompliance, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { ObjectKind, SloCompliance, SloMappingBase, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
 
 export interface CostEfficiencySloConfig {
 
@@ -12,7 +12,7 @@ export interface CostEfficiencySloConfig {
 
 export class CostEfficiencySloMappingSpec extends SloMappingSpecBase<CostEfficiencySloConfig, SloCompliance> { }
 
-export class CostEfficiencySloMapping extends ApiObject<CostEfficiencySloMappingSpec> {
+export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMappingSpec> {
 
     constructor(initData?: Partial<Omit<CostEfficiencySloMapping, 'objectKind'>>) {
         super(initData);

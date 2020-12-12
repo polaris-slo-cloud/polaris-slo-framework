@@ -1,5 +1,5 @@
 import { CostEfficiencySloConfig } from '@sloc/common-mappings';
-import { MetricsSource, ObservableOrPromise, ServiceLevelObjective, SloCompliance, SloMappingSpec, SloOutput, SlocRuntime } from '@sloc/core';
+import { MetricsSource, ObservableOrPromise, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput, SlocRuntime } from '@sloc/core';
 import { of as observableOf } from 'rxjs';
 
 const LOWER_BOUND = 1;
@@ -7,19 +7,23 @@ const UPPER_BOUND = 200;
 
 export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySloConfig, SloCompliance>  {
 
-    spec: SloMappingSpec<CostEfficiencySloConfig, SloCompliance>;
+    sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>;
 
     private metricsSource: MetricsSource;
 
-    configure(spec: SloMappingSpec<CostEfficiencySloConfig, SloCompliance>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): ObservableOrPromise<void> {
-        this.spec = spec;
+    configure(
+        sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>,
+        metricsSource: MetricsSource,
+        slocRuntime: SlocRuntime,
+    ): ObservableOrPromise<void> {
+        this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;
         return observableOf(null);
     }
 
     evaluate(): ObservableOrPromise<SloOutput<SloCompliance>> {
         return Promise.resolve({
-            spec: this.spec,
+            sloMapping: this.sloMapping,
             elasticityStrategyParams: {
                 currSloCompliancePercentage: this.calculateSloCompliance(),
             },

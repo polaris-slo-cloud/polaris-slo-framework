@@ -97,3 +97,11 @@ export abstract class SloMappingBase<T extends SloMappingSpec<any, any, any>> ex
     }
 
 }
+
+/**
+ * Convenience type to refer to an `SloMappingBase<SloMappingSpec<C, O, T>>` with a shorter generics parameter sequence.
+ *
+ * Use this type to declare the type of properties and method parameters.
+ * For creating an `SloMapping` subclass, please extend `SloMappingBase`.
+ */
+export type SloMapping<C, O, T extends SloTarget = SloTarget> = SloMappingBase<SloMappingSpec<C, O, T>>;

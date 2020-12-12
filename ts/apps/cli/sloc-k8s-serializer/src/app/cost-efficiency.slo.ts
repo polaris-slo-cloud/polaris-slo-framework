@@ -1,12 +1,21 @@
 import { CostEfficiencySloConfig, CostEfficiencySloMapping, CostEfficiencySloMappingSpec, HorizontalElasticityStrategyKind } from '@sloc/common-mappings';
-import { ApiObjectMetadata, MetricsSource, ServiceLevelObjective, SloCompliance, SloMappingSpec, SloOutput, SloTarget, SlocRuntime } from '@sloc/core';
+import {
+    ApiObjectMetadata,
+    MetricsSource,
+    ServiceLevelObjective,
+    SloCompliance,
+    SloMapping,
+    SloOutput,
+    SloTarget,
+    SlocRuntime,
+} from '@sloc/core';
 
 
 export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySloConfig, SloCompliance> {
 
-    spec: SloMappingSpec<CostEfficiencySloConfig, SloCompliance>;
+    sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>;
 
-    configure(spec: SloMappingSpec<CostEfficiencySloConfig, SloCompliance>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): Promise<void> {
+    configure(sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): Promise<void> {
         throw new Error('Method not implemented.');
     }
 

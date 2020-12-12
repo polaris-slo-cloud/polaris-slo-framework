@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { SloMappingBase, SloMappingSpec, SloTarget } from '../../../model';
+import { SloMapping, SloMappingSpec, SloTarget } from '../../../model';
 import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { WatchEventsHandler } from '../../../runtime/public/watch';
 import { IndexByKey } from '../../../util';
@@ -42,7 +42,7 @@ export interface SloControlLoopConfig {
 /**
  * Used to connect an `ObjectKindWatcher` to an `SloControlLoop`.
  */
-export interface SloWatchEventsHandler extends WatchEventsHandler<SloMappingBase<SloMappingSpec<any, any, SloTarget>>> {}
+export interface SloWatchEventsHandler extends WatchEventsHandler<SloMapping<any, any>> {}
 
 /**
  * This interface must be implemented by classes that run an SLO control loop.
@@ -79,11 +79,11 @@ export interface SloControlLoop {
      *
      * @param key The key that should be used to identify the SLO.
      * This must be unique within the cluster.
-     * @param sloMapping The `SloMappingSpec` that describes the SLO.
+     * @param sloMapping The `SloMapping` that describes the SLO.
      * @returns A Promise that resolves to the created `ServiceLevelObjective` object or rejects
      * if an error occurs.
      */
-    addSlo(key: string, sloMapping: SloMappingSpec<any, any, any>): Promise<ServiceLevelObjective<any, any, any>>;
+    addSlo(key: string, sloMapping: SloMapping<any, any, any>): Promise<ServiceLevelObjective<any, any, any>>;
 
     /**
      * @returns The `ServiceLevelObjective` that has been added under the specified `key`

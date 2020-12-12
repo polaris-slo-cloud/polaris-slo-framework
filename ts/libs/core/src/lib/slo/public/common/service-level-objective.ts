@@ -1,5 +1,5 @@
 import { MetricsSource } from '../../../metrics-query';
-import { SloMappingSpec, SloTarget } from '../../../model';
+import { SloMapping, SloTarget } from '../../../model';
 import { SlocRuntime } from '../../../runtime';
 import { ObservableOrPromise } from '../../../util';
 import { SloOutput } from './slo-output';
@@ -14,19 +14,19 @@ import { SloOutput } from './slo-output';
 export interface ServiceLevelObjective<C, O, T extends SloTarget = SloTarget> {
 
     /**
-     * The SloMappingSpec that was used to configure this SLO instance.
+     * The `SloMapping` that was used to configure this SLO instance.
      */
-    readonly spec: SloMappingSpec<C, O, T>;
+    readonly sloMapping: SloMapping<C, O, T>;
 
     /**
      * Configures this SLO using an `SloMappingSpec` and a metrics source.
      *
-     * @param spec The `SloMappingSpec` that describes the configuration for this instance.
+     * @param sloMapping The `SloMapping` that describes the configuration for this instance.
      * @param metricsSource The `MetricsSource` that should be used for querying the observed metrics.
      * @param slocRuntime The `SlocRuntime` instance.
      * @returns An observable that emits and completes or a Promise that resolves when the SLO has finished its configuration.
      */
-    configure(spec: SloMappingSpec<C, O, T>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): ObservableOrPromise<void>;
+    configure(sloMapping: SloMapping<C, O, T>, metricsSource: MetricsSource, slocRuntime: SlocRuntime): ObservableOrPromise<void>;
 
     /**
      * Evaluates the SLO on the current system state.
