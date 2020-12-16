@@ -67,6 +67,7 @@
     },
     "query-backends-prometheus": {
       "tags": [
+        "scope:core",
         "query:prometheus"
       ]
     },
