@@ -1,4 +1,10 @@
-import { CostEfficiencySloConfig, CostEfficiencySloMapping, CostEfficiencySloMappingSpec, HorizontalElasticityStrategyKind } from '@sloc/common-mappings';
+import {
+    CostEfficiencySloConfig,
+    CostEfficiencySloMapping,
+    CostEfficiencySloMappingSpec,
+    HorizontalElasticityStrategyKind,
+    RestServiceTarget,
+} from '@sloc/common-mappings';
 import {
     ApiObjectMetadata,
     MetricsSource,
@@ -6,7 +12,6 @@ import {
     SloCompliance,
     SloMapping,
     SloOutput,
-    SloTarget,
     SlocRuntime,
 } from '@sloc/core';
 
@@ -28,7 +33,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
 export default new CostEfficiencySloMapping({
     metadata: new ApiObjectMetadata({ name: 'data-service-cost-efficiency' }),
     spec: new CostEfficiencySloMappingSpec({
-        targetRef: new SloTarget({
+        targetRef: new RestServiceTarget({
             group: 'apps',
             version: 'v1',
             kind: 'Deployment',

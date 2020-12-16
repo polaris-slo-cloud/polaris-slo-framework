@@ -1,4 +1,5 @@
 import { ObjectKind, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { RestServiceTarget } from '../slo-targets';
 
 export interface CostEfficiencySloConfig {
 
@@ -10,7 +11,7 @@ export interface CostEfficiencySloConfig {
 
 }
 
-export class CostEfficiencySloMappingSpec extends SloMappingSpecBase<CostEfficiencySloConfig, SloCompliance> { }
+export class CostEfficiencySloMappingSpec extends SloMappingSpecBase<CostEfficiencySloConfig, SloCompliance, RestServiceTarget> { }
 
 export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMappingSpec> {
 
