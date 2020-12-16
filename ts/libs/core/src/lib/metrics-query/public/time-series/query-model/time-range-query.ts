@@ -22,6 +22,13 @@ export interface TimeRangeQuery<T> extends ValueFilterableQuery<TimeSeries<T>, T
      */
     countChanges(): TimeInstantQuery<T>; // ToDo Check if this exists in MQL and Flux!
 
+    /**
+     * Changes the resolution of this `TimeRangeQuery`.
+     *
+     * @param resolutionSec The new resolution in seconds.
+     */
+    changeResolution(resolutionSec: number): TimeRangeQuery<T>;
+
 }
 
 /**

@@ -1,5 +1,5 @@
 import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
-import { FilterOnValueQueryContent, QueryContentType } from './query-content';
+import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType } from './query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**
@@ -16,6 +16,14 @@ export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeri
 
     countChanges(): TimeInstantQuery<T> {
         throw new Error('Method not implemented.');
+    }
+
+    changeResolution(resolutionSec: number): TimeRangeQuery<T> {
+        const queryContent: ChangeResolutionQueryContent = {
+            contentType: QueryContentType.ChangeResolution,
+            resolutionSec,
+        }
+        return this.createTimeRangeQuery(queryContent);
     }
 
     filterOnValue(predicate: ValueFilter): TimeRangeQuery<T> {

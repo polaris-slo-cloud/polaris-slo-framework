@@ -18,6 +18,9 @@ export enum QueryContentType {
     /** A query that applies a filter on the value(s) of the `TimeSeries`. */
     FilterOnValue = 'filterOnValueQuery',
 
+    /** Changes the resolution of the current range query. */
+    ChangeResolution = 'changeResolutionQuery',
+
     /** A query that applies a DB-native function to the `TimeSeries`. */
     Function = 'functionQuery',
 
@@ -72,6 +75,15 @@ export interface FilterOnValueQueryContent extends QueryContent {
 
 }
 
+export interface ChangeResolutionQueryContent extends QueryContent {
+
+    contentType: QueryContentType.ChangeResolution;
+
+    /** The new resolution in seconds */
+    resolutionSec: number;
+
+}
+
 
 export interface FunctionQueryContent extends QueryContent {
 
@@ -99,6 +111,7 @@ export interface QueryContentTypeMapping {
     selectQuery: SelectQueryContent;
     filterOnLabelQuery: FilterOnLabelQueryContent;
     filterOnValueQuery: FilterOnValueQueryContent;
+    changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
     nonNativeFunctionQuery: NonNativeFunctionQueryContent;
 }
