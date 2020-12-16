@@ -105,3 +105,8 @@ export abstract class SloMappingBase<T extends SloMappingSpec<any, any, any>> ex
  * For creating an `SloMapping` subclass, please extend `SloMappingBase`.
  */
 export type SloMapping<C, O, T extends SloTarget = SloTarget> = SloMappingBase<SloMappingSpec<C, O, T>>;
+
+/**
+ * Convenience type to define the type of initilization data for the constructor of an `SloMapping`.
+ */
+export type SloMappingInitData<T> = Partial<Omit<T, 'objectKind'>>;
