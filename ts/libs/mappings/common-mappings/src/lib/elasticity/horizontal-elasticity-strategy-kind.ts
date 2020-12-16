@@ -1,6 +1,7 @@
 import { ElasticityStrategyKind, SloCompliance } from '@sloc/core';
+import { ReplicableTarget } from '../slo-targets';
 
-export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind<SloCompliance> {
+export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind<SloCompliance, ReplicableTarget> {
 
     constructor() {
         super({

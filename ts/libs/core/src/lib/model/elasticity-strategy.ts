@@ -16,25 +16,26 @@ import { SloTarget } from './slo-target';
  *
  * @note All elasticity strategy specs, no matter if they are define in TypeScript or not, must adhere to this class' layout.
  *
- * @param T The type of output parameters from the SLO/input parameters of the elasticity strategy.
+ * @param O The type of output parameters from the SLO/input parameters of the elasticity strategy.
+ * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
  */
-export class ElasticityStrategySpec<T> {
+export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     @SlocType(() => SloTarget)
-    targetRef: SloTarget;
+    targetRef: T;
 
     /**
      * The output parameters from the last `ServiceLevelObjective.evaluate()` call.
      */
-    sloOutputParams: T;
+    sloOutputParams: O;
 
     /**
      * Static configuration that was supplied using `SloMappingSpec.staticElasticityStrategyConfig`.
      */
     staticConfig?: any;
 
-    constructor(initData?: Partial<ElasticityStrategySpec<T>>) {
+    constructor(initData?: Partial<ElasticityStrategySpec<O>>) {
         initSelf(this, initData);
     }
 
@@ -50,14 +51,15 @@ export class ElasticityStrategySpec<T> {
  * defined in TypeScript, without creating a subclass - an `ElasticityStrategyKind` subclass is recommended though
  * to avoid forcing users to manually configure the kind data.
  *
- * @param T The type of output parameters from the SLO/input parameters of the elasticity strategy.
+ * @param O The type of output parameters from the SLO/input parameters of the elasticity strategy.
+ * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
  */
-export class ElasticityStrategy<T> extends ApiObject<ElasticityStrategySpec<T>> {
+export class ElasticityStrategy<O, T extends SloTarget = SloTarget> extends ApiObject<ElasticityStrategySpec<O, T>> {
 
     @SlocType(() => ElasticityStrategySpec)
-    spec: ElasticityStrategySpec<T>;
+    spec: ElasticityStrategySpec<O, T>;
 
-    constructor(initData?: Partial<ElasticityStrategy<T>>) {
+    constructor(initData?: Partial<ElasticityStrategy<O, T>>) {
         super(initData);
     }
 

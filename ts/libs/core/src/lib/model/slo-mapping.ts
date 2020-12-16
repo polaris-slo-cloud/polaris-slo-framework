@@ -17,7 +17,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
     targetRef: T;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
-    elasticityStrategy: ElasticityStrategyKind<O>;
+    elasticityStrategy: ElasticityStrategyKind<O, T>;
 
     /**
      * Configuration parameters for the SLO.
@@ -70,13 +70,13 @@ export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> 
     targetRef: T;
 
     @SlocType(() => ElasticityStrategyKind)
-    elasticityStrategy: ElasticityStrategyKind<O>;
+    elasticityStrategy: ElasticityStrategyKind<O, T>;
 
     sloConfig: C;
 
     staticElasticityStrategyConfig?: IndexByKey<any>;
 
-    constructor(initData?: Partial<SloMappingSpecBase<C, O>>) {
+    constructor(initData?: Partial<SloMappingSpecBase<C, O, T>>) {
         initSelf(this, initData);
     }
 
