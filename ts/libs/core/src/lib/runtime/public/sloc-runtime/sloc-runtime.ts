@@ -1,4 +1,5 @@
 import { ElasticityStrategyService } from '../../../elasticity';
+import { MetricsSourcesManager } from '../../../metrics-query';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { SlocTransformationService } from '../../../transformation';
 import { ObjectKindWatcher, WatchManager } from '../watch';
@@ -51,6 +52,11 @@ export interface SlocRuntime {
      * The `ElasticityStrategyService` that should be used for creating and configuring elasticity strategies.
      */
     elasticityStrategyService: ElasticityStrategyService;
+
+    /**
+     * The `MetricsSourcesManager` that can be used to register new metrics sources and for obtaining existing ones.
+     */
+    metricsSourcesManager: MetricsSourcesManager;
 
     /**
      * Creates an instance of the `SloEvaluator` specific to this runtime implementation.
