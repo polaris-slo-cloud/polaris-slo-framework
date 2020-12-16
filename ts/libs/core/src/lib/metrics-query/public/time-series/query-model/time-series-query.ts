@@ -4,6 +4,20 @@ import { TimeSeries } from './time-series';
 import { ValueFilter } from './value-filter';
 
 /**
+ * Defines the type of the results of a `TimeSeriesQuery`.
+ */
+// eslint-disable-next-line no-shadow
+export enum TimeSeriesQueryResultType {
+
+    /** The query will result in a set of `TimeSeriesInstant` instances. */
+    Instant,
+
+    /** The query will result in a set of `TimeSeries` instances. */
+    Range,
+
+}
+
+/**
  * A query that results in `TimeSeries` and which provides operations that are
  * applicable to all `TimeSeries` queries.
  *
@@ -26,7 +40,12 @@ import { ValueFilter } from './value-filter';
  *
  * @param T The type of `TimeSeries` that is returned by this query.
  */
-export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> { }
+export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> {
+
+    /** Defines the type of the results of this `TimeSeriesQuery` */
+    readonly resultType: TimeSeriesQueryResultType;
+
+}
 
 
 /**

@@ -1,5 +1,5 @@
 import { QueryError } from '../../generic';
-import { TimeSeriesQuery } from '../query-model';
+import { TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
 import { NativeQueryBuilder } from './native-query-builder';
 import { QueryContent, QueryContentType, SelectQueryContent } from './query-content';
 
@@ -20,7 +20,7 @@ export abstract class NativeQueryBuilderBase implements NativeQueryBuilder {
      */
     protected queryChainAfterSelect: QueryContent[] = [];
 
-    abstract buildQuery(): TimeSeriesQuery<any>;
+    abstract buildQuery(resultType: TimeSeriesQueryResultType): TimeSeriesQuery<any>;
 
     addQuery(queryContent: QueryContent): void {
         if (this.selectSegment) {

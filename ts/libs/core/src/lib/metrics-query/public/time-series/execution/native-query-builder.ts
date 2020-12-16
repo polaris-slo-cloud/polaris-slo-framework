@@ -1,4 +1,4 @@
-import { TimeSeriesQuery } from '../query-model';
+import { TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
 import { QueryContent } from './query-content';
 
 /** Factory function for creating a new `NativeQueryBuilder`. */
@@ -17,8 +17,9 @@ export interface NativeQueryBuilder {
     /**
      * Builds the query for the DB, for which this builder is implemented.
      *
+     * @param resultType The final type of query to be built.
      * @return A new `TimeSeriesQuery` object, whose methods will trigger actual DB operations.
      */
-    buildQuery(): TimeSeriesQuery<any>;
+    buildQuery(resultType: TimeSeriesQueryResultType): TimeSeriesQuery<any>;
 
 }

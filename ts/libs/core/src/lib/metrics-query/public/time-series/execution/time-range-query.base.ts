@@ -1,4 +1,4 @@
-import { TimeInstantQuery, TimeRangeQuery, TimeSeries, ValueFilter } from '../query-model';
+import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
 import { FilterOnValueQueryContent, QueryContentType } from './query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
@@ -11,6 +11,8 @@ import { TimeSeriesQueryBase } from './time-series-query.base';
  * in a single file (time-series-queries.impl.ts`).
  */
 export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeries<T>> implements TimeRangeQuery<T> {
+
+    readonly resultType: TimeSeriesQueryResultType.Range = TimeSeriesQueryResultType.Range;
 
     countChanges(): TimeInstantQuery<T> {
         throw new Error('Method not implemented.');

@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { SlocQueryBase, SlocQueryResult } from '../../generic';
-import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery } from '../query-model';
+import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
 import { NativeQueryBuilderFactoryFn } from './native-query-builder';
-import { QueryContent, QueryContentType, QueryContentTypeMapping } from './query-content';
+import { QueryContent } from './query-content';
 
 /**
  * Common superclass for all `TimeSeriesQuery` implementations.
@@ -11,6 +11,8 @@ import { QueryContent, QueryContentType, QueryContentTypeMapping } from './query
  * assemble a DB-native query, as well as executing it.
  */
 export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends SlocQueryBase<T> implements TimeSeriesQuery<T> {
+
+    abstract readonly resultType: TimeSeriesQueryResultType;
 
     /** The actual content of this query. */
     protected queryContent: QueryContent;
@@ -58,7 +60,7 @@ export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends Slo
     protected buildNativeQuery(queryChain: TimeSeriesQueryBase<T>[]): TimeSeriesQuery<T> {
         const builder = this.queryBuilderFactoryFn();
         queryChain.forEach(queryPart => builder.addQuery(queryPart.queryContent));
-        return builder.buildQuery();
+        return builder.buildQuery(this.resultType);
     }
 
 }
