@@ -16,9 +16,13 @@
 
 ### DB Assumptions
 We assume the following data model in the time series DB:
+* Every time series can be identified using an appName and a metric name:
+    * Prometheus's single metric name = ${appName}_${metricName}
+    * InfluxDB: bucket = appName, _measurement column = metricName (_field column is considered as a label by us)
+    * MQL: resourceType = appName, metricType = metricName
 * Every time series can have labels, e.g.,
     * Labels in Prometheus
-    * Text columns in InfluxDB (e.g., _measurement, _field)
+    * Tag columns in InfluxDB (e.g., _field and custom columns)
     * Time series identifier labels in MQL (https://cloud.google.com/monitoring/mql/reference#tables)
 * Every sample of a time series has a single value
     * The value in Prometheus
