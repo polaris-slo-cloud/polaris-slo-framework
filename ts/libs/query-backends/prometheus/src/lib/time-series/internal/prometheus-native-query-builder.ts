@@ -10,11 +10,15 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
 
     buildQuery(resultType: TimeSeriesQueryResultType): TimeSeriesQuery<any> {
         const queryStr = this.buildPromQlQuery();
-        return new PrometheusNativeQuery(this.config, resultType, queryStr);
+        return new PrometheusNativeQuery(this.config, resultType, this.selectSegment, queryStr);
     }
 
     private buildPromQlQuery(): string {
-        return '';
+        const query = `${this.selectSegment.appName}_${this.selectSegment.metricName}`;
+
+        // ToDo
+
+        return query;
     }
 
 }
