@@ -34,15 +34,15 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
     }
 
     evaluate(): ObservableOrPromise<SloOutput<SloCompliance>> {
-        return Promise.resolve({
+        return this.calculateSloCompliance().then(compliance => ({
             sloMapping: this.sloMapping,
             elasticityStrategyParams: {
-                currSloCompliancePercentage: this.calculateSloCompliance(),
+                currSloCompliancePercentage: compliance,
             },
-        });
+        }));
     }
 
-    private calculateSloCompliance(): number {
+    private calculateSloCompliance(): Promise<number> {
         // const metricsSource = this.metricsSource;
         // metricsSource.getTimeSeriesSource()
         //     .select('gentics-mesh', 'http_requests_total', TimeRange.fromDuration(Duration.fromHours(1)))
@@ -53,9 +53,18 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
         //         // ...
         //     }).catch(() => { /* ... */});
 
+        return this.metricsSource.getTimeSeriesSource()
+            .select<number>('container', 'cpu_load_average_10s')
+            .filterOnLabel(LabelFilters.regex('pod', this.sloMapping.spec.targetRef.name))
+            .execute()
+            .then(result => {
+                console.log(result);
+                const cpuAvg = result.results[0]?.samples[0].value ?? 100;
+                return this.sloMapping.spec.sloConfig.targetAvgCPUUtilizationPercentage / cpuAvg;
+            });
 
-        const currSloCompliance = Math.ceil(Math.random() * UPPER_BOUND);
-        return currSloCompliance || LOWER_BOUND;
+        // const currSloCompliance = Math.ceil(Math.random() * UPPER_BOUND);
+        // return currSloCompliance || LOWER_BOUND;
     }
 
 }
