@@ -1,5 +1,17 @@
 import { CpuUsageSloConfig } from '@sloc/common-mappings';
-import { MetricsSource, ObservableOrPromise, ServiceLevelObjective, SloCompliance, SloMapping, SloMappingSpec, SloOutput, SlocRuntime } from '@sloc/core';
+import {
+    Duration,
+    LabelFilters,
+    MetricsSource,
+    ObservableOrPromise,
+    ServiceLevelObjective,
+    SloCompliance,
+    SloMapping,
+    SloMappingSpec,
+    SloOutput,
+    SlocRuntime,
+    TimeRange,
+} from '@sloc/core';
 import { of as observableOf } from 'rxjs';
 
 const LOWER_BOUND = 1;
@@ -31,8 +43,16 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
     }
 
     private calculateSloCompliance(): number {
-        // Get some metrics.
-        // Do some calculations, based on sloMapping.spec
+        // const metricsSource = this.metricsSource;
+        // metricsSource.getTimeSeriesSource()
+        //     .select('gentics-mesh', 'http_requests_total', TimeRange.fromDuration(Duration.fromHours(1)))
+        //     .filterOnLabel(LabelFilters.equal('method', 'POST'))
+        //     .changeResolution(60)
+        //     .execute()
+        //     .then(results => {
+        //         // ...
+        //     }).catch(() => { /* ... */});
+
 
         const currSloCompliance = Math.ceil(Math.random() * UPPER_BOUND);
         return currSloCompliance || LOWER_BOUND;
