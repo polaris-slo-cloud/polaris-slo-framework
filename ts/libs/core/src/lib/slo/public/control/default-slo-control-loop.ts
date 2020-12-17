@@ -60,7 +60,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
             map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping.spec)),
             switchMap(sloInstance => {
                 slo = sloInstance;
-                return slo.configure(sloMapping, null, this.slocRuntime);
+                return slo.configure(sloMapping, this.slocRuntime.metricsSourcesManager, this.slocRuntime);
             }),
             timeout(SLO_DEFAULT_TIMEOUT_MS),
             catchError(() => {
