@@ -1,5 +1,18 @@
-import { SlocQueryResult, TimeSeriesQuery, TimeSeriesQueryResultType } from '@sloc/core';
-import { PrometheusQuery } from 'prometheus-query';
+// eslint doesn't seem to handle manual typings correctly, so we disable these rules here.
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import {
+    DataType,
+    QueryError,
+    Sample,
+    SelectQueryContent,
+    SlocQueryResult,
+    TimeSeries,
+    TimeSeriesInstant,
+    TimeSeriesQuery,
+    TimeSeriesQueryResultType,
+} from '@sloc/core';
+import { InstantVector, Metric as PromMetric, SampleValue as PromSample, PrometheusQuery, RangeVector } from 'prometheus-query';
 import { Observable, from as observableFrom } from 'rxjs';
 import { PrometheusConfig } from '../../config';
 
@@ -14,20 +27,75 @@ interface PrometheusQueryConfig extends Omit<PrometheusConfig, 'useTLS' | 'port'
 
 export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
 
-    constructor(private config: PrometheusConfig, public resultType: TimeSeriesQueryResultType, private promQlQuery: string) { }
+    constructor(
+        private config: PrometheusConfig,
+        public resultType: TimeSeriesQueryResultType,
+        private selectSegment: SelectQueryContent,
+        private promQlQuery: string,
+    ) { }
 
-    execute(): Promise<SlocQueryResult<any>> {
+    execute(): Promise<SlocQueryResult<TimeSeries<any>>> {
         const config = this.buildPrometheusQueryConfig();
         const promQuery = new PrometheusQuery(config);
 
-        if (this.resultType === TimeSeriesQueryResultType.Instant) {
+        switch (this.resultType) {
+            case TimeSeriesQueryResultType.Instant:
+                return promQuery.instantQuery(this.promQlQuery)
+                    .then(result => this.transformInstantQueryResult(result.result));
 
+            case TimeSeriesQueryResultType.Range:
+                return promQuery.rangeQuery(this.promQlQuery, this.selectSegment.range.start, this.selectSegment.range.end)
+                    .then(result => this.transformRangeQueryResult(result.result));
+
+            default:
+                throw new QueryError('Invalid TimeSeriesQueryResultType', this);
         }
-        throw new Error('Not implemented');
     }
 
-    toObservable(): Observable<SlocQueryResult<any>> {
+    toObservable(): Observable<SlocQueryResult<TimeSeries<any>>> {
         return observableFrom(this.execute());
+    }
+
+    private transformInstantQueryResult(instantVectors: InstantVector[]): SlocQueryResult<TimeSeries<any>> {
+        const slocResults: TimeSeriesInstant<any>[] = instantVectors.map(instant => {
+            const slocInstant: TimeSeriesInstant<any> = this.transformMetricToTimeSeries(instant.metric) as any;
+            slocInstant.samples = [ this.transformSample(instant.value) ];
+            slocInstant.start = slocInstant.samples[0].timestamp;
+            slocInstant.end = slocInstant.end;
+            return slocInstant;
+        });
+
+        return { results: slocResults };
+    }
+
+    private transformRangeQueryResult(rangeVectors: RangeVector[]): SlocQueryResult<any> {
+        const slocResults: TimeSeries<any>[] = rangeVectors.map(promSeries => {
+            const slocSeries = this.transformMetricToTimeSeries(promSeries.metric);
+            slocSeries.samples = promSeries.values.map(promSample => this.transformSample(promSample));
+            slocSeries.start = slocSeries.samples[0].timestamp;
+            slocSeries.end = slocSeries.samples[slocSeries.samples.length - 1].timestamp;
+            return slocSeries;
+        });
+
+        return { results: slocResults };
+    }
+
+    private transformMetricToTimeSeries(promMetric: PromMetric): TimeSeries<any> {
+        return {
+            dataType: DataType.Float,
+            metricName: promMetric.name,
+            labels: promMetric.labels,
+            samples: null,
+            start: null,
+            end: null,
+        };
+    }
+
+    private transformSample(promSample: PromSample): Sample<any> {
+        return {
+            timestamp: promSample.time.valueOf(),
+            value: promSample.value,
+        };
     }
 
     private buildPrometheusQueryConfig(): PrometheusQueryConfig {

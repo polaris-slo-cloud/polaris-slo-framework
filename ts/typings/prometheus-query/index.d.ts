@@ -26,7 +26,7 @@ declare module 'prometheus-query' {
         static fromJSON(obj: any): RangeVector;
         constructor(metric: any, values: any);
         metric: Metric;
-        values: SampleValue;
+        values: SampleValue[];
     }
     export class InstantVector {
         static fromJSON(obj: any): InstantVector;
@@ -122,7 +122,7 @@ declare module 'prometheus-query' {
          * @param {*} end End Date object or number in milliseconds.
          * @param {*} step Query resolution step width in number of seconds.
          */
-        rangeQuery(query: string, start: Date | number, end: Date | number, step: number): Promise<QueryResult<RangeVector>>;
+        rangeQuery(query: string, start: Date | number, end: Date | number, step?: number): Promise<QueryResult<RangeVector>>;
         /***********************  METADATA API  ***********************/
         /**
          * Finding series by label matchers
