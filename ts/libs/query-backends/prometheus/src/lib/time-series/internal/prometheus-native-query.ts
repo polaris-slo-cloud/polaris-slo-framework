@@ -12,7 +12,8 @@ import {
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
 } from '@sloc/core';
-import { InstantVector, Metric as PromMetric, SampleValue as PromSample, PrometheusQuery, RangeVector } from 'prometheus-query';
+import { InstantVector, Metric as PromMetric, SampleValue as PromSample, RangeVector } from 'prometheus-query';
+import PrometheusQuery from 'prometheus-query';
 import { Observable, from as observableFrom } from 'rxjs';
 import { PrometheusConfig } from '../../config';
 
@@ -63,7 +64,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
             const slocInstant: TimeSeriesInstant<any> = this.transformMetricToTimeSeries(instant.metric) as any;
             slocInstant.samples = [ this.transformSample(instant.value) ];
             slocInstant.start = slocInstant.samples[0].timestamp;
-            slocInstant.end = slocInstant.end;
+            slocInstant.end = slocInstant.start;
             return slocInstant;
         });
 

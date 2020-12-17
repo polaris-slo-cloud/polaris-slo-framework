@@ -82,7 +82,7 @@ declare module 'prometheus-query' {
         name: any;
     }
 
-    export class PrometheusQuery {
+    export default class PrometheusQuery {
         /**
          * Creates a PrometheusQuery client
          * `options` has the following fields:

@@ -55,11 +55,18 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
 
         return this.metricsSource.getTimeSeriesSource()
             .select<number>('container', 'cpu_load_average_10s')
-            .filterOnLabel(LabelFilters.regex('pod', this.sloMapping.spec.targetRef.name))
+            .filterOnLabel(LabelFilters.regex('pod', `${this.sloMapping.spec.targetRef.name}.*`))
             .execute()
             .then(result => {
-                console.log(result);
-                const cpuAvg = result.results[0]?.samples[0].value ?? 100;
+                console.log(JSON.stringify(result, null, '    '));
+                if (result.results.length === 0) {
+                    throw new Error('Metric could not be read.');
+                }
+
+                let cpuAvg = result.results[0]?.samples[0].value ?? this.sloMapping.spec.sloConfig.targetAvgCPUUtilizationPercentage;
+                if (cpuAvg === 0) {
+                    cpuAvg = 1;
+                }
                 return this.sloMapping.spec.sloConfig.targetAvgCPUUtilizationPercentage / cpuAvg;
             });
 

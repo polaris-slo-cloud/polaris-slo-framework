@@ -14,7 +14,8 @@ k8sConfig.loadFromDefault();
 const slocRuntime = initSlocKubernetes(k8sConfig);
 
 // Initialize the Prometheus query backend.
-initPrometheusQueryBackend(slocRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);
+// initPrometheusQueryBackend(slocRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);
+initPrometheusQueryBackend(slocRuntime, { host: 'localhost', port: 30900 }, true);
 
 // Initialize the used SLOC mapping libraries
 initCommonMappingsLib(slocRuntime);
