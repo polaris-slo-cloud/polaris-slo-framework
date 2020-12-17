@@ -36,6 +36,8 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
 
     execute(): Promise<SlocQueryResult<TimeSeries<any>>> {
         const config = this.buildPrometheusQueryConfig();
+        console.log(config);
+        console.log(this.promQlQuery);
         const promQuery = new PrometheusQuery(config);
 
         switch (this.resultType) {

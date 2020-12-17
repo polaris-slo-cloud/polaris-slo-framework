@@ -31,7 +31,7 @@ export abstract class NativeQueryBuilderBase implements NativeQueryBuilder {
             this.queryChainAfterSelect.push(queryContent);
         } else {
             // First query segment.
-            if (queryContent.contentType === QueryContentType.Select) {
+            if (queryContent.contentType !== QueryContentType.Select) {
                 throw new QueryError('The first query segment must be of `QueryContentType.Select`.', queryContent)
             }
             this.selectSegment = queryContent as SelectQueryContent;
