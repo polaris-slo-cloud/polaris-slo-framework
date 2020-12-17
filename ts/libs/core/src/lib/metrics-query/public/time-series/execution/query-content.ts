@@ -21,15 +21,13 @@ export enum QueryContentType {
     /** Changes the resolution of the current range query. */
     ChangeResolution = 'changeResolutionQuery',
 
-    /** A query that applies a DB-native function to the `TimeSeries`. */
-    Function = 'functionQuery',
-
     /**
-     * A query that applies a function to the `TimeSeries`,
-     * which is not natively supported by the DB and thus needs to be
-     * executed by SLOC code.
+     * A query that applies a DB-native function to the `TimeSeries`.
+     *
+     * If the DB does not support a particular function, the query library may
+     * emulate the behavior in SLOC code.
      */
-    NonNativeFunction = 'nonNativeFunctionQuery',
+    Function = 'functionQuery',
 
 }
 
@@ -95,14 +93,6 @@ export interface FunctionQueryContent extends QueryContent {
 
 }
 
-export interface NonNativeFunctionQueryContent extends QueryContent {
-
-    contentType: QueryContentType.NonNativeFunction;
-
-    // ToDo
-
-}
-
 
 /**
  * Maps the QueryContentTypes to their respective interfaces.
@@ -113,5 +103,4 @@ export interface QueryContentTypeMapping {
     filterOnValueQuery: FilterOnValueQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
-    nonNativeFunctionQuery: NonNativeFunctionQueryContent;
 }
