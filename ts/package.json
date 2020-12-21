@@ -10,6 +10,7 @@
     "build": "ng build",
     "docker:build:sloc-ui": "npm run build -- sloc-ui && mv ./dist/apps/sloc-ui ./apps/sloc-ui/dist && docker build -t tuwiendsgsloc/sloc-ui:$npm_package_version -t tuwiendsgsloc/sloc-ui:latest ./apps/sloc-ui",
     "docker:push-latest:sloc-ui": "docker push tuwiendsgsloc/sloc-ui:$npm_package_version && docker push tuwiendsgsloc/sloc-ui:latest",
+    "docker:build:slo-cost-efficiency-slo-controller": "docker build -f ./apps/slo/cost-efficiency-slo-controller/Dockerfile --build-arg SLOC_APP_TYPE=slo --build-arg SLOC_APP_NAME=cost-efficiency-slo-controller -t tuwiendsgsloc/slo-cost-efficiency:latest .",
     "docker:build:slo-cpu-usage-slo": "docker build -f ./apps/slo/cpu-usage-slo-controller/Dockerfile --build-arg SLOC_APP_TYPE=slo --build-arg SLOC_APP_NAME=cpu-usage-slo-controller -t tuwiendsgsloc/slo-cpu-usage:latest .",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
