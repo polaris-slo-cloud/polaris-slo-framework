@@ -1,98 +1,52 @@
-# Sloc
+# SLO Script
 
-This project was generated using [Nx](https://nx.dev).
+This folder contains all SLO Script components, i.e., the SLOC components written in TypeScript.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+The TypeScript subprojects are managed using the [Nx](https://nx.dev) monorepo tools.
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
-## Quick Start & Documentation
+## Development Setup
 
-[Nx Documentation](https://nx.dev/angular)
+To set up a development environment:
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+1. Run `npm install` in the `ts` folder of the SLOC repository.
+1. If you want to test components locally, set the Kubernetes cluster, where you want to test the controller, as the current context in your KUBECONFIG file.
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
 
-## Adding capabilities to your workspace
+## Repository Organization
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+The SLO Script repository is divided into two major parts: libraries and applications.
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+The [`libs`](./libs) subfolder contains the following library projects:
 
-Below are our core plugins:
+| Name              | Purpose |
+|-------------------|---------|
+| [`core`](./libs/core) | Main SLO Script library containing the language abstractions and orchestrator-independent runtime facilities. |
+| [`mappings-common-mappings`](./libs/mappings/common-mappings) | Definitions of commonly used, generic SLO Mappings and elasticity strategies. |
+| [`orchestrators-kubernetes`](./libs/orchestrators/kubernetes) | Connector library for Kubernetes. |
+| [`query-backends-prometheus`](./libs/query-backends/prometheus) | Connector to allow the Metrics Query API to use Prometheus as a backend. |
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
 
-## Generate an application
+The [`apps`](./apps) folder contains the following application projects:
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+| Name              | Purpose |
+|-------------------|---------|
+| [`cli-sloc-k8s-serializer`](./apps/cli/sloc-k8s-serializer) | Transforms SLO Mappings form SLO Script to Kubernetes-specific YAML. |
+| [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO (metrics evaluation is currently mocked). |
+| [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
+| [`ui-sloc-ui`](./apps/ui/sloc-ui) | Angular UI for SLOC. |
 
-> You can use any of the plugins above to generate applications as well.
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+## Building and Running
 
-## Generate a library
+To build any application/library use the following command:
+```
+npm run build -- <subproject-name> --with-deps=true
+```
+For example, to build the cli-sloc-k8s-serializer app:
+```
+npm run build -- cli-sloc-k8s-serializer --with-deps=true
+```
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications. They can be imported from `@sloc/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+The output can then be found in the `dist` folder.
