@@ -11,19 +11,20 @@ export class DefaultElasticityStrategyService implements ElasticityStrategyServi
 
     fromSloOutput<T>(name: string, sloOutput: SloOutput<T>): ElasticityStrategy<T> {
         const elasticityStrategyCtor: SlocConstructor<ElasticityStrategy<T>> =
-            this.transformationService.getSlocType(sloOutput.spec.elasticityStrategy) ?? ElasticityStrategy;
+            this.transformationService.getSlocType(sloOutput.sloMapping.spec.elasticityStrategy) ?? ElasticityStrategy;
         const specCtor: SlocConstructor<ElasticityStrategySpec<T>> =
             this.transformationService.getPropertyType(elasticityStrategyCtor, 'spec') ?? ElasticityStrategySpec;
 
         return new elasticityStrategyCtor({
-            objectKind: new ElasticityStrategyKind(sloOutput.spec.elasticityStrategy),
+            objectKind: new ElasticityStrategyKind(sloOutput.sloMapping.spec.elasticityStrategy),
             metadata: new ApiObjectMetadata({
                 name,
+                namespace: sloOutput.sloMapping.metadata.namespace,
             }),
             spec: new specCtor({
-                targetRef: sloOutput.spec.targetRef,
+                targetRef: sloOutput.sloMapping.spec.targetRef,
                 sloOutputParams: sloOutput.elasticityStrategyParams,
-                staticConfig: sloOutput.spec.staticElasticityStrategyConfig,
+                staticConfig: sloOutput.sloMapping.spec.staticElasticityStrategyConfig,
             }),
         });
     }

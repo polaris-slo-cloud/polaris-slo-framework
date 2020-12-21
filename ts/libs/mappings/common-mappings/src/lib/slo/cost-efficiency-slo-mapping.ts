@@ -1,4 +1,5 @@
-import { ApiObject, ObjectKind, SloCompliance, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { ObjectKind, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { RestServiceTarget } from '../slo-targets';
 
 export interface CostEfficiencySloConfig {
 
@@ -10,11 +11,11 @@ export interface CostEfficiencySloConfig {
 
 }
 
-export class CostEfficiencySloMappingSpec extends SloMappingSpecBase<CostEfficiencySloConfig, SloCompliance> { }
+export class CostEfficiencySloMappingSpec extends SloMappingSpecBase<CostEfficiencySloConfig, SloCompliance, RestServiceTarget> { }
 
-export class CostEfficiencySloMapping extends ApiObject<CostEfficiencySloMappingSpec> {
+export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMappingSpec> {
 
-    constructor(initData?: Partial<Omit<CostEfficiencySloMapping, 'objectKind'>>) {
+    constructor(initData?: SloMappingInitData<CostEfficiencySloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
             group: 'slo.sloc.github.io',

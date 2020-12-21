@@ -1,6 +1,6 @@
 import { of as observableOf, throwError} from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
-import { SloMappingSpec } from '../../../model';
+import { SloMapping, SloMappingSpec } from '../../../model';
 import { DefaultMicrocontrollerFactory, MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { getSlocRuntime } from '../../../runtime/public/sloc-runtime/sloc-runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
@@ -50,17 +50,17 @@ export class DefaultSloControlLoop implements SloControlLoop {
         return this._watchHandler;
     }
 
-    addSlo(key: string, sloMapping: SloMappingSpec<any, any, any>): Promise<ServiceLevelObjective<any, any>> {
+    addSlo(key: string, sloMapping: SloMapping<any, any>): Promise<ServiceLevelObjective<any, any>> {
         if (this.registeredSlos.has(key)) {
             this.removeSlo(key);
         }
 
         let slo: ServiceLevelObjective<any, any>;
         const configAndAdd$ = observableOf(null).pipe(
-            map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping)),
+            map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping.spec)),
             switchMap(sloInstance => {
                 slo = sloInstance;
-                return slo.configure(sloMapping, null, this.slocRuntime);
+                return slo.configure(sloMapping, this.slocRuntime.metricsSourcesManager, this.slocRuntime);
             }),
             timeout(SLO_DEFAULT_TIMEOUT_MS),
             catchError(() => {

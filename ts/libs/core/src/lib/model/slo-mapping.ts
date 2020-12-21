@@ -17,7 +17,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
     targetRef: T;
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
-    elasticityStrategy: ElasticityStrategyKind<O>;
+    elasticityStrategy: ElasticityStrategyKind<O, T>;
 
     /**
      * Configuration parameters for the SLO.
@@ -70,13 +70,13 @@ export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> 
     targetRef: T;
 
     @SlocType(() => ElasticityStrategyKind)
-    elasticityStrategy: ElasticityStrategyKind<O>;
+    elasticityStrategy: ElasticityStrategyKind<O, T>;
 
     sloConfig: C;
 
     staticElasticityStrategyConfig?: IndexByKey<any>;
 
-    constructor(initData?: Partial<SloMappingSpecBase<C, O>>) {
+    constructor(initData?: Partial<SloMappingSpecBase<C, O, T>>) {
         initSelf(this, initData);
     }
 
@@ -97,3 +97,16 @@ export abstract class SloMappingBase<T extends SloMappingSpec<any, any, any>> ex
     }
 
 }
+
+/**
+ * Convenience type to refer to an `SloMappingBase<SloMappingSpec<C, O, T>>` with a shorter generics parameter sequence.
+ *
+ * Use this type to declare the type of properties and method parameters.
+ * For creating an `SloMapping` subclass, please extend `SloMappingBase`.
+ */
+export type SloMapping<C, O, T extends SloTarget = SloTarget> = SloMappingBase<SloMappingSpec<C, O, T>>;
+
+/**
+ * Convenience type to define the type of initilization data for the constructor of an `SloMapping`.
+ */
+export type SloMappingInitData<T> = Partial<Omit<T, 'objectKind'>>;

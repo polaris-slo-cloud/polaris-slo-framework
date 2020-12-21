@@ -1,6 +1,7 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initSlocLib as initCommonMappingsLib } from '@sloc/common-mappings';
 import { initSlocKubernetes } from '@sloc/kubernetes';
+import { initPrometheusQueryBackend } from '@sloc/prometheus';
 import { interval } from 'rxjs';
 import { CpuUsageSlo } from './app/cpu-usage-slo';
 
@@ -11,6 +12,10 @@ import { CpuUsageSlo } from './app/cpu-usage-slo';
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
 const slocRuntime = initSlocKubernetes(k8sConfig);
+
+// Initialize the Prometheus query backend.
+// initPrometheusQueryBackend(slocRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);
+initPrometheusQueryBackend(slocRuntime, { host: 'localhost', port: 30900 }, true);
 
 // Initialize the used SLOC mapping libraries
 initCommonMappingsLib(slocRuntime);

@@ -51,7 +51,8 @@
     "cli-sloc-k8s-serializer": {
       "tags": [
         "scope:cli",
-        "orchestrator:kubernetes"
+        "orchestrator:kubernetes",
+        "query:prometheus"
       ]
     },
     "orchestrators-kubernetes": {
@@ -62,6 +63,19 @@
     "mappings-common-mappings": {
       "tags": [
         "scope:core"
+      ]
+    },
+    "query-backends-prometheus": {
+      "tags": [
+        "scope:core",
+        "query:prometheus"
+      ]
+    },
+    "slo-cost-efficiency-slo-controller": {
+      "tags": [
+        "scope:cli",
+        "orchestrator:kubernetes",
+        "query:prometheus"
       ]
     }
   },

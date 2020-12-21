@@ -13,7 +13,8 @@
         "resolveJsonModule": true,
         "noImplicitAny": true,
         "typeRoots": [
-            "node_modules/@types"
+            "node_modules/@types",
+            "typings"
         ],
         "lib": [
             "es2017",
@@ -34,6 +35,9 @@
             ],
             "@sloc/common-mappings": [
                 "libs/mappings/common-mappings/src/index.ts"
+            ],
+            "@sloc/prometheus": [
+                "libs/query-backends/prometheus/src/index.ts"
             ]
         }
     },

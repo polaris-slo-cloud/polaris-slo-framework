@@ -1,4 +1,5 @@
 import { DefaultElasticityStrategyService, ElasticityStrategyService } from '../../../elasticity';
+import { DefaultMetricsSourcesManager, MetricsSourcesManager } from '../../../metrics-query';
 import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../../slo';
 import { DefaultSlocTransformationService, SlocTransformationService } from '../../../transformation/public/service';
 import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from '../watch';
@@ -9,6 +10,8 @@ export abstract class SlocRuntimeBase implements SlocRuntime {
     transformer: SlocTransformationService = new DefaultSlocTransformationService();
 
     elasticityStrategyService: ElasticityStrategyService;
+
+    metricsSourcesManager: MetricsSourcesManager = new DefaultMetricsSourcesManager();
 
     constructor() {
         this.elasticityStrategyService = new DefaultElasticityStrategyService(this.transformer);

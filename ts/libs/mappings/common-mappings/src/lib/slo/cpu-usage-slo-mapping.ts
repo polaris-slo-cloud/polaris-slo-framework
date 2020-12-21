@@ -1,4 +1,4 @@
-import { ObjectKind, SloCompliance, SloMappingBase, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { ObjectKind, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
 
 export interface CpuUsageSloConfig {
 
@@ -20,7 +20,7 @@ export class CpuUsageSloMappingSpec extends SloMappingSpecBase<CpuUsageSloConfig
 
 export class CpuUsageSloMapping extends SloMappingBase<CpuUsageSloMappingSpec> {
 
-    constructor(initData?: Partial<Omit<CpuUsageSloMapping, 'objectKind'>>) {
+    constructor(initData?: SloMappingInitData<CpuUsageSloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
             group: 'slo.sloc.github.io',

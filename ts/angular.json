@@ -367,6 +367,95 @@
           }
         }
       }
+    },
+    "query-backends-prometheus": {
+      "root": "libs/query-backends/prometheus",
+      "sourceRoot": "libs/query-backends/prometheus/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/query-backends/prometheus/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/query-backends/prometheus/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/query-backends/prometheus",
+            "tsConfig": "libs/query-backends/prometheus/tsconfig.lib.json",
+            "packageJson": "libs/query-backends/prometheus/package.json",
+            "main": "libs/query-backends/prometheus/src/index.ts",
+            "assets": [
+              "libs/query-backends/prometheus/*.md"
+            ]
+          }
+        }
+      }
+    },
+    "slo-cost-efficiency-slo-controller": {
+      "root": "apps/slo/cost-efficiency-slo-controller",
+      "sourceRoot": "apps/slo/cost-efficiency-slo-controller/src",
+      "projectType": "application",
+      "prefix": "slo-cost-efficiency-slo-controller",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
+            "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
+            "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
+            "assets": [
+              "apps/slo/cost-efficiency-slo-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.ts",
+                  "with": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "slo-cost-efficiency-slo-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/slo/cost-efficiency-slo-controller/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
