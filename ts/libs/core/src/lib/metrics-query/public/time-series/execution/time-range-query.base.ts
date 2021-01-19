@@ -45,4 +45,9 @@ export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeri
         return this.createTimeInstantQuery(queryContent);
     }
 
+    rate(): TimeRangeQuery<number> {
+        const queryContent = createQueryContent(QueryContentType.Function, { functionName: 'rate' });
+        return this.createTimeRangeQuery(queryContent);
+    }
+
 }

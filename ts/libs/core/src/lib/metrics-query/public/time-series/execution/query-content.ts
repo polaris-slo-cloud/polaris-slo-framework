@@ -5,6 +5,7 @@
 
 import { IndexByKey } from '../../../../util';
 import { LabelFilter, TimeRange, ValueFilter } from '../query-model';
+import { DBFunctionName } from './db-functions';
 
 // eslint-disable-next-line no-shadow
 export enum QueryContentType {
@@ -88,18 +89,17 @@ export interface ChangeResolutionQueryContent extends QueryContent {
 
 }
 
-
 export interface FunctionQueryContent extends QueryContent {
 
     contentType: QueryContentType.Function;
 
-    functionName: string;
+    functionName: DBFunctionName;
 
     params?: IndexByKey<string>;
 
 }
 
-export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: ...
+export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: extend
 
 export interface AggregateByGroupQueryContent extends QueryContent {
 

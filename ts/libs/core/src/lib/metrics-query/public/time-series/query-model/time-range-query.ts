@@ -32,6 +32,11 @@ export interface TimeRangeQuery<T> extends ValueFilterableQuery<TimeSeries<T>, T
     sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number>;
 
     /**
+     * Computes the per-second average rate of increase of the values of the `TimeSeries`.
+     */
+    rate(): TimeRangeQuery<number>;
+
+    /**
      * Changes the resolution of this `TimeRangeQuery`.
      *
      * @param resolutionSec The new resolution in seconds.

@@ -1,7 +1,9 @@
 import {
     AggregateByGroupQueryContent,
     AggregationType,
+    DBFunctionName,
     FilterOnLabelQueryContent,
+    FunctionQueryContent,
     Index,
     IndexByKey,
     LabelComparisonOperator,
@@ -23,6 +25,13 @@ const AGGREGATIONS_MAP: Index<AggregationType, string> = {
     min: 'min',
     max: 'max',
     avg: 'avg',
+};
+
+/**
+ * Maps the AggregationType values to the names of native PromQL aggregation functions.
+ */
+const FUNCTIONS_MAP: Index<DBFunctionName, string> = {
+    rate: 'rate',
 };
 
 export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
@@ -57,6 +66,9 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
             switch (segment.contentType) {
                 case QueryContentType.AggregateByGroup:
                     query = this.buildAggregationByGroup(segment as AggregateByGroupQueryContent, query);
+                    break;
+                case QueryContentType.Function:
+                    query = this.buildFunctionCall(segment as FunctionQueryContent, query);
                     break;
                 default:
                     break;
@@ -102,6 +114,17 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         const params = this.serializeFunctionParams(queryContent.params);
 
         return `${nativeAggregationFn} ${grouping}(${params}${innerQuery})`;
+    }
+
+    private buildFunctionCall(queryContent: FunctionQueryContent, innerQuery: string): string {
+        const nativeFn = FUNCTIONS_MAP[queryContent.functionName];
+        if (!nativeFn) {
+            throw new QueryError(`Unknown DB function '${queryContent.functionName}'`);
+        }
+
+        const params = this.serializeFunctionParams(queryContent.params);
+
+        return `${nativeFn}(${params}${innerQuery})`;
     }
 
     private serializeFunctionParams(params?: IndexByKey<string>): string {
