@@ -22,6 +22,12 @@ export enum QueryContentType {
     ChangeResolution = 'changeResolutionQuery',
 
     /**
+     * Groups the `TimeSeries` by specified label values and performs an aggregation
+     * function on the data within each group.
+     */
+    AggregateByGroup = 'aggregateByGroupQuery',
+
+    /**
      * A query that applies a DB-native function to the `TimeSeries`.
      *
      * If the DB does not support a particular function, the query library may
@@ -93,6 +99,18 @@ export interface FunctionQueryContent extends QueryContent {
 
 }
 
+export interface AggregationByGroupQueryContent extends QueryContent {
+
+    contentType: QueryContentType.AggregateByGroup,
+
+    aggregationType: string;
+
+    groupByLabels?: string[];
+
+    params?: IndexByKey<string>;
+
+}
+
 
 /**
  * Maps the QueryContentTypes to their respective interfaces.
@@ -103,4 +121,19 @@ export interface QueryContentTypeMapping {
     filterOnValueQuery: FilterOnValueQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
+    aggregateByGroupQuery: AggregationByGroupQueryContent;
+}
+
+/**
+ * Convenience function to create a `QueryContent` object.
+ *
+ * @param type The type of `QueryContent`.
+ * @param content The actual `QueryContent`.
+ * @returns A new `QueryContent` object of the specified type with `content`.
+ */
+export function createQueryContent<T extends QueryContentType, Q extends QueryContentTypeMapping[T]>(type: T, content: Omit<Q, 'contentType'>): Q {
+    return {
+        contentType: type,
+        ...content,
+    } as any;
 }

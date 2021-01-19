@@ -1,5 +1,5 @@
 import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
-import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType } from './query-content';
+import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType, createQueryContent } from './query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**
@@ -32,6 +32,17 @@ export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeri
             filter: predicate,
         };
         return this.createTimeRangeQuery(queryContent);
+    }
+
+    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(
+            QueryContentType.AggregateByGroup,
+            {
+                aggregationType: 'sum',
+                groupByLabels: groupingLabels && groupingLabels.length > 0 ? groupingLabels : undefined,
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
     }
 
 }

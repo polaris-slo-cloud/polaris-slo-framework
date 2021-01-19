@@ -23,6 +23,15 @@ export interface TimeRangeQuery<T> extends ValueFilterableQuery<TimeSeries<T>, T
     countChanges(): TimeInstantQuery<T>; // ToDo Check if this exists in MQL and Flux!
 
     /**
+     * Groups the `TimeSeries` by the specified labels and then computes the
+     * sum within each group.
+     *
+     * @param groupingLabels The label by which to group the `TimeSeries`
+     * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
+     */
+    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number>;
+
+    /**
      * Changes the resolution of this `TimeRangeQuery`.
      *
      * @param resolutionSec The new resolution in seconds.
