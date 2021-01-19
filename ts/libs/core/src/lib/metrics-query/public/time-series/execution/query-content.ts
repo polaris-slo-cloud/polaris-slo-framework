@@ -99,11 +99,13 @@ export interface FunctionQueryContent extends QueryContent {
 
 }
 
-export interface AggregationByGroupQueryContent extends QueryContent {
+export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: ...
+
+export interface AggregateByGroupQueryContent extends QueryContent {
 
     contentType: QueryContentType.AggregateByGroup,
 
-    aggregationType: string;
+    aggregationType: AggregationType;
 
     groupByLabels?: string[];
 
@@ -121,7 +123,7 @@ export interface QueryContentTypeMapping {
     filterOnValueQuery: FilterOnValueQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
-    aggregateByGroupQuery: AggregationByGroupQueryContent;
+    aggregateByGroupQuery: AggregateByGroupQueryContent;
 }
 
 /**
