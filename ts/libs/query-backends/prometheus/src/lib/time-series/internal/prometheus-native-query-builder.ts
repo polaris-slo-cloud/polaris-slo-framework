@@ -2,6 +2,7 @@ import {
     AggregateByGroupQueryContent,
     AggregationType,
     DBFunctionName,
+    Duration,
     FilterOnLabelQueryContent,
     FunctionQueryContent,
     Index,
@@ -11,6 +12,7 @@ import {
     NativeQueryBuilderBase,
     QueryContentType,
     QueryError,
+    TimeRange,
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
 } from '@sloc/core';
@@ -48,7 +50,6 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
     private buildPromQlQuery(): string {
         const selectStatement = `${this.selectSegment.appName}_${this.selectSegment.metricName}`;
         const labelFilters: string[] = [];
-        // The time range is handled by PrometheusNativeQuery.execute()
 
         this.queryChainAfterSelect.forEach(segment => {
             if (segment.contentType === QueryContentType.FilterOnLabel) {
@@ -60,6 +61,11 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         if (labelFilters.length > 0) {
             const filterStr = labelFilters.join(',');
             query = `${selectStatement}{${filterStr}}`;
+        }
+
+        const timeRangeStr = this.serializeTimeRange(this.selectSegment.range);
+        if (timeRangeStr) {
+            query = query + timeRangeStr;
         }
 
         this.queryChainAfterSelect.forEach(segment => {
@@ -127,6 +133,29 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         return `${nativeFn}(${params}${innerQuery})`;
     }
 
+    private serializeTimeRange(range: TimeRange): string {
+        if (!range) {
+            return null;
+        }
+
+        const duration = `[${this.serializeDuration(range.duration)}]`;
+        if (range.endsNow()) {
+            return duration;
+        }
+
+        let offset = range.offset;
+        if (!offset) {
+            const offsetMs = new Date().valueOf() - range.end;
+            if (offsetMs > 0) {
+                offset = Duration.fromMilliseconds(offsetMs);
+            }
+        }
+        if (offset) {
+            return `${duration} offset ${this.serializeDuration(offset)}`;
+        }
+        return duration;
+    }
+
     private serializeFunctionParams(params?: IndexByKey<string>): string {
         if (!params) {
             return '';
@@ -137,6 +166,10 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
             return values.join() + ', ';
         }
         return '';
+    }
+
+    private serializeDuration(duration: Duration): string {
+        return Math.ceil(duration.valueMs / 1000).toString() + 's';
     }
 
 }
