@@ -1,5 +1,5 @@
 import { TimeInstantQuery, TimeSeriesInstant, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
-import { FilterOnValueQueryContent, QueryContentType } from './query-content';
+import { FilterOnValueQueryContent, QueryContentType, createQueryContent } from './query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**
@@ -20,6 +20,17 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
 
     add(addend: TimeInstantQuery<T>): TimeInstantQuery<T> {
         throw new Error('Method not implemented.');
+    }
+
+    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(
+            QueryContentType.AggregateByGroup,
+            {
+                aggregationType: 'sum',
+                groupByLabels: groupingLabels && groupingLabels.length > 0 ? groupingLabels : undefined,
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
     }
 
     filterOnValue(predicate: ValueFilter): TimeInstantQuery<T> {

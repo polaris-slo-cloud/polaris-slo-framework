@@ -34,20 +34,9 @@ export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeri
         return this.createTimeRangeQuery(queryContent);
     }
 
-    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number> {
-        const queryContent = createQueryContent(
-            QueryContentType.AggregateByGroup,
-            {
-                aggregationType: 'sum',
-                groupByLabels: groupingLabels && groupingLabels.length > 0 ? groupingLabels : undefined,
-            },
-        );
-        return this.createTimeInstantQuery(queryContent);
-    }
-
-    rate(): TimeRangeQuery<number> {
+    rate(): TimeInstantQuery<number> {
         const queryContent = createQueryContent(QueryContentType.Function, { functionName: 'rate' });
-        return this.createTimeRangeQuery(queryContent);
+        return this.createTimeInstantQuery(queryContent);
     }
 
 }
