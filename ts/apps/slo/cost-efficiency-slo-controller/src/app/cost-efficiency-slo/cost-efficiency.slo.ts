@@ -95,9 +95,8 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
             .sumByGroup('path');
 
         const reqCountQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_bucket', TimeRange.fromDuration(Duration.fromMinutes(1)))
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_count', TimeRange.fromDuration(Duration.fromMinutes(1)))
             .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
-            .filterOnLabel(LabelFilters.equal('le', this.targetThresholdSecStr))
             .rate()
             .sumByGroup('path');
 
