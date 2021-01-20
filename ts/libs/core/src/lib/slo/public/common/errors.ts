@@ -7,7 +7,7 @@ import { ServiceLevelObjective } from './service-level-objective';
  */
 export class SloControlLoopError extends Error {
 
-    constructor(public controlLoop: SloControlLoop, message: string) {
+    constructor(public controlLoop: SloControlLoop, message: string, public cause?: any) {
         super(message);
     }
 

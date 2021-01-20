@@ -62,6 +62,11 @@ export class DefaultSloControlLoop implements SloControlLoop {
                 slo = sloInstance;
                 return slo.configure(sloMapping, this.slocRuntime.metricsSourcesManager, this.slocRuntime);
             }),
+            catchError(err => {
+                const errorMsg = `An error occurred while configuring SLO ${key}.`;
+                console.error(errorMsg, err);
+                throw new SloControlLoopError(this, errorMsg, err);
+            }),
             timeout(SLO_DEFAULT_TIMEOUT_MS),
             catchError(() => {
                 const errorMsg = `SLO ${key} has timed out during configuration.`;
