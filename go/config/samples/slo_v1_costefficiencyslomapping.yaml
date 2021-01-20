@@ -1,0 +1,7 @@
+apiVersion: slo.sloc.github.io/v1
+kind: CostEfficiencySloMapping
+metadata:
+  name: costefficiencyslomapping-sample
+spec:
+  # Add fields here
+  foo: bar

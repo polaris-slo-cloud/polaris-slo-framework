@@ -11,4 +11,7 @@ resources:
 - group: slo
   kind: CPUUsageSloMapping
   version: v1
+- group: slo
+  kind: CostEfficiencySloMapping
+  version: v1
 version: "2"

@@ -1,0 +1,24 @@
+# permissions for end users to edit costefficiencyslomappings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: costefficiencyslomapping-editor-role
+rules:
+- apiGroups:
+  - slo.sloc.github.io
+  resources:
+  - costefficiencyslomappings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - slo.sloc.github.io
+  resources:
+  - costefficiencyslomappings/status
+  verbs:
+  - get
