@@ -1,5 +1,6 @@
 import { CostEfficiencySloConfig } from '@sloc/common-mappings';
 import {
+    Duration,
     LabelFilters,
     MetricsSource,
     ObservableOrPromise,
@@ -9,6 +10,7 @@ import {
     SloOutput,
     SlocRuntime,
     TimeRange,
+    TimeSeriesInstant,
 } from '@sloc/core';
 import { of as observableOf } from 'rxjs';
 
@@ -42,31 +44,41 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     }
 
     private async calculateSloCompliance(): Promise<number> {
-        const responseTime = await this.getResponseTime();
-        const cost = await this.getCost();
+        const responseTime = this.getResponseTime();
+        const cost = this.getCost();
 
-        return responseTime / cost;
+        return await responseTime / await cost;
     }
 
     private async getResponseTime(): Promise<number> {
         const reqDurationsQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_sum')
-            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`));
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_sum', TimeRange.fromDuration(Duration.fromMinutes(1)))
+            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
+            .rate()
+            .sumByGroup('path');
 
         const reqCountQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_count')
-            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`));
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_count', TimeRange.fromDuration(Duration.fromMinutes(1)))
+            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
+            .rate()
+            .sumByGroup('path');
 
         const reqDurationsResult = await reqDurationsQuery.execute();
         const reqCountResult = await reqCountQuery.execute();
 
-        const reqDurations = reqDurationsResult.results[0]?.samples[0]?.value ?? 0;
-        const reqCount = reqCountResult.results[0]?.samples[0]?.value ?? 0;
+        const reqDurationsSum = this.sumResults(reqDurationsResult.results);
+        const totalReqCount = this.sumResults(reqCountResult.results);
 
-        if (reqCount === 0) {
+        if (totalReqCount === 0) {
             return 0;
         }
-        return (reqDurations / reqCount) * 1000;
+        return (reqDurationsSum / totalReqCount) * 1000;
+    }
+
+    private sumResults(results: TimeSeriesInstant<number>[]): number {
+        let sum = 0;
+        results.forEach(result => sum += result.samples[0].value);
+        return sum;
     }
 
     private getCost(): Promise<number> {
