@@ -8,7 +8,10 @@ import { ApiObjectMetadata } from '@sloc/core';
 
 
 export default new CostEfficiencySloMapping({
-    metadata: new ApiObjectMetadata({ name: 'data-service-cost-efficiency' }),
+    metadata: new ApiObjectMetadata({
+        namespace: 'mesh',
+        name: 'gentics-mesh-cost-efficiency',
+    }),
     spec: new CostEfficiencySloMappingSpec({
         targetRef: new RestServiceTarget({
             group: 'apps',
