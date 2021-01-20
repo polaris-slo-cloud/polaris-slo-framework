@@ -32,6 +32,7 @@ type CostEfficiencySloConfig struct {
 	TargetCostEfficiency int32 `json:"targetCostEfficiency"`
 
 	// The minimum percentile of requests that should be handled within the time threshold.
+	// +optional
 	MinRequestsPercentile *int32 `json:"minRequestsPercentile;omitempty"`
 }
 
