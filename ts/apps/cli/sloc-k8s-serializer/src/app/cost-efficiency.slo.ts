@@ -21,7 +21,7 @@ export default new CostEfficiencySloMapping({
         }),
         elasticityStrategy: new HorizontalElasticityStrategyKind(),
         sloConfig: {
-            responseTimeThresholdMs: 400,
+            responseTimeThresholdMs: 25,
             targetCostEfficiency: 1000,
             minRequestsPercentile: 90,
         },

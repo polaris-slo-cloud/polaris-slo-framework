@@ -15,11 +15,21 @@ import {
 import { of as observableOf } from 'rxjs';
 
 function getHourlyGbMemoryCost(): number {
-    return 1;
+    return 0.1;
 }
 
 function getHourlyCpuCost(): number {
-    return 2;
+    return 0.2;
+}
+
+interface RequestsFasterThanThresholdInfo {
+
+    /** The percentile of requests that are faster than the threshold. */
+    percentileFaster: number;
+
+    /** The absolute number of requests that are faster than the threshold. */
+    totalReqFaster: number
+
 }
 
 export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySloConfig, SloCompliance>  {
@@ -28,6 +38,9 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
 
     private metricsSource: MetricsSource;
 
+    private targetThresholdSecStr: string;
+    private minRequestsPercentile: number;
+
     configure(
         sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>,
         metricsSource: MetricsSource,
@@ -35,6 +48,14 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;
+
+        this.targetThresholdSecStr = (sloMapping.spec.sloConfig.responseTimeThresholdMs / 1000).toString();
+        if (typeof sloMapping.spec.sloConfig.minRequestsPercentile === 'number') {
+            this.minRequestsPercentile = sloMapping.spec.sloConfig.minRequestsPercentile / 100;
+        } else {
+            this.minRequestsPercentile = 0.9;
+        }
+
         return observableOf(null);
     }
 
@@ -49,41 +70,53 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     }
 
     private async calculateSloCompliance(): Promise<number> {
-        const avgResponseTime = await this.getAvgResponseTime() || 1;
+        const requestsInfo = await this.getPercentileFasterThanThreshold();
         const cost = await this.getCost();
 
-        if (cost === 0) {
+        if (cost === 0 || requestsInfo.percentileFaster >= this.minRequestsPercentile) {
             return 100;
         }
 
-        const costEff = 1 / (avgResponseTime / cost);
+        const costEff = requestsInfo.totalReqFaster / cost;
         const compliance = (costEff / this.sloMapping.spec.sloConfig.targetCostEfficiency) * 100
         return Math.ceil(compliance);
     }
 
-    private async getAvgResponseTime(): Promise<number> {
-        const reqDurationsQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_sum', TimeRange.fromDuration(Duration.fromMinutes(1)))
+    private async getPercentileFasterThanThreshold(): Promise<RequestsFasterThanThresholdInfo> {
+        // PromQL equivalent:
+        // sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress=~'mesh-gentics-mesh.*', le='0.1'}[1m])) /
+        // sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{ingress=~'mesh-gentics-mesh.*'}[1m]))
+
+        const fasterThanBucketQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_bucket', TimeRange.fromDuration(Duration.fromMinutes(1)))
             .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
+            .filterOnLabel(LabelFilters.equal('le', this.targetThresholdSecStr))
             .rate()
             .sumByGroup('path');
 
         const reqCountQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_count', TimeRange.fromDuration(Duration.fromMinutes(1)))
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_bucket', TimeRange.fromDuration(Duration.fromMinutes(1)))
             .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
+            .filterOnLabel(LabelFilters.equal('le', this.targetThresholdSecStr))
             .rate()
             .sumByGroup('path');
 
-        const reqDurationsResult = await reqDurationsQuery.execute();
+        const fasterThanBucketResult = await fasterThanBucketQuery.execute();
         const reqCountResult = await reqCountQuery.execute();
 
-        const reqDurationsSum = this.sumResults(reqDurationsResult.results);
+        const totalReqFasterThanThreshold = this.sumResults(fasterThanBucketResult.results);
         const totalReqCount = this.sumResults(reqCountResult.results);
 
         if (totalReqCount === 0) {
-            return 0;
+            return {
+                percentileFaster: 1,
+                totalReqFaster: 0,
+            };
         }
-        return (reqDurationsSum / totalReqCount) * 1000;
+        return {
+            percentileFaster: totalReqFasterThanThreshold / totalReqCount,
+            totalReqFaster: totalReqFasterThanThreshold,
+        };
     }
 
     private sumResults(results: TimeSeriesInstant<number>[]): number {
