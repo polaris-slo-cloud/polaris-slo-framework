@@ -28,6 +28,11 @@ export interface TimeRangeQuery<T> extends ValueFilterableQuery<TimeSeries<T>, T
     rate(): TimeInstantQuery<number>;
 
     /**
+     * Computes the average within each `TimeSeries` over the duration of the query.
+     */
+    averageOverTime(): TimeInstantQuery<number>;
+
+    /**
      * Changes the resolution of this `TimeRangeQuery`.
      *
      * @param resolutionSec The new resolution in seconds.

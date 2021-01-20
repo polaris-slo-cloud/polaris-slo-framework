@@ -39,4 +39,9 @@ export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeri
         return this.createTimeInstantQuery(queryContent);
     }
 
+    averageOverTime(): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(QueryContentType.Function, { functionName: 'averageOverTime' });
+        return this.createTimeInstantQuery(queryContent);
+    }
+
 }

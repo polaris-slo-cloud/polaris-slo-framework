@@ -34,6 +34,7 @@ const AGGREGATIONS_MAP: Index<AggregationType, string> = {
  */
 const FUNCTIONS_MAP: Index<DBFunctionName, string> = {
     rate: 'rate',
+    averageOverTime: 'avg_over_time',
 };
 
 export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
