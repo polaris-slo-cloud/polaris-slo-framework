@@ -46,5 +46,7 @@
             ],
             "sourceMaps": true
         }
+        // When adding a new app, make sure that it has "externalDependencies": "none", in angular.json set for the PROD build.
+        // If this is always set to "none", (by default it's not set), debugging will take longer to start.
     ]
 }

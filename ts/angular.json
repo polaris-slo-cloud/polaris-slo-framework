@@ -416,6 +416,7 @@
             "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
             "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
+            "externalDependencies": "none",
             "assets": [
               "apps/slo/cost-efficiency-slo-controller/src/assets"
             ]
