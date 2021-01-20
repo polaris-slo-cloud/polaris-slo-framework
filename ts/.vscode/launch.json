@@ -22,7 +22,29 @@
             // "program": "${workspaceFolder}/serve",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
-            ]
+            ],
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug cost-efficiency-slo-controller",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "port": 7777,
+            "runtimeExecutable": "npx",
+            "runtimeArgs": [
+                "nx",
+                "serve",
+                "slo-cost-efficiency-slo-controller",
+                "--with-deps=true"
+            ],
+            // "program": "${workspaceFolder}/serve",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "sourceMaps": true
         }
     ]
 }
