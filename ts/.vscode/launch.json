@@ -8,19 +8,18 @@
             "type": "node",
             "request": "launch",
             "name": "Debug sloc-k8s-serializer",
+            "preLaunchTask": "build-cli-sloc-k8s-serializer",
             "skipFiles": [
                 "<node_internals>/**",
-                "**/node_modules/tslib/**"
+                "${workspaceFolder}/node_modules/tslib/**"
             ],
             "port": 7777,
             "runtimeExecutable": "npx",
             "runtimeArgs": [
                 "nx",
                 "serve",
-                "cli-sloc-k8s-serializer",
-                "--with-deps=true"
+                "cli-sloc-k8s-serializer"
             ],
-            // "program": "${workspaceFolder}/serve",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
@@ -30,9 +29,10 @@
             "type": "node",
             "request": "launch",
             "name": "Debug cost-efficiency-slo-controller",
+            "preLaunchTask": "build-cost-efficiency-slo-controller",
             "skipFiles": [
                 "<node_internals>/**",
-                "**/node_modules/tslib/**"
+                "${workspaceFolder}/node_modules/tslib/**"
             ],
             "port": 7777,
             "runtimeExecutable": "npx",
@@ -40,9 +40,7 @@
                 "nx",
                 "serve",
                 "slo-cost-efficiency-slo-controller",
-                "--with-deps=true"
             ],
-            // "program": "${workspaceFolder}/serve",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
