@@ -8,21 +8,45 @@
             "type": "node",
             "request": "launch",
             "name": "Debug sloc-k8s-serializer",
+            "preLaunchTask": "build-cli-sloc-k8s-serializer",
             "skipFiles": [
-                "<node_internals>/**"
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/tslib/**"
             ],
             "port": 7777,
             "runtimeExecutable": "npx",
             "runtimeArgs": [
                 "nx",
                 "serve",
-                "cli-sloc-k8s-serializer",
-                "--with-deps=true"
+                "cli-sloc-k8s-serializer"
             ],
-            // "program": "${workspaceFolder}/serve",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
-            ]
+            ],
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug cost-efficiency-slo-controller",
+            "preLaunchTask": "build-cost-efficiency-slo-controller",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/tslib/**"
+            ],
+            "port": 7777,
+            "runtimeExecutable": "npx",
+            "runtimeArgs": [
+                "nx",
+                "serve",
+                "slo-cost-efficiency-slo-controller",
+            ],
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "sourceMaps": true
         }
+        // When adding a new app, make sure that it has "externalDependencies": "none", in angular.json set for the PROD build.
+        // If this is always set to "none", (by default it's not set), debugging will take longer to start.
     ]
 }

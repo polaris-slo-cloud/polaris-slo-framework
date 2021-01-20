@@ -28,6 +28,15 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      */
     add(addend: TimeInstantQuery<T>): TimeInstantQuery<T>;
 
+    /**
+     * Groups the `TimeSeries` by the specified labels and then computes the
+     * sum within each group.
+     *
+     * @param groupingLabels The label by which to group the `TimeSeries`
+     * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
+     */
+    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number>;
+
 }
 
 /**

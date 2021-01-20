@@ -1,5 +1,5 @@
 import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
-import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType } from './query-content';
+import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType, createQueryContent } from './query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**
@@ -32,6 +32,16 @@ export abstract class TimeRangeQueryBase<T> extends TimeSeriesQueryBase<TimeSeri
             filter: predicate,
         };
         return this.createTimeRangeQuery(queryContent);
+    }
+
+    rate(): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(QueryContentType.Function, { functionName: 'rate' });
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    averageOverTime(): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(QueryContentType.Function, { functionName: 'averageOverTime' });
+        return this.createTimeInstantQuery(queryContent);
     }
 
 }

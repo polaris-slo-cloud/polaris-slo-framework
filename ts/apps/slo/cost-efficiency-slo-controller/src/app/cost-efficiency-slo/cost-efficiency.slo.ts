@@ -1,5 +1,6 @@
 import { CostEfficiencySloConfig } from '@sloc/common-mappings';
 import {
+    Duration,
     LabelFilters,
     MetricsSource,
     ObservableOrPromise,
@@ -9,17 +10,36 @@ import {
     SloOutput,
     SlocRuntime,
     TimeRange,
+    TimeSeriesInstant,
 } from '@sloc/core';
 import { of as observableOf } from 'rxjs';
 
-const LOWER_BOUND = 1;
-const UPPER_BOUND = 200;
+function getHourlyGbMemoryCost(): number {
+    return 0.1;
+}
+
+function getHourlyCpuCost(): number {
+    return 0.2;
+}
+
+interface RequestsFasterThanThresholdInfo {
+
+    /** The percentile of requests that are faster than the threshold. */
+    percentileFaster: number;
+
+    /** The absolute number of requests that are faster than the threshold. */
+    totalReqFaster: number
+
+}
 
 export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySloConfig, SloCompliance>  {
 
     sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>;
 
     private metricsSource: MetricsSource;
+
+    private targetThresholdSecStr: string;
+    private minRequestsPercentile: number;
 
     configure(
         sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>,
@@ -28,6 +48,14 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;
+
+        this.targetThresholdSecStr = (sloMapping.spec.sloConfig.responseTimeThresholdMs / 1000).toString();
+        if (typeof sloMapping.spec.sloConfig.minRequestsPercentile === 'number') {
+            this.minRequestsPercentile = sloMapping.spec.sloConfig.minRequestsPercentile / 100;
+        } else {
+            this.minRequestsPercentile = 0.9;
+        }
+
         return observableOf(null);
     }
 
@@ -42,36 +70,81 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     }
 
     private async calculateSloCompliance(): Promise<number> {
-        const responseTime = await this.getResponseTime();
+        const requestsInfo = await this.getPercentileFasterThanThreshold();
         const cost = await this.getCost();
 
-        return responseTime / cost;
+        if (cost === 0 || requestsInfo.percentileFaster >= this.minRequestsPercentile) {
+            return 100;
+        }
+
+        const costEff = requestsInfo.totalReqFaster / cost;
+        const compliance = (costEff / this.sloMapping.spec.sloConfig.targetCostEfficiency) * 100
+        return Math.ceil(compliance);
     }
 
-    private async getResponseTime(): Promise<number> {
-        const reqDurationsQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_sum')
-            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`));
+    private async getPercentileFasterThanThreshold(): Promise<RequestsFasterThanThresholdInfo> {
+        // PromQL equivalent:
+        // sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress=~'mesh-gentics-mesh.*', le='0.1'}[1m])) /
+        // sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{ingress=~'mesh-gentics-mesh.*'}[1m]))
+
+        const fasterThanBucketQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_bucket', TimeRange.fromDuration(Duration.fromMinutes(1)))
+            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
+            .filterOnLabel(LabelFilters.equal('le', this.targetThresholdSecStr))
+            .rate()
+            .sumByGroup('path');
 
         const reqCountQuery = this.metricsSource.getTimeSeriesSource()
-            .select<number>('nginx', 'ingress_controller_request_duration_seconds_count')
-            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`));
+            .select<number>('nginx', 'ingress_controller_request_duration_seconds_bucket', TimeRange.fromDuration(Duration.fromMinutes(1)))
+            .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
+            .filterOnLabel(LabelFilters.equal('le', this.targetThresholdSecStr))
+            .rate()
+            .sumByGroup('path');
 
-        const reqDurationsResult = await reqDurationsQuery.execute();
+        const fasterThanBucketResult = await fasterThanBucketQuery.execute();
         const reqCountResult = await reqCountQuery.execute();
 
-        const reqDurations = reqDurationsResult.results[0]?.samples[0]?.value ?? 0;
-        const reqCount = reqCountResult.results[0]?.samples[0]?.value ?? 0;
+        const totalReqFasterThanThreshold = this.sumResults(fasterThanBucketResult.results);
+        const totalReqCount = this.sumResults(reqCountResult.results);
 
-        if (reqCount === 0) {
-            return 0;
+        if (totalReqCount === 0) {
+            return {
+                percentileFaster: 1,
+                totalReqFaster: 0,
+            };
         }
-        return (reqDurations / reqCount) * 1000;
+        return {
+            percentileFaster: totalReqFasterThanThreshold / totalReqCount,
+            totalReqFaster: totalReqFasterThanThreshold,
+        };
     }
 
-    private getCost(): Promise<number> {
-        // ToDo
-        return Promise.resolve(Math.ceil(Math.random() * UPPER_BOUND));
+    private sumResults(results: TimeSeriesInstant<number>[]): number {
+        let sum = 0;
+        results.forEach(result => sum += result.samples[0].value);
+        return sum;
+    }
+
+    private async getCost(): Promise<number> {
+        const memoryUsageBytesQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('container', 'memory_working_set_bytes')
+            .filterOnLabel(LabelFilters.equal('namespace', this.sloMapping.metadata.namespace))
+            .sumByGroup('pod');
+
+        const cpuUsageSecondsSumQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('node', 'namespace_pod_container:container_cpu_usage_seconds_total:sum_rate')
+            .filterOnLabel(LabelFilters.equal('namespace', this.sloMapping.metadata.namespace))
+            .sumByGroup('pod');
+
+        const memoryUsageBytesResult = await memoryUsageBytesQuery.execute();
+        const cpuUsageSecondsSumResult = await cpuUsageSecondsSumQuery.execute();
+
+        const totalMemoryUsageGb = this.sumResults(memoryUsageBytesResult.results) / 1024 / 1024 / 1024;
+        const totalCpu = this.sumResults(cpuUsageSecondsSumResult.results);
+
+        const memoryCost = totalMemoryUsageGb * getHourlyGbMemoryCost();
+        const cpuCost = totalCpu * getHourlyCpuCost();
+        return memoryCost + cpuCost;
     }
 
 }

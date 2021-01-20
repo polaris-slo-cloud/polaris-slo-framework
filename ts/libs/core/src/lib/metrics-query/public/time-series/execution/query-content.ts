@@ -5,6 +5,7 @@
 
 import { IndexByKey } from '../../../../util';
 import { LabelFilter, TimeRange, ValueFilter } from '../query-model';
+import { DBFunctionName } from './db-functions';
 
 // eslint-disable-next-line no-shadow
 export enum QueryContentType {
@@ -20,6 +21,12 @@ export enum QueryContentType {
 
     /** Changes the resolution of the current range query. */
     ChangeResolution = 'changeResolutionQuery',
+
+    /**
+     * Groups the `TimeSeries` by specified label values and performs an aggregation
+     * function on the data within each group.
+     */
+    AggregateByGroup = 'aggregateByGroupQuery',
 
     /**
      * A query that applies a DB-native function to the `TimeSeries`.
@@ -82,12 +89,25 @@ export interface ChangeResolutionQueryContent extends QueryContent {
 
 }
 
-
 export interface FunctionQueryContent extends QueryContent {
 
     contentType: QueryContentType.Function;
 
-    functionName: string;
+    functionName: DBFunctionName;
+
+    params?: IndexByKey<string>;
+
+}
+
+export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: extend
+
+export interface AggregateByGroupQueryContent extends QueryContent {
+
+    contentType: QueryContentType.AggregateByGroup,
+
+    aggregationType: AggregationType;
+
+    groupByLabels?: string[];
 
     params?: IndexByKey<string>;
 
@@ -103,4 +123,19 @@ export interface QueryContentTypeMapping {
     filterOnValueQuery: FilterOnValueQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
+    aggregateByGroupQuery: AggregateByGroupQueryContent;
+}
+
+/**
+ * Convenience function to create a `QueryContent` object.
+ *
+ * @param type The type of `QueryContent`.
+ * @param content The actual `QueryContent`.
+ * @returns A new `QueryContent` object of the specified type with `content`.
+ */
+export function createQueryContent<T extends QueryContentType, Q extends QueryContentTypeMapping[T]>(type: T, content: Omit<Q, 'contentType'>): Q {
+    return {
+        contentType: type,
+        ...content,
+    } as any;
 }
