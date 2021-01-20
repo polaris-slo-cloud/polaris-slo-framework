@@ -151,7 +151,12 @@ export class DefaultSloControlLoop implements SloControlLoop {
                 catchError(err => throwError(new SloEvaluationError(this, key, slo.slo, err))),
 
                 timeout(this.loopConfig.sloTimeoutMs),
-                catchError(err => throwError(new SloEvaluationError(this, key, slo.slo, err, 'The SLO evaluation has timed out.'))),
+                catchError(err => {
+                    if (err instanceof SloEvaluationError) {
+                        return throwError(err);
+                    }
+                    return throwError(new SloEvaluationError(this, key, slo.slo, err, 'The SLO evaluation has timed out.'))
+                }),
 
                 // Allow stopping the evaluation if the SLO should be removed.
                 takeUntil(slo.stopper.stopper$),
