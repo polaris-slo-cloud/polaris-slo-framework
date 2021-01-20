@@ -14,8 +14,13 @@ import {
 } from '@sloc/core';
 import { of as observableOf } from 'rxjs';
 
-const LOWER_BOUND = 1;
-const UPPER_BOUND = 200;
+function getHourlyGbMemoryCost(): number {
+    return 1;
+}
+
+function getHourlyCpuCost(): number {
+    return 2;
+}
 
 export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySloConfig, SloCompliance>  {
 
@@ -44,13 +49,19 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     }
 
     private async calculateSloCompliance(): Promise<number> {
-        const responseTime = this.getResponseTime();
-        const cost = this.getCost();
+        const avgResponseTime = await this.getAvgResponseTime() || 1;
+        const cost = await this.getCost();
 
-        return await responseTime / await cost;
+        if (cost === 0) {
+            return 100;
+        }
+
+        const costEff = 1 / (avgResponseTime / cost);
+        const compliance = (costEff / this.sloMapping.spec.sloConfig.targetCostEfficiency) * 100
+        return Math.ceil(compliance);
     }
 
-    private async getResponseTime(): Promise<number> {
+    private async getAvgResponseTime(): Promise<number> {
         const reqDurationsQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('nginx', 'ingress_controller_request_duration_seconds_sum', TimeRange.fromDuration(Duration.fromMinutes(1)))
             .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
@@ -81,9 +92,26 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
         return sum;
     }
 
-    private getCost(): Promise<number> {
-        // ToDo
-        return Promise.resolve(Math.ceil(Math.random() * UPPER_BOUND));
+    private async getCost(): Promise<number> {
+        const memoryUsageBytesQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('container', 'memory_working_set_bytes')
+            .filterOnLabel(LabelFilters.equal('namespace', this.sloMapping.metadata.namespace))
+            .sumByGroup('pod');
+
+        const cpuUsageSecondsSumQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('node', 'namespace_pod_container:container_cpu_usage_seconds_total:sum_rate')
+            .filterOnLabel(LabelFilters.equal('namespace', this.sloMapping.metadata.namespace))
+            .sumByGroup('pod');
+
+        const memoryUsageBytesResult = await memoryUsageBytesQuery.execute();
+        const cpuUsageSecondsSumResult = await cpuUsageSecondsSumQuery.execute();
+
+        const totalMemoryUsageGb = this.sumResults(memoryUsageBytesResult.results) / 1024 / 1024 / 1024;
+        const totalCpu = this.sumResults(cpuUsageSecondsSumResult.results);
+
+        const memoryCost = totalMemoryUsageGb * getHourlyGbMemoryCost();
+        const cpuCost = totalCpu * getHourlyCpuCost();
+        return memoryCost + cpuCost;
     }
 
 }
