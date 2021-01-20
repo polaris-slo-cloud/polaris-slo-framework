@@ -9,7 +9,8 @@
             "request": "launch",
             "name": "Debug sloc-k8s-serializer",
             "skipFiles": [
-                "<node_internals>/**"
+                "<node_internals>/**",
+                "**/node_modules/tslib/**"
             ],
             "port": 7777,
             "runtimeExecutable": "npx",
@@ -30,7 +31,8 @@
             "request": "launch",
             "name": "Debug cost-efficiency-slo-controller",
             "skipFiles": [
-                "<node_internals>/**"
+                "<node_internals>/**",
+                "**/node_modules/tslib/**"
             ],
             "port": 7777,
             "runtimeExecutable": "npx",
