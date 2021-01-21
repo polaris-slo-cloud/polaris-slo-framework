@@ -78,15 +78,15 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
         }
 
         const costEff = requestsInfo.totalReqFaster / cost;
-        const compliance = (costEff / this.sloMapping.spec.sloConfig.targetCostEfficiency) * 100
+        if (costEff === 0) {
+            return 200;
+        }
+
+        const compliance = (this.sloMapping.spec.sloConfig.targetCostEfficiency / costEff) * 100
         return Math.ceil(compliance);
     }
 
     private async getPercentileFasterThanThreshold(): Promise<RequestsFasterThanThresholdInfo> {
-        // PromQL equivalent:
-        // sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress=~'mesh-gentics-mesh.*', le='0.1'}[1m])) /
-        // sum by (path) (rate(nginx_ingress_controller_request_duration_seconds_count{ingress=~'mesh-gentics-mesh.*'}[1m]))
-
         const fasterThanBucketQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('nginx', 'ingress_controller_request_duration_seconds_bucket', TimeRange.fromDuration(Duration.fromMinutes(1)))
             .filterOnLabel(LabelFilters.regex('ingress', `${this.sloMapping.spec.targetRef.name}.*`))
