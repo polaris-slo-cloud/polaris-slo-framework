@@ -74,11 +74,10 @@ All code for this project is contained in this repository.
 
 | Directory                | Contents |
 |--------------------------|----------|
-| [`assets`](./assets)     | Images and other assets |
-| [`docs`](./docs)         | Documentation files (Work in progress) |
-| [`go`](./go)             | Go code, i.e., Kubernetes-specific controllers, etc. |
-| [`testbeds`](./testbeds) | Configurations and demo applications, we use for testing |
-| [`ts`](./ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
+| [`docs`](https://github.com/SLOCloud/SLOC/tree/master/docs)         | Documentation files (Work in progress) |
+| [`go`](https://github.com/SLOCloud/SLOC/tree/master/go)             | Go code, i.e., Kubernetes-specific controllers, etc. |
+| [`testbeds`](https://github.com/SLOCloud/SLOC/tree/master/testbeds) | Configurations and demo applications, we use for testing |
+| [`ts`](https://github.com/SLOCloud/SLOC/tree/master/ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
 
 
 ## Documentation

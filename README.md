@@ -74,7 +74,6 @@ All code for this project is contained in this repository.
 
 | Directory                | Contents |
 |--------------------------|----------|
-| [`assets`](./assets)     | Images and other assets |
 | [`docs`](./docs)         | Documentation files (Work in progress) |
 | [`go`](./go)             | Go code, i.e., Kubernetes-specific controllers, etc. |
 | [`testbeds`](./testbeds) | Configurations and demo applications, we use for testing |
