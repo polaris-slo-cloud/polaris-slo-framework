@@ -23,7 +23,7 @@ The CMS-as-a-Service that is being offered consists of the following services: a
 Each service may expose one or more metrics, which can be simple ones like CPU usage or complex ones.
 These metrics can be used by the service provider to set up SLOs.
 
-<img src="./assets/motivating-example.svg" alt="Motivating Example">
+<img src="./docs/assets/motivating-example.svg" alt="Motivating Example">
 
 *Service consumers*, i.e., Customers, who deploy the CMS-as-a-Service are not really interested in having an average CPU utiliztion of 80%, but instead want to have a "good performance for an acceptable cost".
 Ideally they would like to specify a simple configuration that guarantees them a good performance without making their eyes pop out when they see the bill at the end of the month.
