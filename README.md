@@ -1,6 +1,6 @@
 # SLOC
 
-This respository contains the code of the SLOC Project (Service Level Objectives for Next Generation Cloud Computing).
+The SLOC project aims to provide **S**ervice **L**evel **O**bjectives for next generation **C**loud computing
 
 Service Level Agreements (SLAs) are very common in cloud computing.
 Each SLA consists of one or more Service Level Objectives, which are measurable capacity guarantees.

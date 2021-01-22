@@ -1,6 +1,6 @@
 # SLOC Documentation
 
-This folder contains the main documentation of the project.
+This is the main documentation of the project.
 
 
 ## Content
