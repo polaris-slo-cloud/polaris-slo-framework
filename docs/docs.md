@@ -6,7 +6,7 @@ This is the main documentation of the project.
 ## Content
 
 * Project Structure (ToDo)
-    ** Contributing
+    * Contributing
 * [Building and Deployment](./deployment)
 * Features (ToDo)
     * SLO Script
