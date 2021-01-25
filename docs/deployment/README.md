@@ -21,8 +21,9 @@ For testing and development, they can also be run as a normal process on your de
 When running SLOC components locally, the current context configured in your KUBECONFIG file is used to connect to the Kubernetes cluster.
 
 
-## Building
+## Building and Execution Tutorial
 
+The following sections show you how to build and run SLOC components.
 A part of SLOC is implemented in Go and another part in TypeScript.
 The [go](https://github.com/SLOCloud/SLOC/tree/master/go) and [ts](https://github.com/SLOCloud/SLOC/tree/master/ts) folders contain all code in the respective languages as a monorepository.
 
@@ -76,5 +77,5 @@ If the respective SLO's controller is running, it will pick up and enforce the S
 ### Run the CMS Workload
 
 The [testbeds](https://github.com/SLOCloud/SLOC/tree/master/testbeds) include a deployment of the open-source headless CMS [Gentics Mesh](https://getmesh.io).
-To install it, please follow [these steps](https://github.com/SLOCloud/SLOC/tree/master/testbeds/gentics-mesh/README.md).
+To install it, please follow [these steps](https://github.com/SLOCloud/SLOC/tree/master/testbeds/kubernetes/gentics-mesh).
 The defined cost efficiency SLO mapping defined [here](https://github.com/SLOCloud/SLOC/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app/cost-efficiency.slo.ts) is configured to operate on the deployed Gentics Mesh stateful set.
