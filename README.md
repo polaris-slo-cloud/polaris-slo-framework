@@ -84,4 +84,4 @@ All code for this project is contained in this repository.
 
 Documentation for the SLOC project can be found in the [docs](./docs) folder.
 
-This [video](https://www.youtube.com/watch?v=33P3YGOmnyI) provides an introduction to SLO script and shows an end-to-end demo.
+This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo.
