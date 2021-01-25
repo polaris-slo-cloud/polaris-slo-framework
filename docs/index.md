@@ -80,8 +80,10 @@ All code for this project is contained in this repository.
 | [`ts`](https://github.com/SLOCloud/SLOC/tree/master/ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
 
 
-## Documentation
+## Documentation and Tutorial
 
-Documentation for the SLOC project can be found in the [docs](./README) folder.
+Documentation for the SLOC project can be found [here](./docs.md).
 
-This [video](https://www.youtube.com/watch?v=33P3YGOmnyI) provides an introduction to SLO script and shows an end-to-end demo.
+This video provides an introduction to SLO script and shows an end-to-end demo:
+
+[![SLO Script Demo Video](http://img.youtube.com/vi/qRw_oyn_7Ss/0.jpg)](http://www.youtube.com/watch?v=qRw_oyn_7Ss)
