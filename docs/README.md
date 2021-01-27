@@ -7,8 +7,8 @@ This is the main documentation of the project.
 
 * [Project Structure](./project-structure)
 * [Building and Deployment](./deployment)
-* Features (ToDo)
-    * SLO Script
-    * Generic Elasticity Strategies
-    * Generic SLOs
-    * Predictions
+* Features
+    * [SLO Script](./features/slo-script)
+    * [Generic Elasticity Strategies](./features/generic-elasticity-strategies)
+    * [Generic SLOs](./features/generic-slos)
+    * [Predictions](./features/predictions)
