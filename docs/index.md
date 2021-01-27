@@ -86,4 +86,6 @@ Documentation for the SLOC project can be found [here](./docs.md).
 
 This video provides an introduction to SLO script and shows an end-to-end demo:
 
-[![SLO Script Demo Video](https://img.youtube.com/vi/qRw_oyn_7Ss/0.jpg)](https://www.youtube.com/watch?v=qRw_oyn_7Ss)
+<a href="https://www.youtube.com/watch?v=qRw_oyn_7Ss" target="_blank" rel="noopener">
+    <img src="./assets/demo-video1-preview.png" alt="SLO Script Demo Video" width="640" height="360" border="10" />
+</a>
