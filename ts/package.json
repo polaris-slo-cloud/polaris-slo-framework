@@ -63,8 +63,7 @@
     "prometheus-query": "^2.1.4",
     "reflect-metadata": "~0.1.13",
     "rxjs": "6.5.5",
-    "zone.js": "^0.10.2",
-    "@ngrx/component-store": "11.0.0"
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.1102.2",
