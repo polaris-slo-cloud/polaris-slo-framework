@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GrafanaPanelHostComponent } from './grafana-panel-host.component';
 
@@ -7,8 +7,8 @@ describe('GrafanaPanelHostComponent', () => {
     let component: GrafanaPanelHostComponent;
     let fixture: ComponentFixture<GrafanaPanelHostComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    beforeEach(waitForAsync(() => {
+        void TestBed.configureTestingModule({
             declarations: [GrafanaPanelHostComponent],
         })
             .compileComponents();
