@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
     DataType,
+    IndexByKey,
     QueryError,
     Sample,
     SelectQueryContent,
@@ -12,8 +13,7 @@ import {
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
 } from '@sloc/core';
-import { InstantVector, Metric as PromMetric, SampleValue as PromSample, RangeVector } from 'prometheus-query';
-import PrometheusQuery from 'prometheus-query';
+import { InstantVector, Metric as PromMetric, SampleValue as PromSample, PrometheusDriver, RangeVector } from 'prometheus-query';
 import { Observable, from as observableFrom } from 'rxjs';
 import { PrometheusConfig } from '../../config';
 
@@ -39,7 +39,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         const config = this.buildPrometheusQueryConfig();
         // console.log(config);
         // console.log(this.promQlQuery);
-        const promQuery = new PrometheusQuery(config);
+        const promQuery = new PrometheusDriver(config);
 
         switch (this.resultType) {
             case TimeSeriesQueryResultType.Instant:
@@ -47,7 +47,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
                     .then(result => this.transformInstantQueryResult(result.result));
 
             case TimeSeriesQueryResultType.Range:
-                return promQuery.rangeQuery(this.promQlQuery, this.selectSegment.range.start, this.selectSegment.range.end)
+                return promQuery.rangeQuery(this.promQlQuery, this.selectSegment.range.start, this.selectSegment.range.end, undefined)
                     .then(result => this.transformRangeQueryResult(result.result));
 
             default:
@@ -87,7 +87,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         return {
             dataType: DataType.Float,
             metricName: promMetric.name,
-            labels: promMetric.labels,
+            labels: promMetric.labels as IndexByKey<string>,
             samples: null,
             start: null,
             end: null,

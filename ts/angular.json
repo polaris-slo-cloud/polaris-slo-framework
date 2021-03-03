@@ -25,7 +25,10 @@
           "options": {
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/core"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -37,7 +40,10 @@
             "assets": [
               "libs/core/*.md"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -86,7 +92,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -104,7 +109,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -142,7 +150,10 @@
           "options": {
             "jestConfig": "apps/ui/sloc-ui/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/ui/sloc-ui"
+          ]
         }
       }
     },
@@ -208,7 +219,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -231,7 +245,10 @@
           "options": {
             "jestConfig": "apps/slo/cpu-usage-slo-controller/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/slo/cpu-usage-slo-controller"
+          ]
         }
       }
     },
@@ -265,7 +282,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -289,7 +309,10 @@
           "options": {
             "jestConfig": "apps/cli/sloc-k8s-serializer/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/cli/sloc-k8s-serializer"
+          ]
         }
       }
     },
@@ -317,7 +340,10 @@
           "options": {
             "jestConfig": "libs/orchestrators/kubernetes/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/orchestrators/kubernetes"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -329,7 +355,10 @@
             "assets": [
               "libs/orchestrators/kubernetes/*.md"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -352,7 +381,10 @@
           "options": {
             "jestConfig": "libs/mappings/common-mappings/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/mappings/common-mappings"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -364,7 +396,10 @@
             "assets": [
               "libs/mappings/common-mappings/*.md"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -387,7 +422,10 @@
           "options": {
             "jestConfig": "libs/query-backends/prometheus/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/query-backends/prometheus"
+          ]
         },
         "build": {
           "builder": "@nrwl/node:package",
@@ -399,7 +437,10 @@
             "assets": [
               "libs/query-backends/prometheus/*.md"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         }
       }
     },
@@ -433,7 +474,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -454,7 +498,10 @@
           "options": {
             "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/slo/cost-efficiency-slo-controller"
+          ]
         }
       }
     }
