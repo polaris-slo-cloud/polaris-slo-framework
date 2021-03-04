@@ -2,6 +2,7 @@
   "name": "@sloc/prometheus",
   "version": "0.1.0",
   "dependencies": {
-    "@sloc/core": "~0.1.0"
+    "@sloc/core": "~0.1.0",
+    "prometheus-query": "^3.0.0"
   }
 }

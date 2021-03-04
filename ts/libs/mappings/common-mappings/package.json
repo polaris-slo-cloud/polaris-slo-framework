@@ -1,5 +1,8 @@
 {
   "name": "@sloc/common-mappings",
   "version": "0.1.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@sloc/core": "~0.1.0"
+  }
 }
