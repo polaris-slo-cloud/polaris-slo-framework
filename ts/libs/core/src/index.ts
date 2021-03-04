@@ -5,9 +5,9 @@ import 'reflect-metadata';
  */
 
 export * from './lib/elasticity/public';
-export * from './lib/metrics-query/public';
 export * from './lib/metrics-writing/public';
 export * from './lib/model';
+export * from './lib/raw-metrics-query/public';
 export * from './lib/runtime/public';
 export * from './lib/slo/public';
 export * from './lib/transformation/public';
