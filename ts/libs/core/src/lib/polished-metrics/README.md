@@ -9,6 +9,7 @@ SLO Script has two types of metrics:
 Examples:
 ```TypeScript
 // To use a custom metric, we will be able to do something like:
+// The scoping to an sloTarget will be done by a factory object.
 const polishedMetric = this.metricsSource.getPolishedMetricsSource().getByName('xyz', sloTarget);
 // or
 const polishedMetric = this.metricsSource.getPolishedMetricsSource().getByType(metricType, sloTarget);
