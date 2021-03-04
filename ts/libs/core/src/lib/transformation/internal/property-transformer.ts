@@ -1,4 +1,4 @@
-import { TransformationType } from 'class-transformer';
+import { TransformFnParams, TransformationType } from 'class-transformer';
 import { getSlocRuntimeOrThrow } from '../../runtime/public/sloc-runtime/sloc-runtime';
 import { Constructor } from '../../util';
 
@@ -12,22 +12,26 @@ export class PropertyTransformer<T> {
     /**
      * Transform method called by `class-transformer`
      *
-     * @param value The property value before the transformation.
-     * @param obj The transformation source object.
-     * @param transformationType The transformation type.
+     * @param transformParams The transformation parameters provided by class-transformer.
+     * This object has four properties:
+     *  * `value` The property value before the transformation.
+     *  * `key` The name of the property within the source object.
+     *  * `obj` The transformation source object.
+     *  * `type` The transformation type.
+     *
      * @returns The transformed object.
      *
      * @see https://github.com/typestack/class-transformer#additional-data-transformation
      */
-    transform(value: any, obj: any, transformationType: TransformationType): any {
+    transform(transformParams: TransformFnParams): any {
         const runtime = getSlocRuntimeOrThrow();
-        switch (transformationType) {
+        switch (transformParams.type) {
             case TransformationType.CLASS_TO_PLAIN:
-                return runtime.transformer.transformToOrchestratorPlainObject(value);
+                return runtime.transformer.transformToOrchestratorPlainObject(transformParams.value);
             case TransformationType.PLAIN_TO_CLASS:
-                return runtime.transformer.transformToSlocObject(this.slocType, value);
+                return runtime.transformer.transformToSlocObject(this.slocType, transformParams.value);
             default:
-                throw new Error(`Unexpected SlocRuntime: ${transformationType}`);
+                throw new Error(`Unexpected tranformation type: ${transformParams.type}`);
         }
     }
 }
