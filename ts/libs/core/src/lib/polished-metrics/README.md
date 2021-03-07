@@ -10,12 +10,10 @@ Examples:
 ```TypeScript
 // To use a custom metric, we will be able to do something like:
 // The scoping to an sloTarget will be done by a factory object.
-const polishedMetric = this.metricsSource.getPolishedMetricsSource().getByName('xyz', sloTarget);
-// or
-const polishedMetric = this.metricsSource.getPolishedMetricsSource().getByType(metricType, sloTarget);
+const polishedMetricSrc = this.metricsSource.getPolishedMetricSource(metricType, sloTarget, { metricName?, paramA, paramB });
 
 // Get the latest value
-const value$ = polishedMetric.getCurrentValue();
-const valueProm = polishedMetric.getCurrentValueAsPromise();
-const valueRange = polishedMetric.getValueRange(); // nor sure if we want this
+const value$ = polishedMetricSrc.getCurrentValue();
+const valueProm = polishedMetricSrc.getCurrentValueAsPromise();
+const valueRange = polishedMetricSrc.getValueRange(); // nor sure if we want this
 ```
