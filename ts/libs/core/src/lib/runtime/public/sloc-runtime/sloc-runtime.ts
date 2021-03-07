@@ -1,7 +1,7 @@
 import { ElasticityStrategyService } from '../../../elasticity';
-import { MetricsSourcesManager } from '../../../metrics-query';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { SlocTransformationService } from '../../../transformation';
+import { MetricsSourcesManager } from '../metrics-source';
 import { ObjectKindWatcher, WatchManager } from '../watch';
 
 let slocRuntimeSingleton: SlocRuntime;

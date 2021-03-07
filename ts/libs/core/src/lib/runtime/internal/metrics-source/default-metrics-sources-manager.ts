@@ -1,4 +1,4 @@
-import { TimeSeriesSource } from '../../public';
+import { TimeSeriesSource } from '../../../raw-metrics-query/public';
 import { MetricsSourcesManager } from '../../public/metrics-source';
 
 export class DefaultMetricsSourcesManager implements MetricsSourcesManager {

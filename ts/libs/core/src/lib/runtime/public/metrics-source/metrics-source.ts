@@ -1,4 +1,4 @@
-import { TimeSeriesSource } from '../time-series';
+import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 
 /**
  * Encapsulates a source for obtaining metrics.

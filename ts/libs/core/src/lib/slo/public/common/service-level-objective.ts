@@ -1,6 +1,5 @@
-import { MetricsSource } from '../../../metrics-query';
 import { SloMapping, SloTarget } from '../../../model';
-import { SlocRuntime } from '../../../runtime';
+import { MetricsSource, SlocRuntime } from '../../../runtime';
 import { ObservableOrPromise } from '../../../util';
 import { SloOutput } from './slo-output';
 

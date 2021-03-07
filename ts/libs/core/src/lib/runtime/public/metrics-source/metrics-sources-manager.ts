@@ -1,4 +1,4 @@
-import { TimeSeriesSource } from '../time-series/query-model/time-series-source';
+import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
 
 /**
