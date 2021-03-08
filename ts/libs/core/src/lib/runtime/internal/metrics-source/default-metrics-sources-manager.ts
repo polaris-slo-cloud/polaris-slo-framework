@@ -1,16 +1,13 @@
-import { SloTarget } from '../../../model';
 import { PolishedMetricParams, PolishedMetricSource, PolishedMetricSourceFactory, PolishedMetricType } from '../../../polished-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
 import { MetricsSourcesManager } from '../../public/metrics-source';
 
-type AnyPolishedMetricSourceFactory = PolishedMetricSourceFactory<PolishedMetricType<any, any, any>, any, any, any>;
-
 /** Stores a map of factories for one `PolishedMetricSourceType`. */
 interface PolishedMetricTypeFactories {
 
-    factories: Map<string, PolishedMetricSourceFactory<any, any, any, any>>;
+    factories: Map<string, PolishedMetricSourceFactory<PolishedMetricType<any, any>>>;
 
-    defaultFactory?: PolishedMetricSourceFactory<any, any, any, any>;
+    defaultFactory?: PolishedMetricSourceFactory<PolishedMetricType<any, any>>;
 }
 
 export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
@@ -46,7 +43,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         }
     }
 
-    addPolishedMetricSourceFactory(factory: AnyPolishedMetricSourceFactory, setAsDefault?: boolean): void {
+    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any>>, setAsDefault?: boolean): void {
         const metricTypeStr = factory.metricType.metricTypeName;
         const sourceName = factory.metricSourceName;
 
@@ -63,27 +60,21 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
     }
 
     getPolishedMetricSource<
-        M extends PolishedMetricType<V, T, P>,
+        M extends PolishedMetricType<V, P>,
         V,
-        T extends SloTarget,
         P extends PolishedMetricParams,
-    >(metricType: M, sloTarget: T, params?: P): PolishedMetricSource<V> {
+    >(metricType: M, params: P, metricSourceName?: string): PolishedMetricSource<V> {
         const typeFactories = this.polishedMetricSourceFactories.get(metricType.metricTypeName);
         if (!typeFactories) {
             return undefined;
         }
 
-        let factory: PolishedMetricSourceFactory<M, V, T, P>;
-        if (params?.metricSourceName) {
-            factory = typeFactories.factories.get(params.metricSourceName);
-        } else {
-            factory = typeFactories.defaultFactory;
-        }
-
+        const factory = metricSourceName ? typeFactories.factories.get(metricSourceName) : typeFactories.defaultFactory;
         if (!factory) {
             return undefined;
         }
-        return factory.createSource(sloTarget, params);
+
+        return factory.createSource(params);
     }
 
 }

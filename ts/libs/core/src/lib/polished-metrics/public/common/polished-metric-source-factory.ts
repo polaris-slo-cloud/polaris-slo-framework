@@ -1,4 +1,3 @@
-import { SloTarget } from '../../../model';
 import { PolishedMetricParams } from './polished-metric-params';
 import { PolishedMetricSource } from './polished-metric-source';
 import { PolishedMetricType } from './polished-metric-type';
@@ -8,10 +7,9 @@ import { PolishedMetricType } from './polished-metric-type';
  * to a particular `SloTarget`.
  *
  * @param V The TypeScript type that represents the values of the polished metric.
- * @param T The type of `SloTarget` that the polished metric can be obtained from.
  * @param P Optional parameters that can be used to configure the `PolishedMetricSource`.
  */
-export interface PolishedMetricSourceFactory<M extends PolishedMetricType<V, T, P>, V, T extends SloTarget, P extends PolishedMetricParams> {
+export interface PolishedMetricSourceFactory<M extends PolishedMetricType<V, P>, V = any, P extends PolishedMetricParams = PolishedMetricParams> {
 
     /**
      * The type of polished metric that the sources produced by this factory supply.
@@ -24,12 +22,11 @@ export interface PolishedMetricSourceFactory<M extends PolishedMetricType<V, T, 
     readonly metricSourceName: string;
 
     /**
-     * Creates a new `PolishedMetricSource` for the specified `sloTarget` and the optional `params`.
+     * Creates a new `PolishedMetricSource` for the specified `params`.
      *
-     * @param sloTarget The target workload, where the metric should be obtained from.
-     * @param params (optional) Parameters to further configure the metric source.
+     * @param params Parameters to configure the metric source.
      * @returns A new `PolishedMetricSource`.
      */
-    createSource(sloTarget: T, params?: P): PolishedMetricSource<V>;
+    createSource(params: P): PolishedMetricSource<V>;
 
 }

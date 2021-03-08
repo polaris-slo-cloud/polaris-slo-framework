@@ -1,4 +1,3 @@
-import { SloTarget } from '../../../model';
 import { PolishedMetricParams, PolishedMetricSource } from '../../../polished-metrics';
 import { PolishedMetricType } from '../../../polished-metrics/public/common/polished-metric-type';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
@@ -20,17 +19,16 @@ export interface MetricsSource {
     /**
      * Gets a `PolishedMetricSource` for the specified `metricType` and `sloTarget`, optionally configured with `params`.
      *
-     * This will return the default source for the `metricType`, unless the `params` indicate a specific `metricSourceName`.
+     * This will return the default source for the `metricType`, unless `metricSourceName` is specified.
      *
      * @param metricType The type of polished metric that the source should supply.
-     * @param sloTarget The target workload, from which the metric should be obtained.
-     * @param params (optional) Parameters to configure the polished metric source.
+     * @param params Parameters to configure the polished metric source.
+     * @param metricSourceName (optional) The full name of the `PolishedMetricSource` that should be obtained
      */
     getPolishedMetricSource<
-        M extends PolishedMetricType<V, T, P>,
+        M extends PolishedMetricType<V, P>,
         V,
-        T extends SloTarget,
         P extends PolishedMetricParams,
-    >(metricType: M, sloTarget: T, params?: P): PolishedMetricSource<V>;
+    >(metricType: M, params: P, metricSourceName?: string): PolishedMetricSource<V>;
 
 }

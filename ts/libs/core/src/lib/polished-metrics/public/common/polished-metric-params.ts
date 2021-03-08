@@ -1,16 +1,14 @@
+import { SloTarget } from '../../../model';
 
 /**
- * Base interface for an optional parameter object that can be used for configuring a
+ * Base interface for the parameter object that can is used for configuring a
  * `PolishedMetricSource` when obtaining it.
  */
 export interface PolishedMetricParams {
 
     /**
-     * (optional) The full name of the `PolishedMetricSource` that should be obtained.
-     *
-     * The `PolishedMetricType` only describes the type of metric, which may be supplied
-     * by multiple sources.
+     * The target workload, for which the metric should be retrieved.
      */
-    metricSourceName?: string;
+    sloTarget: SloTarget;
 
 }

@@ -29,6 +29,6 @@ export interface MetricsSourcesManager extends MetricsSource {
      * @param factory The `PolishedMetricSourceFactory` that should be added.
      * @param setAsDefault (optional) If `true`, sets `factory` as the default factory for its `PolishedMetricType`. Default = `false`.
      */
-    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any, any>, any, any, any>, setAsDefault?: boolean): void;
+    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any>>, setAsDefault?: boolean): void;
 
 }
