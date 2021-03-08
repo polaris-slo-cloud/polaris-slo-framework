@@ -1,3 +1,4 @@
+import { PolishedMetricSourceFactory, PolishedMetricType } from '../../../polished-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
 
@@ -21,5 +22,13 @@ export interface MetricsSourcesManager extends MetricsSource {
      * @returns The new default `TimeSeriesSource` or `undefined` if no `TimeSeriesSource` with the specified `name` exists.
      */
     setDefaultTimeSeriesSource(name: string): TimeSeriesSource;
+
+    /**
+     * Adds the specified `PolishedMetricSourceFactory` to this manager.
+     *
+     * @param factory The `PolishedMetricSourceFactory` that should be added.
+     * @param setAsDefault (optional) If `true`, sets `factory` as the default factory for its `PolishedMetricType`. Default = `false`.
+     */
+    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any, any>, any, any, any>, setAsDefault?: boolean): void;
 
 }

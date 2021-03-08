@@ -1,5 +1,6 @@
 import { SloTarget } from '../../../model';
 import { TypeFn } from '../../../util';
+import { PolishedMetricParams } from './polished-metric-params';
 
 /**
  * Describes a type of polished metric.
@@ -10,7 +11,7 @@ import { TypeFn } from '../../../util';
  * @param T The type of `SloTarget` that the polished metric can be obtained from.
  * @param P Optional parameters that can be used to configure the `PolishedMetricSource`.
  */
-export abstract class PolishedMetricType<V, T extends SloTarget = SloTarget, P = never> {
+export abstract class PolishedMetricType<V, T extends SloTarget = SloTarget, P extends PolishedMetricParams = never> {
 
     /**
      * This property is needed to trigger type checking for the `V` parameter.
