@@ -24,6 +24,6 @@ export abstract class PolishedMetricType<V, P extends PolishedMetricParams = Pol
     /**
      * The fully qualified name of the this metric type.
      */
-    readonly metricTypeName: string;
+    abstract readonly metricTypeName: string;
 
 }
