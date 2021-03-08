@@ -1,3 +1,4 @@
+import { SlocRuntime } from '../../../runtime';
 import { PolishedMetricParams } from './polished-metric-params';
 import { PolishedMetricSource } from './polished-metric-source';
 import { PolishedMetricType } from './polished-metric-type';
@@ -25,8 +26,9 @@ export interface PolishedMetricSourceFactory<M extends PolishedMetricType<V, P>,
      * Creates a new `PolishedMetricSource` for the specified `params`.
      *
      * @param params Parameters to configure the metric source.
+     * @param slocRuntime The `SlocRuntime` instance.
      * @returns A new `PolishedMetricSource`.
      */
-    createSource(params: P): PolishedMetricSource<V>;
+    createSource(params: P, slocRuntime: SlocRuntime): PolishedMetricSource<V>;
 
 }

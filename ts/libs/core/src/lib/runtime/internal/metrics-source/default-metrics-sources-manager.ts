@@ -1,5 +1,6 @@
 import { PolishedMetricParams, PolishedMetricSource, PolishedMetricSourceFactory, PolishedMetricType } from '../../../polished-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
+import { SlocRuntime } from '../../public';
 import { MetricsSourcesManager } from '../../public/metrics-source';
 
 /** Stores a map of factories for one `PolishedMetricSourceType`. */
@@ -22,6 +23,8 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
      * The second level uses the `metricSourceName` of each factory and also stores a default factory for the type.
      */
     private polishedMetricSourceFactories: Map<string, PolishedMetricTypeFactories> = new Map();
+
+    constructor(private slocRuntime: SlocRuntime) {}
 
     addTimeSeriesSource(source: TimeSeriesSource, setAsDefault: boolean = false): void {
         this.timeSeriesSources.set(source.name, source);
@@ -74,7 +77,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
             return undefined;
         }
 
-        return factory.createSource(params);
+        return factory.createSource(params, this.slocRuntime);
     }
 
 }

@@ -12,7 +12,7 @@ export abstract class SlocRuntimeBase implements SlocRuntime {
 
     elasticityStrategyService: ElasticityStrategyService;
 
-    metricsSourcesManager: MetricsSourcesManager = new DefaultMetricsSourcesManager();
+    metricsSourcesManager: MetricsSourcesManager = new DefaultMetricsSourcesManager(this);
 
     constructor() {
         this.elasticityStrategyService = new DefaultElasticityStrategyService(this.transformer);
