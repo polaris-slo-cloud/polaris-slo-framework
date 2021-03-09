@@ -49,6 +49,7 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
         return {
             costEfficiency: reqFasterThan.totalReqFaster / totalCost.currentCostPerHour,
             percentileBetterThanThreshold: reqFasterThan.percentileFaster,
+            totalCost,
         };
     }
 

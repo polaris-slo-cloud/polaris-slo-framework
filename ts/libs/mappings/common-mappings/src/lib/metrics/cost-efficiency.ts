@@ -1,4 +1,5 @@
 import { PolishedMetricParams, PolishedMetricType } from '@sloc/core';
+import { TotalCost } from './total-cost';
 
 /**
  * Represents a generic cost efficiency metric.
@@ -21,6 +22,11 @@ export interface CostEfficiency {
      * The percentile of the `performance` metric samples that are better than the defined threshold.
      */
     percentileBetterThanThreshold: number;
+
+    /**
+     * The total costs of the `SloTarget`.
+     */
+    totalCost: TotalCost;
 
 }
 
