@@ -33,7 +33,8 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
     }
 
     getValueStream(): Observable<Sample<CostEfficiency>> {
-        const costSource = this.metricsSource.getPolishedMetricSource(TotalCostMetric.instance, { ...this.params }, this.params.costMetricSourceName);
+        const { targetThreshold, ...costParams } = this.params;
+        const costSource = this.metricsSource.getPolishedMetricSource(TotalCostMetric.instance, costParams, this.params.costMetricSourceName);
 
         return interval(STREAM_INTERVAL_MSEC).pipe(
             switchMap(() => this.getPercentileFasterThanThreshold()),
