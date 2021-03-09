@@ -77,6 +77,12 @@
         "orchestrator:kubernetes",
         "query:prometheus"
       ]
+    },
+    "metrics-cost-efficiency": {
+      "tags": [
+        "scope:core",
+        "scope:metric"
+      ]
     }
   },
   "affected": {

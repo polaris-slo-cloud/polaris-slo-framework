@@ -1,5 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CostEfficiencySloMapping, CostEfficiencySloMappingSpec, initSlocLib as initCommonMappingsLib } from '@sloc/common-mappings';
+import { initCostEfficiencyMetrics } from '@sloc/cost-efficiency';
 import { initSlocKubernetes } from '@sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@sloc/prometheus';
 import { interval } from 'rxjs';
@@ -19,6 +20,9 @@ initPrometheusQueryBackend(slocRuntime, { host: 'localhost', port: 30900 }, true
 
 // Initialize the used SLOC mapping libraries
 initCommonMappingsLib(slocRuntime);
+
+// Initialize the polished metrics
+initCostEfficiencyMetrics(slocRuntime);
 
 // Create an SloControlLoop and register the factories for the ServiceLevelObjectives it will handle
 const sloControlLoop = slocRuntime.createSloControlLoop();

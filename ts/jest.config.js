@@ -8,5 +8,6 @@ module.exports = {
         '<rootDir>/libs/mappings/common-mappings',
         '<rootDir>/libs/query-backends/prometheus',
         '<rootDir>/apps/slo/cost-efficiency-slo-controller',
+        '<rootDir>/libs/metrics/cost-efficiency',
     ],
 };

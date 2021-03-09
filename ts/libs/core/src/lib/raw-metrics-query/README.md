@@ -1,5 +1,8 @@
-# Metrics Query API Specification
+# Raw Metrics Query API Specification
 
+SLO Script has two types of metrics:
+* **Raw Metrics** are time series obtained using the Raw Metrics Query API.
+* **Polished Metrics** have been processed by a metrics library and may be composed of a combination of raw metrics.
 
 ## Source Selection
 

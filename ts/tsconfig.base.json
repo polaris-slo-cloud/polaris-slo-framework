@@ -38,6 +38,9 @@
             ],
             "@sloc/prometheus": [
                 "libs/query-backends/prometheus/src/index.ts"
+            ],
+            "@sloc/cost-efficiency": [
+                "libs/metrics/cost-efficiency/src/index.ts"
             ]
         }
     },
