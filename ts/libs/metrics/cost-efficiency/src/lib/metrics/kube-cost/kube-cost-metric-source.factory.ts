@@ -9,7 +9,7 @@ export class KubeCostMetricSourceFactory implements PolishedMetricSourceFactory<
 
     readonly metricType = TotalCostMetric.instance;
 
-    readonly metricSourceName = KubeCostMetricSource.metricSourceName;
+    readonly metricSourceName = `${TotalCostMetric.instance.metricTypeName}/kube-cost`;
 
     createSource(params: PolishedMetricParams, slocRuntime: SlocRuntime): PolishedMetricSource<TotalCost> {
         return new KubeCostMetricSource(params, slocRuntime);

@@ -1,4 +1,4 @@
-import { TotalCost, TotalCostMetric } from '@sloc/common-mappings';
+import { TotalCost } from '@sloc/common-mappings';
 import { LabelFilters, MetricsSource, PolishedMetricParams, PolishedMetricSourceBase, Sample, SlocRuntime, TimeSeriesInstant } from '@sloc/core';
 import { Observable, interval } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -19,8 +19,6 @@ function getHourlyCpuCost(): number {
  * ToDo: implement the KubeCost part (currently the hourly costs are mocked).
  */
 export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
-
-    static readonly metricSourceName = `${TotalCostMetric.instance.metricTypeName}/kube-cost`;
 
     private metricsSource: MetricsSource;
 
