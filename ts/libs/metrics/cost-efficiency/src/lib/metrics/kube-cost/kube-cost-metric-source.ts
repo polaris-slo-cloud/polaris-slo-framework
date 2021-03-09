@@ -48,8 +48,10 @@ export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
             .filterOnLabel(LabelFilters.equal('namespace', this.params.namespace))
             .sumByGroup('pod');
 
-        const memoryUsageBytesResult = await memoryUsageBytesQuery.execute();
-        const cpuUsageSecondsSumResult = await cpuUsageSecondsSumQuery.execute();
+        const [ memoryUsageBytesResult, cpuUsageSecondsSumResult ] = await Promise.all([
+            memoryUsageBytesQuery.execute(),
+            cpuUsageSecondsSumQuery.execute(),
+        ]);
 
         const totalMemoryUsageGb = this.sumResults(memoryUsageBytesResult.results) / 1024 / 1024 / 1024;
         const totalCpu = this.sumResults(cpuUsageSecondsSumResult.results);
