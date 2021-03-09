@@ -55,7 +55,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         const sourceName = factory.metricSourceName;
 
         let typeFactories = this.polishedMetricSourceFactories.get(metricTypeStr);
-        if (typeFactories) {
+        if (!typeFactories) {
             typeFactories = { factories: new Map() };
             this.polishedMetricSourceFactories.set(metricTypeStr, typeFactories);
             setAsDefault = true;
