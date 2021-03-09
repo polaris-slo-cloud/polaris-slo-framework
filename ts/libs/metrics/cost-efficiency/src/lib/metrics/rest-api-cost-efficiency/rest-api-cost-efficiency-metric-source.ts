@@ -1,9 +1,7 @@
 import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@sloc/common-mappings';
 import { Duration, LabelFilters, MetricsSource, PolishedMetricSourceBase, Sample, SlocRuntime, TimeRange, TimeSeriesInstant } from '@sloc/core';
-import { Observable, interval } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
-
-const STREAM_INTERVAL_MSEC = 10000;
 
 interface RequestsFasterThanThresholdInfo {
 
@@ -27,7 +25,7 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
     private targetThresholdSecStr: string;
 
     constructor(private params: CostEfficiencyParams, slocRuntime: SlocRuntime) {
-        super();
+        super(slocRuntime);
         this.metricsSource = slocRuntime.metricsSourcesManager;
         this.targetThresholdSecStr = (params.targetThreshold / 1000).toString();
     }
@@ -36,7 +34,7 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
         const { targetThreshold, ...costParams } = this.params;
         const costSource = this.metricsSource.getPolishedMetricSource(TotalCostMetric.instance, costParams, this.params.costMetricSourceName);
 
-        return interval(STREAM_INTERVAL_MSEC).pipe(
+        return this.getDefaultPollingInterval().pipe(
             switchMap(() => this.getPercentileFasterThanThreshold()),
             withLatestFrom(costSource.getValueStream()),
             // For some reason the TypeScript compiler reports a TS2345 if we don't declare the types of the tuple's members

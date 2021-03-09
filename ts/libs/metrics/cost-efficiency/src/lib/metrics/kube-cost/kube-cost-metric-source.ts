@@ -1,9 +1,7 @@
 import { TotalCost } from '@sloc/common-mappings';
 import { LabelFilters, MetricsSource, PolishedMetricParams, PolishedMetricSourceBase, Sample, SlocRuntime, TimeSeriesInstant } from '@sloc/core';
-import { Observable, interval } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-
-const STREAM_INTERVAL_MSEC = 10000;
 
 function getHourlyGbMemoryCost(): number {
     return 0.1;
@@ -23,12 +21,12 @@ export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
     private metricsSource: MetricsSource;
 
     constructor(private params: PolishedMetricParams, slocRuntime: SlocRuntime) {
-        super();
+        super(slocRuntime);
         this.metricsSource = slocRuntime.metricsSourcesManager;
     }
 
     getValueStream(): Observable<Sample<TotalCost>> {
-        return interval(STREAM_INTERVAL_MSEC).pipe(
+        return this.getDefaultPollingInterval().pipe(
             switchMap(() => this.getCost()),
             map(totalCost => ({
                 value: totalCost,
