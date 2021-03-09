@@ -11,4 +11,9 @@ export interface PolishedMetricParams {
      */
     sloTarget: SloTarget;
 
+    /**
+     * The namespace that the `SloTarget` is contained in.
+     */
+    namespace: string;
+
 }

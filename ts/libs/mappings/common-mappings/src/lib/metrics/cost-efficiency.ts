@@ -50,7 +50,10 @@ export interface CostEfficiencyParams extends PolishedMetricParams {
  *
  * The `totalCost` part is retrieved using the `TotalCostMetric` type.
  */
-export class CostEfficiencyMetricType extends PolishedMetricType<CostEfficiency, CostEfficiencyParams> {
+export class CostEfficiencyMetric extends PolishedMetricType<CostEfficiency, CostEfficiencyParams> {
+
+    /** The singleton instance of this type. */
+    static readonly instance = new CostEfficiencyMetric();
 
     readonly metricTypeName = 'metrics.sloc.github.io/cost-efficiency';
 

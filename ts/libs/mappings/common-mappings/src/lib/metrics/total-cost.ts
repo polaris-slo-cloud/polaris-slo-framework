@@ -20,7 +20,10 @@ export interface TotalCost {
 /**
  * Polished metric type for describing the total cost for an `SloTarget`.
  */
-export class TotalCostMetricType extends PolishedMetricType<TotalCost> {
+export class TotalCostMetric extends PolishedMetricType<TotalCost> {
+
+    /** The singleton instance of this type. */
+    static readonly instance = new TotalCostMetric();
 
     readonly metricTypeName = 'metrics.sloc.github.io/total-cost';
 
