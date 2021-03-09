@@ -39,7 +39,9 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
         return interval(STREAM_INTERVAL_MSEC).pipe(
             switchMap(() => this.getPercentileFasterThanThreshold()),
             withLatestFrom(costSource.getValueStream()),
-            map(([ reqFasterThan, totalCost ]) => ({
+            // For some reason the TypeScript compiler reports a TS2345 if we don't declare the types of the tuple's members
+            // even though the TS language server in VS Code reports that everything is fine.
+            map(([ reqFasterThan, totalCost ]: [ RequestsFasterThanThresholdInfo, Sample<TotalCost> ]) => ({
                 value: this.computeCostEfficiency(reqFasterThan, totalCost.value),
                 timestamp: new Date().valueOf(),
             })),
