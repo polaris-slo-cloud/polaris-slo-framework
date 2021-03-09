@@ -62,11 +62,11 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         }
     }
 
-    getPolishedMetricSource<
-        M extends PolishedMetricType<V, P>,
-        V,
-        P extends PolishedMetricParams,
-    >(metricType: M, params: P, metricSourceName?: string): PolishedMetricSource<V> {
+    getPolishedMetricSource<V, P extends PolishedMetricParams>(
+        metricType: PolishedMetricType<V, P>,
+        params: P,
+        metricSourceName?: string,
+    ): PolishedMetricSource<V> {
         const typeFactories = this.polishedMetricSourceFactories.get(metricType.metricTypeName);
         if (!typeFactories) {
             return undefined;

@@ -25,10 +25,10 @@ export interface MetricsSource {
      * @param params Parameters to configure the polished metric source.
      * @param metricSourceName (optional) The full name of the `PolishedMetricSource` that should be obtained
      */
-    getPolishedMetricSource<
-        M extends PolishedMetricType<V, P>,
-        V,
-        P extends PolishedMetricParams,
-    >(metricType: M, params: P, metricSourceName?: string): PolishedMetricSource<V>;
+    getPolishedMetricSource<V, P extends PolishedMetricParams>(
+        metricType: PolishedMetricType<V, P>,
+        params: P,
+        metricSourceName?: string,
+    ): PolishedMetricSource<V>;
 
 }
