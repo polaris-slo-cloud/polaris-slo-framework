@@ -18,9 +18,9 @@ export interface CostEfficiency {
     costEfficiency: number;
 
     /**
-     * The percentile of the `performance` metric samples that are above the defined threshold.
+     * The percentile of the `performance` metric samples that are better than the defined threshold.
      */
-    percentileAboveThreshold: number;
+    percentileBetterThanThreshold: number;
 
 }
 
@@ -28,6 +28,15 @@ export interface CostEfficiency {
  * The parameters for retrieving the cost efficiency metric.
  */
 export interface CostEfficiencyParams extends PolishedMetricParams {
+
+    /**
+     * The target threshold for the `performance` metric.
+     *
+     * Depending on the specific metric implementation, the threshold may be considered as
+     * a lower bound (`performance` samples should be above the threshold) or as an
+     * upper bound (`performance` samples should be below the threshold).
+     */
+    targetThreshold: number;
 
     /**
      * (optional) The name of the metric source that supplies the `totalCost` of the target workload.
