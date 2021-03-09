@@ -52,6 +52,6 @@ export interface CostEfficiencyParams extends PolishedMetricParams {
  */
 export class CostEfficiencyMetricType extends PolishedMetricType<CostEfficiency, CostEfficiencyParams> {
 
-    readonly metricTypeName = 'metrics.sloc.github.io/CostEfficiency';
+    readonly metricTypeName = 'metrics.sloc.github.io/cost-efficiency';
 
 }
