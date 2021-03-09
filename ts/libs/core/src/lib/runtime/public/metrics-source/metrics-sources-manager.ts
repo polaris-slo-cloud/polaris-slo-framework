@@ -12,6 +12,7 @@ export interface MetricsSourcesManager extends MetricsSource {
      *
      * @param source The `TimeSeriesSource` that should be added.
      * @param setAsDefault (optional) If `true`, sets `source` as the default `TimeSeriesSource`. Default = `false`.
+     * If this is the first source that is added, it is always set as default.
      */
     addTimeSeriesSource(source: TimeSeriesSource, setAsDefault?: boolean): void;
 
@@ -28,6 +29,7 @@ export interface MetricsSourcesManager extends MetricsSource {
      *
      * @param factory The `PolishedMetricSourceFactory` that should be added.
      * @param setAsDefault (optional) If `true`, sets `factory` as the default factory for its `PolishedMetricType`. Default = `false`.
+     * If this is the first factory that is added for a particular `PolishedMetricType`, it is always set as default.
      */
     addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any>>, setAsDefault?: boolean): void;
 

@@ -27,6 +27,10 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
     constructor(private slocRuntime: SlocRuntime) {}
 
     addTimeSeriesSource(source: TimeSeriesSource, setAsDefault: boolean = false): void {
+        if (this.timeSeriesSources.size === 0) {
+            setAsDefault = true;
+        }
+
         this.timeSeriesSources.set(source.name, source);
         if (setAsDefault) {
             this.setDefaultTimeSeriesSource(source.name);
@@ -46,7 +50,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         }
     }
 
-    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any>>, setAsDefault?: boolean): void {
+    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any>>, setAsDefault: boolean = false): void {
         const metricTypeStr = factory.metricType.metricTypeName;
         const sourceName = factory.metricSourceName;
 
@@ -54,6 +58,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         if (typeFactories) {
             typeFactories = { factories: new Map() };
             this.polishedMetricSourceFactories.set(metricTypeStr, typeFactories);
+            setAsDefault = true;
         }
 
         typeFactories.factories.set(sourceName, factory);
