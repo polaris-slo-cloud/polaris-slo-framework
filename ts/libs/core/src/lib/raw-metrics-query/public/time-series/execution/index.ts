@@ -1,3 +1,4 @@
+export * from './binary-operator';
 export * from './db-functions';
 export * from './native-query-builder.base';
 export * from './native-query-builder';

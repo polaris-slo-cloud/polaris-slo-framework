@@ -4,7 +4,8 @@
  */
 
 import { IndexByKey } from '../../../../util';
-import { LabelFilter, TimeRange, ValueFilter } from '../query-model';
+import { LabelFilter, TimeInstantQuery, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
+import { BinaryOperator } from './binary-operator';
 import { DBFunctionName } from './db-functions';
 
 // eslint-disable-next-line no-shadow
@@ -18,6 +19,12 @@ export enum QueryContentType {
 
     /** A query that applies a filter on the value(s) of the `TimeSeries`. */
     FilterOnValue = 'filterOnValueQuery',
+
+    /** A query that applies a binary operator with two queries as operands. */
+    BinaryOperation = 'binaryOperationQuery',
+
+    /** A query that applies a binary operator with right operand being a constant. */
+    BinaryOperationWithConstant = 'binaryOperationWithConstOperandQuery',
 
     /** Changes the resolution of the current range query. */
     ChangeResolution = 'changeResolutionQuery',
@@ -45,6 +52,16 @@ export interface QueryContent {
 
     /** The type of query content. */
     contentType: QueryContentType;
+
+}
+
+/**
+ * Provides a unified way for storing subqueries
+ */
+export interface SubqueryContainer {
+
+    /** The subqueries used in the parent query. */
+    subqueries: TimeSeriesQuery<any>[];
 
 }
 
@@ -77,6 +94,30 @@ export interface FilterOnValueQueryContent extends QueryContent {
     contentType: QueryContentType.FilterOnValue;
 
     filter: ValueFilter;
+
+}
+
+/**
+ * Models a binary operation with two queries as operands.
+ */
+export interface BinaryOperationQueryContent extends QueryContent, SubqueryContainer {
+
+    contentType: QueryContentType.BinaryOperation;
+
+    operator: BinaryOperator;
+
+}
+
+/**
+ * Models a binary operation with a constant as the right operand.
+ */
+export interface BinaryOperationWithConstOperandQueryContent extends QueryContent {
+
+    contentType: QueryContentType.BinaryOperation;
+
+    operator: BinaryOperator;
+
+    rightOperand: any;
 
 }
 
@@ -121,6 +162,8 @@ export interface QueryContentTypeMapping {
     selectQuery: SelectQueryContent;
     filterOnLabelQuery: FilterOnLabelQueryContent;
     filterOnValueQuery: FilterOnValueQueryContent;
+    binaryOperationQuery: BinaryOperationQueryContent;
+    binaryOperationWithConstOperandQuery: BinaryOperationWithConstOperandQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
     aggregateByGroupQuery: AggregateByGroupQueryContent;

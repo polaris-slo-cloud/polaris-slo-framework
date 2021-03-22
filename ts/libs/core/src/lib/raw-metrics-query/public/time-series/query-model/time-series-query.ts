@@ -18,6 +18,19 @@ export enum TimeSeriesQueryResultType {
 }
 
 /**
+ * @returns `true` if `obj` is a `TimeSeriesQuery`, otherwise `false`.
+ */
+export function isTimeSeriesQuery(obj: any | TimeSeriesQuery<any>): obj is TimeSeriesQuery<any> {
+    // Since TimeSeriesQuery is an interface and people are not forced to use the TimeSeriesQueryBase class,
+    // we can only check if its methods and property are present.
+    const objAsQueryUnsafe = obj as TimeSeriesQuery<any>;
+    return !!objAsQueryUnsafe &&
+        typeof objAsQueryUnsafe.execute === 'function' &&
+        typeof objAsQueryUnsafe.toObservable === 'function' &&
+        (objAsQueryUnsafe.resultType === TimeSeriesQueryResultType.Instant || objAsQueryUnsafe.resultType === TimeSeriesQueryResultType.Range);
+}
+
+/**
  * A query that results in `TimeSeries` and which provides operations that are
  * applicable to all `TimeSeries` queries.
  *

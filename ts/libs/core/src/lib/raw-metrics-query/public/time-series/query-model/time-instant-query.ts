@@ -20,13 +20,82 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
     abs(): TimeInstantQuery<T>;
 
     /**
-     * Adds the resulting values of another `TimeInstantQuery` to this one.
+     * Adds a constant value or the resulting values of another `TimeInstantQuery` to this one.
      *
      * @note The results of both queries must match.
      *
-     * @param addend The query, whose results should be added.
+     * @param addend The constant or the query, whose results should be added.
      */
-    add(addend: TimeInstantQuery<T>): TimeInstantQuery<T>;
+    add(addend: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Subtracts a constant value or the resulting values of another `TimeInstantQuery` from this one.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param subtrahend The constant or the query, whose results should be subtracted.
+     */
+    subtract(subtrahend: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Multiplies the results of this query by a constant value or the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param factor The constant or the query, by whose results this query's results should be multiplied.
+     */
+    multiplyBy(factor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Divides the results of this query by a constant value or the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param divisor The constant or the query, by whose results this query's results should be divided.
+     */
+    divideBy(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Calculates the modulus of the results of this query divided by a constant value or the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param divisor The constant or the query, by whose results this query's results should be divided to determine the modulus.
+     */
+    modulo(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Raises the results of this query by a constant value or the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param exponent The constant or the query, by whose results this query's results should be raised.
+     */
+    pow(exponent: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Returns a query with the union of the results of this query and the `other` query.
+     *
+     * @param other The query, whose results should be united with this query's results.
+     */
+    union(other: TimeInstantQuery<T>): TimeInstantQuery<T>;
+
+    /**
+     * Returns a query with the intersection of the results of this query and the `other` query.
+     *
+     * @param other The query, whose results should be intersected with this query's results.
+     */
+    intersect(other: TimeInstantQuery<T>): TimeInstantQuery<T>
+
+    /**
+     * Returns a query with the relative complement of the results of the `other` query in the results of this query.
+     *
+     * If `a` and `b` are sets, the relative complement of `b` in `a` (`a \ b`) is coded as:
+     * ```
+     * a.complementOf(b);
+     * ```
+     */
+    complementOf(other: TimeInstantQuery<T>): TimeInstantQuery<T>;
 
     /**
      * Groups the `TimeSeries` by the specified labels and then computes the
