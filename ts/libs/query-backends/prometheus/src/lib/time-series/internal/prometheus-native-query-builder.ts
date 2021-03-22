@@ -1,6 +1,9 @@
 import {
     AggregateByGroupQueryContent,
     AggregationType,
+    BinaryOperationQueryContent,
+    BinaryOperationWithConstOperandQueryContent,
+    BinaryOperator,
     DBFunctionName,
     Duration,
     FilterOnLabelQueryContent,
@@ -12,6 +15,7 @@ import {
     NativeQueryBuilderBase,
     QueryContentType,
     QueryError,
+    SubqueryBuilderContainer,
     TimeRange,
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
@@ -28,6 +32,21 @@ const AGGREGATIONS_MAP: Index<AggregationType, string> = {
     max: 'max',
     avg: 'avg',
 };
+
+/**
+ * Maps the `BinaryOperator` values to the operator strings of PromQL.
+ */
+const BINARY_OPS_MAP: Index<BinaryOperator, string> = {
+    [BinaryOperator.Add]: '+',
+    [BinaryOperator.Subtract]: '-',
+    [BinaryOperator.Multiply]: '*',
+    [BinaryOperator.Divide]: '/',
+    [BinaryOperator.Modulo]: '%',
+    [BinaryOperator.Power]: '^',
+    [BinaryOperator.Union]: 'or',
+    [BinaryOperator.Intersection]: 'and',
+    [BinaryOperator.Complement]: 'unless',
+}
 
 /**
  * Maps the AggregationType values to the names of native PromQL aggregation functions.
@@ -73,6 +92,12 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
             switch (segment.contentType) {
                 case QueryContentType.AggregateByGroup:
                     query = this.buildAggregationByGroup(segment as AggregateByGroupQueryContent, query);
+                    break;
+                case QueryContentType.BinaryOperation:
+                    query = this.buildBinaryOperation(segment as SubqueryBuilderContainer<BinaryOperationQueryContent>, query);
+                    break;
+                case QueryContentType.BinaryOperationWithConstant:
+                    query = this.buildBinaryOperationWithConstant(segment as BinaryOperationWithConstOperandQueryContent, query);
                     break;
                 case QueryContentType.Function:
                     query = this.buildFunctionCall(segment as FunctionQueryContent, query);
@@ -121,6 +146,29 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         const params = this.serializeFunctionParams(queryContent.params);
 
         return `${nativeAggregationFn} ${grouping}(${params}${innerQuery})`;
+    }
+
+    private buildBinaryOperation(queryContent: SubqueryBuilderContainer<BinaryOperationQueryContent>, leftOperandQuery: string): string {
+        const nativeBinOp = BINARY_OPS_MAP[queryContent.operator];
+        if (!nativeBinOp) {
+            throw new QueryError(`Unknown binary operator '${queryContent.operator}'`);
+        }
+        if (queryContent.subqueryBuilders.length !== 1) {
+            throw new QueryError('A binary operation must have exactly one query subquery as right operand.', queryContent);
+        }
+
+        const rightOperandQuery = (queryContent.subqueryBuilders[0] as PrometheusNativeQueryBuilder).buildPromQlQuery();
+        return `(${leftOperandQuery} ${nativeBinOp} (${rightOperandQuery}))`;
+    }
+
+    private buildBinaryOperationWithConstant(queryContent: BinaryOperationWithConstOperandQueryContent, leftOperandQuery: string): string {
+        const nativeBinOp = BINARY_OPS_MAP[queryContent.operator];
+        if (!nativeBinOp) {
+            throw new QueryError(`Unknown binary operator '${queryContent.operator}'`);
+        }
+
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        return `(${leftOperandQuery}) ${nativeBinOp} (${(queryContent.rightOperand as object).toString()})`
     }
 
     private buildFunctionCall(queryContent: FunctionQueryContent, innerQuery: string): string {
