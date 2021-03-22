@@ -1,5 +1,5 @@
 import { QueryError } from '../../generic';
-import { TimeInstantQuery, TimeSeriesInstant, TimeSeriesQueryResultType, ValueFilter, isTimeSeriesQuery } from '../query-model';
+import { JoinConfig, TimeInstantQuery, TimeSeriesInstant, TimeSeriesQueryResultType, ValueFilter, isTimeSeriesQuery } from '../query-model';
 
 import { BinaryOperator } from './binary-operator';
 import {
@@ -27,33 +27,33 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         throw new Error('Method not implemented.');
     }
 
-    add(addend: T | TimeInstantQuery<T>): TimeInstantQuery<T> {
-        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Add, addend);
+    add(addend: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Add, addend, joinConfig);
         return this.createTimeInstantQuery(queryContent);
     }
 
-    subtract(subtrahend: T | TimeInstantQuery<T>): TimeInstantQuery<T> {
-        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Subtract, subtrahend);
+    subtract(subtrahend: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Subtract, subtrahend, joinConfig);
         return this.createTimeInstantQuery(queryContent);
     }
 
-    multiplyBy(factor: T | TimeInstantQuery<T>): TimeInstantQuery<T> {
-        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Multiply, factor);
+    multiplyBy(factor: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Multiply, factor, joinConfig);
         return this.createTimeInstantQuery(queryContent);
     }
 
-    divideBy(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T> {
-        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Divide, divisor);
+    divideBy(divisor: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Divide, divisor, joinConfig);
         return this.createTimeInstantQuery(queryContent);
     }
 
-    modulo(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T> {
-        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Modulo, divisor);
+    modulo(divisor: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Modulo, divisor, joinConfig);
         return this.createTimeInstantQuery(queryContent);
     }
 
-    pow(exponent: T | TimeInstantQuery<T>): TimeInstantQuery<T> {
-        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Power, exponent);
+    pow(exponent: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Power, exponent, joinConfig);
         return this.createTimeInstantQuery(queryContent);
     }
 
@@ -110,7 +110,9 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
     }
 
     protected createBinaryOperationQueryContent(
-        operator: BinaryOperator, rightOperand: T | TimeInstantQuery<T>,
+        operator: BinaryOperator,
+        rightOperand: T | TimeInstantQuery<T>,
+        joinConfig?: JoinConfig,
     ): BinaryOperationQueryContent | BinaryOperationWithConstOperandQueryContent {
         if (isTimeSeriesQuery(rightOperand)) {
             if (!(rightOperand instanceof TimeSeriesQueryBase)) {
@@ -125,6 +127,7 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
                 {
                     operator,
                     subqueries: [ rightOperand ],
+                    joinConfig,
                 },
             );
         } else {

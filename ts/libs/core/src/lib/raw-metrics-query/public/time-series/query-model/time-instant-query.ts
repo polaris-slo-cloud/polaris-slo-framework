@@ -1,3 +1,4 @@
+import { JoinConfig } from './join-config';
 import { TimeSeriesInstant } from './time-series';
 import { LabelFilterableQuery, ValueFilterableQuery } from './time-series-query';
 
@@ -19,65 +20,114 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      */
     abs(): TimeInstantQuery<T>;
 
-    /**
-     * Adds a constant value or the resulting values of another `TimeInstantQuery` to this one.
-     *
-     * @note The results of both queries must match.
-     *
-     * @param addend The constant or the query, whose results should be added.
-     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
-     */
-    add(addend: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
     /**
-     * Subtracts a constant value or the resulting values of another `TimeInstantQuery` from this one.
+     * Adds a constant value to resulting values of this query.
      *
-     * @note The results of both queries must match.
-     *
-     * @param subtrahend The constant or the query, whose results should be subtracted.
-     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param addend The constant that should be added.
      */
-    subtract(subtrahend: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+    add(addend: T): TimeInstantQuery<T>;
 
     /**
-     * Multiplies the results of this query by a constant value or the resulting values of another `TimeInstantQuery`.
+     * Adds the resulting values of another `TimeInstantQuery` to this one.
      *
      * @note The results of both queries must match.
      *
-     * @param factor The constant or the query, by whose results this query's results should be multiplied.
+     * @param addend The query, whose results should be added.
      * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param joinConfig (optional) Additional options for configuring the join with the second query.
      */
-    multiplyBy(factor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+    add(addend: TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T>;
 
     /**
-     * Divides the results of this query by a constant value or the resulting values of another `TimeInstantQuery`.
+     * Subtracts a constant value from the resulting values of this query.
      *
-     * @note The results of both queries must match.
-     *
-     * @param divisor The constant or the query, by whose results this query's results should be divided.
-     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param subtrahend The constant that should be subtracted.
      */
-    divideBy(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+    subtract(subtrahend: T): TimeInstantQuery<T>;
 
     /**
-     * Calculates the modulus of the results of this query divided by a constant value or the resulting values of another `TimeInstantQuery`.
+     * Subtracts the resulting values of another `TimeInstantQuery` from this one.
      *
      * @note The results of both queries must match.
      *
-     * @param divisor The constant or the query, by whose results this query's results should be divided to determine the modulus.
+     * @param subtrahend The query, whose results should be subtracted.
      * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param joinConfig (optional) Additional options for configuring the join with the second query.
      */
-    modulo(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+    subtract(subtrahend: TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T>;
 
     /**
-     * Raises the results of this query by a constant value or the resulting values of another `TimeInstantQuery`.
+     * Multiplies the results of this query by a constant value.
+     *
+     * @param factor The constant with which the results of this query should be multiplied.
+     */
+    multiplyBy(factor: T): TimeInstantQuery<T>;
+
+    /**
+     * Multiplies the results of this query by the resulting values of another `TimeInstantQuery`.
      *
      * @note The results of both queries must match.
      *
-     * @param exponent The constant or the query, by whose results this query's results should be raised.
+     * @param factor The query, by whose results this query's results should be multiplied.
      * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param joinConfig (optional) Additional options for configuring the join with the second query.
      */
-    pow(exponent: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
+    multiplyBy(factor: TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T>;
+
+    /**
+     * Divides the results of this query by a constant value.
+     *
+     * @param divisor The constant by which this query's results should be divided.
+     */
+    divideBy(divisor: T): TimeInstantQuery<T>;
+
+    /**
+     * Divides the results of this query by the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param divisor The query, by whose results this query's results should be divided.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param joinConfig (optional) Additional options for configuring the join with the second query.
+     */
+    divideBy(divisor: TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T>;
+
+    /**
+     * Calculates the modulus of the results of this query divided by a constant value.
+     *
+     * @param divisor The constant by which this query's results should be divided to determine the modulus.
+     */
+    modulo(divisor: T): TimeInstantQuery<T>;
+
+    /**
+     * Calculates the modulus of the results of this query divided by the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param divisor The query, by whose results this query's results should be divided to determine the modulus.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param joinConfig (optional) Additional options for configuring the join with the second query.
+     */
+    modulo(divisor: TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T>;
+
+    /**
+     * Raises the results of this query by a constant value.
+     *
+     * @param exponent The constant by which this query's results should be raised.
+     */
+     pow(exponent: T): TimeInstantQuery<T>;
+
+    /**
+     * Raises the results of this query by the resulting values of another `TimeInstantQuery`.
+     *
+     * @note The results of both queries must match.
+     *
+     * @param exponent The query, by whose results this query's results should be raised.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
+     * @param joinConfig (optional) Additional options for configuring the join with the second query.
+     */
+    pow(exponent: TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T>;
 
     /**
      * Returns a query with the union of the results of this query and the `other` query.

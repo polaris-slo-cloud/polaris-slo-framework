@@ -5,6 +5,7 @@
 
 import { IndexByKey } from '../../../../util';
 import { LabelFilter, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
+import { JoinConfig } from '../query-model/join-config';
 import { BinaryOperator } from './binary-operator';
 import { DBFunctionName } from './db-functions';
 
@@ -105,6 +106,8 @@ export interface BinaryOperationQueryContent extends SubqueryQueryContent {
     contentType: QueryContentType.BinaryOperation;
 
     operator: BinaryOperator;
+
+    joinConfig?: JoinConfig;
 
 }
 

@@ -1,3 +1,4 @@
+export * from './join-config';
 export * from './label-filter';
 export * from './sample';
 export * from './time-instant-query'
