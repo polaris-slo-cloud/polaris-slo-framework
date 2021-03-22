@@ -10,8 +10,11 @@ import {
     FunctionQueryContent,
     Index,
     IndexByKey,
+    JoinConfig,
+    JoinGrouping,
     LabelComparisonOperator,
     LabelFilter,
+    LabelJoinOptions,
     NativeQueryBuilderBase,
     QueryContentType,
     QueryError,
@@ -158,7 +161,9 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         }
 
         const rightOperandQuery = (queryContent.subqueryBuilders[0] as PrometheusNativeQueryBuilder).buildPromQlQuery();
-        return `(${leftOperandQuery} ${nativeBinOp} (${rightOperandQuery}))`;
+        const joinConfig = this.serializeJoinConfig(queryContent.joinConfig);
+
+        return `(${leftOperandQuery} ${nativeBinOp} ${joinConfig} (${rightOperandQuery}))`;
     }
 
     private buildBinaryOperationWithConstant(queryContent: BinaryOperationWithConstOperandQueryContent, leftOperandQuery: string): string {
@@ -219,6 +224,47 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
 
     private serializeDuration(duration: Duration): string {
         return Math.ceil(duration.valueMs / 1000).toString() + 's';
+    }
+
+    private serializeJoinConfig(joinConfig: JoinConfig): string {
+        if (!joinConfig) {
+            return '';
+        }
+
+        let labelsConfig = '';
+        if (joinConfig.labels && joinConfig.labels.length > 0) {
+            const labelsStr = joinConfig.labels.join();
+            switch (joinConfig.labelOptions) {
+                case LabelJoinOptions.On:
+                    labelsConfig = `on(${labelsStr})`;
+                    break;
+                case LabelJoinOptions.Ignoring:
+                    labelsConfig = `ignoring(${labelsStr})`;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        let groupingConfig = '';
+        if (joinConfig.grouping) {
+            const additionalLabels = joinConfig.additionalLabelsFromOneSide ? joinConfig.additionalLabelsFromOneSide.join() : '';
+            switch (joinConfig.grouping) {
+                case JoinGrouping.Left:
+                    groupingConfig = `group_left(${additionalLabels})`;
+                    break;
+                case JoinGrouping.Right:
+                    groupingConfig = `grouping_right(${additionalLabels})`;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (labelsConfig || groupingConfig) {
+            return `${labelsConfig} ${groupingConfig}`;
+        }
+        return '';
     }
 
 }
