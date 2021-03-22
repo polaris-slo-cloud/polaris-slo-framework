@@ -4,7 +4,7 @@
  */
 
 import { IndexByKey } from '../../../../util';
-import { LabelFilter, TimeInstantQuery, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
+import { LabelFilter, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
 import { BinaryOperator } from './binary-operator';
 import { DBFunctionName } from './db-functions';
 
@@ -58,7 +58,7 @@ export interface QueryContent {
 /**
  * Provides a unified way for storing subqueries
  */
-export interface SubqueryContainer {
+export interface SubqueryQueryContent extends QueryContent {
 
     /** The subqueries used in the parent query. */
     subqueries: TimeSeriesQuery<any>[];
@@ -100,7 +100,7 @@ export interface FilterOnValueQueryContent extends QueryContent {
 /**
  * Models a binary operation with two queries as operands.
  */
-export interface BinaryOperationQueryContent extends QueryContent, SubqueryContainer {
+export interface BinaryOperationQueryContent extends SubqueryQueryContent {
 
     contentType: QueryContentType.BinaryOperation;
 

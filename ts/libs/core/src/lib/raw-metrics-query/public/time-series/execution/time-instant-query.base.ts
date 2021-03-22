@@ -1,3 +1,4 @@
+import { QueryError } from '../../generic';
 import { TimeInstantQuery, TimeSeriesInstant, TimeSeriesQueryResultType, ValueFilter, isTimeSeriesQuery } from '../query-model';
 
 import { BinaryOperator } from './binary-operator';
@@ -112,6 +113,13 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         operator: BinaryOperator, rightOperand: T | TimeInstantQuery<T>,
     ): BinaryOperationQueryContent | BinaryOperationWithConstOperandQueryContent {
         if (isTimeSeriesQuery(rightOperand)) {
+            if (!(rightOperand instanceof TimeSeriesQueryBase)) {
+                throw new QueryError(
+                    `Right operand of binary query operation '${operator}' must have been created by the same TimeSeriesSource as the left operand.`,
+                    rightOperand,
+                );
+            }
+
             return createQueryContent(
                 QueryContentType.BinaryOperation,
                 {

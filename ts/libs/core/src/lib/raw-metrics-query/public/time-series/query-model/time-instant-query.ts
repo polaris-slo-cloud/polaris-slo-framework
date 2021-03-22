@@ -25,6 +25,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * @note The results of both queries must match.
      *
      * @param addend The constant or the query, whose results should be added.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
      */
     add(addend: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -34,6 +35,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * @note The results of both queries must match.
      *
      * @param subtrahend The constant or the query, whose results should be subtracted.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
      */
     subtract(subtrahend: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -43,6 +45,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * @note The results of both queries must match.
      *
      * @param factor The constant or the query, by whose results this query's results should be multiplied.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
      */
     multiplyBy(factor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -52,6 +55,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * @note The results of both queries must match.
      *
      * @param divisor The constant or the query, by whose results this query's results should be divided.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
      */
     divideBy(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -61,6 +65,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * @note The results of both queries must match.
      *
      * @param divisor The constant or the query, by whose results this query's results should be divided to determine the modulus.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
      */
     modulo(divisor: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -70,6 +75,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * @note The results of both queries must match.
      *
      * @param exponent The constant or the query, by whose results this query's results should be raised.
+     * If this is a query, it must have been created by the same `TimeSeriesSource` as this one.
      */
     pow(exponent: T | TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -77,6 +83,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * Returns a query with the union of the results of this query and the `other` query.
      *
      * @param other The query, whose results should be united with this query's results.
+     * The query must have been created by the same `TimeSeriesSource` as this one.
      */
     union(other: TimeInstantQuery<T>): TimeInstantQuery<T>;
 
@@ -84,6 +91,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * Returns a query with the intersection of the results of this query and the `other` query.
      *
      * @param other The query, whose results should be intersected with this query's results.
+     * The query must have been created by the same `TimeSeriesSource` as this one.
      */
     intersect(other: TimeInstantQuery<T>): TimeInstantQuery<T>
 
@@ -94,6 +102,9 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * ```
      * a.complementOf(b);
      * ```
+     *
+     * @param other The query that results in the set `b`.
+     * The query must have been created by the same `TimeSeriesSource` as this one.
      */
     complementOf(other: TimeInstantQuery<T>): TimeInstantQuery<T>;
 
