@@ -65,7 +65,7 @@ export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends Slo
             if ((queryContent as SubqueryQueryContent).subqueries instanceof Array) {
                 queryContent = this.createSubqueryBuilders(queryContent as SubqueryQueryContent);
             }
-            builder.addQuery(queryPart.queryContent);
+            builder.addQuery(queryContent);
         });
         return builder;
     }
