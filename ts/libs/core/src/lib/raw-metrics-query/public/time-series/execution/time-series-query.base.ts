@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 import { SlocQueryBase, SlocQueryResult } from '../../generic';
 import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
-import { NativeQueryBuilderFactoryFn } from './native-query-builder';
-import { QueryContent } from './query-content';
+import { NativeQueryBuilder, NativeQueryBuilderFactoryFn } from './native-query-builder';
+import { QueryContent, SubqueryQueryContent } from './query-content';
+import { SubqueryBuilderContainer } from './subquery-builder-content';
 
 /**
  * Common superclass for all `TimeSeriesQuery` implementations.
@@ -55,12 +56,44 @@ export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends Slo
     }
 
     /**
+     * Creates a `NativeQueryBuilder` adds the entire `queryChain` to it.
+     */
+    protected prepareNativeQueryBuilder(queryChain: TimeSeriesQueryBase<T>[]): NativeQueryBuilder {
+        const builder = this.queryBuilderFactoryFn();
+        queryChain.forEach(queryPart => {
+            let queryContent = queryPart.queryContent;
+            if ((queryContent as SubqueryQueryContent).subqueries instanceof Array) {
+                queryContent = this.createSubqueryBuilders(queryContent as SubqueryQueryContent);
+            }
+            builder.addQuery(queryContent);
+        });
+        return builder;
+    }
+
+    /**
      * Builds a native query from the provided `queryChain`.
      */
     protected buildNativeQuery(queryChain: TimeSeriesQueryBase<T>[]): TimeSeriesQuery<T> {
-        const builder = this.queryBuilderFactoryFn();
-        queryChain.forEach(queryPart => builder.addQuery(queryPart.queryContent));
+        const builder = this.prepareNativeQueryBuilder(queryChain);
         return builder.buildQuery(this.resultType);
+    }
+
+    /**
+     * Creates a `NativeQueryBuilder` for each subquery in `queryContent`.
+     */
+    protected createSubqueryBuilders<Q extends SubqueryQueryContent>(queryContent: Q): SubqueryBuilderContainer<Q> {
+        const subqueryBuilders = queryContent.subqueries.map(subquery => {
+            // The methods that create the SubqueryQueryContent check that subquery inherits from TimeSeriesQueryBase.
+            const queryChain = (subquery as any as TimeSeriesQueryBase<T>).buildQueryChain();
+
+            // To make sure that we use the same NativeQueryBuilderFactoryFn, we the prepareNativeQueryBuilder() of this object.
+            return this.prepareNativeQueryBuilder(queryChain as TimeSeriesQueryBase<T>[]);
+        });
+
+        return {
+            ...queryContent,
+            subqueryBuilders,
+        };
     }
 
 }

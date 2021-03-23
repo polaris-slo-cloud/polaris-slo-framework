@@ -4,7 +4,9 @@
  */
 
 import { IndexByKey } from '../../../../util';
-import { LabelFilter, TimeRange, ValueFilter } from '../query-model';
+import { LabelFilter, LabelGroupingConfig, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
+import { JoinConfig } from '../query-model/join-config';
+import { BinaryOperator } from './binary-operator';
 import { DBFunctionName } from './db-functions';
 
 // eslint-disable-next-line no-shadow
@@ -18,6 +20,12 @@ export enum QueryContentType {
 
     /** A query that applies a filter on the value(s) of the `TimeSeries`. */
     FilterOnValue = 'filterOnValueQuery',
+
+    /** A query that applies a binary operator with two queries as operands. */
+    BinaryOperation = 'binaryOperationQuery',
+
+    /** A query that applies a binary operator with right operand being a constant. */
+    BinaryOperationWithConstant = 'binaryOperationWithConstOperandQuery',
 
     /** Changes the resolution of the current range query. */
     ChangeResolution = 'changeResolutionQuery',
@@ -45,6 +53,16 @@ export interface QueryContent {
 
     /** The type of query content. */
     contentType: QueryContentType;
+
+}
+
+/**
+ * Provides a unified way for storing subqueries
+ */
+export interface SubqueryQueryContent extends QueryContent {
+
+    /** The subqueries used in the parent query. */
+    subqueries: TimeSeriesQuery<any>[];
 
 }
 
@@ -80,6 +98,32 @@ export interface FilterOnValueQueryContent extends QueryContent {
 
 }
 
+/**
+ * Models a binary operation with two queries as operands.
+ */
+export interface BinaryOperationQueryContent extends SubqueryQueryContent {
+
+    contentType: QueryContentType.BinaryOperation;
+
+    operator: BinaryOperator;
+
+    joinConfig?: JoinConfig;
+
+}
+
+/**
+ * Models a binary operation with a constant as the right operand.
+ */
+export interface BinaryOperationWithConstOperandQueryContent extends QueryContent {
+
+    contentType: QueryContentType.BinaryOperation;
+
+    operator: BinaryOperator;
+
+    rightOperand: any;
+
+}
+
 export interface ChangeResolutionQueryContent extends QueryContent {
 
     contentType: QueryContentType.ChangeResolution;
@@ -101,14 +145,28 @@ export interface FunctionQueryContent extends QueryContent {
 
 export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: extend
 
+/**
+ * Describes a query that performs an aggregation.
+ */
 export interface AggregateByGroupQueryContent extends QueryContent {
 
     contentType: QueryContentType.AggregateByGroup,
 
+    /**
+     * The type of aggregation.
+     */
     aggregationType: AggregationType;
 
-    groupByLabels?: string[];
+    /**
+     * The configuration used for grouping.
+     *
+     * If no config is specified, grouping is performed by the set of all labels.
+     */
+    groupingConfig?: LabelGroupingConfig;
 
+    /**
+     * Additional parameters for the aggregation function.
+     */
     params?: IndexByKey<string>;
 
 }
@@ -121,6 +179,8 @@ export interface QueryContentTypeMapping {
     selectQuery: SelectQueryContent;
     filterOnLabelQuery: FilterOnLabelQueryContent;
     filterOnValueQuery: FilterOnValueQueryContent;
+    binaryOperationQuery: BinaryOperationQueryContent;
+    binaryOperationWithConstOperandQuery: BinaryOperationWithConstOperandQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
     functionQuery: FunctionQueryContent
     aggregateByGroupQuery: AggregateByGroupQueryContent;

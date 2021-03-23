@@ -1,5 +1,21 @@
-import { TimeInstantQuery, TimeSeriesInstant, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
-import { FilterOnValueQueryContent, QueryContentType, createQueryContent } from './query-content';
+import { QueryError } from '../../generic';
+import {
+    JoinConfig,
+    LabelGroupingConfig,
+    TimeInstantQuery,
+    TimeSeriesInstant,
+    TimeSeriesQueryResultType,
+    ValueFilter,
+    isTimeSeriesQuery,
+} from '../query-model';
+import { BinaryOperator } from './binary-operator';
+import {
+    BinaryOperationQueryContent,
+    BinaryOperationWithConstOperandQueryContent,
+    FilterOnValueQueryContent,
+    QueryContentType,
+    createQueryContent,
+} from './query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**
@@ -18,16 +34,75 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         throw new Error('Method not implemented.');
     }
 
-    add(addend: TimeInstantQuery<T>): TimeInstantQuery<T> {
-        throw new Error('Method not implemented.');
+    add(addend: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Add, addend, joinConfig);
+        return this.createTimeInstantQuery(queryContent);
     }
 
-    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number> {
+    subtract(subtrahend: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Subtract, subtrahend, joinConfig);
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    multiplyBy(factor: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Multiply, factor, joinConfig);
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    divideBy(divisor: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Divide, divisor, joinConfig);
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    modulo(divisor: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Modulo, divisor, joinConfig);
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    pow(exponent: T | TimeInstantQuery<T>, joinConfig?: JoinConfig): TimeInstantQuery<T> {
+        const queryContent = this.createBinaryOperationQueryContent(BinaryOperator.Power, exponent, joinConfig);
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    union(other: TimeInstantQuery<T>): TimeInstantQuery<T> {
+        const queryContent = createQueryContent(
+            QueryContentType.BinaryOperation,
+            {
+                operator: BinaryOperator.Union,
+                subqueries: [ other ],
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    intersect(other: TimeInstantQuery<T>): TimeInstantQuery<T> {
+        const queryContent = createQueryContent(
+            QueryContentType.BinaryOperation,
+            {
+                operator: BinaryOperator.Intersection,
+                subqueries: [ other ],
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    complementOf(other: TimeInstantQuery<T>): TimeInstantQuery<T> {
+        const queryContent = createQueryContent(
+            QueryContentType.BinaryOperation,
+            {
+                operator: BinaryOperator.Complement,
+                subqueries: [ other ],
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    sumByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number> {
         const queryContent = createQueryContent(
             QueryContentType.AggregateByGroup,
             {
                 aggregationType: 'sum',
-                groupByLabels: groupingLabels && groupingLabels.length > 0 ? groupingLabels : undefined,
+                groupingConfig,
             },
         );
         return this.createTimeInstantQuery(queryContent);
@@ -39,6 +114,38 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
             filter: predicate,
         };
         return this.createTimeInstantQuery(queryContent);
+    }
+
+    protected createBinaryOperationQueryContent(
+        operator: BinaryOperator,
+        rightOperand: T | TimeInstantQuery<T>,
+        joinConfig?: JoinConfig,
+    ): BinaryOperationQueryContent | BinaryOperationWithConstOperandQueryContent {
+        if (isTimeSeriesQuery(rightOperand)) {
+            if (!(rightOperand instanceof TimeSeriesQueryBase)) {
+                throw new QueryError(
+                    `Right operand of binary query operation '${operator}' must have been created by the same TimeSeriesSource as the left operand.`,
+                    rightOperand,
+                );
+            }
+
+            return createQueryContent(
+                QueryContentType.BinaryOperation,
+                {
+                    operator,
+                    subqueries: [ rightOperand ],
+                    joinConfig,
+                },
+            );
+        } else {
+            return createQueryContent(
+                QueryContentType.BinaryOperationWithConstant,
+                {
+                    operator,
+                    rightOperand,
+                },
+            );
+        }
     }
 
 }

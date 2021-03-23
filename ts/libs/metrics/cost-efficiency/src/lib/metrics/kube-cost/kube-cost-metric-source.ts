@@ -1,20 +1,20 @@
 import { TotalCost } from '@sloc/common-mappings';
-import { LabelFilters, MetricsSource, PolishedMetricParams, PolishedMetricSourceBase, Sample, SlocRuntime, TimeSeriesInstant } from '@sloc/core';
+import {
+    Join,
+    LabelFilters,
+    LabelGrouping,
+    MetricsSource,
+    PolishedMetricParams,
+    PolishedMetricSourceBase,
+    Sample,
+    SlocRuntime,
+    TimeSeriesInstant,
+} from '@sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-function getHourlyGbMemoryCost(): number {
-    return 0.1;
-}
-
-function getHourlyCpuCost(): number {
-    return 0.2;
-}
-
 /**
  * Provides the total cost of a `SloTarget` using KubeCost.
- *
- * ToDo: implement the KubeCost part (currently the hourly costs are mocked).
  */
 export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
 
@@ -36,30 +36,34 @@ export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
     }
 
     private async getCost(): Promise<TotalCost> {
-        const memoryUsageBytesQuery = this.metricsSource.getTimeSeriesSource()
+        const memoryHourlyCostQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('node', 'ram_hourly_cost');
+        const cpuHourlyCostQuery = this.metricsSource.getTimeSeriesSource()
+            .select<number>('node', 'cpu_hourly_cost');
+
+        const memoryCostQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('container', 'memory_working_set_bytes')
             .filterOnLabel(LabelFilters.equal('namespace', this.params.namespace))
-            .sumByGroup('pod');
+            .divideBy(1024)
+            .divideBy(1024)
+            .divideBy(1024)
+            .multiplyBy(memoryHourlyCostQuery, Join.onLabels('node').groupLeft())
+            .sumByGroup(LabelGrouping.by('pod'));
 
-        const cpuUsageSecondsSumQuery = this.metricsSource.getTimeSeriesSource()
+        const cpuCostQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('node', 'namespace_pod_container:container_cpu_usage_seconds_total:sum_rate')
             .filterOnLabel(LabelFilters.equal('namespace', this.params.namespace))
-            .sumByGroup('pod');
+            .multiplyBy(cpuHourlyCostQuery, Join.onLabels('node').groupLeft())
+            .sumByGroup(LabelGrouping.by('pod'));
 
-        const [ memoryUsageBytesResult, cpuUsageSecondsSumResult ] = await Promise.all([
-            memoryUsageBytesQuery.execute(),
-            cpuUsageSecondsSumQuery.execute(),
-        ]);
+        const totalCostQuery = memoryCostQuery.add(cpuCostQuery)
+            .sumByGroup();
 
-        const totalMemoryUsageGb = this.sumResults(memoryUsageBytesResult.results) / 1024 / 1024 / 1024;
-        const totalCpu = this.sumResults(cpuUsageSecondsSumResult.results);
-
-        const memoryCost = totalMemoryUsageGb * getHourlyGbMemoryCost();
-        const cpuCost = totalCpu * getHourlyCpuCost();
+        const totalCost = await totalCostQuery.execute();
 
         return {
-            currentCostPerHour: memoryCost + cpuCost,
-            accumulatedCostInPeriod: memoryCost + cpuCost,
+            currentCostPerHour: totalCost.results[0].samples[0].value,
+            accumulatedCostInPeriod: totalCost.results[0].samples[0].value,
         };
     }
 

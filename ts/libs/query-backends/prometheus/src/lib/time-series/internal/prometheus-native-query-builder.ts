@@ -1,17 +1,24 @@
 import {
     AggregateByGroupQueryContent,
     AggregationType,
+    BinaryOperationQueryContent,
+    BinaryOperationWithConstOperandQueryContent,
+    BinaryOperator,
     DBFunctionName,
     Duration,
     FilterOnLabelQueryContent,
     FunctionQueryContent,
     Index,
     IndexByKey,
+    JoinConfig,
+    JoinGrouping,
     LabelComparisonOperator,
     LabelFilter,
+    LabelGroupingOrJoinType,
     NativeQueryBuilderBase,
     QueryContentType,
     QueryError,
+    SubqueryBuilderContainer,
     TimeRange,
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
@@ -28,6 +35,21 @@ const AGGREGATIONS_MAP: Index<AggregationType, string> = {
     max: 'max',
     avg: 'avg',
 };
+
+/**
+ * Maps the `BinaryOperator` values to the operator strings of PromQL.
+ */
+const BINARY_OPS_MAP: Index<BinaryOperator, string> = {
+    [BinaryOperator.Add]: '+',
+    [BinaryOperator.Subtract]: '-',
+    [BinaryOperator.Multiply]: '*',
+    [BinaryOperator.Divide]: '/',
+    [BinaryOperator.Modulo]: '%',
+    [BinaryOperator.Power]: '^',
+    [BinaryOperator.Union]: 'or',
+    [BinaryOperator.Intersection]: 'and',
+    [BinaryOperator.Complement]: 'unless',
+}
 
 /**
  * Maps the AggregationType values to the names of native PromQL aggregation functions.
@@ -74,6 +96,12 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
                 case QueryContentType.AggregateByGroup:
                     query = this.buildAggregationByGroup(segment as AggregateByGroupQueryContent, query);
                     break;
+                case QueryContentType.BinaryOperation:
+                    query = this.buildBinaryOperation(segment as SubqueryBuilderContainer<BinaryOperationQueryContent>, query);
+                    break;
+                case QueryContentType.BinaryOperationWithConstant:
+                    query = this.buildBinaryOperationWithConstant(segment as BinaryOperationWithConstOperandQueryContent, query);
+                    break;
                 case QueryContentType.Function:
                     query = this.buildFunctionCall(segment as FunctionQueryContent, query);
                     break;
@@ -112,8 +140,16 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         }
 
         let grouping: string;
-        if (queryContent.groupByLabels) {
-            grouping = `by (${queryContent.groupByLabels.join()})`
+        if (queryContent.groupingConfig) {
+            const labelsStr = queryContent.groupingConfig.labels ? queryContent.groupingConfig.labels.join() : '';
+            switch (queryContent.groupingConfig.labelUsageType) {
+                case LabelGroupingOrJoinType.ByOrOn:
+                default:
+                    grouping = `by (${labelsStr})`;
+                    break;
+                case LabelGroupingOrJoinType.Without:
+                    grouping = `without (${labelsStr})`;
+            }
         } else {
             grouping = '';
         }
@@ -121,6 +157,31 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         const params = this.serializeFunctionParams(queryContent.params);
 
         return `${nativeAggregationFn} ${grouping}(${params}${innerQuery})`;
+    }
+
+    private buildBinaryOperation(queryContent: SubqueryBuilderContainer<BinaryOperationQueryContent>, leftOperandQuery: string): string {
+        const nativeBinOp = BINARY_OPS_MAP[queryContent.operator];
+        if (!nativeBinOp) {
+            throw new QueryError(`Unknown binary operator '${queryContent.operator}'`);
+        }
+        if (queryContent.subqueryBuilders.length !== 1) {
+            throw new QueryError('A binary operation must have exactly one query subquery as right operand.', queryContent);
+        }
+
+        const rightOperandQuery = (queryContent.subqueryBuilders[0] as PrometheusNativeQueryBuilder).buildPromQlQuery();
+        const joinConfig = this.serializeJoinConfig(queryContent.joinConfig);
+
+        return `(${leftOperandQuery} ${nativeBinOp} ${joinConfig} (${rightOperandQuery}))`;
+    }
+
+    private buildBinaryOperationWithConstant(queryContent: BinaryOperationWithConstOperandQueryContent, leftOperandQuery: string): string {
+        const nativeBinOp = BINARY_OPS_MAP[queryContent.operator];
+        if (!nativeBinOp) {
+            throw new QueryError(`Unknown binary operator '${queryContent.operator}'`);
+        }
+
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        return `(${leftOperandQuery}) ${nativeBinOp} (${(queryContent.rightOperand as object).toString()})`
     }
 
     private buildFunctionCall(queryContent: FunctionQueryContent, innerQuery: string): string {
@@ -171,6 +232,46 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
 
     private serializeDuration(duration: Duration): string {
         return Math.ceil(duration.valueMs / 1000).toString() + 's';
+    }
+
+    private serializeJoinConfig(joinConfig: JoinConfig): string {
+        if (!joinConfig) {
+            return '';
+        }
+
+        let labelsConfig = '';
+        if (joinConfig.labels && joinConfig.labels.length > 0) {
+            const labelsStr = joinConfig.labels.join();
+            switch (joinConfig.labelUsageType) {
+                case LabelGroupingOrJoinType.ByOrOn:
+                default:
+                    labelsConfig = `on(${labelsStr})`;
+                    break;
+                case LabelGroupingOrJoinType.Without:
+                    labelsConfig = `ignoring(${labelsStr})`;
+                    break;
+            }
+        }
+
+        let groupingConfig = '';
+        if (joinConfig.grouping) {
+            const additionalLabels = joinConfig.additionalLabelsFromOneSide ? joinConfig.additionalLabelsFromOneSide.join() : '';
+            switch (joinConfig.grouping) {
+                case JoinGrouping.Left:
+                    groupingConfig = `group_left(${additionalLabels})`;
+                    break;
+                case JoinGrouping.Right:
+                    groupingConfig = `grouping_right(${additionalLabels})`;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (labelsConfig || groupingConfig) {
+            return `${labelsConfig} ${groupingConfig}`;
+        }
+        return '';
     }
 
 }

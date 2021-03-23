@@ -1,5 +1,5 @@
 import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@sloc/common-mappings';
-import { Duration, LabelFilters, MetricsSource, PolishedMetricSourceBase, Sample, SlocRuntime, TimeRange, TimeSeriesInstant } from '@sloc/core';
+import { Duration, LabelFilters, LabelGrouping, MetricsSource, PolishedMetricSourceBase, Sample, SlocRuntime, TimeRange, TimeSeriesInstant } from '@sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
@@ -60,13 +60,13 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
             .filterOnLabel(LabelFilters.regex('ingress', `${this.params.sloTarget.name}.*`))
             .filterOnLabel(LabelFilters.equal('le', this.targetThresholdSecStr))
             .rate()
-            .sumByGroup('path');
+            .sumByGroup(LabelGrouping.by('path'));
 
         const reqCountQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('nginx', 'ingress_controller_request_duration_seconds_count', TimeRange.fromDuration(Duration.fromMinutes(1)))
             .filterOnLabel(LabelFilters.regex('ingress', `${this.params.sloTarget.name}.*`))
             .rate()
-            .sumByGroup('path');
+            .sumByGroup(LabelGrouping.by('path'));
 
         const [ fasterThanBucketResult, reqCountResult ] = await Promise.all([ fasterThanBucketQuery.execute(), reqCountQuery.execute() ]);
 
