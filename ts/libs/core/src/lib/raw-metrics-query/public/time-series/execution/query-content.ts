@@ -4,7 +4,7 @@
  */
 
 import { IndexByKey } from '../../../../util';
-import { LabelFilter, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
+import { LabelFilter, LabelGroupingConfig, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
 import { JoinConfig } from '../query-model/join-config';
 import { BinaryOperator } from './binary-operator';
 import { DBFunctionName } from './db-functions';
@@ -145,14 +145,28 @@ export interface FunctionQueryContent extends QueryContent {
 
 export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: extend
 
+/**
+ * Describes a query that performs an aggregation.
+ */
 export interface AggregateByGroupQueryContent extends QueryContent {
 
     contentType: QueryContentType.AggregateByGroup,
 
+    /**
+     * The type of aggregation.
+     */
     aggregationType: AggregationType;
 
-    groupByLabels?: string[];
+    /**
+     * The configuration used for grouping.
+     *
+     * If no config is specified, grouping is performed by the set of all labels.
+     */
+    groupingConfig?: LabelGroupingConfig;
 
+    /**
+     * Additional parameters for the aggregation function.
+     */
     params?: IndexByKey<string>;
 
 }

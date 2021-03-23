@@ -1,36 +1,17 @@
+import { LabelGroupingConfig, LabelGroupingOrJoinType } from './label-grouping-config';
 
 /**
  * Describes an extended join configuration.
  *
  * Use the static methods of the `Join` class to create objects that conform to this interface.
  */
-export interface JoinConfig {
-
-    /** The labels to be used for joining. */
-    labels?: string[];
-
-    /** Determines whether to join on or ignore the specified labels. */
-    labelOptions?: LabelJoinOptions;
+export interface JoinConfig extends LabelGroupingConfig {
 
     /** Optional configuration for one-to-many and many-to-one joins. */
     grouping?: JoinGrouping;
 
     /** Optional list of additional labels from the one side on one-to-many and many-to-one joins. */
     additionalLabelsFromOneSide?: string[];
-
-}
-
-/**
- * Extended options for configuring joins on labels.
- */
-// eslint-disable-next-line no-shadow
-export enum LabelJoinOptions {
-
-    /** The join occurs only on the specified labels. */
-    On = 'on',
-
-    /** The join occurs on all labels, except the specified (i.e., ignored) ones. */
-    Ignoring = 'ignoring',
 
 }
 
@@ -53,8 +34,8 @@ export enum JoinGrouping {
  */
 export class Join implements JoinConfig {
 
-    labels: string[];
-    labelOptions: LabelJoinOptions;
+    labelUsageType: LabelGroupingOrJoinType;
+    labels?: string[];
 
     /**
      * Creates a new `Join` configuration where the join will occur on the specified `labels`.
@@ -64,7 +45,7 @@ export class Join implements JoinConfig {
      * @param labels The labels to join on.
      */
     static onLabels(...labels: string[]): Join {
-        return new Join(labels, LabelJoinOptions.On);
+        return new Join(labels, LabelGroupingOrJoinType.ByOrOn);
     }
 
     /**
@@ -75,7 +56,7 @@ export class Join implements JoinConfig {
      * @param labels The labels to exclude from the join operation.
      */
     static ignoringLabels(...labels: string[]): Join {
-        return new Join(labels, LabelJoinOptions.Ignoring);
+        return new Join(labels, LabelGroupingOrJoinType.Without);
     }
 
     /**
@@ -85,6 +66,7 @@ export class Join implements JoinConfig {
      */
     static groupLeft(...additionalLabelsFromRightSide: string[]): JoinConfig {
         return {
+            labelUsageType: LabelGroupingOrJoinType.ByOrOn,
             grouping: JoinGrouping.Left,
             additionalLabelsFromOneSide: additionalLabelsFromRightSide,
         };
@@ -97,14 +79,15 @@ export class Join implements JoinConfig {
      */
     static groupRight(...additionalLabelsFromLeftSide: string[]): JoinConfig {
         return {
+            labelUsageType: LabelGroupingOrJoinType.ByOrOn,
             grouping: JoinGrouping.Right,
             additionalLabelsFromOneSide: additionalLabelsFromLeftSide,
         };
     }
 
-    protected constructor(labels: string[], labelOptions: LabelJoinOptions) {
+    protected constructor(labels: string[], labelUsageType: LabelGroupingOrJoinType) {
         this.labels = labels;
-        this.labelOptions = labelOptions;
+        this.labelUsageType = labelUsageType;
     }
 
     /**
@@ -115,7 +98,7 @@ export class Join implements JoinConfig {
     groupLeft(...additionalLabelsFromRightSide: string[]): JoinConfig {
         return {
             labels: this.labels,
-            labelOptions: this.labelOptions,
+            labelUsageType: this.labelUsageType,
             grouping: JoinGrouping.Left,
             additionalLabelsFromOneSide: additionalLabelsFromRightSide,
         };
@@ -129,7 +112,7 @@ export class Join implements JoinConfig {
      groupRight(...additionalLabelsFromLeftSide: string[]): JoinConfig {
         return {
             labels: this.labels,
-            labelOptions: this.labelOptions,
+            labelUsageType: this.labelUsageType,
             grouping: JoinGrouping.Right,
             additionalLabelsFromOneSide: additionalLabelsFromLeftSide,
         };

@@ -14,7 +14,7 @@ import {
     JoinGrouping,
     LabelComparisonOperator,
     LabelFilter,
-    LabelJoinOptions,
+    LabelGroupingOrJoinType,
     NativeQueryBuilderBase,
     QueryContentType,
     QueryError,
@@ -140,8 +140,16 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         }
 
         let grouping: string;
-        if (queryContent.groupByLabels) {
-            grouping = `by (${queryContent.groupByLabels.join()})`
+        if (queryContent.groupingConfig) {
+            const labelsStr = queryContent.groupingConfig.labels ? queryContent.groupingConfig.labels.join() : '';
+            switch (queryContent.groupingConfig.labelUsageType) {
+                case LabelGroupingOrJoinType.ByOrOn:
+                default:
+                    grouping = `by (${labelsStr})`;
+                    break;
+                case LabelGroupingOrJoinType.Without:
+                    grouping = `without (${labelsStr})`;
+            }
         } else {
             grouping = '';
         }
@@ -234,14 +242,13 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         let labelsConfig = '';
         if (joinConfig.labels && joinConfig.labels.length > 0) {
             const labelsStr = joinConfig.labels.join();
-            switch (joinConfig.labelOptions) {
-                case LabelJoinOptions.On:
+            switch (joinConfig.labelUsageType) {
+                case LabelGroupingOrJoinType.ByOrOn:
+                default:
                     labelsConfig = `on(${labelsStr})`;
                     break;
-                case LabelJoinOptions.Ignoring:
+                case LabelGroupingOrJoinType.Without:
                     labelsConfig = `ignoring(${labelsStr})`;
-                    break;
-                default:
                     break;
             }
         }

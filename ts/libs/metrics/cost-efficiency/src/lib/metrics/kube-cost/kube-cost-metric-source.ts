@@ -1,5 +1,5 @@
 import { TotalCost } from '@sloc/common-mappings';
-import { LabelFilters, MetricsSource, PolishedMetricParams, PolishedMetricSourceBase, Sample, SlocRuntime, TimeSeriesInstant } from '@sloc/core';
+import { LabelFilters, LabelGrouping, MetricsSource, PolishedMetricParams, PolishedMetricSourceBase, Sample, SlocRuntime, TimeSeriesInstant } from '@sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -39,12 +39,12 @@ export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
         const memoryUsageBytesQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('container', 'memory_working_set_bytes')
             .filterOnLabel(LabelFilters.equal('namespace', this.params.namespace))
-            .sumByGroup('pod');
+            .sumByGroup(LabelGrouping.by('pod'));
 
         const cpuUsageSecondsSumQuery = this.metricsSource.getTimeSeriesSource()
             .select<number>('node', 'namespace_pod_container:container_cpu_usage_seconds_total:sum_rate')
             .filterOnLabel(LabelFilters.equal('namespace', this.params.namespace))
-            .sumByGroup('pod');
+            .sumByGroup(LabelGrouping.by('pod'));
 
         const [ memoryUsageBytesResult, cpuUsageSecondsSumResult ] = await Promise.all([
             memoryUsageBytesQuery.execute(),

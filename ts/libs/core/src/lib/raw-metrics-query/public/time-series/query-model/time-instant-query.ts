@@ -1,4 +1,5 @@
 import { JoinConfig } from './join-config';
+import { LabelGroupingConfig } from './label-grouping-config';
 import { TimeSeriesInstant } from './time-series';
 import { LabelFilterableQuery, ValueFilterableQuery } from './time-series-query';
 
@@ -159,13 +160,14 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
     complementOf(other: TimeInstantQuery<T>): TimeInstantQuery<T>;
 
     /**
-     * Groups the `TimeSeries` by the specified labels and then computes the
+     * Groups the `TimeSeries` using the specified `LabelGroupingConfig` and then computes the
      * sum within each group.
      *
-     * @param groupingLabels The label by which to group the `TimeSeries`
+     * @param groupingConfig The configuration used for grouping. Use the static methods of the `LabelGrouping` class
+     * to create this parameter. If no config is specified, grouping is performed by the set of all labels.
      * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
      */
-    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number>;
+    sumByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
 
 }
 

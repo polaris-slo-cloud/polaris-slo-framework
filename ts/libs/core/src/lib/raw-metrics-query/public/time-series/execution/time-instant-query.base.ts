@@ -1,6 +1,13 @@
 import { QueryError } from '../../generic';
-import { JoinConfig, TimeInstantQuery, TimeSeriesInstant, TimeSeriesQueryResultType, ValueFilter, isTimeSeriesQuery } from '../query-model';
-
+import {
+    JoinConfig,
+    LabelGroupingConfig,
+    TimeInstantQuery,
+    TimeSeriesInstant,
+    TimeSeriesQueryResultType,
+    ValueFilter,
+    isTimeSeriesQuery,
+} from '../query-model';
 import { BinaryOperator } from './binary-operator';
 import {
     BinaryOperationQueryContent,
@@ -90,12 +97,12 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         return this.createTimeInstantQuery(queryContent);
     }
 
-    sumByGroup(...groupingLabels: string[]): TimeInstantQuery<number> {
+    sumByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number> {
         const queryContent = createQueryContent(
             QueryContentType.AggregateByGroup,
             {
                 aggregationType: 'sum',
-                groupByLabels: groupingLabels && groupingLabels.length > 0 ? groupingLabels : undefined,
+                groupingConfig,
             },
         );
         return this.createTimeInstantQuery(queryContent);
