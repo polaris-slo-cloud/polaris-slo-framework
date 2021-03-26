@@ -1,4 +1,4 @@
-import { PolishedMetricSourceFactory, PolishedMetricType } from '../../../polished-metrics';
+import { PolishedMetricSourceFactory, PolishedMetricType } from '../../../composed-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
 

@@ -1,7 +1,7 @@
 import { SlocRuntime } from '../../../runtime';
-import { PolishedMetricParams } from './polished-metric-params';
-import { PolishedMetricSource } from './polished-metric-source';
-import { PolishedMetricType } from './polished-metric-type';
+import { PolishedMetricParams } from './composed-metric-params';
+import { PolishedMetricSource } from './composed-metric-source';
+import { PolishedMetricType } from './composed-metric-type';
 
 /**
  * A `PolishedMetricSourceFactory` is used to create a `PolishedMetricSource` instance that is scoped

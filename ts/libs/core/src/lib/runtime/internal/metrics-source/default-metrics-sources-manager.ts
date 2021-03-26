@@ -1,4 +1,4 @@
-import { PolishedMetricParams, PolishedMetricSource, PolishedMetricSourceFactory, PolishedMetricType } from '../../../polished-metrics';
+import { PolishedMetricParams, PolishedMetricSource, PolishedMetricSourceFactory, PolishedMetricType } from '../../../composed-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
 import { SlocRuntime } from '../../public';
 import { MetricsSourcesManager } from '../../public/metrics-source';

@@ -2,7 +2,7 @@ import { Observable, interval } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 import { Sample } from '../../../raw-metrics-query/public';
 import { SlocRuntime } from '../../../runtime';
-import { PolishedMetricSource } from './polished-metric-source';
+import { PolishedMetricSource } from './composed-metric-source';
 
 const POLLING_INTERVAL_MSEC = 10000;
 

@@ -1,5 +1,4 @@
-import { PolishedMetricParams, PolishedMetricSource } from '../../../polished-metrics';
-import { PolishedMetricType } from '../../../polished-metrics/public/common/polished-metric-type';
+import { PolishedMetricParams, PolishedMetricSource, PolishedMetricType } from '../../../composed-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 
 /**

@@ -1,5 +1,5 @@
 import { TypeFn } from '../../../util';
-import { PolishedMetricParams } from './polished-metric-params';
+import { PolishedMetricParams } from './composed-metric-params';
 
 /**
  * Describes a type of polished metric.
