@@ -1,4 +1,4 @@
-import { PolishedMetricParams, PolishedMetricSource, PolishedMetricType } from '../../../composed-metrics';
+import { ComposedMetricParams, ComposedMetricSource, ComposedMetricType } from '../../../composed-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 
 /**
@@ -16,18 +16,18 @@ export interface MetricsSource {
     getTimeSeriesSource(name?: string): TimeSeriesSource;
 
     /**
-     * Gets a `PolishedMetricSource` for the specified `metricType` and `sloTarget`, optionally configured with `params`.
+     * Gets a `ComposedMetricSource` for the specified `metricType` and `sloTarget`, optionally configured with `params`.
      *
      * This will return the default source for the `metricType`, unless `metricSourceName` is specified.
      *
-     * @param metricType The type of polished metric that the source should supply.
-     * @param params Parameters to configure the polished metric source.
-     * @param metricSourceName (optional) The full name of the `PolishedMetricSource` that should be obtained
+     * @param metricType The type of composed metric that the source should supply.
+     * @param params Parameters to configure the composed metric source.
+     * @param metricSourceName (optional) The full name of the `ComposedMetricSource` that should be obtained
      */
-    getPolishedMetricSource<V, P extends PolishedMetricParams>(
-        metricType: PolishedMetricType<V, P>,
+    getComposedMetricSource<V, P extends ComposedMetricParams>(
+        metricType: ComposedMetricType<V, P>,
         params: P,
         metricSourceName?: string,
-    ): PolishedMetricSource<V>;
+    ): ComposedMetricSource<V>;
 
 }

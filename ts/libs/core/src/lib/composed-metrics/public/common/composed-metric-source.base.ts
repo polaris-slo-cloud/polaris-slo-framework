@@ -2,16 +2,16 @@ import { Observable, interval } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 import { Sample } from '../../../raw-metrics-query/public';
 import { SlocRuntime } from '../../../runtime';
-import { PolishedMetricSource } from './composed-metric-source';
+import { ComposedMetricSource } from './composed-metric-source';
 
 const POLLING_INTERVAL_MSEC = 10000;
 
 /**
- * `PolishedMetricSourceBase` may be used as a superclass for `PolishedMetricSource` implementations.
+ * `ComposedMetricSourceBase` may be used as a superclass for `ComposedMetricSource` implementations.
  *
- * It implements common operations in a resusable manner.
+ * It implements common operations in a reusable manner.
  */
-export abstract class PolishedMetricSourceBase<V> implements PolishedMetricSource<V> {
+export abstract class ComposedMetricSourceBase<V> implements ComposedMetricSource<V> {
 
     constructor(protected slocRuntime: SlocRuntime) {}
 

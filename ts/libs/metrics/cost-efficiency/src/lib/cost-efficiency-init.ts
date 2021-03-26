@@ -7,6 +7,6 @@ import { KubeCostMetricSourceFactory, RestApiCostEfficiencyMetricSourceFactory }
  * @param runtime The `SlocRuntime` instance.
  */
 export function initCostEfficiencyMetrics(runtime: SlocRuntime): void {
-    runtime.metricsSourcesManager.addPolishedMetricSourceFactory(new KubeCostMetricSourceFactory());
-    runtime.metricsSourcesManager.addPolishedMetricSourceFactory(new RestApiCostEfficiencyMetricSourceFactory());
+    runtime.metricsSourcesManager.addComposedMetricSourceFactory(new KubeCostMetricSourceFactory());
+    runtime.metricsSourcesManager.addComposedMetricSourceFactory(new RestApiCostEfficiencyMetricSourceFactory());
 }

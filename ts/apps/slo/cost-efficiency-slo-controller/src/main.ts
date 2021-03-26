@@ -21,7 +21,7 @@ initPrometheusQueryBackend(slocRuntime, { host: 'localhost', port: 30900 }, true
 // Initialize the used SLOC mapping libraries
 initCommonMappingsLib(slocRuntime);
 
-// Initialize the polished metrics
+// Initialize the composed metrics
 initCostEfficiencyMetrics(slocRuntime);
 
 // Create an SloControlLoop and register the factories for the ServiceLevelObjectives it will handle

@@ -2,9 +2,9 @@ import { SloTarget } from '../../../model';
 
 /**
  * Base interface for the parameter object that can is used for configuring a
- * `PolishedMetricSource` when obtaining it.
+ * `ComposedMetricSource` when obtaining it.
  */
-export interface PolishedMetricParams {
+export interface ComposedMetricParams {
 
     /**
      * The target workload, for which the metric should be retrieved.

@@ -1,34 +1,34 @@
 import { SlocRuntime } from '../../../runtime';
-import { PolishedMetricParams } from './composed-metric-params';
-import { PolishedMetricSource } from './composed-metric-source';
-import { PolishedMetricType } from './composed-metric-type';
+import { ComposedMetricParams } from './composed-metric-params';
+import { ComposedMetricSource } from './composed-metric-source';
+import { ComposedMetricType } from './composed-metric-type';
 
 /**
- * A `PolishedMetricSourceFactory` is used to create a `PolishedMetricSource` instance that is scoped
+ * A `ComposedMetricSourceFactory` is used to create a `ComposedMetricSource` instance that is scoped
  * to a particular `SloTarget`.
  *
- * @param V The TypeScript type that represents the values of the polished metric.
- * @param P Optional parameters that can be used to configure the `PolishedMetricSource`.
+ * @param V The TypeScript type that represents the values of the composed metric.
+ * @param P Optional parameters that can be used to configure the `ComposedMetricSource`.
  */
-export interface PolishedMetricSourceFactory<M extends PolishedMetricType<V, P>, V = any, P extends PolishedMetricParams = PolishedMetricParams> {
+export interface ComposedMetricSourceFactory<M extends ComposedMetricType<V, P>, V = any, P extends ComposedMetricParams = ComposedMetricParams> {
 
     /**
-     * The type of polished metric that the sources produced by this factory supply.
+     * The type of composed metric that the sources produced by this factory supply.
      */
     readonly metricType: M;
 
     /**
-     * The full name of the `PolishedMetricSource` that this factory creates.
+     * The full name of the `ComposedMetricSource` that this factory creates.
      */
     readonly metricSourceName: string;
 
     /**
-     * Creates a new `PolishedMetricSource` for the specified `params`.
+     * Creates a new `ComposedMetricSource` for the specified `params`.
      *
      * @param params Parameters to configure the metric source.
      * @param slocRuntime The `SlocRuntime` instance.
-     * @returns A new `PolishedMetricSource`.
+     * @returns A new `ComposedMetricSource`.
      */
-    createSource(params: P, slocRuntime: SlocRuntime): PolishedMetricSource<V>;
+    createSource(params: P, slocRuntime: SlocRuntime): ComposedMetricSource<V>;
 
 }
