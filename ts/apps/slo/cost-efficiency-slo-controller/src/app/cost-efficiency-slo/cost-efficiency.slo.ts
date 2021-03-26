@@ -56,7 +56,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     }
 
     private async calculateSloCompliance(): Promise<number> {
-        const costEffMetric = this.metricsSource.getPolishedMetricSource(CostEfficiencyMetric.instance, this.costEfficiencyParams);
+        const costEffMetric = this.metricsSource.getComposedMetricSource(CostEfficiencyMetric.instance, this.costEfficiencyParams);
         const costEff = await costEffMetric.getCurrentValue().toPromise();
 
         if (costEff.value.totalCost.currentCostPerHour === 0 || costEff.value.percentileBetterThanThreshold >= this.minRequestsPercentile) {

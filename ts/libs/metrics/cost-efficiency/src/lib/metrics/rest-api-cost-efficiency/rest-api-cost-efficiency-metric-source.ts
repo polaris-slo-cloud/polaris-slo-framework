@@ -1,5 +1,5 @@
 import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@sloc/common-mappings';
-import { Duration, LabelFilters, LabelGrouping, MetricsSource, PolishedMetricSourceBase, Sample, SlocRuntime, TimeRange, TimeSeriesInstant } from '@sloc/core';
+import { ComposedMetricSourceBase, Duration, LabelFilters, LabelGrouping, MetricsSource, Sample, SlocRuntime, TimeRange, TimeSeriesInstant } from '@sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ interface RequestsFasterThanThresholdInfo {
  * The `CostEfficiencyParams.targetThreshold` specifies the response time in milliseconds that
  * the REST API requests should have at most.
  */
-export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<CostEfficiency> {
+export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<CostEfficiency> {
 
     private metricsSource: MetricsSource;
     private targetThresholdSecStr: string;
@@ -32,7 +32,7 @@ export class RestApiCostEfficiencyMetricSource extends PolishedMetricSourceBase<
 
     getValueStream(): Observable<Sample<CostEfficiency>> {
         const { targetThreshold, ...costParams } = this.params;
-        const costSource = this.metricsSource.getPolishedMetricSource(TotalCostMetric.instance, costParams, this.params.costMetricSourceName);
+        const costSource = this.metricsSource.getComposedMetricSource(TotalCostMetric.instance, costParams, this.params.costMetricSourceName);
 
         return this.getDefaultPollingInterval().pipe(
             switchMap(() => this.getPercentileFasterThanThreshold()),

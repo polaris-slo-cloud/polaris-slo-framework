@@ -1,4 +1,4 @@
-import { PolishedMetricParams, PolishedMetricType } from '@sloc/core';
+import { ComposedMetricParams, ComposedMetricType } from '@sloc/core';
 import { TotalCost } from './total-cost';
 
 /**
@@ -33,7 +33,7 @@ export interface CostEfficiency {
 /**
  * The parameters for retrieving the cost efficiency metric.
  */
-export interface CostEfficiencyParams extends PolishedMetricParams {
+export interface CostEfficiencyParams extends ComposedMetricParams {
 
     /**
      * The target threshold for the `performance` metric.
@@ -65,7 +65,7 @@ export interface CostEfficiencyParams extends PolishedMetricParams {
  *
  * The `totalCost` part is retrieved using the `TotalCostMetric` type.
  */
-export class CostEfficiencyMetric extends PolishedMetricType<CostEfficiency, CostEfficiencyParams> {
+export class CostEfficiencyMetric extends ComposedMetricType<CostEfficiency, CostEfficiencyParams> {
 
     /** The singleton instance of this type. */
     static readonly instance = new CostEfficiencyMetric();

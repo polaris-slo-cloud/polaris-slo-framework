@@ -1,4 +1,4 @@
-import { PolishedMetricType } from '@sloc/core';
+import { ComposedMetricType } from '@sloc/core';
 
 /**
  * Describes the total cost for an `SloTarget`.
@@ -18,9 +18,9 @@ export interface TotalCost {
 }
 
 /**
- * Polished metric type for describing the total cost for an `SloTarget`.
+ * Composed metric type for describing the total cost for an `SloTarget`.
  */
-export class TotalCostMetric extends PolishedMetricType<TotalCost> {
+export class TotalCostMetric extends ComposedMetricType<TotalCost> {
 
     /** The singleton instance of this type. */
     static readonly instance = new TotalCostMetric();

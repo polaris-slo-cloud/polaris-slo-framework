@@ -1,11 +1,11 @@
 import { TotalCost } from '@sloc/common-mappings';
 import {
+    ComposedMetricParams,
+    ComposedMetricSourceBase,
     Join,
     LabelFilters,
     LabelGrouping,
     MetricsSource,
-    PolishedMetricParams,
-    PolishedMetricSourceBase,
     Sample,
     SlocRuntime,
     TimeSeriesInstant,
@@ -16,11 +16,11 @@ import { map, switchMap } from 'rxjs/operators';
 /**
  * Provides the total cost of a `SloTarget` using KubeCost.
  */
-export class KubeCostMetricSource extends PolishedMetricSourceBase<TotalCost> {
+export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
 
     private metricsSource: MetricsSource;
 
-    constructor(private params: PolishedMetricParams, slocRuntime: SlocRuntime) {
+    constructor(private params: ComposedMetricParams, slocRuntime: SlocRuntime) {
         super(slocRuntime);
         this.metricsSource = slocRuntime.metricsSourcesManager;
     }

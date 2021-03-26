@@ -1,4 +1,4 @@
-import { PolishedMetricSourceFactory, PolishedMetricType } from '../../../polished-metrics';
+import { ComposedMetricSourceFactory, ComposedMetricType } from '../../../composed-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
 
@@ -25,12 +25,12 @@ export interface MetricsSourcesManager extends MetricsSource {
     setDefaultTimeSeriesSource(name: string): TimeSeriesSource;
 
     /**
-     * Adds the specified `PolishedMetricSourceFactory` to this manager.
+     * Adds the specified `ComposedMetricSourceFactory` to this manager.
      *
-     * @param factory The `PolishedMetricSourceFactory` that should be added.
-     * @param setAsDefault (optional) If `true`, sets `factory` as the default factory for its `PolishedMetricType`. Default = `false`.
-     * If this is the first factory that is added for a particular `PolishedMetricType`, it is always set as default.
+     * @param factory The `ComposedMetricSourceFactory` that should be added.
+     * @param setAsDefault (optional) If `true`, sets `factory` as the default factory for its `ComposedMetricType`. Default = `false`.
+     * If this is the first factory that is added for a particular `ComposedMetricType`, it is always set as default.
      */
-    addPolishedMetricSourceFactory(factory: PolishedMetricSourceFactory<PolishedMetricType<any, any>>, setAsDefault?: boolean): void;
+    addComposedMetricSourceFactory(factory: ComposedMetricSourceFactory<ComposedMetricType<any, any>>, setAsDefault?: boolean): void;
 
 }
