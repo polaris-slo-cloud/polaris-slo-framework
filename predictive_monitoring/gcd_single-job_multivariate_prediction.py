@@ -44,11 +44,8 @@ def generate_model(train_x, batch_size, neurons, stateful):
     else:
         model.add(
             LSTM(neurons,
-                 #return_sequences=True,
                  input_shape=(train_x.shape[1], train_x.shape[2]),
                  dropout=dropout))
-        #model.add(LSTM(int(neurons / 2), return_sequences=True))
-        #model.add(LSTM(int(neurons / 4)))
     model.add(Dense(1))
     model.compile(loss='mae', optimizer='adam')
     return model
@@ -130,11 +127,9 @@ if __name__ == "__main__":
                         help="Defines the number of repetition. Default = 1")
     parser.add_argument("--stateful", action="store_true",
                         help="If stateful, keeps the LSTM memory between batches")
+    parser.add_argument("--job_id", type=int, default=3418339, dest='job_id'
+                        help="ID of the job considered for the model generation.")
 
-    JOB_ID = 3418339
-    input_path = "data/task-usage_job-ID-%i_total.csv" % JOB_ID
-    figures_path = 'figures'
-    results_path = 'results'
 
     columns_to_consider = ['end time',
                            'CPU rate',
@@ -162,6 +157,12 @@ if __name__ == "__main__":
     aggr_type = args.aggr_type
     n_rep = args.n_rep
     stateful = args.stateful
+    JOB_ID = args.job_id
+
+    input_path = "data/task-usage_job-ID-%i_total.csv" % JOB_ID
+    figures_path = 'figures'
+    results_path = 'results'
+
 
     # Data manipulation
     readings_df = load_data(input_path, columns_to_consider)
@@ -197,4 +198,4 @@ if __name__ == "__main__":
     plot_val_history(history_loss, figures_path, exp_name)
     plot_prediction(inv_y, inv_yhat, exp_name)
     model.save(
-        "/data/results/amorichetta/Google/high-level_monitoring/models/lstm_model_%s" % exp_name)
+        "models/lstm_model_%s" % exp_name)
