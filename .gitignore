@@ -17,3 +17,8 @@
 # System Files
 .DS_Store
 Thumbs.db
+
+# Predictive monitoring
+predictive_monitoring/.ipynb_checkpoints
+predictive_monitoring/__pycache__
+
