@@ -73,16 +73,6 @@ values = reframed.values
 
 test_X, test_y = values[:, :-1], values[:, -1]
 
-# t =0
-# x:CPUt0 Memt0 Efft0
-# y: Efft1
-
-# t = 1
-# x:CPUt1 Memt1 Efft1
-# y: Efft2
-
-
-
 test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
 
 model = keras.models.load_model('results/lstm_batch72_neurons50_epochs400_do0')
@@ -112,6 +102,3 @@ rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 
 with open('results/%s.log' % name, 'w') as f:
     f.write("RMSE: %f" % rmse)
-
-# How to predict in the future
-# https://towardsdatascience.com/time-series-prediction-beyond-test-data-3f4625019fd9
