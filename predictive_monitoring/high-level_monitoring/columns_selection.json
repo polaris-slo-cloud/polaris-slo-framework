@@ -1,0 +1,20 @@
+{
+	"LSTM_efficiency_1": ["end time",
+                           "CPU rate",
+                           "canonical memory usage",
+                           "assigned memory usage",
+                           "unmapped page cache",
+                           "total page cache",
+                           "maximum memory usage",
+                           "disk I/O time",
+                           "local disk space usage",
+                           "maximum CPU rate",
+                           "maximum disk IO time",
+                           "cycles per instruction",
+                           "memory accesses per instruction",
+                           "CPU ratio usage",
+                           "memory ratio usage",
+                           "disk ratio usage",
+                           "Efficiency"
+                           ]
+} 

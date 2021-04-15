@@ -3,6 +3,7 @@ import os
 import sys
 from collections import defaultdict
 from math import sqrt
+import json
 
 from gcd_data_manipulation import data_aggregation
 from gcd_data_manipulation import extract_train_test
@@ -119,6 +120,8 @@ if __name__ == "__main__":
                         help='epochs neurons batch_size')
     parser.add_argument("--exp_name", type=str, required=True,
                         help="Name of the experiment. Necessary to save results")
+    parser.add_argument("--cols", type=str, required=True,
+                       help="Name of the column selection as reported in the json file columns_selection.json")
     parser.add_argument("--dropout", type=float, default=0.0, choices=Range(0.0, 1.0), dest="dropout",
                         help="dropout to reduce overfitting. Default = 0.0")
     parser.add_argument("--aggr_type", type=str, default="mean", choices=["mean", "q95", "max"], dest='aggr_type',
@@ -131,28 +134,13 @@ if __name__ == "__main__":
                         help="ID of the job considered for the model generation.")
 
 
-    columns_to_consider = ['end time',
-                           'CPU rate',
-                           'canonical memory usage',
-                           'assigned memory usage',
-                           'unmapped page cache',
-                           'total page cache',
-                           'maximum memory usage',
-                           'disk I/O time',
-                           'local disk space usage',
-                           'maximum CPU rate',
-                           'maximum disk IO time',
-                           'cycles per instruction',
-                           'memory accesses per instruction',
-                           'CPU ratio usage',
-                           'memory ratio usage',
-                           'disk ratio usage',
-                           'Efficiency'  # target metric
-                           ]
+    with open('columns_selectin.json') as f:
+        columns_selection = json.load(f)
     
     args = parser.parse_args(sys.argv[1:])
     epochs, neurons, batch_size = args.hyperparameters
     exp_name = args.exp_name
+    cols = args.cols
     dropout = args.dropout
     aggr_type = args.aggr_type
     n_rep = args.n_rep
@@ -163,6 +151,7 @@ if __name__ == "__main__":
     figures_path = 'figures'
     results_path = 'results'
 
+    columns_to_consider = columns_selection[cols]
 
     # Data manipulation
     readings_df = load_data(input_path, columns_to_consider)

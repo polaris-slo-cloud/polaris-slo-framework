@@ -1,3 +1,8 @@
+# Folders
+data/*.ign.csv
+figures/
+results/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -93,11 +98,6 @@ ipython_config.py
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
-
-# Folders
-data/*.ign.csv
-figures/
-results/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
