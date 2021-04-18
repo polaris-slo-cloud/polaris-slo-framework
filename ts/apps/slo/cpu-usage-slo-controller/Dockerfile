@@ -1,5 +1,5 @@
 # Builder stage
-FROM node:14-alpine3.12 AS builder
+FROM node:14-alpine3.13 AS builder
 WORKDIR /usr/src/sloc
 
 ARG SLOC_APP_TYPE
@@ -21,7 +21,7 @@ RUN npx nx build ${SLOC_APP_TYPE}-${SLOC_APP_NAME} --with-deps=true
 
 
 # Final image stage
-FROM node:14-alpine3.12
+FROM node:14-alpine3.13
 
 ARG SLOC_APP_TYPE
 ARG SLOC_APP_NAME
