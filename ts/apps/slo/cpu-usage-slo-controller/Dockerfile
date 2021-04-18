@@ -9,11 +9,14 @@ ENV SLOC_APP_NAME ${SLOC_APP_NAME}
 
 COPY . .
 
-# Download dependencies and build the app.
+# Download dependencies.
+# Keeping this as a separate command allows caching this layer.
+RUN npm install --unsafe-perm
+
+# Build the app.
 # It is important that "externalDependencies" is set to "none" in the node builder's options in angular.json
 # to make sure that all dependencies are packaged into the main.js file.
-RUN npm install --unsafe-perm && \
-    npx nx build ${SLOC_APP_TYPE}-${SLOC_APP_NAME} --with-deps=true
+RUN npx nx build ${SLOC_APP_TYPE}-${SLOC_APP_NAME} --with-deps=true
 
 
 
