@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: cost-efficiency-slo-controller
+    tier: control-plane
+  name: cost-efficiency-slo-controller
+  namespace: sloc
+spec:
+  selector:
+    matchLabels:
+      component: cost-efficiency-slo-controller
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: cost-efficiency-slo-controller
+        tier: control-plane
+    spec:
+      serviceAccountName: cost-efficiency-slo-controller
+      containers:
+      - image: tuwiendsgsloc/slo-cost-efficiency:latest
+        name: slo-controller
+        resources:
+          limits:
+            cpu: '1.0'
+            memory: 512Mi
+        securityContext:
+          privileged: false
+
