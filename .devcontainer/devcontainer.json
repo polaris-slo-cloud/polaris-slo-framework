@@ -1,0 +1,48 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.166.1/containers/typescript-node
+{
+	"name": "SLOC Development Environment (Based on Node.js & TypeScript)",
+	"build": {
+		"dockerfile": "Dockerfile",
+		// Update 'VARIANT' to pick a Node version: 10, 12, 14
+		"args": { 
+			"VARIANT": "14"
+		}
+	},
+	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true"
+	},
+
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind",
+		// Uncomment the next line to also sync certs in your .minikube folder
+		"source=${env:HOME}${env:USERPROFILE}/.minikube,target=/usr/local/share/minikube-localhost,type=bind"
+	],
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"dbaeumer.vscode-eslint"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "cd ./ts && npm --silent install",
+	
+	// throws error code or code-insiders is not installed
+	//"postStartCommand": "cd ./ts && code .",
+	// Debug info
+	//"postStartCommand": "whoami && pwd && . /usr/local/share/copy-kube-config.sh && kubectl config view && kubectl cluster-info",
+	// Register CRDs - TODO remove this once CLI implements this
+	"postStartCommand": ". /usr/local/share/copy-kube-config.sh && kubectl apply -k ./go/config/crd",
+	
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "node"
+}
