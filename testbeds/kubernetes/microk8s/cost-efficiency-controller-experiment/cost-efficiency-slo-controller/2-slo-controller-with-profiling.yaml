@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: sloc
+  name: cost-eff-profiling-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  # Use the default storage class
+  # storageClassName: fast
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: cost-efficiency-slo-controller
+    tier: control-plane
+  name: cost-efficiency-slo-controller
+  namespace: sloc
+spec:
+  selector:
+    matchLabels:
+      component: cost-efficiency-slo-controller
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: cost-efficiency-slo-controller
+        tier: control-plane
+    spec:
+      serviceAccountName: cost-efficiency-slo-controller
+      containers:
+      - image: tuwiendsgsloc/slo-cost-efficiency:latest
+        name: slo-controller
+        resources:
+          limits:
+            cpu: '1.0'
+            memory: 512Mi
+        command:
+          - node
+          - --cpu-prof-dir=/profiling-data
+          - --cpu-prof
+          - main.js
+        securityContext:
+          privileged: false
+        volumeMounts:
+          - mountPath: /profiling-data
+            name: profiling-data
+      volumes:
+        - name: profiling-data
+          persistentVolumeClaim:
+            claimName: cost-eff-profiling-data
+

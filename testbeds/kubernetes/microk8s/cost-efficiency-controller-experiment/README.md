@@ -10,8 +10,12 @@
     ```
     make deploy
     ```
-1. Navigate to the [`ts/apps/slo/cost-efficiency-slo-controller`](../../../../ts/apps/slo/cost-efficiency-slo-controller) folder.
-1. Deploy the Cost Efficiency SLO controller:
+1. Navigate to the [`testbeds/kubernetes/microk8s/cost-efficiency-controller-experiment`](./) folder.
+1. Deploy the Cost Efficiency SLO controller with performance profiling:
     ```
-    kubectl apply -f ./manifests/kubernetes
+    kubectl apply -f ./cost-efficiency-slo-controller
+    ```
+1. Apply 100 Cost Efficiency SLO mappings to generate load on the controller.
+    ```
+    ./slo-mappings/gen-mappings.sh ./slo-mappings/cost-efficiency-slo-mapping.template.yaml | kubectl apply -f -
     ```
