@@ -1,0 +1,51 @@
+# Gentics Mesh needs two ReadWriteMany volumes.
+# This creates two ReadWriteMany volumes on rainbow2, so they are not really located on an NFS.
+# The ReadWriteMany volumes are only required when fetching of uploaded files (binary content) needs to work and for backups.
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-mesh-volume-01
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 5Gi
+  local:
+    path: /mnt/disks/mesh-nfs-volume-01
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - rainbow2
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mocked-nfs-storage
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-mesh-volume-02
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 5Gi
+  local:
+    path: /mnt/disks/mesh-nfs-volume-02
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - rainbow2
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mocked-nfs-storage
+  volumeMode: Filesystem

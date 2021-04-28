@@ -42,4 +42,5 @@ helm install kubecost kubecost/cost-analyzer --namespace=kubecost --set kubecost
 ## ToDo
 * Create service YAMLs for exposing Prometheus and Grafana on NodePorts
 * Copy service YAML for exposing Kubecost
+* Import Grafana dashboards for ingress
 * Try `helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values kubecost-values.yaml` after deploying MicroK8s Prometheus

@@ -1,0 +1,54 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  namespace: mesh
+  name: mesh-elasticsearch
+spec:
+  version: 7.6.2
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+    # Unfortunately we cannot configure the nodePort's number (needed for our SSH port forwarding), so we use a custom service instead.
+    # service:
+    #   spec:
+    #     type: NodePort
+  nodeSets:
+    - name: default
+      count: 1
+      config:
+        node.master: true
+        node.data: true
+        node.ingest: true
+        node.store.allow_mmap: false
+        http.cors.enabled: true
+        http.cors.allow-origin: "*"
+        xpack.security.authc:
+          anonymous:
+            username: anonymous
+            roles: superuser
+            authz_exception: false
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 5Gi
+            storageClassName: microk8s-hostpath
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mesh
+  name: elasticsearch-public
+spec:
+  selector:
+    elasticsearch.k8s.elastic.co/cluster-name: mesh-elasticsearch
+  type: NodePort
+  ports:
+    - port: 9200
+      targetPort: 9200
+      nodePort: 30905
