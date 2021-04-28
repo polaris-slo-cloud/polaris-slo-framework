@@ -31,16 +31,25 @@
 
 Follow these steps (based on this [guide](https://www.kubecost.com/install.html)) to install [Kubecost](https://www.kubecost.com), which also installs Prometheus and Grafana:
 
-1. Run `kubectl create namespace kubecost`
-1. Run `helm repo add kubecost https://kubecost.github.io/cost-analyzer/`
-1. Run `helm repo update`
-1. Run
+1. Create a kubecost namespace:
+    ```
+    kubectl create namespace kubecost
+    ```
+1. Add the kubecost Helm repository:
+    ```
+    helm repo add kubecost https://kubecost.github.io/cost-analyzer/
+    helm repo update
+    ```
+1. Install kubecost:
     ```
     helm install kubecost kubecost/cost-analyzer --namespace=kubecost --set kubecostToken="dC5wdXN6dGFpQGRzZy50dXdpZW4uYWMuYXQ=xm343yadf98",prometheus.server.persistentVolume.size="5Gi",persistentVolume.dbSize="2.0Gi",persistentVolume.size="2.0Gi"
     ```
+1. Make Prometheus and Grafana externally accessible through NodePorts:
+    ```
+    kubectl apply -f ./node-port-services.yaml
+    ```
 
 ## ToDo
-* Create service YAMLs for exposing Prometheus and Grafana on NodePorts
 * Copy service YAML for exposing Kubecost
 * Import Grafana dashboards for ingress
 * Fix ingress access
