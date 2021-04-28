@@ -36,10 +36,14 @@
             ],
             "port": 7777,
             "runtimeExecutable": "npx",
+            "env": {
+                "PROMETHEUS_HOST": "localhost",
+                "PROMETHEUS_PORT": "30900"
+            },
             "runtimeArgs": [
                 "nx",
                 "serve",
-                "slo-cost-efficiency-slo-controller",
+                "slo-cost-efficiency-slo-controller"
             ],
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
