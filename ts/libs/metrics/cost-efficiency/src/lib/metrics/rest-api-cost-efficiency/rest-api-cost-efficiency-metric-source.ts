@@ -1,5 +1,16 @@
 import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@sloc/common-mappings';
-import { ComposedMetricSourceBase, Duration, LabelFilters, LabelGrouping, MetricsSource, Sample, SlocRuntime, TimeRange, TimeSeriesInstant } from '@sloc/core';
+import {
+    ComposedMetricSourceBase,
+    Duration,
+    LabelFilters,
+    LabelGrouping,
+    MetricUnavailableError,
+    MetricsSource,
+    Sample,
+    SlocRuntime,
+    TimeRange,
+    TimeSeriesInstant,
+} from '@sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
@@ -69,6 +80,13 @@ export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<
             .sumByGroup(LabelGrouping.by('path'));
 
         const [ fasterThanBucketResult, reqCountResult ] = await Promise.all([ fasterThanBucketQuery.execute(), reqCountQuery.execute() ]);
+
+        if (!fasterThanBucketResult.results || fasterThanBucketResult.results.length === 0) {
+            throw new MetricUnavailableError('ingress_controller_request_duration_seconds_bucket', fasterThanBucketQuery);
+        }
+        if (!reqCountResult.results || reqCountResult.results.length === 0) {
+            throw new MetricUnavailableError('ingress_controller_request_duration_seconds_count', reqCountQuery);
+        }
 
         const totalReqFasterThanThreshold = this.sumResults(fasterThanBucketResult.results);
         const totalReqCount = this.sumResults(reqCountResult.results);
