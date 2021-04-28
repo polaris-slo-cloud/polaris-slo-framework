@@ -1,13 +1,5 @@
 import { CostEfficiencyMetric, CostEfficiencyParams, CostEfficiencySloConfig } from '@sloc/common-mappings';
-import {
-    MetricsSource,
-    ObservableOrPromise,
-    ServiceLevelObjective,
-    SloCompliance,
-    SloMapping,
-    SloOutput,
-    SlocRuntime,
-} from '@sloc/core';
+import { MetricsSource, ObservableOrPromise, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput, SlocRuntime } from '@sloc/core';
 import { of as observableOf } from 'rxjs';
 
 /**
