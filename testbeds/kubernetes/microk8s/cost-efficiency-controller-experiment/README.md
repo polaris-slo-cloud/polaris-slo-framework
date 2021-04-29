@@ -15,7 +15,14 @@
     ```
     kubectl apply -f ./cost-efficiency-slo-controller
     ```
+1. Establish a port forwarding to the Node.JS inspect port of the SLO controller pod:
+    ```
+    kubectl port-forward -n sloc deployments/cost-efficiency-slo-controller 9229:9229
+    ```
+1. Open `chrome://inspect` in Google Chrome. It should detect the running SLO controller automatically. Then hit `inspect`.
+1. In the `Profiling` tab of the Node.JS Developer tool window, start a profiling session.
 1. Apply 100 Cost Efficiency SLO mappings to generate load on the controller.
     ```
     ./slo-mappings/gen-mappings.sh ./slo-mappings/cost-efficiency-slo-mapping.template.yaml | kubectl apply -f -
     ```
+1. Stop the profiling session in Chrome and view the results.
