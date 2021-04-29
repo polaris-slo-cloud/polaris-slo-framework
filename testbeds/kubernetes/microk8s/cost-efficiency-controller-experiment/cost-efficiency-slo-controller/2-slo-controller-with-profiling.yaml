@@ -33,6 +33,8 @@ spec:
         tier: control-plane
     spec:
       serviceAccountName: cost-efficiency-slo-controller
+      nodeSelector:
+        kubernetes.io/hostname: rainbow0
       containers:
       - image: tuwiendsgsloc/slo-cost-efficiency:latest
         name: slo-controller
