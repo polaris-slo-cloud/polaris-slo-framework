@@ -9,9 +9,10 @@
 1. Run `microk8s status --wait-ready` and execute the suggested commands to add your user to the microk8s group. Then log out and log back in.
 1. Run `microk8s status --wait-ready` again.
 1. Follow this [guide](https://microk8s.io/docs/clustering) to add worker nodes to the cluster.
+1. If `microk8s kubectl` commands execute slowly, run `microk8s inspect` on all nodes and follow the instructions of the warning messages (it will probably suggest to run `sudo iptables -P FORWARD ACCEPT`).
 1. Enable the needed add-ons by running 
     ```
-    microk8s enable dns rbac storage helm3 ingress metrics-server prometheus
+    microk8s enable dns rbac storage helm3 metrics-server
     ```
 1. Since MicroK8s uses hostPath as the default storage provider, which creates directories as root (see [here](https://github.com/ubuntu/microk8s/issues/737)), the storage directory must be made world writable. Execute the following command on every node:
     ```
@@ -24,8 +25,17 @@
     * Open your local KUBECONFIG and merge the connection data from MicroK8s into it.
     * In your local KUBECONFIG, adjust the IP address and port of the `server` to match that of the local port forwarded via SSH
     * In your local KUBECONFIG, add `tls-server-name: kubernetes`
-1. If kubectl commands execute slowly, run `microk8s inspect` on all nodes and follow the instructions of the warning messages (it will probably suggest to run `sudo iptables -P FORWARD ACCEPT`).
-
+1. Install the [prometheus-operator helm chart](https://github.com/helm/charts/tree/master/stable/prometheus-operator):
+    ```
+    helm install prometheus-release-1 stable/prometheus-operator -f ./prometheus/values.yaml
+    ```
+1. Install the ingress-nginx controller:
+    ```
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm repo update
+    helm install -f ./ingress-nginx/values.yaml ingress-nginx ingress-nginx/ingress-nginx --atomic
+    ```
+1. Import the [Grafana dashboards](https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards) from the `ingress-nginx/grafana-dashboards` folder.
 
 ## Install KubeCost
 
@@ -40,17 +50,13 @@ Follow these steps (based on this [guide](https://www.kubecost.com/install.html)
     helm repo add kubecost https://kubecost.github.io/cost-analyzer/
     helm repo update
     ```
-1. Install kubecost:
+1. Install kubecost (the additional Prometheus scrape and relabeling config from [here](http://docs.kubecost.com/custom-prom) is already included in `./prometheus/values.yaml`):
     ```
-    helm install kubecost kubecost/cost-analyzer --namespace=kubecost --set kubecostToken="dC5wdXN6dGFpQGRzZy50dXdpZW4uYWMuYXQ=xm343yadf98",prometheus.server.persistentVolume.size="5Gi",persistentVolume.dbSize="2.0Gi",persistentVolume.size="2.0Gi"
-    ```
-1. Make Prometheus and Grafana externally accessible through NodePorts:
-    ```
-    kubectl apply -f ./node-port-services.yaml
+    helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values ./kubecost/values.yaml
     ```
 
 ## ToDo
-* Copy service YAML for exposing Kubecost
 * Import Grafana dashboards for ingress
-* Fix ingress access
-* Try `helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values kubecost-values.yaml` after deploying MicroK8s Prometheus
+* Check again if using MicroK8s ingress is possible (monitoring and access were not working)
+* Check again if MicroK8s Prometheus is usable or upgrade operator chart (new name: kube-prometheus-stack)
+* kubecost with integrated Prometheus: `helm install kubecost kubecost/cost-analyzer --namespace=kubecost --set kubecostToken="dC5wdXN6dGFpQGRzZy50dXdpZW4uYWMuYXQ=xm343yadf98",prometheus.server.persistentVolume.size="5Gi",persistentVolume.dbSize="2.0Gi",persistentVolume.size="2.0Gi"`

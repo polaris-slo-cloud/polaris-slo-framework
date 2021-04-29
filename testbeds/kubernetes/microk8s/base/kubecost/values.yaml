@@ -2,7 +2,7 @@ global:
   # zone: cluster.local (use only if your DNS server doesn't live in the same zone as kubecost)
   prometheus:
     enabled: false # If false, Prometheus will not be installed -- only actively supported on paid Kubecost plans
-    fqdn: http://prometheus-k8s.monitoring.svc #example fqdn. Ignored if enabled: true
+    fqdn: http://prometheus-release-1-prome-prometheus.default.svc:9090 #example fqdn. Ignored if enabled: true
     # insecureSkipVerify : false # If true, kubecost will not check the TLS cert of prometheus
     # queryServiceBasicAuthSecretName: dbsecret # kubectl create secret generic dbsecret -n kubecost --from-file=USERNAME --from-file=PASSWORD
     # queryServiceBearerTokenSecretName: dbsecret  # kubectl create secret generic mcdbsecret -n kubecost --from-file=TOKEN
@@ -17,7 +17,7 @@ global:
 
   grafana:
     enabled: false # If false, Grafana will not be installed
-    domainName: grafana.monitoring.svc #example grafana domain Ignored if enabled: true
+    domainName: prometheus-release-1-grafana.default.svc #example grafana domain Ignored if enabled: true
     scheme: "http" # http or https, for the domain name above.
     proxy: true # If true, the kubecost frontend will route to your grafana through its service endpoint
 
@@ -108,7 +108,7 @@ global:
   additionalLabels: {}
 
 # generated at http://kubecost.com/install, used for alerts tracking and free trials
-kubecostToken: # ""
+kubecostToken: "dC5wdXN6dGFpQGRzZy50dXdpZW4uYWMuYXQ=xm343yadf98"
 
 # Advanced pipeline for custom prices, enterprise key required
 pricingCsv:
