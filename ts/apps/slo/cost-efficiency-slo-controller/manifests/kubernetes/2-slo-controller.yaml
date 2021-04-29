@@ -28,7 +28,7 @@ spec:
             memory: 512Mi
         env:
           - name: PROMETHEUS_HOST
-            value: kubecost-prometheus-server.kubecost.svc
+            value: prometheus-release-1-prome-prometheus.default.svc
           - name: PROMETHEUS_PORT
             value: '9090'
         securityContext:
