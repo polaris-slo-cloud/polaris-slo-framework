@@ -34,18 +34,26 @@ This guide uses the ElasticSearch operator [Elastic Cloud on Kubernetes](https:/
     helm repo update
     ```
 
-2. Set up the (mocked) nfs storage class and 2 ReadWriteMany PVs:
+1. Create folders for the mocked NFS storage class on the `rainbow2` node.
+    ```shell
+    sudo -i
+    cd /mnt/disks
+    mkdir mesh-nfs-volume-01 && mkdir mesh-nfs-volume-02
+    chmod a+rw mesh-nfs-volume-01 mesh-nfs-volume-02
+    ```
+
+1. Set up the (mocked) NFS storage class and 2 ReadWriteMany PVs:
     ```
     kubectl apply -f ./nfs-storage.yaml
     kubectl apply -f ./mesh-pvs.yaml
     ```
 
-3. Create the keystore secret needed by Mesh for running without shared volumes:
+1. Create the keystore secret needed by Mesh for running without shared volumes:
     ```
     kubectl apply -k ./keystore
     ```
 
-3. Deploy Mesh
+1. Deploy Mesh
     ```
     helm install -f ./mesh-values.yaml mesh gentics/gentics-mesh --namespace=mesh --set replicaCount=1 --atomic
     helm upgrade -f ./mesh-values.yaml mesh gentics/gentics-mesh --namespace=mesh --atomic

@@ -536,7 +536,7 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    storageClassName: microk8s-hostpath
+    storageClassName: local-storage
     accessModes:
       - ReadWriteOnce
     size: 5Gi
@@ -1761,7 +1761,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: microk8s-hostpath
+          storageClassName: local-storage
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:

@@ -12,11 +12,33 @@
 1. If `microk8s kubectl` commands execute slowly, run `microk8s inspect` on all nodes and follow the instructions of the warning messages (it will probably suggest to run `sudo iptables -P FORWARD ACCEPT`).
 1. Enable the needed add-ons by running 
     ```
-    microk8s enable dns rbac storage helm3 metrics-server
+    microk8s enable dns rbac helm3 metrics-server
     ```
-1. Since MicroK8s uses hostPath as the default storage provider, which creates directories as root (see [here](https://github.com/ubuntu/microk8s/issues/737)), the storage directory must be made world writable. Execute the following command on every node:
+1. Create directories for the local storage class on all nodes.
+Unfortunately we need to use local storage, because the hostPath volumes, which can be provisioned automatically by MicroK8s cannot ensure that a new pod gets scheduled on the same node as a previously claimed PV.
+    ```shell
+    # Node rainbow0:
+    sudo -i
+    cd /mnt/disks
+    mkdir rainbow0-k8s-disk-01 && mkdir rainbow0-k8s-disk-02 && mkdir rainbow0-k8s-disk-03 && mkdir rainbow0-k8s-disk-04 && mkdir rainbow0-k8s-disk-05
+    chmod a+rw rainbow0-k8s-disk-01 rainbow0-k8s-disk-02 rainbow0-k8s-disk-03 rainbow0-k8s-disk-04 rainbow0-k8s-disk-05
+
+    # Node rainbow1:
+    sudo -i
+    cd /mnt/disks
+    mkdir rainbow1-k8s-disk-01 && mkdir rainbow1-k8s-disk-02 && mkdir rainbow1-k8s-disk-03 && mkdir rainbow1-k8s-disk-04 && mkdir rainbow1-k8s-disk-05
+    chmod a+rw rainbow1-k8s-disk-01 rainbow1-k8s-disk-02 rainbow1-k8s-disk-03 rainbow1-k8s-disk-04 rainbow1-k8s-disk-05
+
+    # Node rainbow2:
+    sudo -i
+    cd /mnt/disks
+    mkdir rainbow2-k8s-disk-01 && mkdir rainbow2-k8s-disk-02 && mkdir rainbow2-k8s-disk-03 && mkdir rainbow2-k8s-disk-04 && mkdir rainbow2-k8s-disk-05
+    chmod a+rw rainbow2-k8s-disk-01 rainbow2-k8s-disk-02 rainbow2-k8s-disk-03 rainbow2-k8s-disk-04 rainbow2-k8s-disk-05
     ```
-    sudo chmod -R a+rwx /var/snap/microk8s/common/default-storage
+1. Create the default storage class and PVs:
+    ```
+    kubectl apply -f ./persistent-volumes/local-storage.yaml
+    kubectl apply -f ./persistent-volumes/persistent-volumes.yaml
     ```
 1. Run `microk8s config > ~/.kube/config` to get the KUBECONFIG file that can be used with an external version of kubectl.
 1. If you are using SSH to connect to the machine running MicroK8s, do the following:
@@ -60,3 +82,7 @@ Follow these steps (based on this [guide](https://www.kubecost.com/install.html)
 * Check again if using MicroK8s ingress is possible (monitoring and access were not working)
 * Check again if MicroK8s Prometheus is usable or upgrade operator chart (new name: kube-prometheus-stack)
 * kubecost with integrated Prometheus: `helm install kubecost kubecost/cost-analyzer --namespace=kubecost --set kubecostToken="dC5wdXN6dGFpQGRzZy50dXdpZW4uYWMuYXQ=xm343yadf98",prometheus.server.persistentVolume.size="5Gi",persistentVolume.dbSize="2.0Gi",persistentVolume.size="2.0Gi"`
+* For the MicroK8s hostPath storage provider only: Since MicroK8s uses hostPath as the default storage provider, which creates directories as root (see [here](https://github.com/ubuntu/microk8s/issues/737)), the storage directory must be made world writable. Execute the following command on every node:
+    ```
+    sudo chmod -R a+rwx /var/snap/microk8s/common/default-storage
+    ```

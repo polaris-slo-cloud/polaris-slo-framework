@@ -37,7 +37,7 @@ spec:
             resources:
               requests:
                 storage: 5Gi
-            storageClassName: microk8s-hostpath
+            storageClassName: local-storage
 ---
 apiVersion: v1
 kind: Service

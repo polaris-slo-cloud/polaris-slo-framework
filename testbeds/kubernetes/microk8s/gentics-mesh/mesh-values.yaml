@@ -109,7 +109,7 @@ persistence:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: "microk8s-hostpath"
+        storageClassName: "local-storage"
         resources:
           requests:
             storage: 5Gi
@@ -136,7 +136,7 @@ persistence:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: "microk8s-hostpath"
+        storageClassName: "local-storage"
         resources:
           requests:
             storage: 5Gi
