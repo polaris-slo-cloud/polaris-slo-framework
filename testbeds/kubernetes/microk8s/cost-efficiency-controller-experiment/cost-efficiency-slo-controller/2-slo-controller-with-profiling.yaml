@@ -42,26 +42,35 @@ spec:
           limits:
             cpu: '1.0'
             memory: 512Mi
-        ports:
-          - containerPort: 9229
         env:
           - name: PROMETHEUS_HOST
             value: prometheus-release-1-prome-prometheus.default.svc
           - name: PROMETHEUS_PORT
             value: '9090'
+        securityContext:
+          privileged: false
+
+        # Run the SLO controller with debugging enabled on port 9229
         command:
           - node
           - --inspect=9229
-          # - --cpu-prof-dir=/profiling-data
-          # - --cpu-prof
           - main.js
-        securityContext:
-          privileged: false
-        volumeMounts:
-          - mountPath: /profiling-data
-            name: profiling-data
-      volumes:
-        - name: profiling-data
-          persistentVolumeClaim:
-            claimName: cost-eff-profiling-data
+        ports:
+          - containerPort: 9229
+
+        # Alternatively, we can do the profiling inside the pod, but this requires the Node.JS process
+        # to be stopped gracefully, so that it can save the profiling data. So far, I haven't found a way to do this.
+        # This requires the profiling-data volume to be mounted.
+        # command:
+        #   - node
+        #   - --cpu-prof-dir=/profiling-data
+        #   - --cpu-prof
+        #   - main.js
+        # volumeMounts:
+        #   - mountPath: /profiling-data
+        #     name: profiling-data
+      # volumes:
+      #   - name: profiling-data
+      #     persistentVolumeClaim:
+      #       claimName: cost-eff-profiling-data
 
