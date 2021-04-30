@@ -1,0 +1,18 @@
+---
+kind: CostEfficiencySloMapping
+apiVersion: slo.sloc.github.io/v1
+metadata:
+  namespace: mesh
+  name: {{ .Name }}
+spec:
+  targetRef:
+    kind: StatefulSet
+    apiVersion: apps/v1
+    name: mesh-gentics-mesh
+  elasticityStrategy:
+    kind: HorizontalElasticityStrategy
+    apiVersion: elasticity.sloc.github.io/v1
+  sloConfig:
+    responseTimeThresholdMs: 500
+    targetCostEfficiency: 10
+    minRequestsPercentile: 90

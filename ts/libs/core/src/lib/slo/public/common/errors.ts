@@ -29,3 +29,18 @@ export class SloEvaluationError extends Error {
     }
 
 }
+
+/**
+ * This error is thrown if a certain metric cannot be fetched.
+ */
+export class MetricUnavailableError extends Error {
+
+    constructor(
+        public metricName: string,
+        public query?: any,
+        msg?: string,
+    ) {
+        super(msg || `Metric ${metricName} is not available.`);
+    }
+
+}

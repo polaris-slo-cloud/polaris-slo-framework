@@ -1,5 +1,5 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { ApiObject, ObjectKind, ObjectReference, SloTarget, SlocRuntime, initSlocRuntime } from '@sloc/core';
+import { ApiObject, ObjectKind, ObjectReference, SlocRuntime, initSlocRuntime } from '@sloc/core';
 import { KubernetesSlocRuntime } from './runtime';
 import { ObjectKindTransformer, ObjectReferenceTransformer } from './transformation';
 import { ApiObjectTransformer } from './transformation/public/transformers/api-object.transformer';
@@ -10,6 +10,7 @@ import { ApiObjectTransformer } from './transformation/public/transformers/api-o
  * @param kubeConfig The Kubernetes configuration that should be used to configure the `KubernetesSlocRuntime`.
  */
 export function initSlocKubernetes(kubeConfig: KubeConfig): SlocRuntime {
+    console.log('Initializing Kubernetes connector with KUBECONFIG:', kubeConfig);
     const runtime = new KubernetesSlocRuntime(kubeConfig);
     registerTransformers(runtime);
     initSlocRuntime(runtime);

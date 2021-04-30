@@ -5,6 +5,7 @@ import { initSlocKubernetes } from '@sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@sloc/prometheus';
 import { interval } from 'rxjs';
 import { CostEfficiencySlo } from './app/cost-efficiency-slo';
+import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // ToDo: This file should be generated automatically during the build process.
 // ToDo: It should be possible to build the SLO controller easily for multiple orchestrators.
@@ -15,8 +16,9 @@ k8sConfig.loadFromDefault();
 const slocRuntime = initSlocKubernetes(k8sConfig);
 
 // Initialize the Prometheus query backend.
-// initPrometheusQueryBackend(slocRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);
-initPrometheusQueryBackend(slocRuntime, { host: 'localhost', port: 30900 }, true);
+const promHost = getEnvironmentVariable('PROMETHEUS_HOST') || 'localhost';
+const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9090
+initPrometheusQueryBackend(slocRuntime, { host: promHost, port: promPort }, true);
 
 // Initialize the used SLOC mapping libraries
 initCommonMappingsLib(slocRuntime);

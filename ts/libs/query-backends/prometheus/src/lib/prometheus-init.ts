@@ -10,5 +10,6 @@ import { PrometheusTimeSeriesSource } from './time-series/public'
  * @param setAsDefaultSource If `true`, Prometheus will be set as the default `TimeSeriesSource`.
  */
 export function initPrometheusQueryBackend(runtime: SlocRuntime, config: PrometheusConfig, setAsDefaultSource: boolean = false): void {
+    console.log('Initializing PrometheusQueryBackend with config:', config);
     runtime.metricsSourcesManager.addTimeSeriesSource(new PrometheusTimeSeriesSource(config), setAsDefaultSource);
 }

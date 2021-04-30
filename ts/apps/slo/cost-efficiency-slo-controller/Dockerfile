@@ -7,11 +7,15 @@ ARG SLOC_APP_NAME
 ENV SLOC_APP_TYPE ${SLOC_APP_TYPE}
 ENV SLOC_APP_NAME ${SLOC_APP_NAME}
 
-COPY . .
-
-# Download dependencies.
-# Keeping this as a separate command allows caching this layer.
+# Copy package.json and similar files and download dependencies.
+# Copying only package.json files here allows us to cache the downloaded dependencies as a layer.
+COPY angular.json decorate-angular-cli.js jest.config.js jest.preset.js nx.json package.json package-lock.json tsconfig.base.json ./
+COPY ./tools ./tools
 RUN npm install --unsafe-perm
+
+# Copy source code.
+COPY ./apps ./apps
+COPY ./libs ./libs
 
 # Build the app.
 # It is important that "externalDependencies" is set to "none" in the node builder's options in angular.json

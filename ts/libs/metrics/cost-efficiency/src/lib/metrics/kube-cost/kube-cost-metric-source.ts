@@ -5,6 +5,7 @@ import {
     Join,
     LabelFilters,
     LabelGrouping,
+    MetricUnavailableError,
     MetricsSource,
     Sample,
     SlocRuntime,
@@ -60,6 +61,10 @@ export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
             .sumByGroup();
 
         const totalCost = await totalCostQuery.execute();
+
+        if (!totalCost.results || totalCost.results.length === 0) {
+            throw new MetricUnavailableError('total cost');
+        }
 
         return {
             currentCostPerHour: totalCost.results[0].samples[0].value,
