@@ -20,7 +20,7 @@ spec:
     spec:
       serviceAccountName: cost-efficiency-slo-controller
       containers:
-      - image: tuwiendsgsloc/slo-cost-efficiency:latest
+      - image: polarissloc/slo-cost-efficiency:latest
         name: slo-controller
         resources:
           limits:

@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: sloc-ui
-        image: tuwiendsgsloc/sloc-ui
+        image: polarissloc/sloc-ui
         resources:
           limits:
             memory: "512Mi"

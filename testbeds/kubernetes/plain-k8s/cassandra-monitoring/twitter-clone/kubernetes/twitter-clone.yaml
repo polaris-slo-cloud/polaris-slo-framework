@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: twitter-clone
-        image: tuwiendsgsloc/tweeter-test
+        image: polarissloc/tweeter-test
         resources:
           limits:
             memory: "512Mi"
