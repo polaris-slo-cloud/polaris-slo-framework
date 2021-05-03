@@ -48,7 +48,7 @@
         "orchestrator:kubernetes"
       ]
     },
-    "cli-sloc-k8s-serializer": {
+    "cli-polaris-k8s-serializer": {
       "tags": [
         "scope:cli",
         "orchestrator:kubernetes",
