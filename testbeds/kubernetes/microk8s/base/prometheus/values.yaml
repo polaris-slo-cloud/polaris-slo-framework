@@ -476,7 +476,7 @@ grafana:
   ##
   defaultDashboardsEnabled: true
 
-  adminPassword: "sloc-@dm1n"
+  adminPassword: "polaris-@dm1n"
 
   ingress:
     ## If true, Grafana Ingress will be created

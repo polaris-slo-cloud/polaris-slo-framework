@@ -1,26 +1,26 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sloc
+  name: polaris
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: sloc
-  name: sloc-ui
+  namespace: polaris
+  name: polaris-ui
 spec:
   selector:
     matchLabels:
-      app: sloc-ui
+      app: polaris-ui
   replicas: 1
   template:
     metadata:
       labels:
-        app: sloc-ui
+        app: polaris-ui
     spec:
       containers:
-      - name: sloc-ui
-        image: polarissloc/sloc-ui
+      - name: polaris-ui
+        image: polarissloc/polaris-ui
         resources:
           limits:
             memory: "512Mi"
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: sloc
-  name: sloc-ui
+  namespace: polaris
+  name: polaris-ui
 spec:
   selector:
-    app: sloc-ui
+    app: polaris-ui
   type: NodePort
   ports:
   - port: 80

@@ -5,7 +5,7 @@ metadata:
     component: cost-efficiency-slo-controller
     tier: control-plane
   name: cost-efficiency-slo-controller
-  namespace: sloc
+  namespace: polaris
 spec:
   selector:
     matchLabels:
