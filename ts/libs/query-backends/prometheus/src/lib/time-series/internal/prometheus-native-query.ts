@@ -4,15 +4,15 @@
 import {
     DataType,
     IndexByKey,
+    PolarisQueryResult,
     QueryError,
     Sample,
     SelectQueryContent,
-    SlocQueryResult,
     TimeSeries,
     TimeSeriesInstant,
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { InstantVector, Metric as PromMetric, SampleValue as PromSample, PrometheusDriver, RangeVector } from 'prometheus-query';
 import { Observable, from as observableFrom } from 'rxjs';
 import { PrometheusConfig } from '../../config';
@@ -35,7 +35,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         private promQlQuery: string,
     ) { }
 
-    execute(): Promise<SlocQueryResult<TimeSeries<any>>> {
+    execute(): Promise<PolarisQueryResult<TimeSeries<any>>> {
         const config = this.buildPrometheusQueryConfig();
         // console.log(config);
         // console.log(this.promQlQuery);
@@ -55,32 +55,32 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         }
     }
 
-    toObservable(): Observable<SlocQueryResult<TimeSeries<any>>> {
+    toObservable(): Observable<PolarisQueryResult<TimeSeries<any>>> {
         return observableFrom(this.execute());
     }
 
-    private transformInstantQueryResult(instantVectors: InstantVector[]): SlocQueryResult<TimeSeries<any>> {
-        const slocResults: TimeSeriesInstant<any>[] = instantVectors.map(instant => {
-            const slocInstant: TimeSeriesInstant<any> = this.transformMetricToTimeSeries(instant.metric) as any;
-            slocInstant.samples = [ this.transformSample(instant.value) ];
-            slocInstant.start = slocInstant.samples[0].timestamp;
-            slocInstant.end = slocInstant.start;
-            return slocInstant;
+    private transformInstantQueryResult(instantVectors: InstantVector[]): PolarisQueryResult<TimeSeries<any>> {
+        const polarisResults: TimeSeriesInstant<any>[] = instantVectors.map(instant => {
+            const polarisInstant: TimeSeriesInstant<any> = this.transformMetricToTimeSeries(instant.metric) as any;
+            polarisInstant.samples = [ this.transformSample(instant.value) ];
+            polarisInstant.start = polarisInstant.samples[0].timestamp;
+            polarisInstant.end = polarisInstant.start;
+            return polarisInstant;
         });
 
-        return { results: slocResults };
+        return { results: polarisResults };
     }
 
-    private transformRangeQueryResult(rangeVectors: RangeVector[]): SlocQueryResult<any> {
-        const slocResults: TimeSeries<any>[] = rangeVectors.map(promSeries => {
-            const slocSeries = this.transformMetricToTimeSeries(promSeries.metric);
-            slocSeries.samples = promSeries.values.map(promSample => this.transformSample(promSample));
-            slocSeries.start = slocSeries.samples[0].timestamp;
-            slocSeries.end = slocSeries.samples[slocSeries.samples.length - 1].timestamp;
-            return slocSeries;
+    private transformRangeQueryResult(rangeVectors: RangeVector[]): PolarisQueryResult<any> {
+        const polarisResults: TimeSeries<any>[] = rangeVectors.map(promSeries => {
+            const polarisSeries = this.transformMetricToTimeSeries(promSeries.metric);
+            polarisSeries.samples = promSeries.values.map(promSample => this.transformSample(promSample));
+            polarisSeries.start = polarisSeries.samples[0].timestamp;
+            polarisSeries.end = polarisSeries.samples[polarisSeries.samples.length - 1].timestamp;
+            return polarisSeries;
         });
 
-        return { results: slocResults };
+        return { results: polarisResults };
     }
 
     private transformMetricToTimeSeries(promMetric: PromMetric): TimeSeries<any> {

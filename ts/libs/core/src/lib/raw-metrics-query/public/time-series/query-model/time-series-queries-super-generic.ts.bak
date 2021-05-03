@@ -6,7 +6,7 @@
  */
 
 
-import { SlocQuery } from '../../generic';
+import { PolarisQuery } from '../../generic';
 import { LabelFilter } from './label-filter';
 import { TimeSeries, TimeSeriesInstant } from './time-series';
 import { ValueFilter } from './value-filter';
@@ -34,7 +34,7 @@ import { ValueFilter } from './value-filter';
  *
  * @param T The type of `TimeSeries` that is returned by this query.
  */
-export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> { }
+export interface TimeSeriesQuery<T extends TimeSeries<any>> extends PolarisQuery<T> { }
 
 
 /**

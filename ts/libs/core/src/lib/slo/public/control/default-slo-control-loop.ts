@@ -2,7 +2,7 @@ import { of as observableOf, throwError} from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
 import { SloMapping, SloMappingSpec } from '../../../model';
 import { DefaultMicrocontrollerFactory, MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
-import { getSlocRuntime } from '../../../runtime/public/sloc-runtime/sloc-runtime';
+import { getPolarisRuntime } from '../../../runtime/public/polaris-runtime';
 import { IndexByKey, ObservableStopper } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
 import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
@@ -35,7 +35,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private registeredSlos: Map<string, RegisteredSlo> = new Map();
 
-    private slocRuntime = getSlocRuntime();
+    private polarisRuntime = getPolarisRuntime();
 
     private _watchHandler: SloWatchEventsHandler;
 
@@ -60,7 +60,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
             map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping.spec)),
             switchMap(sloInstance => {
                 slo = sloInstance;
-                return slo.configure(sloMapping, this.slocRuntime.metricsSourcesManager, this.slocRuntime);
+                return slo.configure(sloMapping, this.polarisRuntime.metricsSourcesManager, this.polarisRuntime);
             }),
             catchError(err => {
                 const errorMsg = `An error occurred while configuring SLO ${key}.`;

@@ -1,6 +1,6 @@
 # SLO Script
 
-This folder contains all SLO Script components, i.e., the SLOC components written in TypeScript.
+This folder contains all SLO Script components, i.e., the Polaris components written in TypeScript.
 
 The TypeScript subprojects are managed using the [Nx](https://nx.dev) monorepo tools.
 
@@ -9,7 +9,7 @@ The TypeScript subprojects are managed using the [Nx](https://nx.dev) monorepo t
 
 To set up a development environment:
 
-1. Run `npm install` in the `ts` folder of the SLOC repository.
+1. Run `npm install` in the `ts` folder of the Polaris repository.
 1. If you want to test components locally, set the Kubernetes cluster, where you want to test the controller, as the current context in your KUBECONFIG file.
 
 
@@ -32,10 +32,10 @@ The [`apps`](./apps) folder contains the following application projects:
 
 | Name              | Purpose |
 |-------------------|---------|
-| [`cli-sloc-k8s-serializer`](./apps/cli/sloc-k8s-serializer) | Transforms SLO Mappings form SLO Script to Kubernetes-specific YAML. |
+| [`cli-polaris-k8s-serializer`](./apps/cli/polaris-k8s-serializer) | Transforms SLO Mappings form SLO Script to Kubernetes-specific YAML. |
 | [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO (metrics evaluation is currently mocked). |
 | [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
-| [`ui-sloc-ui`](./apps/ui/sloc-ui) | Angular UI for SLOC. |
+| [`ui-polaris-ui`](./apps/ui/polaris-ui) | Angular UI for Polaris. |
 
 
 ## Building and Running
@@ -44,9 +44,9 @@ To build any application/library use the following command:
 ```
 npm run build -- <subproject-name> --with-deps=true
 ```
-For example, to build the cli-sloc-k8s-serializer app:
+For example, to build the cli-polaris-k8s-serializer app:
 ```
-npm run build -- cli-sloc-k8s-serializer --with-deps=true
+npm run build -- cli-polaris-k8s-serializer --with-deps=true
 ```
 
 The output can then be found in the `dist` folder.

@@ -1,5 +1,5 @@
 {
-  "name": "@sloc/core",
+  "name": "@polaris-sloc/core",
   "version": "0.1.0",
   "dependencies": {
     "class-transformer": "~0.4.0",

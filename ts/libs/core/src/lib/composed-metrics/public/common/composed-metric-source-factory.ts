@@ -1,4 +1,4 @@
-import { SlocRuntime } from '../../../runtime';
+import { PolarisRuntime } from '../../../runtime';
 import { ComposedMetricParams } from './composed-metric-params';
 import { ComposedMetricSource } from './composed-metric-source';
 import { ComposedMetricType } from './composed-metric-type';
@@ -26,9 +26,9 @@ export interface ComposedMetricSourceFactory<M extends ComposedMetricType<V, P>,
      * Creates a new `ComposedMetricSource` for the specified `params`.
      *
      * @param params Parameters to configure the metric source.
-     * @param slocRuntime The `SlocRuntime` instance.
+     * @param polarisRuntime The `PolarisRuntime` instance.
      * @returns A new `ComposedMetricSource`.
      */
-    createSource(params: P, slocRuntime: SlocRuntime): ComposedMetricSource<V>;
+    createSource(params: P, polarisRuntime: PolarisRuntime): ComposedMetricSource<V>;
 
 }

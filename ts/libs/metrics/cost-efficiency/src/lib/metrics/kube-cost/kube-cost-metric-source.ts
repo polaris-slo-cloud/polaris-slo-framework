@@ -1,4 +1,4 @@
-import { TotalCost } from '@sloc/common-mappings';
+import { TotalCost } from '@polaris-sloc/common-mappings';
 import {
     ComposedMetricParams,
     ComposedMetricSourceBase,
@@ -7,10 +7,10 @@ import {
     LabelGrouping,
     MetricUnavailableError,
     MetricsSource,
+    PolarisRuntime,
     Sample,
-    SlocRuntime,
     TimeSeriesInstant,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -21,9 +21,9 @@ export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
 
     private metricsSource: MetricsSource;
 
-    constructor(private params: ComposedMetricParams, slocRuntime: SlocRuntime) {
-        super(slocRuntime);
-        this.metricsSource = slocRuntime.metricsSourcesManager;
+    constructor(private params: ComposedMetricParams, polarisRuntime: PolarisRuntime) {
+        super(polarisRuntime);
+        this.metricsSource = polarisRuntime.metricsSourcesManager;
     }
 
     getValueStream(): Observable<Sample<TotalCost>> {

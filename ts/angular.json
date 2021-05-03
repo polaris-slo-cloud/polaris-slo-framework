@@ -47,36 +47,36 @@
         }
       }
     },
-    "ui-sloc-ui": {
+    "ui-polaris-ui": {
       "projectType": "application",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
       },
-      "root": "apps/ui/sloc-ui",
-      "sourceRoot": "apps/ui/sloc-ui/src",
+      "root": "apps/ui/polaris-ui",
+      "sourceRoot": "apps/ui/polaris-ui/src",
       "prefix": "sloc",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/ui/sloc-ui",
-            "index": "apps/ui/sloc-ui/src/index.html",
-            "main": "apps/ui/sloc-ui/src/main.ts",
-            "polyfills": "apps/ui/sloc-ui/src/polyfills.ts",
-            "tsConfig": "apps/ui/sloc-ui/tsconfig.app.json",
+            "outputPath": "dist/apps/ui/polaris-ui",
+            "index": "apps/ui/polaris-ui/src/index.html",
+            "main": "apps/ui/polaris-ui/src/main.ts",
+            "polyfills": "apps/ui/polaris-ui/src/polyfills.ts",
+            "tsConfig": "apps/ui/polaris-ui/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "apps/ui/sloc-ui/src/favicon.ico",
-              "apps/ui/sloc-ui/src/assets"
+              "apps/ui/polaris-ui/src/favicon.ico",
+              "apps/ui/polaris-ui/src/assets"
             ],
             "styles": [
-              "apps/ui/sloc-ui/src/styles/styles.scss"
+              "apps/ui/polaris-ui/src/styles/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "apps/ui/sloc-ui/src/styles"
+                "apps/ui/polaris-ui/src/styles"
               ]
             },
             "scripts": []
@@ -85,8 +85,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/ui/sloc-ui/src/environments/environment.ts",
-                  "with": "apps/ui/sloc-ui/src/environments/environment.prod.ts"
+                  "replace": "apps/ui/polaris-ui/src/environments/environment.ts",
+                  "with": "apps/ui/polaris-ui/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -117,61 +117,61 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ui-sloc-ui:build",
+            "browserTarget": "ui-polaris-ui:build",
             "proxyConfig": "./proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ui-sloc-ui:build:production"
+              "browserTarget": "ui-polaris-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ui-sloc-ui:build"
+            "browserTarget": "ui-polaris-ui:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/ui/sloc-ui/tsconfig.app.json",
-              "apps/ui/sloc-ui/tsconfig.spec.json"
+              "apps/ui/polaris-ui/tsconfig.app.json",
+              "apps/ui/polaris-ui/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**",
-              "!apps/ui/sloc-ui/**/*"
+              "!apps/ui/polaris-ui/**/*"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/ui/sloc-ui/jest.config.js",
+            "jestConfig": "apps/ui/polaris-ui/jest.config.js",
             "passWithNoTests": true
           },
           "outputs": [
-            "coverage/apps/ui/sloc-ui"
+            "coverage/apps/ui/polaris-ui"
           ]
         }
       }
     },
-    "ui-sloc-ui-e2e": {
-      "root": "apps/ui/sloc-ui-e2e",
-      "sourceRoot": "apps/ui/sloc-ui-e2e/src",
+    "ui-polaris-ui-e2e": {
+      "root": "apps/ui/polaris-ui-e2e",
+      "sourceRoot": "apps/ui/polaris-ui-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/ui/sloc-ui-e2e/cypress.json",
-            "tsConfig": "apps/ui/sloc-ui-e2e/tsconfig.e2e.json",
-            "devServerTarget": "ui-sloc-ui:serve"
+            "cypressConfig": "apps/ui/polaris-ui-e2e/cypress.json",
+            "tsConfig": "apps/ui/polaris-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ui-polaris-ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ui-sloc-ui:serve:production"
+              "devServerTarget": "ui-polaris-ui:serve:production"
             }
           }
         },
@@ -179,11 +179,11 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/ui/sloc-ui-e2e/tsconfig.e2e.json"
+              "apps/ui/polaris-ui-e2e/tsconfig.e2e.json"
             ],
             "exclude": [
               "**/node_modules/**",
-              "!apps/ui/sloc-ui-e2e/**/*"
+              "!apps/ui/polaris-ui-e2e/**/*"
             ]
           }
         }
@@ -252,22 +252,22 @@
         }
       }
     },
-    "cli-sloc-k8s-serializer": {
-      "root": "apps/cli/sloc-k8s-serializer",
-      "sourceRoot": "apps/cli/sloc-k8s-serializer/src",
+    "cli-polaris-k8s-serializer": {
+      "root": "apps/cli/polaris-k8s-serializer",
+      "sourceRoot": "apps/cli/polaris-k8s-serializer/src",
       "projectType": "application",
-      "prefix": "cli-sloc-k8s-serializer",
+      "prefix": "cli-polaris-k8s-serializer",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/cli/sloc-k8s-serializer",
-            "main": "apps/cli/sloc-k8s-serializer/src/main.ts",
-            "tsConfig": "apps/cli/sloc-k8s-serializer/tsconfig.app.json",
+            "outputPath": "dist/apps/cli/polaris-k8s-serializer",
+            "main": "apps/cli/polaris-k8s-serializer/src/main.ts",
+            "tsConfig": "apps/cli/polaris-k8s-serializer/tsconfig.app.json",
             "externalDependencies": "none",
             "assets": [
-              "apps/cli/sloc-k8s-serializer/src/assets"
+              "apps/cli/polaris-k8s-serializer/src/assets"
             ]
           },
           "configurations": {
@@ -277,8 +277,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/cli/sloc-k8s-serializer/src/environments/environment.ts",
-                  "with": "apps/cli/sloc-k8s-serializer/src/environments/environment.prod.ts"
+                  "replace": "apps/cli/polaris-k8s-serializer/src/environments/environment.ts",
+                  "with": "apps/cli/polaris-k8s-serializer/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -290,7 +290,7 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "cli-sloc-k8s-serializer:build",
+            "buildTarget": "cli-polaris-k8s-serializer:build",
             "inspect": true
           }
         },
@@ -298,20 +298,20 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/cli/sloc-k8s-serializer/**/*.ts",
-              "apps/cli/sloc-k8s-serializer/**/*.spec.ts",
-              "apps/cli/sloc-k8s-serializer/**/*.d.ts"
+              "apps/cli/polaris-k8s-serializer/**/*.ts",
+              "apps/cli/polaris-k8s-serializer/**/*.spec.ts",
+              "apps/cli/polaris-k8s-serializer/**/*.d.ts"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/cli/sloc-k8s-serializer/jest.config.js",
+            "jestConfig": "apps/cli/polaris-k8s-serializer/jest.config.js",
             "passWithNoTests": true
           },
           "outputs": [
-            "coverage/apps/cli/sloc-k8s-serializer"
+            "coverage/apps/cli/polaris-k8s-serializer"
           ]
         }
       }
@@ -558,5 +558,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "ui-sloc-ui"
+  "defaultProject": "ui-polaris-ui"
 }

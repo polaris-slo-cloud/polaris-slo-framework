@@ -1,13 +1,13 @@
 import { TransformFnParams, TransformationType } from 'class-transformer';
-import { getSlocRuntimeOrThrow } from '../../runtime/public/sloc-runtime/sloc-runtime';
+import { getPolarisRuntimeOrThrow } from '../../runtime/public/polaris-runtime';
 import { Constructor } from '../../util';
 
 /**
- * This provides a wrapper around the transformation logic required by `class-transformer` and integrates it with the `SlocTransformationService`.
+ * This provides a wrapper around the transformation logic required by `class-transformer` and integrates it with the `PolarisTransformationService`.
  */
 export class PropertyTransformer<T> {
 
-    constructor(private slocType: Constructor<T>) {}
+    constructor(private polarisType: Constructor<T>) {}
 
     /**
      * Transform method called by `class-transformer`
@@ -24,12 +24,12 @@ export class PropertyTransformer<T> {
      * @see https://github.com/typestack/class-transformer#additional-data-transformation
      */
     transform(transformParams: TransformFnParams): any {
-        const runtime = getSlocRuntimeOrThrow();
+        const runtime = getPolarisRuntimeOrThrow();
         switch (transformParams.type) {
             case TransformationType.CLASS_TO_PLAIN:
                 return runtime.transformer.transformToOrchestratorPlainObject(transformParams.value);
             case TransformationType.PLAIN_TO_CLASS:
-                return runtime.transformer.transformToSlocObject(this.slocType, transformParams.value);
+                return runtime.transformer.transformToPolarisObject(this.polarisType, transformParams.value);
             default:
                 throw new Error(`Unexpected tranformation type: ${transformParams.type}`);
         }

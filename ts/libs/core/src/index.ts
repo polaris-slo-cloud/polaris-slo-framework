@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 /**
- * Public API of the @sloc/core library.
+ * Public API of the @polaris-sloc/core library.
  */
 
 export * from './lib/composed-metrics/public';

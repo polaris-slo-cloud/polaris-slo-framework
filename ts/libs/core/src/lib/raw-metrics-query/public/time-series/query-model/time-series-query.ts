@@ -1,4 +1,4 @@
-import { SlocQuery } from '../../generic';
+import { PolarisQuery } from '../../generic';
 import { LabelFilter } from './label-filter';
 import { TimeSeries } from './time-series';
 import { ValueFilter } from './value-filter';
@@ -53,7 +53,7 @@ export function isTimeSeriesQuery(obj: any | TimeSeriesQuery<any>): obj is TimeS
  *
  * @param T The type of `TimeSeries` that is returned by this query.
  */
-export interface TimeSeriesQuery<T extends TimeSeries<any>> extends SlocQuery<T> {
+export interface TimeSeriesQuery<T extends TimeSeries<any>> extends PolarisQuery<T> {
 
     /** Defines the type of the results of this `TimeSeriesQuery` */
     readonly resultType: TimeSeriesQueryResultType;

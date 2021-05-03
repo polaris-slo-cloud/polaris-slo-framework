@@ -1,7 +1,0 @@
-@import "variables";
-
-// Include the common styles for Angular Material.
-@include mat-core();
-
-// Include all theme styles for all Angular Material components.
-@include angular-material-theme($sloc-theme);

@@ -1,4 +1,4 @@
-import { SlocType } from '../transformation';
+import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { ElasticityStrategyKind } from './elasticity-strategy-kind';
@@ -22,7 +22,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
     /**
      * Configuration parameters for the SLO.
      *
-     * @note If `T` is a class, the `@SlocType` decorator needs to be applied in the
+     * @note If `T` is a class, the `@PolarisType` decorator needs to be applied in the
      * concrete class that implements `SloMappingSpec`.
      */
     sloConfig: C;
@@ -58,7 +58,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
  * Common superclass for SloMappingSpecs.
  *
  * @important If the generic parameter `T` is specified (a subclass of `SloTarget`), make sure
- * that you override the `@SlocType` decorator of `targetRef` with the correct type.
+ * that you override the `@PolarisType` decorator of `targetRef` with the correct type.
  *
  * @param C The type that describes the SLO's required configuration.
  * @param O The type of output data of the SLO, which must be supported by the target ElasticityStrategy.
@@ -66,10 +66,10 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
  */
 export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> implements SloMappingSpec<C, O, T> {
 
-    @SlocType(() => SloTarget)
+    @PolarisType(() => SloTarget)
     targetRef: T;
 
-    @SlocType(() => ElasticityStrategyKind)
+    @PolarisType(() => ElasticityStrategyKind)
     elasticityStrategy: ElasticityStrategyKind<O, T>;
 
     sloConfig: C;
@@ -85,7 +85,7 @@ export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> 
 /**
  * Common superclass for SloMappings.
  *
- * @important The `spec` must be decorated with `@SlocType` if `T` is a class.
+ * @important The `spec` must be decorated with `@PolarisType` if `T` is a class.
  *
  * @param T The type of `SloMappingSpec`.
  */

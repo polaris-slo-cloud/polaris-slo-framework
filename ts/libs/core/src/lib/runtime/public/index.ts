@@ -1,3 +1,3 @@
 export * from './metrics-source';
-export * from './sloc-runtime';
+export * from './polaris-runtime';
 export * from './watch';

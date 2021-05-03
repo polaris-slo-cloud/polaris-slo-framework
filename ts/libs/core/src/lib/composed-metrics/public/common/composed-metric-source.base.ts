@@ -1,7 +1,7 @@
 import { Observable, interval } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 import { Sample } from '../../../raw-metrics-query/public';
-import { SlocRuntime } from '../../../runtime';
+import { PolarisRuntime } from '../../../runtime';
 import { ComposedMetricSource } from './composed-metric-source';
 
 const POLLING_INTERVAL_MSEC = 10000;
@@ -13,7 +13,7 @@ const POLLING_INTERVAL_MSEC = 10000;
  */
 export abstract class ComposedMetricSourceBase<V> implements ComposedMetricSource<V> {
 
-    constructor(protected slocRuntime: SlocRuntime) {}
+    constructor(protected polarisRuntime: PolarisRuntime) {}
 
     getCurrentValue(): Observable<Sample<V>> {
         return this.getValueStream().pipe(

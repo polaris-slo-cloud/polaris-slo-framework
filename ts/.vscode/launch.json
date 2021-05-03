@@ -7,8 +7,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug sloc-k8s-serializer",
-            "preLaunchTask": "build-cli-sloc-k8s-serializer",
+            "name": "Debug polaris-k8s-serializer",
+            "preLaunchTask": "build-cli-polaris-k8s-serializer",
             "skipFiles": [
                 "<node_internals>/**",
                 "${workspaceFolder}/node_modules/tslib/**"
@@ -18,7 +18,7 @@
             "runtimeArgs": [
                 "nx",
                 "serve",
-                "cli-sloc-k8s-serializer"
+                "cli-polaris-k8s-serializer"
             ],
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"

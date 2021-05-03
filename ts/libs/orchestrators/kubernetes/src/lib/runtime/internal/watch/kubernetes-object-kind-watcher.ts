@@ -4,10 +4,10 @@ import {
     ObjectKind,
     ObjectKindPropertiesMissingError,
     ObjectKindWatcher,
-    SlocTransformationService,
+    PolarisTransformationService,
     WatchAlreadyStartedError,
     WatchEventsHandler,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 
 const REQUIRED_OBJECT_KIND_PROPERTIES: (keyof ObjectKind)[] = [ 'version', 'kind' ];
 
@@ -41,7 +41,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
 
     constructor(
         private kubeConfig: KubeConfig,
-        private transformer: SlocTransformationService,
+        private transformer: PolarisTransformationService,
     ) { }
 
     async startWatch(kind: ObjectKind, handler: WatchEventsHandler<any>): Promise<void> {
@@ -98,13 +98,13 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     private onK8sWatchCallbackEvent(type: WatchEventType, k8sObj: KubernetesObject): void {
         switch (type) {
             case 'ADDED':
-                this.transformToSlocObjectAndForward(k8sObj, slocObj => this._handler.onObjectAdded(slocObj));
+                this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectAdded(polarisObj));
                 break;
             case 'MODIFIED':
-                this.transformToSlocObjectAndForward(k8sObj, slocObj => this._handler.onObjectModified(slocObj));
+                this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectModified(polarisObj));
                 break;
             case 'DELETED':
-                this.transformToSlocObjectAndForward(k8sObj, slocObj => this._handler.onObjectDeleted(slocObj));
+                this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectDeleted(polarisObj));
                 break;
             default:
                 break;
@@ -126,13 +126,13 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     }
 
     /**
-     * Transforms the specified Kubernetes object to a SLOC object and passes it to `fn` on success.
+     * Transforms the specified Kubernetes object to a Polaris object and passes it to `fn` on success.
      */
-    private transformToSlocObjectAndForward(k8sObj: KubernetesObject, fn: (slocObj: ApiObject<any>) => void): void {
+    private transformToPolarisObjectAndForward(k8sObj: KubernetesObject, fn: (polarisObj: ApiObject<any>) => void): void {
         try {
-            const slocObj = this.transformer.transformToSlocObject(this._kind, k8sObj);
-            if (slocObj) {
-                fn(slocObj);
+            const polarisObj = this.transformer.transformToPolarisObject(this._kind, k8sObj);
+            if (polarisObj) {
+                fn(polarisObj);
             }
         } catch (err) {
             console.log(err);

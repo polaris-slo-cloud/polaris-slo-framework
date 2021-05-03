@@ -1,8 +1,8 @@
 {
-  "name": "@sloc/cost-efficiency",
+  "name": "@polaris-sloc/cost-efficiency",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@sloc/core": "~0.1.0"
+    "@polaris-sloc/core": "~0.1.0"
   }
 }

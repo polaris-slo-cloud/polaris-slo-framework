@@ -5,47 +5,47 @@ import {
     Constructor,
     InterfaceOf,
     ObjectKind,
-    ReusableSlocTransformer,
-    SlocTransformationService,
-} from '@sloc/core';
+    PolarisTransformationService,
+    ReusablePolarisTransformer,
+} from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 
-export class ApiObjectTransformer<T, P = any> implements ReusableSlocTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {
+export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {
 
-    extractSlocObjectInitData(
-        slocType: Constructor<ApiObject<T>>,
+    extractPolarisObjectInitData(
+        polarisType: Constructor<ApiObject<T>>,
         orchPlainObj: KubernetesObjectWithSpec<P>,
-        transformationService: SlocTransformationService,
+        transformationService: PolarisTransformationService,
     ): Partial<ApiObject<T>> {
         const apiVersionKind: ApiVersionKind = {
             apiVersion: orchPlainObj.apiVersion,
             kind: orchPlainObj.kind,
         };
 
-        const specType = transformationService.getPropertyType(slocType, 'spec') ?? Object;
+        const specType = transformationService.getPropertyType(polarisType, 'spec') ?? Object;
 
         const initData: Partial<ApiObject<T>> = {
-            objectKind: transformationService.transformToSlocObject(ObjectKind, apiVersionKind),
-            metadata: transformationService.transformToSlocObject(ApiObjectMetadata, orchPlainObj.metadata),
-            spec: transformationService.transformToSlocObject(specType, orchPlainObj.spec),
+            objectKind: transformationService.transformToPolarisObject(ObjectKind, apiVersionKind),
+            metadata: transformationService.transformToPolarisObject(ApiObjectMetadata, orchPlainObj.metadata),
+            spec: transformationService.transformToPolarisObject(specType, orchPlainObj.spec),
         };
 
         return initData;
     }
 
-    transformToSlocObject(
-        slocType: Constructor<ApiObject<T>>,
+    transformToPolarisObject(
+        polarisType: Constructor<ApiObject<T>>,
         orchPlainObj: KubernetesObjectWithSpec<P>,
-        transformationService: SlocTransformationService,
+        transformationService: PolarisTransformationService,
     ): ApiObject<T> {
-        const initData = this.extractSlocObjectInitData(slocType, orchPlainObj, transformationService);
-        return new slocType(initData);
+        const initData = this.extractPolarisObjectInitData(polarisType, orchPlainObj, transformationService);
+        return new polarisType(initData);
     }
 
-    transformToOrchestratorPlainObject(slocObj: ApiObject<T>, transformationService: SlocTransformationService): KubernetesObjectWithSpec<P> {
-        const apiVersionKind: ApiVersionKind = transformationService.transformToOrchestratorPlainObject(slocObj.objectKind);
-        const metadata: InterfaceOf<V1ObjectMeta> = transformationService.transformToOrchestratorPlainObject(slocObj.metadata);
-        const spec = transformationService.transformToOrchestratorPlainObject(slocObj.spec);
+    transformToOrchestratorPlainObject(polarisObj: ApiObject<T>, transformationService: PolarisTransformationService): KubernetesObjectWithSpec<P> {
+        const apiVersionKind: ApiVersionKind = transformationService.transformToOrchestratorPlainObject(polarisObj.objectKind);
+        const metadata: InterfaceOf<V1ObjectMeta> = transformationService.transformToOrchestratorPlainObject(polarisObj.metadata);
+        const spec = transformationService.transformToOrchestratorPlainObject(polarisObj.spec);
 
         const plain: KubernetesObjectWithSpec<P> = {
             ...apiVersionKind,

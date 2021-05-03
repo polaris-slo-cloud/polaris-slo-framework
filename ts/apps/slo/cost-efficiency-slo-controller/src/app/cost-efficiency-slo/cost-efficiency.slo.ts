@@ -1,5 +1,5 @@
-import { CostEfficiencyMetric, CostEfficiencyParams, CostEfficiencySloConfig } from '@sloc/common-mappings';
-import { MetricsSource, ObservableOrPromise, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput, SlocRuntime } from '@sloc/core';
+import { CostEfficiencyMetric, CostEfficiencyParams, CostEfficiencySloConfig } from '@polaris-sloc/common-mappings';
+import { MetricsSource, ObservableOrPromise, PolarisRuntime, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput } from '@polaris-sloc/core';
 import { of as observableOf } from 'rxjs';
 
 /**
@@ -17,7 +17,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     configure(
         sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>,
         metricsSource: MetricsSource,
-        slocRuntime: SlocRuntime,
+        polarisRuntime: PolarisRuntime,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

@@ -1,11 +1,11 @@
 import { KubernetesObject, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ApiObject, SloEvaluatorBase, SloOutput, SlocRuntime } from '@sloc/core';
+import { ApiObject, PolarisRuntime, SloEvaluatorBase, SloOutput } from '@polaris-sloc/core';
 import { KubernetesObjectWithSpec } from '../../model';
 
 export class KubernetesSloEvaluator extends SloEvaluatorBase {
 
     constructor(
-        private slocRuntime: SlocRuntime,
+        private polarisRuntime: PolarisRuntime,
         private k8sClient: KubernetesObjectApi,
     ) {
         super();
@@ -13,7 +13,7 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
 
     onAfterEvaluateSlo(key: string, currContext: never, sloOutput: SloOutput<any>): Promise<void> {
         const elasticityStrategyName = `${key}-elasticity-strategy`
-        const elasticityStrategy = this.slocRuntime.elasticityStrategyService.fromSloOutput(elasticityStrategyName, sloOutput);
+        const elasticityStrategy = this.polarisRuntime.elasticityStrategyService.fromSloOutput(elasticityStrategyName, sloOutput);
         const k8sElasticityStrat = this.transformToKubernetesObject(elasticityStrategy);
 
         console.log(`SLO ${k8sElasticityStrat.metadata.name}: Applying elasticityStrategy`, k8sElasticityStrat);
@@ -28,7 +28,7 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
     }
 
     private transformToKubernetesObject(obj: ApiObject<any>): KubernetesObjectWithSpec<any> {
-        return this.slocRuntime.transformer.transformToOrchestratorPlainObject(obj) as KubernetesObjectWithSpec<any>;
+        return this.polarisRuntime.transformer.transformToOrchestratorPlainObject(obj) as KubernetesObjectWithSpec<any>;
     }
 
     private async updateExistingElasticityStrategy(newSpec: KubernetesObjectWithSpec<any>): Promise<void> {

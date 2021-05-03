@@ -1,4 +1,4 @@
-import { SlocType } from '../transformation';
+import { PolarisType } from '../transformation';
 import { initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { SloTarget } from './slo-target';
@@ -22,7 +22,7 @@ import { SloTarget } from './slo-target';
 export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
-    @SlocType(() => SloTarget)
+    @PolarisType(() => SloTarget)
     targetRef: T;
 
     /**
@@ -56,7 +56,7 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
  */
 export class ElasticityStrategy<O, T extends SloTarget = SloTarget> extends ApiObject<ElasticityStrategySpec<O, T>> {
 
-    @SlocType(() => ElasticityStrategySpec)
+    @PolarisType(() => ElasticityStrategySpec)
     spec: ElasticityStrategySpec<O, T>;
 
     constructor(initData?: Partial<ElasticityStrategy<O, T>>) {

@@ -1,5 +1,5 @@
 import { ApiObject, ObjectKind } from '../../../model';
-import { SlocRuntime } from '../sloc-runtime';
+import { PolarisRuntime } from '../polaris-runtime';
 import { ObjectKindsAlreadyWatchedError } from './errors';
 import { ObjectKindWatcher } from './object-kind-watcher';
 import { WatchEventsHandler } from './watch-events-handler';
@@ -9,7 +9,7 @@ export class DefaultWatchManager implements WatchManager {
 
     private watchers: Map<string, ObjectKindWatcher> = new Map();
 
-    constructor(private slocRuntime: SlocRuntime) { }
+    constructor(private polarisRuntime: PolarisRuntime) { }
 
     get activeWatchers(): ObjectKindWatcher[] {
         return Array.from(this.watchers.values());
@@ -19,7 +19,7 @@ export class DefaultWatchManager implements WatchManager {
         this.assertNoExistingWatchers(kinds);
 
         const watchers = kinds.map(async kind => {
-            const watcher = this.slocRuntime.createObjectKindWatcher();
+            const watcher = this.polarisRuntime.createObjectKindWatcher();
             await watcher.startWatch(kind, handler);
             this.watchers.set(kind.toString(), watcher);
             return watcher;

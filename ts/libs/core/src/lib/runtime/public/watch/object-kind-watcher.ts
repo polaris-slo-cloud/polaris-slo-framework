@@ -4,7 +4,7 @@ import { WatchEventsHandler } from './watch-events-handler';
 /**
  * Watches an `ObjectKind` on the orchestrator and passes them to the `WatchEventsHandler`.
  *
- * The objects passed to the `WatchEventsHandler` have already been transformed into SLOC objects.
+ * The objects passed to the `WatchEventsHandler` have already been transformed into Polaris objects.
  */
 export interface ObjectKindWatcher {
 

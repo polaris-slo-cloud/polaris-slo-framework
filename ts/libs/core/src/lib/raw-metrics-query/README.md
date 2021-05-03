@@ -31,17 +31,17 @@ We assume the following data model in the time series DB:
     * The value in Prometheus
     * _value field in InfluxDB
     * The first value column in MQL
-    * If the DB supports multiple values, the value is represented by an object in a SLOC TimeSeries
+    * If the DB supports multiple values, the value is represented by an object in a Polaris TimeSeries
 
 
-### SLOC Query API Data Types
+### Polaris Query API Data Types
 PromQL:
 * InstantVector 
     * (PromQL: a set of time series containing a single sample for each time series, all sharing the same timestamp)
 * RangeVector
     * (PromQL: a set of time series containing a range of data points over time for each time series)
 
-SLOC:
+Polaris:
 * `TimeSeries<T>`
     * Unique ID?
     * MetricName (e.g., kubelet_http_requests_total)
@@ -116,7 +116,7 @@ metrics.from(PROMETHEUS)
 ```
 **PromQL Output:** a single InstantVector with the latest sample for each time series.
 
-**SLOC API Output:** `TimeSeriesInstant[]`, where the `samples` array of each `TimeSeries` contains a single sample.
+**Polaris API Output:** `TimeSeriesInstant[]`, where the `samples` array of each `TimeSeries` contains a single sample.
 
 
 ### Example 2
@@ -129,4 +129,4 @@ metrics.from(PROMETHEUS)
 ```
 **PromQL Output:** a single RangeVector, which is made up of an array of sample values for each time series.
 
-**SLOC API Output:** `TimeSeries[]`, where the `samples` array of each `TimeSeries` contains multiple samples.
+**Polaris API Output:** `TimeSeries[]`, where the `samples` array of each `TimeSeries` contains multiple samples.

@@ -6,7 +6,7 @@ export type FactoryFn<I, O> = (input: I) => O;
  * Used to instantiate a microcontroller for a particular Spec instance, e.g., a `ServiceLevelObjective`
  * instance for an `SloMapping`.
  *
- * @note In SLOC a controller is used to manage a particular `ObjectKind`. Some kinds need only a single
+ * @note In Polaris a controller is used to manage a particular `ObjectKind`. Some kinds need only a single
  * controller, while others (e.g., `SloMappings`) require a distinct controller instance for each spec instance.
  * To distinguish between these two controller types, we call the latter ones `microcontrollers`.
  *
@@ -16,7 +16,7 @@ export type FactoryFn<I, O> = (input: I) => O;
  * Originally an SLO mapping contained a factory method for the `ServiceLevelObjective`, but this proved to be
  * too restrictive, because it required the SLO mapping to be compiled together with the `ServiceLevelObjective`
  * implementation.
- * This would have made the public SLOC libraries larger and would have prevented the packaging of implementations
+ * This would have made the public Polaris libraries larger and would have prevented the packaging of implementations
  * into proprietary applications.
  *
  * @param S The type of input spec.

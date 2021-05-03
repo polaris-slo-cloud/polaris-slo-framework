@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { SlocQueryBase, SlocQueryResult } from '../../generic';
+import { PolarisQueryBase, PolarisQueryResult } from '../../generic';
 import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
 import { NativeQueryBuilder, NativeQueryBuilderFactoryFn } from './native-query-builder';
 import { QueryContent, SubqueryQueryContent } from './query-content';
@@ -11,7 +11,7 @@ import { SubqueryBuilderContainer } from './subquery-builder-content';
  * This class takes care of storing the `QueryContent` and executing the `NativeQueryBuilder` to
  * assemble a DB-native query, as well as executing it.
  */
-export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends SlocQueryBase<T> implements TimeSeriesQuery<T> {
+export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends PolarisQueryBase<T> implements TimeSeriesQuery<T> {
 
     abstract readonly resultType: TimeSeriesQueryResultType;
 
@@ -45,12 +45,12 @@ export abstract class TimeSeriesQueryBase<T extends TimeSeries<any>> extends Slo
      */
     protected abstract createTimeInstantQuery(queryContent: QueryContent): TimeInstantQuery<any> & TimeSeriesQueryBase<TimeSeriesInstant<any>>;
 
-    protected executeInternal(queryChain: TimeSeriesQueryBase<T>[]): Promise<SlocQueryResult<T>> {
+    protected executeInternal(queryChain: TimeSeriesQueryBase<T>[]): Promise<PolarisQueryResult<T>> {
         const query = this.buildNativeQuery(queryChain);
         return query.execute();
     }
 
-    protected toObservableInternal(queryChain: TimeSeriesQueryBase<T>[]): Observable<SlocQueryResult<T>> {
+    protected toObservableInternal(queryChain: TimeSeriesQueryBase<T>[]): Observable<PolarisQueryResult<T>> {
         const query = this.buildNativeQuery(queryChain);
         return query.toObservable();
     }

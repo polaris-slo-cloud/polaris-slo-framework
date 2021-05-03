@@ -1,5 +1,5 @@
 
-import { SloTarget } from '@sloc/core';
+import { SloTarget } from '@polaris-sloc/core';
 
 /**
  * An `SloTarget` that supports replicas (horizontal scaling).

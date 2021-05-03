@@ -1,2 +1,2 @@
 export * from './watch';
-export * from './kubernetes-sloc-runtime';
+export * from './kubernetes-polaris-runtime';

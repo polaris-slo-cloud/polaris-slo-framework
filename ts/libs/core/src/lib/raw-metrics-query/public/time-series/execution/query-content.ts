@@ -40,7 +40,7 @@ export enum QueryContentType {
      * A query that applies a DB-native function to the `TimeSeries`.
      *
      * If the DB does not support a particular function, the query library may
-     * emulate the behavior in SLOC code.
+     * emulate the behavior in Polaris code.
      */
     Function = 'functionQuery',
 

@@ -1,11 +1,11 @@
 # Builder stage
 FROM node:14-alpine3.13 AS builder
-WORKDIR /usr/src/sloc
+WORKDIR /usr/src/polaris
 
-ARG SLOC_APP_TYPE
-ARG SLOC_APP_NAME
-ENV SLOC_APP_TYPE ${SLOC_APP_TYPE}
-ENV SLOC_APP_NAME ${SLOC_APP_NAME}
+ARG POLARIS_APP_TYPE
+ARG POLARIS_APP_NAME
+ENV POLARIS_APP_TYPE ${POLARIS_APP_TYPE}
+ENV POLARIS_APP_NAME ${POLARIS_APP_NAME}
 
 # Copy package.json and similar files and download dependencies.
 # Copying only package.json files here allows us to cache the downloaded dependencies as a layer.
@@ -20,21 +20,21 @@ COPY ./libs ./libs
 # Build the app.
 # It is important that "externalDependencies" is set to "none" in the node builder's options in angular.json
 # to make sure that all dependencies are packaged into the main.js file.
-RUN npx nx build ${SLOC_APP_TYPE}-${SLOC_APP_NAME} --with-deps=true
+RUN npx nx build ${POLARIS_APP_TYPE}-${POLARIS_APP_NAME} --with-deps=true
 
 
 
 # Final image stage
 FROM node:14-alpine3.13
 
-ARG SLOC_APP_TYPE
-ARG SLOC_APP_NAME
-ENV SLOC_APP_TYPE ${SLOC_APP_TYPE}
-ENV SLOC_APP_NAME ${SLOC_APP_NAME}
+ARG POLARIS_APP_TYPE
+ARG POLARIS_APP_NAME
+ENV POLARIS_APP_TYPE ${POLARIS_APP_TYPE}
+ENV POLARIS_APP_NAME ${POLARIS_APP_NAME}
 
-WORKDIR /usr/apps/${SLOC_APP_NAME}
+WORKDIR /usr/apps/${POLARIS_APP_NAME}
 
 # Copy the build output.
-COPY --from=builder /usr/src/sloc/dist/apps/${SLOC_APP_TYPE}/${SLOC_APP_NAME} .
+COPY --from=builder /usr/src/polaris/dist/apps/${POLARIS_APP_TYPE}/${POLARIS_APP_NAME} .
 
 CMD ["node", "main.js"]

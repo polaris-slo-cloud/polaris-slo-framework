@@ -1,4 +1,4 @@
-import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@sloc/common-mappings';
+import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@polaris-sloc/common-mappings';
 import {
     ComposedMetricSourceBase,
     Duration,
@@ -6,11 +6,11 @@ import {
     LabelGrouping,
     MetricUnavailableError,
     MetricsSource,
+    PolarisRuntime,
     Sample,
-    SlocRuntime,
     TimeRange,
     TimeSeriesInstant,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
@@ -35,9 +35,9 @@ export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<
     private metricsSource: MetricsSource;
     private targetThresholdSecStr: string;
 
-    constructor(private params: CostEfficiencyParams, slocRuntime: SlocRuntime) {
-        super(slocRuntime);
-        this.metricsSource = slocRuntime.metricsSourcesManager;
+    constructor(private params: CostEfficiencyParams, polarisRuntime: PolarisRuntime) {
+        super(polarisRuntime);
+        this.metricsSource = polarisRuntime.metricsSourcesManager;
         this.targetThresholdSecStr = (params.targetThreshold / 1000).toString();
     }
 

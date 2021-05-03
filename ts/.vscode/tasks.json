@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build-cli-sloc-k8s-serializer",
+            "label": "build-cli-polaris-k8s-serializer",
             "type": "shell",
-            "command": "npx nx build cli-sloc-k8s-serializer --with-deps=true --source-map=true"
+            "command": "npx nx build cli-polaris-k8s-serializer --with-deps=true --source-map=true"
         },
         {
             "label": "build-cost-efficiency-slo-controller",

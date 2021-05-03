@@ -1,40 +1,53 @@
-import { Constructor, ObjectKind, OrchestratorToSlocTransformationError, ReusableSlocTransformer, SlocTransformationService } from '@sloc/core';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import {
+    Constructor,
+    ObjectKind,
+    OrchestratorToPolarisTransformationError,
+    PolarisTransformationService,
+    ReusablePolarisTransformer,
+} from '@polaris-sloc/core';
 import { ApiVersionKind } from '../../../model';
 
 /**
- * Transforms an `ObjectKind` between the SLOC format and a Kubernetes object of the form:
+ * Transforms an `ObjectKind` between the Polaris format and a Kubernetes object of the form:
  * ```
  * {
- *      apiVersion: `${slocObj.group}/${slocObj.version}`,
- *      kind: slocObj.kind
+ *      apiVersion: `${polarisObj.group}/${polarisObj.version}`,
+ *      kind: polarisObj.kind
  * }
  * ```
  */
-export class ObjectKindTransformer implements ReusableSlocTransformer<ObjectKind, ApiVersionKind> {
+export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectKind, ApiVersionKind> {
 
-    transformToSlocObject(slocType: Constructor<ObjectKind>, orchPlainObj: ApiVersionKind, transformationService: SlocTransformationService): ObjectKind {
-        const data = this.extractSlocObjectInitData(slocType, orchPlainObj, transformationService);
-        // Using `new slocType()` allows this transformer to work also for subclasses.
-        return new slocType(data);
+    transformToPolarisObject(
+        polarisType: Constructor<ObjectKind>,
+        orchPlainObj: ApiVersionKind,
+        transformationService: PolarisTransformationService,
+    ): ObjectKind {
+        const data = this.extractPolarisObjectInitData(polarisType, orchPlainObj, transformationService);
+        // Using `new polarisType()` allows this transformer to work also for subclasses.
+        return new polarisType(data);
     }
 
-    transformToOrchestratorPlainObject(slocObj: ObjectKind, transformationService: SlocTransformationService): ApiVersionKind {
+    transformToOrchestratorPlainObject(polarisObj: ObjectKind, transformationService: PolarisTransformationService): ApiVersionKind {
         const ret: ApiVersionKind = {
-            kind: slocObj.kind,
+            kind: polarisObj.kind,
         };
-        if (slocObj.group) {
-            ret.apiVersion = slocObj.group;
-            if (slocObj.version) {
-                ret.apiVersion += `/${slocObj.version}`;
+        if (polarisObj.group) {
+            ret.apiVersion = polarisObj.group;
+            if (polarisObj.version) {
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                ret.apiVersion += `/${polarisObj.version}`;
             }
         }
         return ret;
     }
 
-    extractSlocObjectInitData(
-        slocType: Constructor<ObjectKind>,
+    extractPolarisObjectInitData(
+        polarisType: Constructor<ObjectKind>,
         orchPlainObj: ApiVersionKind,
-        transformationService: SlocTransformationService,
+        transformationService: PolarisTransformationService,
     ): Partial<ObjectKind> {
         const data: Partial<ObjectKind> = {
             kind: orchPlainObj.kind,
@@ -42,7 +55,7 @@ export class ObjectKindTransformer implements ReusableSlocTransformer<ObjectKind
         if (orchPlainObj.apiVersion) {
             const segments = orchPlainObj.apiVersion.split('/');
             if (segments.length > 2) {
-                throw new OrchestratorToSlocTransformationError(slocType, orchPlainObj, '"apiVersion" must not contain more than one slash.');
+                throw new OrchestratorToPolarisTransformationError(polarisType, orchPlainObj, '"apiVersion" must not contain more than one slash.');
             }
             data.group = segments[0];
             if (segments.length === 2) {
