@@ -1,4 +1,4 @@
-# SLOC Documentation
+# Polaris Documentation
 
 This is the main documentation of the project.
 

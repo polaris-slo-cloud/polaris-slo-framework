@@ -1,6 +1,6 @@
 # Generic Elasticity Strategies
 
-The SLOC project contains a set of generic elasticity strategy controllers and the associated SLO Script types, which are commonly used.
+The Polaris project contains a set of generic elasticity strategy controllers and the associated SLO Script types, which are commonly used.
 
 Currently, we provide the following elasticity strategies:
 

@@ -25,7 +25,7 @@ To carry out the profiling experiment, there are multiple options:
     ```
 1. Establish a port forwarding to the Node.JS inspect port of the SLO controller pod:
     ```
-    kubectl port-forward -n sloc deployments/cost-efficiency-slo-controller 9229:9229
+    kubectl port-forward -n polaris deployments/cost-efficiency-slo-controller 9229:9229
     ```
 1. Open `chrome://inspect` in Google Chrome. It should detect the running SLO controller automatically. Then hit `inspect`.
 1. In the `Profiling` tab of the Node.JS Developer tool window, start a profiling session.

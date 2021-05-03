@@ -1,4 +1,4 @@
-# Install SLOC Testbed Base with MicroK8S
+# Install Polaris Testbed Base with MicroK8S
 
 ## Install MicroK8s Base
 

@@ -1,6 +1,6 @@
-# SLOC
+# Polaris SLO Cloud
 
-The SLOC project aims to provide **S**ervice **L**evel **O**bjectives for next generation **C**loud computing
+The Polaris SLO Cloud project aims to provide Service Level Objectives (SLOs) for next generation Cloud computing
 
 Service Level Agreements (SLAs) are very common in cloud computing.
 Each SLA consists of one or more Service Level Objectives, which are measurable capacity guarantees.
@@ -11,9 +11,9 @@ It is commonly understood as provisioning more resources for an application as t
 However, this *resource elasticity* is only one of three possible [elasticity dimensions](https://ieeexplore.ieee.org/document/6015579).
 The other two are *cost elasticity* (i.e., how much is a customer willing to pay for a service) and *quality elasticity* (e.g., the desired accuracy of the prediction of a machine learning model).
 
-The goal of the SLOC project is to bring **high-level SLOs** to the cloud and enable customers to leverage all three levels of elasticity.
+The goal of the Polaris project is to bring **high-level SLOs** to the cloud and enable customers to leverage all three levels of elasticity.
 
-For more details and background on the overall goals of the SLOC project, please see [this publication](https://ieeexplore.ieee.org/document/9146966).
+For more details and background on the overall goals of the Polaris project, please see [this publication](https://ieeexplore.ieee.org/document/9146966).
 
 
 ## Motivating Example
@@ -31,7 +31,7 @@ Ideally they would like to specify a simple configuration that guarantees them a
 To this end, a [cost efficiency](http://www2.tisip.no/quis/public_files/wp7-cost-effectiveness-efficiency.pdf) SLO could be offered by the provider.
 Based on [this article](https://ieeexplore.ieee.org/document/6319167), we define the cost efficiency of a cloud application as the number of requests per second faster than N milliseconds divided by the total cost of the service.
 The cost efficiency could be exported by one or more services of the deployment as a *custom metric* and the service provider can use it as a base for creating an SLO that can be configured by the service consumers.
-SLOC can then take care of automatically of scaling all services within the CMS-as-a-Service workload, based on this cost efficiency SLO.
+Polaris can then take care of automatically of scaling all services within the CMS-as-a-Service workload, based on this cost efficiency SLO.
 
 A service consumer can now deploy the CMS-as-a-Service as a workload in his/her cloud subscription.
 To configure the SLO, the consumer configures an *SLO Mapping*, which associates the cost efficiency SLO to the particular workload and supplies the desired cost efficiency as configuration values.
@@ -39,7 +39,7 @@ To configure the SLO, the consumer configures an *SLO Mapping*, which associates
 
 ## Beyond Simple Scaling
 
-SLOC does not only allow the development and configuration of complex SLOs, it also allows service consumers the choose the exact elasticity strategy they want to use when their SLO is violated.
+Polaris does not only allow the development and configuration of complex SLOs, it also allows service consumers the choose the exact elasticity strategy they want to use when their SLO is violated.
 The most common form (see [here](https://dl.acm.org/doi/10.1145/3148149)) of scaling in today's clouds is horizontal scaling, i.e., adding additional instances of a service (*scaling out*) or removing unneeded instances of the service (*scaling in*).
 
 The service provider can offer multiple *elasticity strategies*, e.g., 
@@ -53,7 +53,7 @@ SLO Mappings allow service consumers to choose which elasticity strategy they wa
 
 ## Features
 
-The SLOC project offers/will offer (the project is still under development) the following features:
+The Polaris project offers/will offer (the project is still under development) the following features:
 
 * SLO Script, a language and framework for 
     * developing complex SLOs, based on one or more metrics
@@ -82,6 +82,6 @@ All code for this project is contained in this repository.
 
 ## Documentation
 
-Documentation for the SLOC project can be found in the [docs](./docs) folder.
+Documentation for the Polaris project can be found in the [docs](./docs) folder.
 
 This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo.
