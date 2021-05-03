@@ -1,2 +1,2 @@
-export * from './sloc-runtime.base';
-export * from './sloc-runtime';
+export * from './polaris-runtime.base';
+export * from './polaris-runtime';

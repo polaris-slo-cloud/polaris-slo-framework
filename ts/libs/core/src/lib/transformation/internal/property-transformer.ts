@@ -1,5 +1,5 @@
 import { TransformFnParams, TransformationType } from 'class-transformer';
-import { getPolarisRuntimeOrThrow } from '../../runtime/public/sloc-runtime/sloc-runtime';
+import { getPolarisRuntimeOrThrow } from '../../runtime/public/sloc-runtime';
 import { Constructor } from '../../util';
 
 /**

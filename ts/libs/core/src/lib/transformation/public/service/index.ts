@@ -1,2 +1,2 @@
-export * from './default-sloc-transformation.service';
-export * from './sloc-transformation-service';
+export * from './default-polaris-transformation.service';
+export * from './polaris-transformation-service';

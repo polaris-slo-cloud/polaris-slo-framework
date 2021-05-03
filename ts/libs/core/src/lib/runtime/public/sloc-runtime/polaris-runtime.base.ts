@@ -4,7 +4,7 @@ import { DefaultPolarisTransformationService, PolarisTransformationService } fro
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
 import { MetricsSourcesManager } from '../metrics-source';
 import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from '../watch';
-import { PolarisRuntime } from './sloc-runtime';
+import { PolarisRuntime } from './polaris-runtime';
 
 export abstract class PolarisRuntimeBase implements PolarisRuntime {
 

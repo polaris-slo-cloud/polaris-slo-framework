@@ -3,7 +3,7 @@ import { IndexByKey, PolarisConstructor, PolarisMetadataUtils } from '../../../u
 import { PolarisTransformationMetadata } from '../../internal';
 import { PolarisTransformationConfig, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
-import { PolarisTransformationService } from './sloc-transformation-service';
+import { PolarisTransformationService } from './polaris-transformation-service';
 
 /**
  * The default implementation of the `PolarisTransformationService`.

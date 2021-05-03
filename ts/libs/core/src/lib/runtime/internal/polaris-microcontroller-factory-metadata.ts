@@ -1,7 +1,7 @@
 import { FactoryFn } from '../public/microcontroller-factory/microcontroller-factory';
 
 /**
- * Type metadata used by the `DefaulMicrocontrollerFactory`.
+ * Type metadata used by the `DefaultMicrocontrollerFactory`.
  *
  * This metadata is inheritable.
  *

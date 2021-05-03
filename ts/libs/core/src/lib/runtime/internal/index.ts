@@ -1,2 +1,2 @@
 export * from './metrics-source';
-export * from './sloc-microcontroller-factory-metadata';
+export * from './polaris-microcontroller-factory-metadata';
