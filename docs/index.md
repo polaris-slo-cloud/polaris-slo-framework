@@ -1,6 +1,6 @@
-# Polaris
+# Polaris SLO Cloud
 
-The Polaris project aims to provide **S**ervice **L**evel **O**bjectives for next generation **C**loud computing
+The Polaris SLO Cloud project (previously called SLOC) aims to provide Service Level Objectives (SLOs) for next generation Cloud computing.
 
 Service Level Agreements (SLAs) are very common in cloud computing.
 Each SLA consists of one or more Service Level Objectives, which are measurable capacity guarantees.
@@ -84,7 +84,7 @@ All code for this project is contained in this repository.
 
 Documentation for the Polaris project can be found [here](./docs.md).
 
-This video provides an introduction to SLO script and shows an end-to-end demo:
+This video provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC, is used):
 
 <a href="https://www.youtube.com/watch?v=qRw_oyn_7Ss" target="_blank" rel="noopener">
     <img src="./assets/demo-video1-preview.png" alt="SLO Script Demo Video" width="640" height="360" border="10" />
