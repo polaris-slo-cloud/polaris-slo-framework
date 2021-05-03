@@ -56,7 +56,7 @@
       },
       "root": "apps/ui/polaris-ui",
       "sourceRoot": "apps/ui/polaris-ui/src",
-      "prefix": "sloc",
+      "prefix": "polaris",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
