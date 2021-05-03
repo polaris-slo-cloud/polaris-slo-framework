@@ -1,5 +1,5 @@
 import { ApiObject, ObjectKind } from '../../../model';
-import { PolarisRuntime } from '../sloc-runtime';
+import { PolarisRuntime } from '../polaris-runtime';
 import { ObjectKindsAlreadyWatchedError } from './errors';
 import { ObjectKindWatcher } from './object-kind-watcher';
 import { WatchEventsHandler } from './watch-events-handler';
