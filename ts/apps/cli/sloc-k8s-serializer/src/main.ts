@@ -1,6 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { CostEfficiencySloMapping, CpuUsageSloMapping, initSlocLib as initCommonMappingsLib } from '@sloc/common-mappings';
-import { initSlocKubernetes } from '@sloc/kubernetes';
+import { CostEfficiencySloMapping, CpuUsageSloMapping, initSlocLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { initSlocKubernetes } from '@polaris-sloc/kubernetes';
 import * as Yaml from 'js-yaml';
 import { isEqual as _isEqual } from 'lodash';
 import { default as costEffSlo } from './app/cost-efficiency.slo';

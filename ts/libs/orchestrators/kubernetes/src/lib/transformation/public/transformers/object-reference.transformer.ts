@@ -1,4 +1,4 @@
-import { Constructor, ObjectKind, ObjectReference, ReusableSlocTransformer, SlocTransformationService } from '@sloc/core';
+import { Constructor, ObjectKind, ObjectReference, ReusableSlocTransformer, SlocTransformationService } from '@polaris-sloc/core';
 import { CrossVersionObjectReference } from '../../../model';
 import { ObjectKindTransformer } from './object-kind.transformer';
 

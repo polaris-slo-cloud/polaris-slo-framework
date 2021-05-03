@@ -1,4 +1,4 @@
-# @sloc/common-mappings
+# @polaris-sloc/common-mappings
 
 This library was contains commonly used SLOC mappings and interfaces.
 

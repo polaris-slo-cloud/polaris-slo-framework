@@ -7,7 +7,7 @@ import {
     ObjectKind,
     ReusableSlocTransformer,
     SlocTransformationService,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 
 export class ApiObjectTransformer<T, P = any> implements ReusableSlocTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {

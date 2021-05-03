@@ -1,4 +1,4 @@
-import { Constructor, ObjectKind, OrchestratorToSlocTransformationError, ReusableSlocTransformer, SlocTransformationService } from '@sloc/core';
+import { Constructor, ObjectKind, OrchestratorToSlocTransformationError, ReusableSlocTransformer, SlocTransformationService } from '@polaris-sloc/core';
 import { ApiVersionKind } from '../../../model';
 
 /**

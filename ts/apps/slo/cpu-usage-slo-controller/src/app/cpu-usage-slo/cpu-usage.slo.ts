@@ -1,4 +1,4 @@
-import { CpuUsageSloConfig } from '@sloc/common-mappings';
+import { CpuUsageSloConfig } from '@polaris-sloc/common-mappings';
 import {
     Duration,
     LabelFilters,
@@ -11,7 +11,7 @@ import {
     SloOutput,
     SlocRuntime,
     TimeRange,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { of as observableOf } from 'rxjs';
 
 const LOWER_BOUND = 1;

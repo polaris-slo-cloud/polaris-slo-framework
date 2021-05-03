@@ -1,5 +1,5 @@
-import { CostEfficiency, CostEfficiencyMetric, CostEfficiencyParams } from '@sloc/common-mappings';
-import { ComposedMetricSource, ComposedMetricSourceFactory, SlocRuntime } from '@sloc/core';
+import { CostEfficiency, CostEfficiencyMetric, CostEfficiencyParams } from '@polaris-sloc/common-mappings';
+import { ComposedMetricSource, ComposedMetricSourceFactory, SlocRuntime } from '@polaris-sloc/core';
 import { RestApiCostEfficiencyMetricSource } from './rest-api-cost-efficiency-metric-source';
 
 /**

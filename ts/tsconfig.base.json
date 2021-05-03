@@ -27,19 +27,19 @@
             "lodash": [
                 "node_modules/lodash-es"
             ],
-            "@sloc/core": [
+            "@polaris-sloc/core": [
                 "libs/core/src/index.ts"
             ],
-            "@sloc/kubernetes": [
+            "@polaris-sloc/kubernetes": [
                 "libs/orchestrators/kubernetes/src/index.ts"
             ],
-            "@sloc/common-mappings": [
+            "@polaris-sloc/common-mappings": [
                 "libs/mappings/common-mappings/src/index.ts"
             ],
-            "@sloc/prometheus": [
+            "@polaris-sloc/prometheus": [
                 "libs/query-backends/prometheus/src/index.ts"
             ],
-            "@sloc/cost-efficiency": [
+            "@polaris-sloc/cost-efficiency": [
                 "libs/metrics/cost-efficiency/src/index.ts"
             ]
         }

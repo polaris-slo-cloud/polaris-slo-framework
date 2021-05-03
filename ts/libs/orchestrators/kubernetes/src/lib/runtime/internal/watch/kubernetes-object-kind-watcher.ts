@@ -7,7 +7,7 @@ import {
     SlocTransformationService,
     WatchAlreadyStartedError,
     WatchEventsHandler,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 
 const REQUIRED_OBJECT_KIND_PROPERTIES: (keyof ObjectKind)[] = [ 'version', 'kind' ];
 

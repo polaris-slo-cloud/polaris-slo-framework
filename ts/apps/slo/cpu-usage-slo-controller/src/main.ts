@@ -1,14 +1,14 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initSlocLib as initCommonMappingsLib } from '@sloc/common-mappings';
-import { initSlocKubernetes } from '@sloc/kubernetes';
-import { initPrometheusQueryBackend } from '@sloc/prometheus';
+import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initSlocLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { initSlocKubernetes } from '@polaris-sloc/kubernetes';
+import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
 import { CpuUsageSlo } from './app/cpu-usage-slo';
 
 // ToDo: This file should be generated automatically during the build process.
 // ToDo: It should be possible to build the SLO controller easily for multiple orchestrators.
 
-// Load the KubeConfig and initialize the @sloc/kubernetes library.
+// Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
 const slocRuntime = initSlocKubernetes(k8sConfig);

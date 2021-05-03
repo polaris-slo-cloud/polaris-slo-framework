@@ -1,5 +1,5 @@
 import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ObjectKindWatcher, SloEvaluator, SlocRuntimeBase } from '@sloc/core';
+import { ObjectKindWatcher, SloEvaluator, SlocRuntimeBase } from '@polaris-sloc/core';
 import { KubernetesSloEvaluator } from '../../slo';
 import { KubernetesObjectKindWatcher } from './watch';
 

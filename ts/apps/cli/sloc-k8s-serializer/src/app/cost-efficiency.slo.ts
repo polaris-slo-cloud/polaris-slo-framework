@@ -3,8 +3,8 @@ import {
     CostEfficiencySloMappingSpec,
     HorizontalElasticityStrategyKind,
     RestServiceTarget,
-} from '@sloc/common-mappings';
-import { ApiObjectMetadata } from '@sloc/core';
+} from '@polaris-sloc/common-mappings';
+import { ApiObjectMetadata } from '@polaris-sloc/core';
 
 
 export default new CostEfficiencySloMapping({

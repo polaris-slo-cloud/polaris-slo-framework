@@ -1,8 +1,8 @@
 {
-  "name": "@sloc/prometheus",
+  "name": "@polaris-sloc/prometheus",
   "version": "0.1.0",
   "dependencies": {
-    "@sloc/core": "~0.1.0",
+    "@polaris-sloc/core": "~0.1.0",
     "prometheus-query": "^3.0.0"
   }
 }

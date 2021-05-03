@@ -1,5 +1,5 @@
-import { CpuUsageSloMapping, CpuUsageSloMappingSpec, HorizontalElasticityStrategyKind } from '@sloc/common-mappings';
-import { ApiObjectMetadata, SloTarget } from '@sloc/core';
+import { CpuUsageSloMapping, CpuUsageSloMappingSpec, HorizontalElasticityStrategyKind } from '@polaris-sloc/common-mappings';
+import { ApiObjectMetadata, SloTarget } from '@polaris-sloc/core';
 
 export default new CpuUsageSloMapping({
     metadata: new ApiObjectMetadata({

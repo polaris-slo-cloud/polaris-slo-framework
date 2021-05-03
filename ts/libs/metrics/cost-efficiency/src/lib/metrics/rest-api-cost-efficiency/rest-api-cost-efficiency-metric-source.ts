@@ -1,4 +1,4 @@
-import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@sloc/common-mappings';
+import { CostEfficiency, CostEfficiencyParams, TotalCost, TotalCostMetric } from '@polaris-sloc/common-mappings';
 import {
     ComposedMetricSourceBase,
     Duration,
@@ -10,7 +10,7 @@ import {
     SlocRuntime,
     TimeRange,
     TimeSeriesInstant,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 

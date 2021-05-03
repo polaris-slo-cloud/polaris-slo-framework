@@ -22,7 +22,7 @@ import {
     TimeRange,
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { PrometheusConfig } from '../../config';
 import { PrometheusNativeQuery } from './prometheus-native-query';
 

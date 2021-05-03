@@ -1,4 +1,4 @@
-import { ObjectKind, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, SlocType, initSelf } from '@sloc/core';
+import { ObjectKind, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, SlocType, initSelf } from '@polaris-sloc/core';
 import { RestServiceTarget } from '../slo-targets';
 
 export interface CostEfficiencySloConfig {

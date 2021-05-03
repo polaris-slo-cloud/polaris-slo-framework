@@ -1,4 +1,4 @@
-import { SlocRuntime } from '@sloc/core'
+import { SlocRuntime } from '@polaris-sloc/core'
 import { PrometheusConfig } from './config'
 import { PrometheusTimeSeriesSource } from './time-series/public'
 

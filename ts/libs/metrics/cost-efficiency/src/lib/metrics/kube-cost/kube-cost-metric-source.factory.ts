@@ -1,5 +1,5 @@
-import { TotalCost, TotalCostMetric } from '@sloc/common-mappings';
-import { ComposedMetricParams, ComposedMetricSource, ComposedMetricSourceFactory, SlocRuntime } from '@sloc/core';
+import { TotalCost, TotalCostMetric } from '@polaris-sloc/common-mappings';
+import { ComposedMetricParams, ComposedMetricSource, ComposedMetricSourceFactory, SlocRuntime } from '@polaris-sloc/core';
 import { KubeCostMetricSource } from './kube-cost-metric-source';
 
 /**

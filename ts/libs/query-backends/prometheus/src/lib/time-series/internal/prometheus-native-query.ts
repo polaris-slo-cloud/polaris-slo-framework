@@ -12,7 +12,7 @@ import {
     TimeSeriesInstant,
     TimeSeriesQuery,
     TimeSeriesQueryResultType,
-} from '@sloc/core';
+} from '@polaris-sloc/core';
 import { InstantVector, Metric as PromMetric, SampleValue as PromSample, PrometheusDriver, RangeVector } from 'prometheus-query';
 import { Observable, from as observableFrom } from 'rxjs';
 import { PrometheusConfig } from '../../config';

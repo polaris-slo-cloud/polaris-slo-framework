@@ -1,4 +1,4 @@
-import { ComposedMetricParams, ComposedMetricType } from '@sloc/core';
+import { ComposedMetricParams, ComposedMetricType } from '@polaris-sloc/core';
 import { TotalCost } from './total-cost';
 
 /**

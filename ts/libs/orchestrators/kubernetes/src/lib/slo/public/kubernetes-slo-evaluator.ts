@@ -1,5 +1,5 @@
 import { KubernetesObject, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ApiObject, SloEvaluatorBase, SloOutput, SlocRuntime } from '@sloc/core';
+import { ApiObject, SloEvaluatorBase, SloOutput, SlocRuntime } from '@polaris-sloc/core';
 import { KubernetesObjectWithSpec } from '../../model';
 
 export class KubernetesSloEvaluator extends SloEvaluatorBase {

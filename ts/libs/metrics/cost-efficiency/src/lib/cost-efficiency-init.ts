@@ -1,4 +1,4 @@
-import { SlocRuntime } from '@sloc/core';
+import { SlocRuntime } from '@polaris-sloc/core';
 import { KubeCostMetricSourceFactory, RestApiCostEfficiencyMetricSourceFactory } from './metrics';
 
 /**
