@@ -1,0 +1,21 @@
+<h1>{{ 'common.visualization' | translate }}</h1>
+
+<form class="polaris-panel-selector" [formGroup]="panelForm">
+    <div>
+        <polaris-dashboards-list
+            formControlName="dashboardUid"
+            [tags]="[ 'sloc' ]"
+        ></polaris-dashboards-list>
+    </div>
+
+    <div>
+        <polaris-panels-list
+            formControlName="panelId"
+            [dashboard]="selectedDashboard$ | async"
+        ></polaris-panels-list>
+    </div>
+</form>
+
+<div *ngIf="panelForm.valid" class="polaris-grafana-panel">
+    <polaris-grafana-panel-host [panelIdentifier]="panelForm.value"></polaris-grafana-panel-host>
+</div>

@@ -29,17 +29,17 @@
         "scope:core"
       ]
     },
-    "ui-sloc-ui": {
+    "ui-polaris-ui": {
       "tags": [
         "scope:ui"
       ]
     },
-    "ui-sloc-ui-e2e": {
+    "ui-polaris-ui-e2e": {
       "tags": [
         "scope:ui"
       ],
       "implicitDependencies": [
-        "ui-sloc-ui"
+        "ui-polaris-ui"
       ]
     },
     "slo-cpu-usage-slo-controller": {

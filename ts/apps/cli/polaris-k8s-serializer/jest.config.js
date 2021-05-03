@@ -9,6 +9,6 @@ module.exports = {
         '^.+\\.[tj]s$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../../coverage/apps/cli/sloc-k8s-serializer',
-    displayName: 'cli-sloc-k8s-serializer',
+    coverageDirectory: '../../../coverage/apps/cli/polaris-k8s-serializer',
+    displayName: 'cli-polaris-k8s-serializer',
 };

@@ -32,10 +32,10 @@ The [`apps`](./apps) folder contains the following application projects:
 
 | Name              | Purpose |
 |-------------------|---------|
-| [`cli-sloc-k8s-serializer`](./apps/cli/sloc-k8s-serializer) | Transforms SLO Mappings form SLO Script to Kubernetes-specific YAML. |
+| [`cli-polaris-k8s-serializer`](./apps/cli/polaris-k8s-serializer) | Transforms SLO Mappings form SLO Script to Kubernetes-specific YAML. |
 | [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO (metrics evaluation is currently mocked). |
 | [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
-| [`ui-sloc-ui`](./apps/ui/sloc-ui) | Angular UI for Polaris. |
+| [`ui-polaris-ui`](./apps/ui/polaris-ui) | Angular UI for Polaris. |
 
 
 ## Building and Running
@@ -44,9 +44,9 @@ To build any application/library use the following command:
 ```
 npm run build -- <subproject-name> --with-deps=true
 ```
-For example, to build the cli-sloc-k8s-serializer app:
+For example, to build the cli-polaris-k8s-serializer app:
 ```
-npm run build -- cli-sloc-k8s-serializer --with-deps=true
+npm run build -- cli-polaris-k8s-serializer --with-deps=true
 ```
 
 The output can then be found in the `dist` folder.

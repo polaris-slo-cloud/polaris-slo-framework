@@ -1,0 +1,28 @@
+@import "variables";
+
+$header-height: 64px;
+
+:host {
+
+    .polaris-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: $header-height
+    }
+
+    .polaris-nav-container {
+        position: absolute;
+        top: $header-height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $polaris-color-white;
+
+        .polaris-sidenav {
+            background-color: $polaris-color-background;
+        }
+    }
+
+}
