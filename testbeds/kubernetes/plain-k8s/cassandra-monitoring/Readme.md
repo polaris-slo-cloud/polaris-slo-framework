@@ -69,7 +69,7 @@ curl -X PUT $TWITTER_CLONE_IP:30903/users -H "Content-Type: application/json" -d
 
 ## Building the twitter-clone Docker Image
 
-twitter-clone is packaged as a Docker image with the name `tuwiendsgsloc/tweeter-test`.
+twitter-clone is packaged as a Docker image with the name `polarissloc/tweeter-test`.
 It is called `tweeter-test` to avoid legal issues with the copyrighted name Twitter.
 
 To build and publish `twitter-clone` to DockerHub, execute the following steps:

@@ -9,7 +9,7 @@ export interface PanelIdentifier {
 }
 
 @Pipe({
-    name: 'slocGrafanaPanelEmbedUrl',
+    name: 'polarisGrafanaPanelEmbedUrl',
 })
 export class GrafanaPanelEmbedUrlPipe implements PipeTransform {
 

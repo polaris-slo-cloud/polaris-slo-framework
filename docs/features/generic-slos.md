@@ -1,6 +1,6 @@
 # Generic SLOs
 
-The SLOC project provides a set of SLO controllers and mappings that can be reused.
+The Polaris project provides a set of SLO controllers and mappings that can be reused.
 
 Currently, we provide the following SLOs:
 

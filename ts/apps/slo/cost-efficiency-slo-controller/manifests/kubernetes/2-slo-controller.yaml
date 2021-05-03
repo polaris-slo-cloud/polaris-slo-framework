@@ -5,7 +5,7 @@ metadata:
     component: cost-efficiency-slo-controller
     tier: control-plane
   name: cost-efficiency-slo-controller
-  namespace: sloc
+  namespace: polaris
 spec:
   selector:
     matchLabels:
@@ -20,7 +20,7 @@ spec:
     spec:
       serviceAccountName: cost-efficiency-slo-controller
       containers:
-      - image: tuwiendsgsloc/slo-cost-efficiency:latest
+      - image: polarissloc/slo-cost-efficiency:latest
         name: slo-controller
         resources:
           limits:

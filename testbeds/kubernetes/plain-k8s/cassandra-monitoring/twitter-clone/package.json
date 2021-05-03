@@ -6,9 +6,9 @@
   "scripts": {
     "start": "npx ts-node ./src/main.ts",
     "build": "npx webpack",
-    "docker:build": "npm run build && docker build -t tuwiendsgsloc/tweeter-test:$npm_package_version .",
-    "docker:build-latest": "npm run build:docker && docker tag tuwiendsgsloc/tweeter-test:$npm_package_version tuwiendsgsloc/tweeter-test:latest",
-    "docker:push-latest": "docker push tuwiendsgsloc/tweeter-test:$npm_package_version && docker push tuwiendsgsloc/tweeter-test:latest",
+    "docker:build": "npm run build && docker build -t polarissloc/tweeter-test:$npm_package_version .",
+    "docker:build-latest": "npm run build:docker && docker tag polarissloc/tweeter-test:$npm_package_version polarissloc/tweeter-test:latest",
+    "docker:push-latest": "docker push polarissloc/tweeter-test:$npm_package_version && docker push polarissloc/tweeter-test:latest",
     "package": "npm run build && tar -czvf ./dist/tweeter-test.tar.gz -C ./dist/build .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

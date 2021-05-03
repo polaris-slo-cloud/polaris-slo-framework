@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: sloc
+  namespace: polaris
   name: cost-eff-profiling-data
 spec:
   accessModes:
@@ -19,7 +19,7 @@ metadata:
     component: cost-efficiency-slo-controller
     tier: control-plane
   name: cost-efficiency-slo-controller
-  namespace: sloc
+  namespace: polaris
 spec:
   selector:
     matchLabels:
@@ -36,7 +36,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: rainbow0
       containers:
-      - image: tuwiendsgsloc/slo-cost-efficiency:latest
+      - image: polarissloc/slo-cost-efficiency:latest
         name: slo-controller
         resources:
           limits:

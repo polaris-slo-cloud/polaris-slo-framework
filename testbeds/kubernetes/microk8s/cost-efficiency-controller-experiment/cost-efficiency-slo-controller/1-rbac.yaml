@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sloc
+  name: polaris
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cost-efficiency-slo-controller
-  namespace: sloc
+  namespace: polaris
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -64,7 +64,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: cost-efficiency-slo-controller
-    namespace: sloc
+    namespace: polaris
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

@@ -270,7 +270,7 @@
     /></g
     ><g font-size="11px" transform="translate(61,319)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
     ><text x="5" xml:space="preserve" y="24" clip-path="url(#clipPath11)" stroke="none"
-      >Transform to SLOC object</text
+      >Transform to Polaris object</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(126,480)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1" stroke-miterlimit="0"
     ><path fill="none" d="M10 7.5 L17 20 L10 32.5 L3 20 Z" clip-path="url(#clipPath12)"
@@ -332,7 +332,7 @@
     /></g
     ><g font-size="11px" transform="translate(61,392)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
     ><text x="10" xml:space="preserve" y="24" clip-path="url(#clipPath16)" stroke="none"
-      >SLOC SloMapping Instance</text
+      >Polaris SloMapping Instance</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(381,239)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1" stroke-miterlimit="0"
     ><rect fill="none" x="0" width="87" height="40" y="0" clip-path="url(#clipPath25)"
