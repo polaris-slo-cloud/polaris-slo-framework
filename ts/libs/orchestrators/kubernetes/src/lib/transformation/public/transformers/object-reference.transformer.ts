@@ -1,31 +1,31 @@
-import { Constructor, ObjectKind, ObjectReference, ReusableSlocTransformer, SlocTransformationService } from '@polaris-sloc/core';
+import { Constructor, ObjectKind, ObjectReference, PolarisTransformationService, ReusablePolarisTransformer } from '@polaris-sloc/core';
 import { CrossVersionObjectReference } from '../../../model';
 import { ObjectKindTransformer } from './object-kind.transformer';
 
-export class ObjectReferenceTransformer implements ReusableSlocTransformer<ObjectReference, CrossVersionObjectReference> {
+export class ObjectReferenceTransformer implements ReusablePolarisTransformer<ObjectReference, CrossVersionObjectReference> {
 
     private parentTransformer = new ObjectKindTransformer();
 
-    extractSlocObjectInitData(
+    extractPolarisObjectInitData(
         slocType: Constructor<ObjectReference>,
         orchPlainObj: CrossVersionObjectReference,
-        transformationService: SlocTransformationService,
+        transformationService: PolarisTransformationService,
     ): Partial<ObjectReference> {
-        const initData: Partial<ObjectReference> = this.parentTransformer.extractSlocObjectInitData(ObjectKind, orchPlainObj, transformationService);
+        const initData: Partial<ObjectReference> = this.parentTransformer.extractPolarisObjectInitData(ObjectKind, orchPlainObj, transformationService);
         initData.name = orchPlainObj.name;
         return initData;
     }
 
-    transformToSlocObject(
+    transformToPolarisObject(
         slocType: Constructor<ObjectReference>,
         orchPlainObj: CrossVersionObjectReference,
-        transformationService: SlocTransformationService,
+        transformationService: PolarisTransformationService,
     ): ObjectReference {
-        const initData = this.extractSlocObjectInitData(slocType, orchPlainObj, transformationService);
+        const initData = this.extractPolarisObjectInitData(slocType, orchPlainObj, transformationService);
         return new slocType(initData);
     }
 
-    transformToOrchestratorPlainObject(slocObj: ObjectReference, transformationService: SlocTransformationService): CrossVersionObjectReference {
+    transformToOrchestratorPlainObject(slocObj: ObjectReference, transformationService: PolarisTransformationService): CrossVersionObjectReference {
         const plain: CrossVersionObjectReference = this.parentTransformer.transformToOrchestratorPlainObject(slocObj, transformationService) as any;
         plain.name = slocObj.name;
         return plain;

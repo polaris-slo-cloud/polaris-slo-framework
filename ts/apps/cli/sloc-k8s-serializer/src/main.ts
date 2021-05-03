@@ -1,14 +1,13 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { CostEfficiencySloMapping, CpuUsageSloMapping, initSlocLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
-import { initSlocKubernetes } from '@polaris-sloc/kubernetes';
+import { CostEfficiencySloMapping, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import * as Yaml from 'js-yaml';
 import { isEqual as _isEqual } from 'lodash';
 import { default as costEffSlo } from './app/cost-efficiency.slo';
-import { default as cpuSlo } from './app/cpu-usage-slo';
 
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
-const slocRuntime = initSlocKubernetes(k8sConfig);
+const slocRuntime = initPolarisKubernetes(k8sConfig);
 
 initCommonMappingsLib(slocRuntime);
 
@@ -20,7 +19,7 @@ console.log('Initial SLOC object: ', sloMapping);
 const orchSpecific = slocRuntime.transformer.transformToOrchestratorPlainObject(sloMapping);
 console.log('Orchestrator-specific plain object: ', orchSpecific);
 
-const slocObj = slocRuntime.transformer.transformToSlocObject(sloMappingType, orchSpecific);
+const slocObj = slocRuntime.transformer.transformToPolarisObject(sloMappingType, orchSpecific);
 console.log('Parsed SLOC object: ', slocObj);
 
 const objectsAreEqual = _isEqual(sloMapping, slocObj);

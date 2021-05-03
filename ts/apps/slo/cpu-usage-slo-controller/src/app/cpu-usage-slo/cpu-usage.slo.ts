@@ -1,21 +1,15 @@
 import { CpuUsageSloConfig } from '@polaris-sloc/common-mappings';
 import {
-    Duration,
     LabelFilters,
     MetricsSource,
     ObservableOrPromise,
+    PolarisRuntime,
     ServiceLevelObjective,
     SloCompliance,
     SloMapping,
-    SloMappingSpec,
     SloOutput,
-    SlocRuntime,
-    TimeRange,
 } from '@polaris-sloc/core';
 import { of as observableOf } from 'rxjs';
-
-const LOWER_BOUND = 1;
-const UPPER_BOUND = 200;
 
 export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, SloCompliance>  {
 
@@ -26,7 +20,7 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
     configure(
         sloMapping: SloMapping<CpuUsageSloConfig, SloCompliance>,
         metricsSource: MetricsSource,
-        slocRuntime: SlocRuntime,
+        slocRuntime: PolarisRuntime,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

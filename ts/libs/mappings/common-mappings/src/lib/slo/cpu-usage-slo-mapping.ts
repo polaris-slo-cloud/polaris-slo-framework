@@ -1,4 +1,4 @@
-import { ObjectKind, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, SlocType, initSelf } from '@polaris-sloc/core';
+import { ObjectKind, PolarisType, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, initSelf } from '@polaris-sloc/core';
 
 export interface CpuUsageSloConfig {
 
@@ -30,7 +30,7 @@ export class CpuUsageSloMapping extends SloMappingBase<CpuUsageSloMappingSpec> {
         initSelf(this, initData);
     }
 
-    @SlocType(() => CpuUsageSloMappingSpec)
+    @PolarisType(() => CpuUsageSloMappingSpec)
     spec: CpuUsageSloMappingSpec;
 
 }

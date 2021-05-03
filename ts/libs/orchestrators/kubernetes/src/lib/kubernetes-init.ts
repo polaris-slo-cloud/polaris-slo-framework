@@ -1,23 +1,23 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { ApiObject, ObjectKind, ObjectReference, SlocRuntime, initSlocRuntime } from '@polaris-sloc/core';
-import { KubernetesSlocRuntime } from './runtime';
+import { ApiObject, ObjectKind, ObjectReference, PolarisRuntime, initPolarisRuntime } from '@polaris-sloc/core';
+import { KubernetesPolarisRuntime } from './runtime';
 import { ObjectKindTransformer, ObjectReferenceTransformer } from './transformation';
 import { ApiObjectTransformer } from './transformation/public/transformers/api-object.transformer';
 
 /**
  * Initializes the Kubernetes SLOC runtime and sets it as the global singleton.
  *
- * @param kubeConfig The Kubernetes configuration that should be used to configure the `KubernetesSlocRuntime`.
+ * @param kubeConfig The Kubernetes configuration that should be used to configure the `KubernetesPolarisRuntime`.
  */
-export function initSlocKubernetes(kubeConfig: KubeConfig): SlocRuntime {
+export function initPolarisKubernetes(kubeConfig: KubeConfig): PolarisRuntime {
     console.log('Initializing Kubernetes connector with KUBECONFIG:', kubeConfig);
-    const runtime = new KubernetesSlocRuntime(kubeConfig);
+    const runtime = new KubernetesPolarisRuntime(kubeConfig);
     registerTransformers(runtime);
-    initSlocRuntime(runtime);
+    initPolarisRuntime(runtime);
     return runtime;
 }
 
-function registerTransformers(runtime: SlocRuntime): void {
+function registerTransformers(runtime: PolarisRuntime): void {
     runtime.transformer.registerTransformer(ObjectKind, new ObjectKindTransformer(), { inheritable: true });
     // Registering ObjectReferenceTransformer as inheritable for the ObjectReference class makes it available for SloTarget as well.
     runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer(), { inheritable: true });

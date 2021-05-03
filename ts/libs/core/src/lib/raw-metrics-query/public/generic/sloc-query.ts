@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 
 /**
- * Encapsulates the result of a `SlocQuery`.
+ * Encapsulates the result of a `PolarisQuery`.
  */
-export interface SlocQueryResult<T> {
+export interface PolarisQueryResult<T> {
 
     /**
      * The array of results of the successful execution of the query.
@@ -20,14 +20,14 @@ export interface SlocQueryResult<T> {
  * A realization of this interface should be immutable to allow query objects to be reused
  * in multiple places.
  */
-export interface SlocQuery<T> {
+export interface PolarisQuery<T> {
 
     /**
      * Executes the query and returns a promise that can be used to obtain the result.
      *
      * @returns A promise that resolves to the result of the query or rejects with an error.
      */
-    execute(): Promise<SlocQueryResult<T>>;
+    execute(): Promise<PolarisQueryResult<T>>;
 
     /**
      * Transforms the query into a cold observable, i.e., you must call `subscribe()`
@@ -37,6 +37,6 @@ export interface SlocQuery<T> {
      *
      * @returns A cold observable for the query result.
      */
-    toObservable(): Observable<SlocQueryResult<T>>;
+    toObservable(): Observable<PolarisQueryResult<T>>;
 
 }

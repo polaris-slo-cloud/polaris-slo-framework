@@ -8,7 +8,7 @@ import { FactoryFn } from '../public/microcontroller-factory/microcontroller-fac
  * @param S The type of input spec.
  * @param C The type of microcontroller created by the factory.
  */
-export interface SlocMicrocontrollerFactoryMetadata<S, C> {
+export interface PolarisMicrocontrollerFactoryMetadata<S, C> {
 
     /** The factory function that should be used to create a microcontroller for this type of spec. */
     factoryFn: FactoryFn<S, C>;

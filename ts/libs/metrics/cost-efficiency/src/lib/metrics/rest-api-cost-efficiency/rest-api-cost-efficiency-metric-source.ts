@@ -6,8 +6,8 @@ import {
     LabelGrouping,
     MetricUnavailableError,
     MetricsSource,
+    PolarisRuntime,
     Sample,
-    SlocRuntime,
     TimeRange,
     TimeSeriesInstant,
 } from '@polaris-sloc/core';
@@ -35,7 +35,7 @@ export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<
     private metricsSource: MetricsSource;
     private targetThresholdSecStr: string;
 
-    constructor(private params: CostEfficiencyParams, slocRuntime: SlocRuntime) {
+    constructor(private params: CostEfficiencyParams, slocRuntime: PolarisRuntime) {
         super(slocRuntime);
         this.metricsSource = slocRuntime.metricsSourcesManager;
         this.targetThresholdSecStr = (params.targetThreshold / 1000).toString();

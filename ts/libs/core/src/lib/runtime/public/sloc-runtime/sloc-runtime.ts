@@ -1,52 +1,52 @@
 import { ElasticityStrategyService } from '../../../elasticity';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
-import { SlocTransformationService } from '../../../transformation';
+import { PolarisTransformationService } from '../../../transformation';
 import { MetricsSourcesManager } from '../metrics-source';
 import { ObjectKindWatcher, WatchManager } from '../watch';
 
-let slocRuntimeSingleton: SlocRuntime;
+let slocRuntimeSingleton: PolarisRuntime;
 
 /**
- * @returns The instance of the `SlocRuntime` singleton or `undefined` if it has not been initialized yet.
+ * @returns The instance of the `PolarisRuntime` singleton or `undefined` if it has not been initialized yet.
  */
-export function getSlocRuntime(): SlocRuntime {
+export function getPolarisRuntime(): PolarisRuntime {
     return slocRuntimeSingleton;
 }
 
 
 /**
- * @returns The instance of the `SlocRuntime` singleton.
- * @throws An error if the `SlocRuntime` singleton has not yet been initialized.
+ * @returns The instance of the `PolarisRuntime` singleton.
+ * @throws An error if the `PolarisRuntime` singleton has not yet been initialized.
  */
-export function getSlocRuntimeOrThrow(): SlocRuntime {
+export function getPolarisRuntimeOrThrow(): PolarisRuntime {
     if (!slocRuntimeSingleton) {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        throw new Error(`The SlocRuntime singleton's value is ${slocRuntimeSingleton}. Did you forget to initialize it?`);
+        throw new Error(`The PolarisRuntime singleton's value is ${slocRuntimeSingleton}. Did you forget to initialize it?`);
     }
     return slocRuntimeSingleton;
 }
 
 /**
- * Sets the `SlocRuntime` singleton.
+ * Sets the `PolarisRuntime` singleton.
  */
-export function initSlocRuntime(runtime: SlocRuntime): void {
+export function initPolarisRuntime(runtime: PolarisRuntime): void {
     slocRuntimeSingleton = runtime;
 }
 
 /**
  * Interface that must be implemented by a class that exposes a SLOC runtime.
  *
- * User `getSlocRuntime()` to obtain an instance of the `SlocRuntime` singleton.
+ * User `getPolarisRuntime()` to obtain an instance of the `PolarisRuntime` singleton.
  *
- * Use `initSlocRuntime()` to set the instance of the `SlocRuntime` singleton.
+ * Use `initPolarisRuntime()` to set the instance of the `PolarisRuntime` singleton.
  */
-export interface SlocRuntime {
+export interface PolarisRuntime {
 
     /**
-     * The `SlocTransformationService` that should be used for converting between orchestrator-independent SLOC objects
+     * The `PolarisTransformationService` that should be used for converting between orchestrator-independent SLOC objects
      * and orchestrator-specific plain objects, which can be serialized.
      */
-    transformer: SlocTransformationService;
+    transformer: PolarisTransformationService;
 
     /**
      * The `ElasticityStrategyService` that should be used for creating and configuring elasticity strategies.

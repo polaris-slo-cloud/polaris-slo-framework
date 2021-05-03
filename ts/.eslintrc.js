@@ -192,6 +192,8 @@ module.exports = {
                     "warn",
                     {
                         "args": "none",
+                        "vars": "all",
+                        "ignoreRestSiblings": true,
                     }
                 ],
                 "@typescript-eslint/no-use-before-define": "off",

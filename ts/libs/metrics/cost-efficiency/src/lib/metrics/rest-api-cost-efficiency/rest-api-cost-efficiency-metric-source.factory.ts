@@ -1,5 +1,5 @@
 import { CostEfficiency, CostEfficiencyMetric, CostEfficiencyParams } from '@polaris-sloc/common-mappings';
-import { ComposedMetricSource, ComposedMetricSourceFactory, SlocRuntime } from '@polaris-sloc/core';
+import { ComposedMetricSource, ComposedMetricSourceFactory, PolarisRuntime } from '@polaris-sloc/core';
 import { RestApiCostEfficiencyMetricSource } from './rest-api-cost-efficiency-metric-source';
 
 /**
@@ -11,7 +11,7 @@ export class RestApiCostEfficiencyMetricSourceFactory implements ComposedMetricS
 
     readonly metricSourceName = `${CostEfficiencyMetric.instance.metricTypeName}/rest-api-cost-efficiency`;
 
-    createSource(params: CostEfficiencyParams, slocRuntime: SlocRuntime): ComposedMetricSource<CostEfficiency> {
+    createSource(params: CostEfficiencyParams, slocRuntime: PolarisRuntime): ComposedMetricSource<CostEfficiency> {
         return new RestApiCostEfficiencyMetricSource(params, slocRuntime);
     }
 

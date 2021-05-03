@@ -1,14 +1,14 @@
 import { DefaultElasticityStrategyService, ElasticityStrategyService } from '../../../elasticity';
 import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../../slo';
-import { DefaultSlocTransformationService, SlocTransformationService } from '../../../transformation/public/service';
+import { DefaultPolarisTransformationService, PolarisTransformationService } from '../../../transformation/public/service';
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
 import { MetricsSourcesManager } from '../metrics-source';
 import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from '../watch';
-import { SlocRuntime } from './sloc-runtime';
+import { PolarisRuntime } from './sloc-runtime';
 
-export abstract class SlocRuntimeBase implements SlocRuntime {
+export abstract class PolarisRuntimeBase implements PolarisRuntime {
 
-    transformer: SlocTransformationService = new DefaultSlocTransformationService();
+    transformer: PolarisTransformationService = new DefaultPolarisTransformationService();
 
     elasticityStrategyService: ElasticityStrategyService;
 

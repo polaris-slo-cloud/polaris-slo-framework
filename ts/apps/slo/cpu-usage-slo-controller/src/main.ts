@@ -1,6 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initSlocLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
-import { initSlocKubernetes } from '@polaris-sloc/kubernetes';
+import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
 import { CpuUsageSlo } from './app/cpu-usage-slo';
@@ -11,7 +11,7 @@ import { CpuUsageSlo } from './app/cpu-usage-slo';
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
-const slocRuntime = initSlocKubernetes(k8sConfig);
+const slocRuntime = initPolarisKubernetes(k8sConfig);
 
 // Initialize the Prometheus query backend.
 // initPrometheusQueryBackend(slocRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);

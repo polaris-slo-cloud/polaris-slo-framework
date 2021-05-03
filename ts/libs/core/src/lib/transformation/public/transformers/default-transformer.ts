@@ -1,7 +1,7 @@
 import { classToPlain, plainToClass } from 'class-transformer';
 import { Constructor, InterfaceOf } from '../../../util';
-import { SlocTransformer } from '../common';
-import { SlocTransformationService } from '../service';
+import { PolarisTransformer } from '../common';
+import { PolarisTransformationService } from '../service';
 
 /**
  * This transformer does not alter the structure of the objects, it just performs a simple
@@ -9,13 +9,13 @@ import { SlocTransformationService } from '../service';
  *
  * This transformer is used by default, if no specific tranformer has been registered for a type.
  */
-export class DefaultTransformer<T> implements SlocTransformer<T, InterfaceOf<T>> {
+export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<T>> {
 
-    transformToSlocObject(slocType: Constructor<T>, orchPlainObj: InterfaceOf<T>, transformationService: SlocTransformationService): T {
+    transformToPolarisObject(slocType: Constructor<T>, orchPlainObj: InterfaceOf<T>, transformationService: PolarisTransformationService): T {
         return plainToClass(slocType, orchPlainObj);
     }
 
-    transformToOrchestratorPlainObject(slocObj: T, transformationService: SlocTransformationService): InterfaceOf<T> {
+    transformToOrchestratorPlainObject(slocObj: T, transformationService: PolarisTransformationService): InterfaceOf<T> {
         return classToPlain(slocObj) as any;
     }
 

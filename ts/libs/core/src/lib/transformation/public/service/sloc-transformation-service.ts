@@ -1,18 +1,18 @@
 import { ObjectKind } from '../../../model';
-import { SlocConstructor } from '../../../util';
-import { SlocTransformationConfig, SlocTransformer } from '../common';
+import { PolarisConstructor } from '../../../util';
+import { PolarisTransformationConfig, PolarisTransformer } from '../common';
 
 /**
  * Implementations of this service should be used for converting between orchestrator-independent SLOC objects
  * and orchestrator-specific plain objects, which can be serialized.
  *
- * A `SlocTransformationService` uses the `SlocTransformers` that have been registered with it to transform complex objects.
- * If no transformer has been registered for a particular type, the `DefaultSlocTransformer` will be used.
+ * A `PolarisTransformationService` uses the `PolarisTransformers` that have been registered with it to transform complex objects.
+ * If no transformer has been registered for a particular type, the `DefaultPolarisTransformer` will be used.
  *
  * Transformation from an orchestrator-specific plain object to a SLOC object can be done either by
  * - specifying the class of the SLOC object, or
  * - specifying the `ObjectKind` from the orchestrator-specific plain object (in this case, the `ObjectKind` must have been
- * registered with the `SlocTransformationService` first).
+ * registered with the `PolarisTransformationService` first).
  *
  * By default a transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
  * This is an intentional design decision, because model subclasses often add additional properties and they thus need
@@ -23,80 +23,85 @@ import { SlocTransformationConfig, SlocTransformer } from '../common';
  *
  * If the same transformer should be used for a parent- and a subclass, there are two possibilities:
  * - it can be registered for both of them or
- * - `SlocTransformationConfig.inheritable` can be set to `true`, which will make all subclasses inherit the
+ * - `PolarisTransformationConfig.inheritable` can be set to `true`, which will make all subclasses inherit the
  * transformer, unless they register their own.
  */
-export interface SlocTransformationService {
+export interface PolarisTransformationService {
 
     /**
-     * The default `SlocTransformer` that is used if no specific transformer has been registered for a particular type.
+     * The default `PolarisTransformer` that is used if no specific transformer has been registered for a particular type.
      */
-    readonly defaultTransformer: SlocTransformer<any, any>;
+    readonly defaultTransformer: PolarisTransformer<any, any>;
 
     /**
-     * Replaces the current default `SlocTransformer` with the one provided.
+     * Replaces the current default `PolarisTransformer` with the one provided.
      */
-    changeDefaultTransformer(newDefaultTransformer: SlocTransformer<any, any>): void;
+    changeDefaultTransformer(newDefaultTransformer: PolarisTransformer<any, any>): void;
 
     /**
-     * Registers the specified transformer with this `SlocTransformationService`.
+     * Registers the specified transformer with this `PolarisTransformationService`.
      *
      * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
      * @param slocType The SLOC type for which to register the transformer.
-     * @param transformer The `SlocTransformer` for the type.
-     * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
+     * @param transformer The `PolarisTransformer` for the type.
+     * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
      */
-    registerTransformer<T>(slocType: SlocConstructor<T>, transformer: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
+    registerTransformer<T>(slocType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config?: PolarisTransformationConfig): void;
 
     /**
      * Associates the specified object kind with a SLOC type and optionally also with a transformer.
      *
-     * This allows the `SlocTransformationService` to automatically instantiate the appropriate class for a raw orchestrator object,
+     * This allows the `PolarisTransformationService` to automatically instantiate the appropriate class for a raw orchestrator object,
      * based on the kind information that it provides.
      *
      * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
      * @param kind The `ObjectKind` that should be registered.
      * @param slocType The SLOC type to be associated with the object kind.
-     * @param transformer The `SlocTransformer` for the type.
-     * @param config (optional) Additional configuration for registration of the `SlocTransformer`.
+     * @param transformer The `PolarisTransformer` for the type.
+     * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
      */
-    registerObjectKind<T>(kind: ObjectKind, slocType: SlocConstructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void;
+    registerObjectKind<T>(
+        kind: ObjectKind,
+        slocType: PolarisConstructor<T>,
+        transformer?: PolarisTransformer<T, any>,
+        config?: PolarisTransformationConfig,
+    ): void;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
      *
      * @param slocType The SLOC type into which the plain object should be transformed.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
-     * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
+     * @returns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
      */
-    transformToSlocObject<T>(slocType: SlocConstructor<T>, orchPlainObj: any): T;
+    transformToPolarisObject<T>(slocType: PolarisConstructor<T>, orchPlainObj: any): T;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding SLOC object.
      *
      * @param kind The registered `ObjectKind` that can be used to deduce the SLOC type of the object.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
-     * @retuns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
+     * @returns A new SLOC object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
      */
-    transformToSlocObject(kind: ObjectKind, orchPlainObj: any): any;
+    transformToPolarisObject(kind: ObjectKind, orchPlainObj: any): any;
 
     /**
      * Transforms the specified SLOC object into an orchestrator-specific plain object that may be serialized without any further changes.
      *
      * @param slocObj The SLOC object to be transformed.
-     * @retuns A new orchestrator-specific plain object that may be serialized without any further changes or `null` if `slocObj` was `null` or `undefined.
+     * @returns A new orchestrator-specific plain object that may be serialized without any further changes or `null` if `slocObj` was `null` or `undefined.
      */
     transformToOrchestratorPlainObject(slocObj: any): any;
 
     /**
      * Gets the type that has been defined for the property `propertyKey` of the class `slocType` using
-     * the `@SlocType` decorator.
+     * the `@PolarisType` decorator.
      *
      * @param slocType The SLOC type that owns the property.
      * @param propertyKey The name of the property.
      * @returns The type that has been defined for the specified property or `undefined` if this information is not available.
      */
-    getPropertyType<T>(slocType: SlocConstructor<T>, propertyKey: keyof T & string): SlocConstructor<any>;
+    getPropertyType<T>(slocType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any>;
 
     /**
      * Gets the SLOC type that has been registered for the specified `ObjectKind`.
@@ -104,6 +109,6 @@ export interface SlocTransformationService {
      * @param kind The registered `ObjectKind` that can be used to deduce the SLOC type.
      * @returns The type that has been defined for the specified `ObjectKind` or `undefined` if this information is not available.
      */
-    getSlocType(kind: ObjectKind): SlocConstructor<any>;
+    getPolarisType(kind: ObjectKind): PolarisConstructor<any>;
 
 }

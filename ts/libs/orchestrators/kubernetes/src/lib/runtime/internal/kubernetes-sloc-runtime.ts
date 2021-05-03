@@ -1,9 +1,9 @@
 import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ObjectKindWatcher, SloEvaluator, SlocRuntimeBase } from '@polaris-sloc/core';
+import { ObjectKindWatcher, PolarisRuntimeBase, SloEvaluator } from '@polaris-sloc/core';
 import { KubernetesSloEvaluator } from '../../slo';
 import { KubernetesObjectKindWatcher } from './watch';
 
-export class KubernetesSlocRuntime extends SlocRuntimeBase {
+export class KubernetesPolarisRuntime extends PolarisRuntimeBase {
 
     constructor(private kubeConfig: KubeConfig) {
         super();

@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { SlocMetadataUtils, TypeFn } from '../../../util';
+import { PolarisMetadataUtils, TypeFn } from '../../../util';
 import { PropertyTransformer } from '../../internal/property-transformer';
 
 /**
@@ -9,11 +9,11 @@ import { PropertyTransformer } from '../../internal/property-transformer';
  * @retuns A `PropertyDecorator` factory.
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export function SlocType(typeFn: TypeFn<any>): PropertyDecorator {
+export function PolarisType(typeFn: TypeFn<any>): PropertyDecorator {
     return (prototype: any, propertyKey: string) => {
         const slocType = typeFn();
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        SlocMetadataUtils.setPropertySlocType(prototype.constructor, propertyKey, slocType);
+        PolarisMetadataUtils.setPropertyPolarisType(prototype.constructor, propertyKey, slocType);
 
         const propertyTransformer = new PropertyTransformer(slocType);
         const origDecorator = Transform(transformParams => propertyTransformer.transform(transformParams));

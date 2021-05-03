@@ -1,39 +1,44 @@
 import { ObjectKind } from '../../../model';
-import { IndexByKey, SlocConstructor, SlocMetadataUtils } from '../../../util';
-import { SlocTransformationMetadata } from '../../internal';
-import { SlocTransformationConfig, SlocTransformer, UnknownObjectKindError } from '../common';
+import { IndexByKey, PolarisConstructor, PolarisMetadataUtils } from '../../../util';
+import { PolarisTransformationMetadata } from '../../internal';
+import { PolarisTransformationConfig, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
-import { SlocTransformationService } from './sloc-transformation-service';
+import { PolarisTransformationService } from './sloc-transformation-service';
 
 /**
- * The default implementation of the `SlocTransformationService`.
+ * The default implementation of the `PolarisTransformationService`.
  *
- * @note Please extend this class if you want to create your own `SlocTransformationService`.
+ * @note Please extend this class if you want to create your own `PolarisTransformationService`.
  */
-export class DefaultSlocTransformationService implements SlocTransformationService {
+export class DefaultPolarisTransformationService implements PolarisTransformationService {
 
-    private _defaultTransformer: SlocTransformer<any, any> = new DefaultTransformer<any>();
+    private _defaultTransformer: PolarisTransformer<any, any> = new DefaultTransformer<any>();
 
-    private knownObjectKinds: IndexByKey<SlocConstructor<any>> = {};
+    private knownObjectKinds: IndexByKey<PolarisConstructor<any>> = {};
 
-    get defaultTransformer(): SlocTransformer<any, any> {
+    get defaultTransformer(): PolarisTransformer<any, any> {
         return this._defaultTransformer;
     }
 
-    changeDefaultTransformer(newDefaultTransformer: SlocTransformer<any, any>): void {
+    changeDefaultTransformer(newDefaultTransformer: PolarisTransformer<any, any>): void {
         this._defaultTransformer = newDefaultTransformer;
     }
 
-    registerTransformer<T>(slocType: SlocConstructor<T>, transformer: SlocTransformer<T, any>, config: SlocTransformationConfig = {}): void {
-        const transformMeta: SlocTransformationMetadata<T> = {
+    registerTransformer<T>(slocType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config: PolarisTransformationConfig = {}): void {
+        const transformMeta: PolarisTransformationMetadata<T> = {
             ...config,
             transformer,
             typeRegistered: slocType,
         };
-        SlocMetadataUtils.setSlocTransformationMetadata(transformMeta, slocType);
+        PolarisMetadataUtils.setPolarisTransformationMetadata(transformMeta, slocType);
     }
 
-    registerObjectKind<T>(kind: ObjectKind, slocType: SlocConstructor<T>, transformer?: SlocTransformer<T, any>, config?: SlocTransformationConfig): void {
+    registerObjectKind<T>(
+        kind: ObjectKind,
+        slocType: PolarisConstructor<T>,
+        transformer?: PolarisTransformer<T, any>,
+        config?: PolarisTransformationConfig,
+    ): void {
         const kindStr = kind.toString();
         this.knownObjectKinds[kindStr] = slocType;
 
@@ -42,25 +47,26 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         }
     }
 
-    transformToSlocObject<T>(slocType: SlocConstructor<T>, orchPlainObj: any): T;
-    transformToSlocObject(kind: ObjectKind, orchPlainObj: any): any;
-    transformToSlocObject<T = any>(slocTypeOrKind: SlocConstructor<T> | ObjectKind, orchPlainObj: any): T {
+    transformToPolarisObject<T>(slocType: PolarisConstructor<T>, orchPlainObj: any): T;
+    transformToPolarisObject(kind: ObjectKind, orchPlainObj: any): any;
+    transformToPolarisObject<T = any>(slocTypeOrKind: PolarisConstructor<T> | ObjectKind, orchPlainObj: any): T {
         if (orchPlainObj === null || orchPlainObj === undefined) {
             return null;
         }
 
-        let slocType: SlocConstructor<T>;
+        let slocType: PolarisConstructor<T>;
         if (slocTypeOrKind instanceof Function) {
             slocType = slocTypeOrKind;
         } else {
-            slocType = this.getSlocType(slocTypeOrKind);
+            slocType = this.getPolarisType(slocTypeOrKind);
             if (!slocType) {
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 throw new UnknownObjectKindError(slocTypeOrKind, orchPlainObj, `The ObjectKind '${slocTypeOrKind} has not been registered.`);
             }
         }
 
         const transformer = this.getTransformer(slocType);
-        return transformer.transformToSlocObject(slocType, orchPlainObj, this);
+        return transformer.transformToPolarisObject(slocType, orchPlainObj, this);
     }
 
     transformToOrchestratorPlainObject(slocObj: any): any {
@@ -72,17 +78,17 @@ export class DefaultSlocTransformationService implements SlocTransformationServi
         return transformer.transformToOrchestratorPlainObject(slocObj, this);
     }
 
-    getPropertyType<T>(slocType: SlocConstructor<T>, propertyKey: keyof T & string): SlocConstructor<any> {
-        return SlocMetadataUtils.getPropertySlocType(slocType, propertyKey);
+    getPropertyType<T>(slocType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {
+        return PolarisMetadataUtils.getPropertyPolarisType(slocType, propertyKey);
     }
 
-    getSlocType(kind: ObjectKind): SlocConstructor<any> {
+    getPolarisType(kind: ObjectKind): PolarisConstructor<any> {
         const kindStr = kind.toString();
         return this.knownObjectKinds[kindStr];
     }
 
-    private getTransformer<T>(slocObjOrType: T | SlocConstructor<T>): SlocTransformer<T, any> {
-        const transformMeta = SlocMetadataUtils.getSlocTransformationMetadata(slocObjOrType);
+    private getTransformer<T>(slocObjOrType: T | PolarisConstructor<T>): PolarisTransformer<T, any> {
+        const transformMeta = PolarisMetadataUtils.getPolarisTransformationMetadata(slocObjOrType);
         return transformMeta ? transformMeta.transformer : this.defaultTransformer;
     }
 

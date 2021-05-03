@@ -7,8 +7,8 @@ import {
     LabelGrouping,
     MetricUnavailableError,
     MetricsSource,
+    PolarisRuntime,
     Sample,
-    SlocRuntime,
     TimeSeriesInstant,
 } from '@polaris-sloc/core';
 import { Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
 
     private metricsSource: MetricsSource;
 
-    constructor(private params: ComposedMetricParams, slocRuntime: SlocRuntime) {
+    constructor(private params: ComposedMetricParams, slocRuntime: PolarisRuntime) {
         super(slocRuntime);
         this.metricsSource = slocRuntime.metricsSourcesManager;
     }

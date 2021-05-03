@@ -1,15 +1,15 @@
-import { Constructor, SlocMetadataUtils } from '../../../util';
-import { SlocMicrocontrollerFactoryMetadata } from '../../internal';
+import { Constructor, PolarisMetadataUtils } from '../../../util';
+import { PolarisMicrocontrollerFactoryMetadata } from '../../internal';
 import { MicrocontrollerFactoryNotRegisteredError } from './errors';
 import { FactoryFn, MicrocontrollerFactory } from './microcontroller-factory';
 
 export class DefaultMicrocontrollerFactory<S, C> implements MicrocontrollerFactory<S, C> {
 
     registerFactoryFn(specType: Constructor<S>, factoryFn: FactoryFn<S, C>): void {
-        const metadata: SlocMicrocontrollerFactoryMetadata<S, C> = {
+        const metadata: PolarisMicrocontrollerFactoryMetadata<S, C> = {
             factoryFn,
         };
-        SlocMetadataUtils.setSlocMicrocontrollerFactoryMetadata(metadata, specType);
+        PolarisMetadataUtils.setPolarisMicrocontrollerFactoryMetadata(metadata, specType);
     }
 
     createMicrocontroller(spec: S): C {
@@ -21,7 +21,7 @@ export class DefaultMicrocontrollerFactory<S, C> implements MicrocontrollerFacto
     }
 
     private getFactoryFn(spec: S): FactoryFn<S, C> {
-        const metadata = SlocMetadataUtils.getSlocMicrocontrollerFactoryMetadata(spec);
+        const metadata = PolarisMetadataUtils.getPolarisMicrocontrollerFactoryMetadata(spec);
         return metadata?.factoryFn;
     }
 

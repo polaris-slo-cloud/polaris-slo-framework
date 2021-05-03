@@ -1,4 +1,4 @@
-import { SlocType } from '../transformation';
+import { PolarisType } from '../transformation';
 import { initSelf } from '../util';
 import { ApiObjectMetadata } from './api-object-metadata';
 import { ObjectKind } from './object-kind';
@@ -9,8 +9,8 @@ import { ObjectKind } from './object-kind';
  * It is recommended to subclass `ApiObject` for each specific concrete API object and to provide
  * default initialization logic, e.g., for `objectKind`.
  *
- * When registering a `SlocTransformer` for `ApiObject` for a specific orchestrator, it is recommended
- * to set `SlocTransformationConfig.inheritable` to `true`, because most subclasses of `ApiObject` will
+ * When registering a `PolarisTransformer` for `ApiObject` for a specific orchestrator, it is recommended
+ * to set `PolarisTransformationConfig.inheritable` to `true`, because most subclasses of `ApiObject` will
  * not add additional properties, but just customize the existing ones.
  *
  * @param T Defines the type of the `spec` property.
@@ -20,19 +20,19 @@ export class ApiObject<T> {
     /**
      * Indicates the type of the object.
      */
-    @SlocType(() => ObjectKind)
+    @PolarisType(() => ObjectKind)
     objectKind: ObjectKind;
 
     /**
      * Provides metadata about the object, including its name.
      */
-    @SlocType(() => ApiObjectMetadata)
+    @PolarisType(() => ApiObjectMetadata)
     metadata: ApiObjectMetadata;
 
     /**
      * The actual content (payload) of the object.
      *
-     * This must be decorated with `@SlocType` if `T` is a class.
+     * This must be decorated with `@PolarisType` if `T` is a class.
      */
     spec?: T;
 

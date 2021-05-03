@@ -1,16 +1,16 @@
 import { Constructor } from '../../util';
-import { SlocTransformationConfig, SlocTransformer } from '../public';
+import { PolarisTransformationConfig, PolarisTransformer } from '../public';
 
 /**
  * Metadata that is used for transforming between SLOC objects and orchestrator-specific plain objects.
  */
-export interface SlocTransformationMetadata<T> extends SlocTransformationConfig {
+export interface PolarisTransformationMetadata<T> extends PolarisTransformationConfig {
 
     /**
-     * The `SlocTransformer` that should be used for converting this type
+     * The `PolarisTransformer` that should be used for converting this type
      * between SLOC objects and orchestrator-specific plain objects.
      */
-    transformer: SlocTransformer<T, any>;
+    transformer: PolarisTransformer<T, any>;
 
     /**
      * The type for which this metadata has been registered.

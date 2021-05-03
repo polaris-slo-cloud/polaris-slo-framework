@@ -1,4 +1,4 @@
-import { SlocType } from '../transformation';
+import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
 
 /**
@@ -18,7 +18,7 @@ export class ApiObjectMetadata {
     /**
      * The timestamp representing the server time when this object was created.
      */
-    @SlocType(() => Date)
+    @PolarisType(() => Date)
     creationTimestamp?: Date;
 
     /**

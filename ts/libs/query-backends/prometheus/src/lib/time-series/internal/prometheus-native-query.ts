@@ -4,10 +4,10 @@
 import {
     DataType,
     IndexByKey,
+    PolarisQueryResult,
     QueryError,
     Sample,
     SelectQueryContent,
-    SlocQueryResult,
     TimeSeries,
     TimeSeriesInstant,
     TimeSeriesQuery,
@@ -35,7 +35,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         private promQlQuery: string,
     ) { }
 
-    execute(): Promise<SlocQueryResult<TimeSeries<any>>> {
+    execute(): Promise<PolarisQueryResult<TimeSeries<any>>> {
         const config = this.buildPrometheusQueryConfig();
         // console.log(config);
         // console.log(this.promQlQuery);
@@ -55,11 +55,11 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         }
     }
 
-    toObservable(): Observable<SlocQueryResult<TimeSeries<any>>> {
+    toObservable(): Observable<PolarisQueryResult<TimeSeries<any>>> {
         return observableFrom(this.execute());
     }
 
-    private transformInstantQueryResult(instantVectors: InstantVector[]): SlocQueryResult<TimeSeries<any>> {
+    private transformInstantQueryResult(instantVectors: InstantVector[]): PolarisQueryResult<TimeSeries<any>> {
         const slocResults: TimeSeriesInstant<any>[] = instantVectors.map(instant => {
             const slocInstant: TimeSeriesInstant<any> = this.transformMetricToTimeSeries(instant.metric) as any;
             slocInstant.samples = [ this.transformSample(instant.value) ];
@@ -71,7 +71,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         return { results: slocResults };
     }
 
-    private transformRangeQueryResult(rangeVectors: RangeVector[]): SlocQueryResult<any> {
+    private transformRangeQueryResult(rangeVectors: RangeVector[]): PolarisQueryResult<any> {
         const slocResults: TimeSeries<any>[] = rangeVectors.map(promSeries => {
             const slocSeries = this.transformMetricToTimeSeries(promSeries.metric);
             slocSeries.samples = promSeries.values.map(promSample => this.transformSample(promSample));

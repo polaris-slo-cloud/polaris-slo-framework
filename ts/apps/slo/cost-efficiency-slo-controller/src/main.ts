@@ -1,7 +1,7 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { CostEfficiencySloMapping, CostEfficiencySloMappingSpec, initSlocLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { CostEfficiencySloMapping, CostEfficiencySloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
 import { initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
-import { initSlocKubernetes } from '@polaris-sloc/kubernetes';
+import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
 import { CostEfficiencySlo } from './app/cost-efficiency-slo';
@@ -13,7 +13,7 @@ import { convertToNumber, getEnvironmentVariable } from './app/util/environment-
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
-const slocRuntime = initSlocKubernetes(k8sConfig);
+const slocRuntime = initPolarisKubernetes(k8sConfig);
 
 // Initialize the Prometheus query backend.
 const promHost = getEnvironmentVariable('PROMETHEUS_HOST') || 'localhost';

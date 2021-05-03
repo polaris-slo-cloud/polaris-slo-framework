@@ -1,6 +1,6 @@
 import { ComposedMetricParams, ComposedMetricSource, ComposedMetricSourceFactory, ComposedMetricType } from '../../../composed-metrics';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
-import { SlocRuntime } from '../../public';
+import { PolarisRuntime } from '../../public';
 import { MetricsSourcesManager } from '../../public/metrics-source';
 
 /** Stores a map of factories for one `ComposedMetricSourceType`. */
@@ -24,7 +24,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
      */
     private composedMetricSourceFactories: Map<string, ComposedMetricTypeFactories> = new Map();
 
-    constructor(private slocRuntime: SlocRuntime) {}
+    constructor(private slocRuntime: PolarisRuntime) {}
 
     addTimeSeriesSource(source: TimeSeriesSource, setAsDefault: boolean = false): void {
         if (this.timeSeriesSources.size === 0) {
