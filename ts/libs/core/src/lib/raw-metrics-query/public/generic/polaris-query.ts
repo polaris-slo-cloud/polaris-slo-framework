@@ -15,7 +15,7 @@ export interface PolarisQueryResult<T> {
 }
 
 /**
- * Represents a metrics query in SLOC.
+ * Represents a metrics query in Polaris.
  *
  * A realization of this interface should be immutable to allow query objects to be reused
  * in multiple places.

@@ -126,7 +126,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     }
 
     /**
-     * Transforms the specified Kubernetes object to a SLOC object and passes it to `fn` on success.
+     * Transforms the specified Kubernetes object to a Polaris object and passes it to `fn` on success.
      */
     private transformToPolarisObjectAndForward(k8sObj: KubernetesObject, fn: (slocObj: ApiObject<any>) => void): void {
         try {

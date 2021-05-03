@@ -4,7 +4,7 @@ import { Constructor } from '../../../util';
 export class PolarisTransformationError extends Error {}
 
 /**
- * This type of error is thrown when there is a problem when transforming a SLOC object
+ * This type of error is thrown when there is a problem when transforming a Polaris object
  * into an orchestrator-specific plain object.
  */
 export class PolarisToOrchestratorTransformationError extends PolarisTransformationError {
@@ -17,7 +17,7 @@ export class PolarisToOrchestratorTransformationError extends PolarisTransformat
 
 /**
  * This type of error is thrown when there is a problem when transforming an orchestrator-specific plain object
- * into a SLOC object.
+ * into a Polaris object.
  */
 export class OrchestratorToPolarisTransformationError extends PolarisTransformationError {
 
@@ -32,7 +32,7 @@ export class OrchestratorToPolarisTransformationError extends PolarisTransformat
 }
 
 /**
- * This type of error is thrown when trying to derive the SLOC type that corresponds to the `ObjectKind`
+ * This type of error is thrown when trying to derive the Polaris type that corresponds to the `ObjectKind`
  * specified in the orchestrator-specific plain object.
  */
 export class UnknownObjectKindError extends PolarisTransformationError {

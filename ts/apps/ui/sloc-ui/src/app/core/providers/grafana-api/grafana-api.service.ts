@@ -14,7 +14,7 @@ export const GRAFANA_BASE_URL = new InjectionToken<string>('GRAFANA_API_BASE_URL
  * Provides access to the Grafana REST API.
  *
  * This service does not wrap all available REST API endpoints (https://grafana.com/docs/grafana/latest/http_api/),
- * but only a selection needed for the SLOC UI.
+ * but only a selection needed for the Polaris UI.
  */
 @Injectable()
 export class GrafanaApiService {

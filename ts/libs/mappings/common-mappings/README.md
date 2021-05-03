@@ -1,6 +1,6 @@
 # @polaris-sloc/common-mappings
 
-This library was contains commonly used SLOC mappings and interfaces.
+This library was contains commonly used Polaris mappings and interfaces.
 
 
 ## Running unit tests

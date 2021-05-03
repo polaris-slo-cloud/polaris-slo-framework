@@ -10,7 +10,7 @@ import {
 import { ApiVersionKind } from '../../../model';
 
 /**
- * Transforms an `ObjectKind` between the SLOC format and a Kubernetes object of the form:
+ * Transforms an `ObjectKind` between the Polaris format and a Kubernetes object of the form:
  * ```
  * {
  *      apiVersion: `${slocObj.group}/${slocObj.version}`,

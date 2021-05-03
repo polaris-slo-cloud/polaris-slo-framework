@@ -4,7 +4,7 @@ import { PolarisQuery, PolarisQueryResult } from '../generic';
 /**
  * Common superclass that can be used for implementing `PolarisQuery` realizations.
  *
- * Since SLOC queries are supposed to be used as a fluent API, `PolarisQueryBase` is designed
+ * Since Polaris queries are supposed to be used as a fluent API, `PolarisQueryBase` is designed
  * to establish a chain of `PolarisQuery` instances, with each query referring to its predecessor.
  */
 export abstract class PolarisQueryBase<T> implements PolarisQuery<T> {

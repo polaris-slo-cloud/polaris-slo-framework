@@ -3,9 +3,9 @@ import { PolarisMetadataUtils, TypeFn } from '../../../util';
 import { PropertyTransformer } from '../../internal/property-transformer';
 
 /**
- * Property decorator to define the SLOC type of a property.
+ * Property decorator to define the Polaris type of a property.
  *
- * @param typeFn A funciton that returns the constructor of the SLOC type.
+ * @param typeFn A funciton that returns the constructor of the Polaris type.
  * @retuns A `PropertyDecorator` factory.
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention

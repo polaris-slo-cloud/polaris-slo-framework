@@ -20,7 +20,7 @@ const promHost = getEnvironmentVariable('PROMETHEUS_HOST') || 'localhost';
 const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9090
 initPrometheusQueryBackend(slocRuntime, { host: promHost, port: promPort }, true);
 
-// Initialize the used SLOC mapping libraries
+// Initialize the used Polaris mapping libraries
 initCommonMappingsLib(slocRuntime);
 
 // Initialize the composed metrics

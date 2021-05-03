@@ -14,15 +14,15 @@ initCommonMappingsLib(slocRuntime);
 const sloMapping = costEffSlo;
 const sloMappingType = CostEfficiencySloMapping;
 
-console.log('Initial SLOC object: ', sloMapping);
+console.log('Initial Polaris object: ', sloMapping);
 
 const orchSpecific = slocRuntime.transformer.transformToOrchestratorPlainObject(sloMapping);
 console.log('Orchestrator-specific plain object: ', orchSpecific);
 
 const slocObj = slocRuntime.transformer.transformToPolarisObject(sloMappingType, orchSpecific);
-console.log('Parsed SLOC object: ', slocObj);
+console.log('Parsed Polaris object: ', slocObj);
 
 const objectsAreEqual = _isEqual(sloMapping, slocObj);
-console.log('Parsed SLOC object is equal to initial SLOC object: ', objectsAreEqual);
+console.log('Parsed Polaris object is equal to initial Polaris object: ', objectsAreEqual);
 
 console.log('Orchestrator-specific YAML:\n', Yaml.dump(orchSpecific, { indent: 2 }));

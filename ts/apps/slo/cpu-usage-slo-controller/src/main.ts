@@ -17,7 +17,7 @@ const slocRuntime = initPolarisKubernetes(k8sConfig);
 // initPrometheusQueryBackend(slocRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);
 initPrometheusQueryBackend(slocRuntime, { host: 'localhost', port: 30900 }, true);
 
-// Initialize the used SLOC mapping libraries
+// Initialize the used Polaris mapping libraries
 initCommonMappingsLib(slocRuntime);
 
 // Create an SloControlLoop and register the factories for the ServiceLevelObjectives it will handle

@@ -3,7 +3,7 @@ import { ApiObject } from '../../../model';
 /**
  * Handles events that occur when watching an `ObjectKind` with an `ObjectKindWatcher`.
  *
- * The objects passed to the `WatchEventsHandler` must have already been transformed into SLOC objects.
+ * The objects passed to the `WatchEventsHandler` must have already been transformed into Polaris objects.
  *
  * @param T The type of `ApiObject` that is handled by this `WatchEventsHandler`.
  */

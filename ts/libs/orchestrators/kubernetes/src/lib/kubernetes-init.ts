@@ -5,7 +5,7 @@ import { ObjectKindTransformer, ObjectReferenceTransformer } from './transformat
 import { ApiObjectTransformer } from './transformation/public/transformers/api-object.transformer';
 
 /**
- * Initializes the Kubernetes SLOC runtime and sets it as the global singleton.
+ * Initializes the Kubernetes Polaris runtime and sets it as the global singleton.
  *
  * @param kubeConfig The Kubernetes configuration that should be used to configure the `KubernetesPolarisRuntime`.
  */

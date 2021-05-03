@@ -34,7 +34,7 @@ export function initPolarisRuntime(runtime: PolarisRuntime): void {
 }
 
 /**
- * Interface that must be implemented by a class that exposes a SLOC runtime.
+ * Interface that must be implemented by a class that exposes a Polaris runtime.
  *
  * User `getPolarisRuntime()` to obtain an instance of the `PolarisRuntime` singleton.
  *
@@ -43,7 +43,7 @@ export function initPolarisRuntime(runtime: PolarisRuntime): void {
 export interface PolarisRuntime {
 
     /**
-     * The `PolarisTransformationService` that should be used for converting between orchestrator-independent SLOC objects
+     * The `PolarisTransformationService` that should be used for converting between orchestrator-independent Polaris objects
      * and orchestrator-specific plain objects, which can be serialized.
      */
     transformer: PolarisTransformationService;
