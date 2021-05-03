@@ -11,8 +11,8 @@ export class KubeCostMetricSourceFactory implements ComposedMetricSourceFactory<
 
     readonly metricSourceName = `${TotalCostMetric.instance.metricTypeName}/kube-cost`;
 
-    createSource(params: ComposedMetricParams, slocRuntime: PolarisRuntime): ComposedMetricSource<TotalCost> {
-        return new KubeCostMetricSource(params, slocRuntime);
+    createSource(params: ComposedMetricParams, polarisRuntime: PolarisRuntime): ComposedMetricSource<TotalCost> {
+        return new KubeCostMetricSource(params, polarisRuntime);
     }
 
 }

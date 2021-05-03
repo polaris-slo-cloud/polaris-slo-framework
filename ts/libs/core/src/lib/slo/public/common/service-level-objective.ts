@@ -22,10 +22,10 @@ export interface ServiceLevelObjective<C, O, T extends SloTarget = SloTarget> {
      *
      * @param sloMapping The `SloMapping` that describes the configuration for this instance.
      * @param metricsSource The `MetricsSource` that should be used for querying the observed metrics.
-     * @param slocRuntime The `PolarisRuntime` instance.
+     * @param polarisRuntime The `PolarisRuntime` instance.
      * @returns An observable that emits and completes or a Promise that resolves when the SLO has finished its configuration.
      */
-    configure(sloMapping: SloMapping<C, O, T>, metricsSource: MetricsSource, slocRuntime: PolarisRuntime): ObservableOrPromise<void>;
+    configure(sloMapping: SloMapping<C, O, T>, metricsSource: MetricsSource, polarisRuntime: PolarisRuntime): ObservableOrPromise<void>;
 
     /**
      * Evaluates the SLO on the current system state.

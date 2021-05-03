@@ -16,25 +16,25 @@ export interface PolarisTransformer<T, P = any> {
      * Transforms the specified orchestrator-specific plain object into a corresponding Polaris object.
      *
      * @note If this transformer should be inheritable, it is recommended to not instantiate a hardcoded Polaris type in this method,
-     * but to use `new slocType(...)` instead.
+     * but to use `new polarisType(...)` instead.
      *
-     * @param slocType The type of Polaris object that should be created.
+     * @param polarisType The type of Polaris object that should be created.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `PolarisTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
      * @retuns A new Polaris object that results from transforming `orchPlainObj`.
      */
-    transformToPolarisObject(slocType: Constructor<T>, orchPlainObj: P, transformationService: PolarisTransformationService): T;
+    transformToPolarisObject(polarisType: Constructor<T>, orchPlainObj: P, transformationService: PolarisTransformationService): T;
 
     /**
      * Transforms the specified Polaris object into an orchestrator-specific plain object that may be serialized without any further changes.
      *
-     * @param slocObj The Polaris object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
+     * @param polarisObj The Polaris object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `PolarisTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
      * @retuns A new orchestrator-specific plain object that may be serialized without any further changes.
      */
-    transformToOrchestratorPlainObject(slocObj: T, transformationService: PolarisTransformationService): P;
+    transformToOrchestratorPlainObject(polarisObj: T, transformationService: PolarisTransformationService): P;
 
 }
 
@@ -60,12 +60,12 @@ export interface ReusablePolarisTransformer<T, P = any> extends PolarisTransform
      * by `T` without instantiating `T`. The transformer of `U` can then add the data of its type before passing
      * all the init data to the constructor of `U`.
      *
-     * @param slocType The type of Polaris object, for which the init data should be extracted.
+     * @param polarisType The type of Polaris object, for which the init data should be extracted.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `PolarisTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
      * @retuns The init data for a Polaris object of type `T` that results from transforming `orchPlainObj`.
      */
-    extractPolarisObjectInitData(slocType: Constructor<T>, orchPlainObj: P, transformationService: PolarisTransformationService): Partial<T>;
+    extractPolarisObjectInitData(polarisType: Constructor<T>, orchPlainObj: P, transformationService: PolarisTransformationService): Partial<T>;
 
 }

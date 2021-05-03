@@ -7,7 +7,7 @@ export class ObjectReferenceTransformer implements ReusablePolarisTransformer<Ob
     private parentTransformer = new ObjectKindTransformer();
 
     extractPolarisObjectInitData(
-        slocType: Constructor<ObjectReference>,
+        polarisType: Constructor<ObjectReference>,
         orchPlainObj: CrossVersionObjectReference,
         transformationService: PolarisTransformationService,
     ): Partial<ObjectReference> {
@@ -17,17 +17,17 @@ export class ObjectReferenceTransformer implements ReusablePolarisTransformer<Ob
     }
 
     transformToPolarisObject(
-        slocType: Constructor<ObjectReference>,
+        polarisType: Constructor<ObjectReference>,
         orchPlainObj: CrossVersionObjectReference,
         transformationService: PolarisTransformationService,
     ): ObjectReference {
-        const initData = this.extractPolarisObjectInitData(slocType, orchPlainObj, transformationService);
-        return new slocType(initData);
+        const initData = this.extractPolarisObjectInitData(polarisType, orchPlainObj, transformationService);
+        return new polarisType(initData);
     }
 
-    transformToOrchestratorPlainObject(slocObj: ObjectReference, transformationService: PolarisTransformationService): CrossVersionObjectReference {
-        const plain: CrossVersionObjectReference = this.parentTransformer.transformToOrchestratorPlainObject(slocObj, transformationService) as any;
-        plain.name = slocObj.name;
+    transformToOrchestratorPlainObject(polarisObj: ObjectReference, transformationService: PolarisTransformationService): CrossVersionObjectReference {
+        const plain: CrossVersionObjectReference = this.parentTransformer.transformToOrchestratorPlainObject(polarisObj, transformationService) as any;
+        plain.name = polarisObj.name;
         return plain;
     }
 

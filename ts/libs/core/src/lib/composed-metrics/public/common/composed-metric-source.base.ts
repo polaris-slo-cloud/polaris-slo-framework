@@ -13,7 +13,7 @@ const POLLING_INTERVAL_MSEC = 10000;
  */
 export abstract class ComposedMetricSourceBase<V> implements ComposedMetricSource<V> {
 
-    constructor(protected slocRuntime: PolarisRuntime) {}
+    constructor(protected polarisRuntime: PolarisRuntime) {}
 
     getCurrentValue(): Observable<Sample<V>> {
         return this.getValueStream().pipe(

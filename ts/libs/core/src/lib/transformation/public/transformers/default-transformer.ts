@@ -11,12 +11,12 @@ import { PolarisTransformationService } from '../service';
  */
 export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<T>> {
 
-    transformToPolarisObject(slocType: Constructor<T>, orchPlainObj: InterfaceOf<T>, transformationService: PolarisTransformationService): T {
-        return plainToClass(slocType, orchPlainObj);
+    transformToPolarisObject(polarisType: Constructor<T>, orchPlainObj: InterfaceOf<T>, transformationService: PolarisTransformationService): T {
+        return plainToClass(polarisType, orchPlainObj);
     }
 
-    transformToOrchestratorPlainObject(slocObj: T, transformationService: PolarisTransformationService): InterfaceOf<T> {
-        return classToPlain(slocObj) as any;
+    transformToOrchestratorPlainObject(polarisObj: T, transformationService: PolarisTransformationService): InterfaceOf<T> {
+        return classToPlain(polarisObj) as any;
     }
 
 }

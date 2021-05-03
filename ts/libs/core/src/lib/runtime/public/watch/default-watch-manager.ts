@@ -9,7 +9,7 @@ export class DefaultWatchManager implements WatchManager {
 
     private watchers: Map<string, ObjectKindWatcher> = new Map();
 
-    constructor(private slocRuntime: PolarisRuntime) { }
+    constructor(private polarisRuntime: PolarisRuntime) { }
 
     get activeWatchers(): ObjectKindWatcher[] {
         return Array.from(this.watchers.values());
@@ -19,7 +19,7 @@ export class DefaultWatchManager implements WatchManager {
         this.assertNoExistingWatchers(kinds);
 
         const watchers = kinds.map(async kind => {
-            const watcher = this.slocRuntime.createObjectKindWatcher();
+            const watcher = this.polarisRuntime.createObjectKindWatcher();
             await watcher.startWatch(kind, handler);
             this.watchers.set(kind.toString(), watcher);
             return watcher;

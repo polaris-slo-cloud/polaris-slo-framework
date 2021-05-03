@@ -17,7 +17,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     configure(
         sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>,
         metricsSource: MetricsSource,
-        slocRuntime: PolarisRuntime,
+        polarisRuntime: PolarisRuntime,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

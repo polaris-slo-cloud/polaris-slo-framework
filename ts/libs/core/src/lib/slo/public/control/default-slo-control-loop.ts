@@ -35,7 +35,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     private registeredSlos: Map<string, RegisteredSlo> = new Map();
 
-    private slocRuntime = getPolarisRuntime();
+    private polarisRuntime = getPolarisRuntime();
 
     private _watchHandler: SloWatchEventsHandler;
 
@@ -60,7 +60,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
             map(() => this.microcontrollerFactory.createMicrocontroller(sloMapping.spec)),
             switchMap(sloInstance => {
                 slo = sloInstance;
-                return slo.configure(sloMapping, this.slocRuntime.metricsSourcesManager, this.slocRuntime);
+                return slo.configure(sloMapping, this.polarisRuntime.metricsSourcesManager, this.polarisRuntime);
             }),
             catchError(err => {
                 const errorMsg = `An error occurred while configuring SLO ${key}.`;

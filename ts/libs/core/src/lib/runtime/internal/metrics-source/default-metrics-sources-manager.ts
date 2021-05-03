@@ -24,7 +24,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
      */
     private composedMetricSourceFactories: Map<string, ComposedMetricTypeFactories> = new Map();
 
-    constructor(private slocRuntime: PolarisRuntime) {}
+    constructor(private polarisRuntime: PolarisRuntime) {}
 
     addTimeSeriesSource(source: TimeSeriesSource, setAsDefault: boolean = false): void {
         if (this.timeSeriesSources.size === 0) {
@@ -82,7 +82,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
             return undefined;
         }
 
-        return factory.createSource(params, this.slocRuntime);
+        return factory.createSource(params, this.polarisRuntime);
     }
 
 }

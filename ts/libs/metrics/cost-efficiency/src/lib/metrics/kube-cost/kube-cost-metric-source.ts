@@ -21,9 +21,9 @@ export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
 
     private metricsSource: MetricsSource;
 
-    constructor(private params: ComposedMetricParams, slocRuntime: PolarisRuntime) {
-        super(slocRuntime);
-        this.metricsSource = slocRuntime.metricsSourcesManager;
+    constructor(private params: ComposedMetricParams, polarisRuntime: PolarisRuntime) {
+        super(polarisRuntime);
+        this.metricsSource = polarisRuntime.metricsSourcesManager;
     }
 
     getValueStream(): Observable<Sample<TotalCost>> {

@@ -11,8 +11,8 @@ export class RestApiCostEfficiencyMetricSourceFactory implements ComposedMetricS
 
     readonly metricSourceName = `${CostEfficiencyMetric.instance.metricTypeName}/rest-api-cost-efficiency`;
 
-    createSource(params: CostEfficiencyParams, slocRuntime: PolarisRuntime): ComposedMetricSource<CostEfficiency> {
-        return new RestApiCostEfficiencyMetricSource(params, slocRuntime);
+    createSource(params: CostEfficiencyParams, polarisRuntime: PolarisRuntime): ComposedMetricSource<CostEfficiency> {
+        return new RestApiCostEfficiencyMetricSource(params, polarisRuntime);
     }
 
 }

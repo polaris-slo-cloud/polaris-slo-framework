@@ -5,8 +5,8 @@ import { RestServiceTarget } from './slo-targets';
 /**
  * Initializes this library and registers its types with the transformer in the `PolarisRuntime`.
  */
-export function initPolarisLib(slocRuntime: PolarisRuntime): void {
-    slocRuntime.transformer.registerObjectKind(new RestServiceTarget(), RestServiceTarget);
-    slocRuntime.transformer.registerObjectKind(new CpuUsageSloMapping().objectKind, CpuUsageSloMapping);
-    slocRuntime.transformer.registerObjectKind(new CostEfficiencySloMapping().objectKind, CostEfficiencySloMapping);
+export function initPolarisLib(polarisRuntime: PolarisRuntime): void {
+    polarisRuntime.transformer.registerObjectKind(new RestServiceTarget(), RestServiceTarget);
+    polarisRuntime.transformer.registerObjectKind(new CpuUsageSloMapping().objectKind, CpuUsageSloMapping);
+    polarisRuntime.transformer.registerObjectKind(new CostEfficiencySloMapping().objectKind, CostEfficiencySloMapping);
 }

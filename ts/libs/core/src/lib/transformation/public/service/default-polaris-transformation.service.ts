@@ -24,62 +24,62 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         this._defaultTransformer = newDefaultTransformer;
     }
 
-    registerTransformer<T>(slocType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config: PolarisTransformationConfig = {}): void {
+    registerTransformer<T>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config: PolarisTransformationConfig = {}): void {
         const transformMeta: PolarisTransformationMetadata<T> = {
             ...config,
             transformer,
-            typeRegistered: slocType,
+            typeRegistered: polarisType,
         };
-        PolarisMetadataUtils.setPolarisTransformationMetadata(transformMeta, slocType);
+        PolarisMetadataUtils.setPolarisTransformationMetadata(transformMeta, polarisType);
     }
 
     registerObjectKind<T>(
         kind: ObjectKind,
-        slocType: PolarisConstructor<T>,
+        polarisType: PolarisConstructor<T>,
         transformer?: PolarisTransformer<T, any>,
         config?: PolarisTransformationConfig,
     ): void {
         const kindStr = kind.toString();
-        this.knownObjectKinds[kindStr] = slocType;
+        this.knownObjectKinds[kindStr] = polarisType;
 
         if (transformer) {
-            this.registerTransformer(slocType, transformer, config);
+            this.registerTransformer(polarisType, transformer, config);
         }
     }
 
-    transformToPolarisObject<T>(slocType: PolarisConstructor<T>, orchPlainObj: any): T;
+    transformToPolarisObject<T>(polarisType: PolarisConstructor<T>, orchPlainObj: any): T;
     transformToPolarisObject(kind: ObjectKind, orchPlainObj: any): any;
-    transformToPolarisObject<T = any>(slocTypeOrKind: PolarisConstructor<T> | ObjectKind, orchPlainObj: any): T {
+    transformToPolarisObject<T = any>(polarisTypeOrKind: PolarisConstructor<T> | ObjectKind, orchPlainObj: any): T {
         if (orchPlainObj === null || orchPlainObj === undefined) {
             return null;
         }
 
-        let slocType: PolarisConstructor<T>;
-        if (slocTypeOrKind instanceof Function) {
-            slocType = slocTypeOrKind;
+        let polarisType: PolarisConstructor<T>;
+        if (polarisTypeOrKind instanceof Function) {
+            polarisType = polarisTypeOrKind;
         } else {
-            slocType = this.getPolarisType(slocTypeOrKind);
-            if (!slocType) {
+            polarisType = this.getPolarisType(polarisTypeOrKind);
+            if (!polarisType) {
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                throw new UnknownObjectKindError(slocTypeOrKind, orchPlainObj, `The ObjectKind '${slocTypeOrKind} has not been registered.`);
+                throw new UnknownObjectKindError(polarisTypeOrKind, orchPlainObj, `The ObjectKind '${polarisTypeOrKind} has not been registered.`);
             }
         }
 
-        const transformer = this.getTransformer(slocType);
-        return transformer.transformToPolarisObject(slocType, orchPlainObj, this);
+        const transformer = this.getTransformer(polarisType);
+        return transformer.transformToPolarisObject(polarisType, orchPlainObj, this);
     }
 
-    transformToOrchestratorPlainObject(slocObj: any): any {
-        if (slocObj === null || slocObj === undefined) {
+    transformToOrchestratorPlainObject(polarisObj: any): any {
+        if (polarisObj === null || polarisObj === undefined) {
             return null;
         }
 
-        const transformer = this.getTransformer(slocObj);
-        return transformer.transformToOrchestratorPlainObject(slocObj, this);
+        const transformer = this.getTransformer(polarisObj);
+        return transformer.transformToOrchestratorPlainObject(polarisObj, this);
     }
 
-    getPropertyType<T>(slocType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {
-        return PolarisMetadataUtils.getPropertyPolarisType(slocType, propertyKey);
+    getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {
+        return PolarisMetadataUtils.getPropertyPolarisType(polarisType, propertyKey);
     }
 
     getPolarisType(kind: ObjectKind): PolarisConstructor<any> {
@@ -87,8 +87,8 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         return this.knownObjectKinds[kindStr];
     }
 
-    private getTransformer<T>(slocObjOrType: T | PolarisConstructor<T>): PolarisTransformer<T, any> {
-        const transformMeta = PolarisMetadataUtils.getPolarisTransformationMetadata(slocObjOrType);
+    private getTransformer<T>(polarisObjOrType: T | PolarisConstructor<T>): PolarisTransformer<T, any> {
+        const transformMeta = PolarisMetadataUtils.getPolarisTransformationMetadata(polarisObjOrType);
         return transformMeta ? transformMeta.transformer : this.defaultTransformer;
     }
 

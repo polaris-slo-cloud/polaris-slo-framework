@@ -98,13 +98,13 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     private onK8sWatchCallbackEvent(type: WatchEventType, k8sObj: KubernetesObject): void {
         switch (type) {
             case 'ADDED':
-                this.transformToPolarisObjectAndForward(k8sObj, slocObj => this._handler.onObjectAdded(slocObj));
+                this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectAdded(polarisObj));
                 break;
             case 'MODIFIED':
-                this.transformToPolarisObjectAndForward(k8sObj, slocObj => this._handler.onObjectModified(slocObj));
+                this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectModified(polarisObj));
                 break;
             case 'DELETED':
-                this.transformToPolarisObjectAndForward(k8sObj, slocObj => this._handler.onObjectDeleted(slocObj));
+                this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectDeleted(polarisObj));
                 break;
             default:
                 break;
@@ -128,11 +128,11 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     /**
      * Transforms the specified Kubernetes object to a Polaris object and passes it to `fn` on success.
      */
-    private transformToPolarisObjectAndForward(k8sObj: KubernetesObject, fn: (slocObj: ApiObject<any>) => void): void {
+    private transformToPolarisObjectAndForward(k8sObj: KubernetesObject, fn: (polarisObj: ApiObject<any>) => void): void {
         try {
-            const slocObj = this.transformer.transformToPolarisObject(this._kind, k8sObj);
-            if (slocObj) {
-                fn(slocObj);
+            const polarisObj = this.transformer.transformToPolarisObject(this._kind, k8sObj);
+            if (polarisObj) {
+                fn(polarisObj);
             }
         } catch (err) {
             console.log(err);

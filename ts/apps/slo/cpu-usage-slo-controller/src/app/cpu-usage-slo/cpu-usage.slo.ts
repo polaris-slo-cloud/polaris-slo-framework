@@ -20,7 +20,7 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
     configure(
         sloMapping: SloMapping<CpuUsageSloConfig, SloCompliance>,
         metricsSource: MetricsSource,
-        slocRuntime: PolarisRuntime,
+        polarisRuntime: PolarisRuntime,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

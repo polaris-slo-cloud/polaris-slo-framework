@@ -7,22 +7,22 @@ import { default as costEffSlo } from './app/cost-efficiency.slo';
 
 const k8sConfig = new KubeConfig();
 k8sConfig.loadFromDefault();
-const slocRuntime = initPolarisKubernetes(k8sConfig);
+const polarisRuntime = initPolarisKubernetes(k8sConfig);
 
-initCommonMappingsLib(slocRuntime);
+initCommonMappingsLib(polarisRuntime);
 
 const sloMapping = costEffSlo;
 const sloMappingType = CostEfficiencySloMapping;
 
 console.log('Initial Polaris object: ', sloMapping);
 
-const orchSpecific = slocRuntime.transformer.transformToOrchestratorPlainObject(sloMapping);
+const orchSpecific = polarisRuntime.transformer.transformToOrchestratorPlainObject(sloMapping);
 console.log('Orchestrator-specific plain object: ', orchSpecific);
 
-const slocObj = slocRuntime.transformer.transformToPolarisObject(sloMappingType, orchSpecific);
-console.log('Parsed Polaris object: ', slocObj);
+const polarisObj = polarisRuntime.transformer.transformToPolarisObject(sloMappingType, orchSpecific);
+console.log('Parsed Polaris object: ', polarisObj);
 
-const objectsAreEqual = _isEqual(sloMapping, slocObj);
+const objectsAreEqual = _isEqual(sloMapping, polarisObj);
 console.log('Parsed Polaris object is equal to initial Polaris object: ', objectsAreEqual);
 
 console.log('Orchestrator-specific YAML:\n', Yaml.dump(orchSpecific, { indent: 2 }));

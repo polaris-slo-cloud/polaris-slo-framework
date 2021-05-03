@@ -26,9 +26,9 @@ export interface ComposedMetricSourceFactory<M extends ComposedMetricType<V, P>,
      * Creates a new `ComposedMetricSource` for the specified `params`.
      *
      * @param params Parameters to configure the metric source.
-     * @param slocRuntime The `PolarisRuntime` instance.
+     * @param polarisRuntime The `PolarisRuntime` instance.
      * @returns A new `ComposedMetricSource`.
      */
-    createSource(params: P, slocRuntime: PolarisRuntime): ComposedMetricSource<V>;
+    createSource(params: P, polarisRuntime: PolarisRuntime): ComposedMetricSource<V>;
 
 }

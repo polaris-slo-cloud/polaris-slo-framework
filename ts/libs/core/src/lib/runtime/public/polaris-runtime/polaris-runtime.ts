@@ -4,13 +4,13 @@ import { PolarisTransformationService } from '../../../transformation';
 import { MetricsSourcesManager } from '../metrics-source';
 import { ObjectKindWatcher, WatchManager } from '../watch';
 
-let slocRuntimeSingleton: PolarisRuntime;
+let polarisRuntimeSingleton: PolarisRuntime;
 
 /**
  * @returns The instance of the `PolarisRuntime` singleton or `undefined` if it has not been initialized yet.
  */
 export function getPolarisRuntime(): PolarisRuntime {
-    return slocRuntimeSingleton;
+    return polarisRuntimeSingleton;
 }
 
 
@@ -19,18 +19,18 @@ export function getPolarisRuntime(): PolarisRuntime {
  * @throws An error if the `PolarisRuntime` singleton has not yet been initialized.
  */
 export function getPolarisRuntimeOrThrow(): PolarisRuntime {
-    if (!slocRuntimeSingleton) {
+    if (!polarisRuntimeSingleton) {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        throw new Error(`The PolarisRuntime singleton's value is ${slocRuntimeSingleton}. Did you forget to initialize it?`);
+        throw new Error(`The PolarisRuntime singleton's value is ${polarisRuntimeSingleton}. Did you forget to initialize it?`);
     }
-    return slocRuntimeSingleton;
+    return polarisRuntimeSingleton;
 }
 
 /**
  * Sets the `PolarisRuntime` singleton.
  */
 export function initPolarisRuntime(runtime: PolarisRuntime): void {
-    slocRuntimeSingleton = runtime;
+    polarisRuntimeSingleton = runtime;
 }
 
 /**

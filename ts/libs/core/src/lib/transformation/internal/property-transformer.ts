@@ -7,7 +7,7 @@ import { Constructor } from '../../util';
  */
 export class PropertyTransformer<T> {
 
-    constructor(private slocType: Constructor<T>) {}
+    constructor(private polarisType: Constructor<T>) {}
 
     /**
      * Transform method called by `class-transformer`
@@ -29,7 +29,7 @@ export class PropertyTransformer<T> {
             case TransformationType.CLASS_TO_PLAIN:
                 return runtime.transformer.transformToOrchestratorPlainObject(transformParams.value);
             case TransformationType.PLAIN_TO_CLASS:
-                return runtime.transformer.transformToPolarisObject(this.slocType, transformParams.value);
+                return runtime.transformer.transformToPolarisObject(this.polarisType, transformParams.value);
             default:
                 throw new Error(`Unexpected tranformation type: ${transformParams.type}`);
         }

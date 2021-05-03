@@ -35,9 +35,9 @@ export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<
     private metricsSource: MetricsSource;
     private targetThresholdSecStr: string;
 
-    constructor(private params: CostEfficiencyParams, slocRuntime: PolarisRuntime) {
-        super(slocRuntime);
-        this.metricsSource = slocRuntime.metricsSourcesManager;
+    constructor(private params: CostEfficiencyParams, polarisRuntime: PolarisRuntime) {
+        super(polarisRuntime);
+        this.metricsSource = polarisRuntime.metricsSourcesManager;
         this.targetThresholdSecStr = (params.targetThreshold / 1000).toString();
     }
 

@@ -9,7 +9,7 @@ export class PolarisTransformationError extends Error {}
  */
 export class PolarisToOrchestratorTransformationError extends PolarisTransformationError {
 
-    constructor(public slocObj: any, message: string) {
+    constructor(public polarisObj: any, message: string) {
         super(message);
     }
 
@@ -22,7 +22,7 @@ export class PolarisToOrchestratorTransformationError extends PolarisTransformat
 export class OrchestratorToPolarisTransformationError extends PolarisTransformationError {
 
     constructor(
-        public slocType: Constructor<any>,
+        public polarisType: Constructor<any>,
         public orchPlainObj: any,
         message: string,
     ) {

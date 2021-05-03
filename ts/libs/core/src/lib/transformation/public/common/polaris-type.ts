@@ -11,11 +11,11 @@ import { PropertyTransformer } from '../../internal/property-transformer';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function PolarisType(typeFn: TypeFn<any>): PropertyDecorator {
     return (prototype: any, propertyKey: string) => {
-        const slocType = typeFn();
+        const polarisType = typeFn();
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        PolarisMetadataUtils.setPropertyPolarisType(prototype.constructor, propertyKey, slocType);
+        PolarisMetadataUtils.setPropertyPolarisType(prototype.constructor, propertyKey, polarisType);
 
-        const propertyTransformer = new PropertyTransformer(slocType);
+        const propertyTransformer = new PropertyTransformer(polarisType);
         const origDecorator = Transform(transformParams => propertyTransformer.transform(transformParams));
         origDecorator(prototype, propertyKey);
     };

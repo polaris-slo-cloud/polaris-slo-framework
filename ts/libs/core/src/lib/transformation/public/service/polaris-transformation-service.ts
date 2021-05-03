@@ -42,11 +42,11 @@ export interface PolarisTransformationService {
      * Registers the specified transformer with this `PolarisTransformationService`.
      *
      * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
-     * @param slocType The Polaris type for which to register the transformer.
+     * @param polarisType The Polaris type for which to register the transformer.
      * @param transformer The `PolarisTransformer` for the type.
      * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
      */
-    registerTransformer<T>(slocType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config?: PolarisTransformationConfig): void;
+    registerTransformer<T>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config?: PolarisTransformationConfig): void;
 
     /**
      * Associates the specified object kind with a Polaris type and optionally also with a transformer.
@@ -56,13 +56,13 @@ export interface PolarisTransformationService {
      *
      * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
      * @param kind The `ObjectKind` that should be registered.
-     * @param slocType The Polaris type to be associated with the object kind.
+     * @param polarisType The Polaris type to be associated with the object kind.
      * @param transformer The `PolarisTransformer` for the type.
      * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
      */
     registerObjectKind<T>(
         kind: ObjectKind,
-        slocType: PolarisConstructor<T>,
+        polarisType: PolarisConstructor<T>,
         transformer?: PolarisTransformer<T, any>,
         config?: PolarisTransformationConfig,
     ): void;
@@ -70,11 +70,11 @@ export interface PolarisTransformationService {
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding Polaris object.
      *
-     * @param slocType The Polaris type into which the plain object should be transformed.
+     * @param polarisType The Polaris type into which the plain object should be transformed.
      * @param orchPlainObj The orchestrator-specific plain object to be transformed.
      * @returns A new Polaris object that results from transforming `orchPlainObj` or `null` if `orchPlainObj` was `null` or `undefined`.
      */
-    transformToPolarisObject<T>(slocType: PolarisConstructor<T>, orchPlainObj: any): T;
+    transformToPolarisObject<T>(polarisType: PolarisConstructor<T>, orchPlainObj: any): T;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding Polaris object.
@@ -88,20 +88,20 @@ export interface PolarisTransformationService {
     /**
      * Transforms the specified Polaris object into an orchestrator-specific plain object that may be serialized without any further changes.
      *
-     * @param slocObj The Polaris object to be transformed.
-     * @returns A new orchestrator-specific plain object that may be serialized without any further changes or `null` if `slocObj` was `null` or `undefined.
+     * @param polarisObj The Polaris object to be transformed.
+     * @returns A new orchestrator-specific plain object that may be serialized without any further changes or `null` if `polarisObj` was `null` or `undefined.
      */
-    transformToOrchestratorPlainObject(slocObj: any): any;
+    transformToOrchestratorPlainObject(polarisObj: any): any;
 
     /**
-     * Gets the type that has been defined for the property `propertyKey` of the class `slocType` using
+     * Gets the type that has been defined for the property `propertyKey` of the class `polarisType` using
      * the `@PolarisType` decorator.
      *
-     * @param slocType The Polaris type that owns the property.
+     * @param polarisType The Polaris type that owns the property.
      * @param propertyKey The name of the property.
      * @returns The type that has been defined for the specified property or `undefined` if this information is not available.
      */
-    getPropertyType<T>(slocType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any>;
+    getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any>;
 
     /**
      * Gets the Polaris type that has been registered for the specified `ObjectKind`.
