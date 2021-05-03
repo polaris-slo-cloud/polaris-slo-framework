@@ -544,6 +544,77 @@
           }
         }
       }
+    },
+    "polaris-nx": {
+      "root": "libs/polaris-nx",
+      "sourceRoot": "libs/polaris-nx/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/polaris-nx/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/polaris-nx"
+          ],
+          "options": {
+            "jestConfig": "libs/polaris-nx/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/libs/polaris-nx",
+            "tsConfig": "libs/polaris-nx/tsconfig.lib.json",
+            "packageJson": "libs/polaris-nx/package.json",
+            "main": "libs/polaris-nx/src/index.ts",
+            "assets": [
+              "libs/polaris-nx/*.md",
+              {
+                "input": "./libs/polaris-nx/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/polaris-nx",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./libs/polaris-nx",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "polaris-nx-e2e": {
+      "projectType": "application",
+      "root": "apps/polaris-nx-e2e",
+      "sourceRoot": "apps/polaris-nx-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "polaris-nx:build",
+            "npmPackageName": "@polaris-sloc/polaris-nx",
+            "pluginOutputPath": "dist/libs/polaris-nx",
+            "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
+          }
+        }
+      }
     }
   },
   "cli": {

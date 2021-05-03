@@ -83,6 +83,15 @@
         "scope:core",
         "scope:metric"
       ]
+    },
+    "polaris-nx": {
+      "tags": []
+    },
+    "polaris-nx-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "polaris-nx"
+      ]
     }
   },
   "affected": {

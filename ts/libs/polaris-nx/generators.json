@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "name": "polaris-nx",
+    "version": "0.2.0",
+    "generators": {
+        "polaris-nx": {
+            "factory": "./src/generators/polaris-nx/generator",
+            "schema": "./src/generators/polaris-nx/schema.json",
+            "description": "polaris-nx generator"
+        }
+    }
+}
