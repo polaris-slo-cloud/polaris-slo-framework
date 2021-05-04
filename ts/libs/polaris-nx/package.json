@@ -3,5 +3,11 @@
   "version": "0.2.0",
   "main": "src/index.js",
   "generators": "./generators.json",
-  "executors": "./executors.json"
+  "executors": "./executors.json",
+  "dependencies": {
+    "@nrwl/devkit": "*",
+    "@nrwl/node": "*",
+    "@nrwl/workspace": "*",
+    "tslib": "^2.2.0"
+  }
 }
