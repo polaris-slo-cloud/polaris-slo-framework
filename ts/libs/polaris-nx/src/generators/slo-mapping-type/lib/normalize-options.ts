@@ -1,19 +1,13 @@
-import { Tree, getWorkspaceLayout, names } from '@nrwl/devkit';
+import { Tree, joinPathFragments, readProjectConfiguration } from '@nrwl/devkit';
+import { namesWithSuffix } from '../../../util';
 import { NormalizedSchema, SloMappingTypeGeneratorSchema } from '../schema';
 
+const SLO_MAPPING_TYPE_SUFFIX = 'SloMapping';
 
 export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSchema): NormalizedSchema {
-    const name = names(options.name).fileName;
-    const projectDirectory = options.directory
-        ? `${names(options.directory).fileName}/${name}`
-        : name;
-    const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-    const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
-
+    const projectConfig = readProjectConfiguration(host, options.project);
     return {
-        ...options,
-        projectName,
-        projectRoot,
-        projectDirectory,
+        names: namesWithSuffix(options.name, SLO_MAPPING_TYPE_SUFFIX),
+        destDir: joinPathFragments(projectConfig.sourceRoot, options.directory),
     };
 }
