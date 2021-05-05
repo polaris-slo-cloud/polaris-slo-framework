@@ -7,6 +7,11 @@
             "factory": "./src/generators/polaris-nx/generator",
             "schema": "./src/generators/polaris-nx/schema.json",
             "description": "polaris-nx generator"
+        },
+        "slo-mapping-type": {
+            "factory": "./src/generators/slo-mapping-type/generator",
+            "schema": "./src/generators/slo-mapping-type/schema.json",
+            "description": "Create a Polaris SLO Cloud SLO Mapping Type"
         }
     }
 }

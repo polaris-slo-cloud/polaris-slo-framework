@@ -15,6 +15,9 @@ export class CostEfficiencySloMappingSpec extends SloMappingSpecBase<CostEfficie
 
 export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMappingSpec> {
 
+    @PolarisType(() => CostEfficiencySloMappingSpec)
+    spec: CostEfficiencySloMappingSpec;
+
     constructor(initData?: SloMappingInitData<CostEfficiencySloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
@@ -24,8 +27,5 @@ export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMa
         });
         initSelf(this, initData);
     }
-
-    @PolarisType(() => CostEfficiencySloMappingSpec)
-    spec: CostEfficiencySloMappingSpec;
 
 }
