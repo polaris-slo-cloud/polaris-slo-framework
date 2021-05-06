@@ -1,10 +1,16 @@
 import { Tree, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
-import { NormalizedSchema, SloMappingTypeGeneratorSchema } from '../schema';
+import { SloMappingTypeGeneratorNormalizedSchema, SloMappingTypeGeneratorSchema } from '../schema';
 
-export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSchema): NormalizedSchema {
+const SLO_MAPPING_TYPE_FILE_SUFFIX = '.slo-mapping'
+
+export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSchema): SloMappingTypeGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);
+    const normalizedNames = names(options.name);
+
     return {
-        names: names(options.name),
-        destDir: joinPathFragments(projectConfig.sourceRoot, 'lib', options.directory),
+        names: normalizedNames,
+        projectSrcRoot: projectConfig.sourceRoot,
+        destDir: joinPathFragments('lib', options.directory),
+        fileNameWithSuffix: normalizedNames.fileName + SLO_MAPPING_TYPE_FILE_SUFFIX,
     };
 }
