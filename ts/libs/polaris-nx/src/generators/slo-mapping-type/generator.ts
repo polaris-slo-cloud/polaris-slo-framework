@@ -11,20 +11,20 @@ import { SloMappingTypeGeneratorSchema } from './schema';
 
 const generatorFn: Generator<SloMappingTypeGeneratorSchema> = async (host: Tree, options: SloMappingTypeGeneratorSchema) => {
     const normalizedOptions = normalizeOptions(host, options);
-    addProjectConfiguration(
-        host,
-        normalizedOptions.projectName,
-        {
-            root: normalizedOptions.projectRoot,
-            projectType: 'library',
-            sourceRoot: `${normalizedOptions.projectRoot}/src`,
-            targets: {
-                build: {
-                    executor: '@polaris-sloc/polaris-nx:build',
-                },
-            },
-        },
-    );
+    // addProjectConfiguration(
+    //     host,
+    //     normalizedOptions.projectName,
+    //     {
+    //         root: normalizedOptions.projectRoot,
+    //         projectType: 'library',
+    //         sourceRoot: `${normalizedOptions.projectRoot}/src`,
+    //         targets: {
+    //             build: {
+    //                 executor: '@polaris-sloc/polaris-nx:build',
+    //             },
+    //         },
+    //     },
+    // );
     addFiles(host, normalizedOptions);
     await formatFiles(host);
 }

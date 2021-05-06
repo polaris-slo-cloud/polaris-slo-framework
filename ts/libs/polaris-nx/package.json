@@ -8,6 +8,6 @@
     "@nrwl/devkit": "*",
     "@nrwl/node": "*",
     "@nrwl/workspace": "*",
-    "tslib": "^2.2.0"
+    "tslib": "^2.0.0"
   }
 }

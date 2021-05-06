@@ -1,0 +1,52 @@
+import {
+    ObjectKind,
+    PolarisType,
+    SloCompliance,
+    SloMappingBase,
+    SloMappingInitData,
+    SloMappingSpecBase,
+    SloTarget,
+    initSelf,
+} from '@polaris-sloc/core';
+
+/**
+ * Represents the configuration options of the <%= className %> SLO.
+ */
+export interface  <%= className %>SloConfig {
+
+    // ToDo: Add SLO configuration properties.
+
+}
+
+/**
+ * The spec type for the <%= className %> SLO.
+ */
+export class <%= className %>SloMappingSpec extends SloMappingSpecBase<
+    // The SLO's configuration.
+    <%= className %>SloConfig,
+    // The output type of the SLO.
+    SloCompliance,
+    // The type of target(s) that the SLO can be applied to.
+    SloTarget,
+> { }
+
+/**
+ * Represents an SLO mapping for the <%= className %> SLO, which can be used to apply and configure the <%= className %> SLO.
+ */
+export class <%= className %>SloMapping extends SloMappingBase<<%= className %>SloMappingSpec> {
+
+    @PolarisType(() => <%= className %>SloMappingSpec)
+    spec: <%= className %>SloMappingSpec;
+
+    constructor(initData?: SloMappingInitData<<%= className %>SloMapping>) {
+        super(initData);
+        this.objectKind = new ObjectKind({
+            group: 'slo.example.github.io', // ToDo: Replace the group with your own.
+            version: 'v1',
+            kind: '<%= className %>SloMapping',
+        });
+        initSelf(this, initData);
+    }
+
+}
+

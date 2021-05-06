@@ -83,5 +83,5 @@ An `slo-mapping` needs to be part of an existing library project, which does not
 
 ## Running E2E Tests and Manual Testing
 
-Run `nx run polaris-nx:e2e` to execute the E2E tests.
+Run `nx e2e polaris-nx-e2e` to execute the E2E tests.
 This will generate a temporary workspace in the `tmp` subfolder of this workspace, which can also be used for manually testing the plugin.
