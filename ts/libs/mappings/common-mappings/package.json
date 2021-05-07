@@ -1,8 +1,10 @@
 {
   "name": "@polaris-sloc/common-mappings",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
+  "license": "Apache-2.0",
+  "author": "Thomas Pusztai",
+  "private": false,
   "dependencies": {
-    "@polaris-sloc/core": "~0.1.0"
+    "@polaris-sloc/core": "~0.2.0"
   }
 }

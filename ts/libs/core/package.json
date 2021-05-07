@@ -1,6 +1,9 @@
 {
   "name": "@polaris-sloc/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "license": "Apache-2.0",
+  "author": "Thomas Pusztai",
+  "private": false,
   "dependencies": {
     "class-transformer": "~0.4.0",
     "lodash-es": "^4.17.21",

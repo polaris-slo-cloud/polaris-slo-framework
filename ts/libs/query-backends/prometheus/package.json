@@ -1,8 +1,11 @@
 {
   "name": "@polaris-sloc/prometheus",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "license": "Apache-2.0",
+  "author": "Thomas Pusztai",
+  "private": false,
   "dependencies": {
-    "@polaris-sloc/core": "~0.1.0",
+    "@polaris-sloc/core": "~0.2.0",
     "prometheus-query": "^3.0.0"
   }
 }

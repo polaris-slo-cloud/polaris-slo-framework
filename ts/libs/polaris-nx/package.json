@@ -1,6 +1,9 @@
 {
   "name": "@polaris-sloc/polaris-nx",
   "version": "0.2.0",
+  "license": "Apache-2.0",
+  "author": "Thomas Pusztai",
+  "private": false,
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
