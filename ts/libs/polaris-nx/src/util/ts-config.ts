@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Tree, updateJson } from '@nrwl/devkit';
+import { Tree, readJson, updateJson } from '@nrwl/devkit';
 
 const TS_CONFIG_FILES = [
     'tsconfig.base.json',
@@ -27,6 +27,25 @@ export function adaptTsConfigForPolaris(host: Tree): void {
         }
         return json;
     });
+}
+
+/**
+ * Checks if he specified `npmPackage` is remapped in the tsconfig `paths`.
+ *
+ * If it is remapped, the package's source is likely contained in the local monorepo and
+ * thus, the package must not be installed through the package manager.
+ *
+ * @returns `true` if the specified `npmPackage` is remapped in the tsconfig `paths`, otherwise `false.
+ */
+export function checkIfPackageIsInPaths(host: Tree, npmPackage: string): boolean {
+    const tsConfigPath = getWorkspaceTsConfigPath(host);
+    if (!tsConfigPath) {
+        return false;
+    }
+
+    const tsConfigJson = readJson(host, tsConfigPath);
+    const mappedPaths = tsConfigJson?.compilerOptions?.paths;
+    return !!mappedPaths && !!mappedPaths[npmPackage];
 }
 
 /**

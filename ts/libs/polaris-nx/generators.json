@@ -12,6 +12,11 @@
             "factory": "./src/generators/slo-mapping-type/generator",
             "schema": "./src/generators/slo-mapping-type/schema.json",
             "description": "Create a Polaris SLO Cloud SLO Mapping Type"
+        },
+        "slo-controller": {
+            "factory": "./src/generators/slo-controller/generator",
+            "schema": "./src/generators/slo-controller/schema.json",
+            "description": "Create an SLO Controller for an existing Polaris SLO Mapping Type"
         }
     }
 }
