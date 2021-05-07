@@ -5,7 +5,7 @@ import {
     formatFiles,
     joinPathFragments,
 } from '@nrwl/devkit';
-import { NPM_PACKAGES, VERSIONS, addExportToIndex } from '../../util';
+import { NPM_PACKAGES, VERSIONS, adaptTsConfigForPolaris, addExportToIndex } from '../../util';
 import { addFiles } from './lib/add-files';
 import { normalizeOptions } from './lib/normalize-options';
 import { SloMappingTypeGeneratorSchema } from './schema';
@@ -26,6 +26,7 @@ const generatorFn: Generator<SloMappingTypeGeneratorSchema> = async (host: Tree,
     );
 
     // Adapt tsconfig to allow decorators.
+    adaptTsConfigForPolaris(host);
 
     // Generate the SLO mapping file.
     addFiles(host, normalizedOptions);
