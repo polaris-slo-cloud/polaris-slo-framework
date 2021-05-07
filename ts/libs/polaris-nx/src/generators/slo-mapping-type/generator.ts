@@ -1,29 +1,22 @@
 import {
     Generator,
     Tree,
-    addDependenciesToPackageJson,
     formatFiles,
     joinPathFragments,
 } from '@nrwl/devkit';
-import { NPM_PACKAGES, VERSIONS, adaptTsConfigForPolaris, addExportToIndex } from '../../util';
+import { adaptTsConfigForPolaris, addExportToIndex, addPolarisDependenciesToPackageJson } from '../../util';
 import { addFiles } from './lib/add-files';
 import { normalizeOptions } from './lib/normalize-options';
 import { SloMappingTypeGeneratorSchema } from './schema';
 
 /**
- * Main entry point for the SLO mapping type generator.
+ * Generates a new Polaris SLO mapping type.
  */
-const generatorFn: Generator<SloMappingTypeGeneratorSchema> = async (host: Tree, options: SloMappingTypeGeneratorSchema) => {
+const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (host: Tree, options: SloMappingTypeGeneratorSchema) => {
     const normalizedOptions = normalizeOptions(host, options);
 
     // Add required packages to package.json, if necessary.
-    const installPkgsFn = addDependenciesToPackageJson(
-        host,
-        {
-            [NPM_PACKAGES.polaris.core]: VERSIONS.polaris,
-        },
-        {},
-    );
+    const installPkgsFn = addPolarisDependenciesToPackageJson(host);
 
     // Adapt tsconfig to allow decorators.
     adaptTsConfigForPolaris(host);
@@ -41,4 +34,4 @@ const generatorFn: Generator<SloMappingTypeGeneratorSchema> = async (host: Tree,
     return installPkgsFn;
 }
 
-export default generatorFn;
+export default generateSloMappingType;

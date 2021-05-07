@@ -1,3 +1,4 @@
+import { GeneratorCallback, Tree, addDependenciesToPackageJson } from '@nrwl/devkit';
 
 /** The name of the Polaris npm organization. */
 export const POLARIS_NPM_ORG = '@polaris-sloc';
@@ -7,10 +8,13 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
  */
 export const VERSIONS = {
     polaris: '^0.2.0-beta.0',
+    rxJs: '^6.5.5',
 };
 
 /** Full names of packages added by the generators. */
 export const NPM_PACKAGES = {
+
+    rxJs: 'rxjs',
 
     polaris: {
         core: `${POLARIS_NPM_ORG}/core`,
@@ -25,3 +29,27 @@ export const NPM_PACKAGES = {
         },
     },
 };
+
+/**
+ * Adds the default Polaris dependencies to package.json, along with the specified extra dependencies.
+ *
+ * @param host The file system `Tree`.
+ * @param extraDependencies Additional dependencies that should be added to package.json.
+ * @param extraDevDependencies Additional devDependencies that should be added to package.json.
+ */
+export function addPolarisDependenciesToPackageJson(
+    host: Tree,
+    extraDependencies: Record<string, string> = {},
+    extraDevDependencies: Record<string, string> = {},
+): GeneratorCallback {
+    const dependencies: Record<string, string> = {
+        [NPM_PACKAGES.polaris.core]: VERSIONS.polaris,
+        [NPM_PACKAGES.rxJs]: VERSIONS.rxJs,
+        ...extraDependencies,
+    };
+    const devDependencies: Record<string, string> = {
+        ...extraDevDependencies,
+    };
+
+    return addDependenciesToPackageJson(host, dependencies, devDependencies);
+}
