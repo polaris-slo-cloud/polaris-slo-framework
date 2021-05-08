@@ -26,7 +26,10 @@ describe('slo-mapping-type e2e', () => {
         if (result.stderr) {
             console.log(result.stderr);
         }
-        expect(() => checkFilesExist(`libs/${libProj}/src/lib/slo-mappings/${sloMappingNames.fileName}.slo-mapping.ts`)).not.toThrow();
+        expect(() => checkFilesExist(
+            `libs/${libProj}/src/lib/slo-mappings/${sloMappingNames.fileName}.slo-mapping.ts`,
+            `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+        )).not.toThrow();
 
     //     const result = await runNxCommandAsync(`build ${plugin}`);
     //     expect(result.stdout).toContain('Executor ran');

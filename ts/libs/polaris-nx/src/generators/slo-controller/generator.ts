@@ -10,7 +10,7 @@ import {
     offsetFromRoot,
 } from '@nrwl/devkit';
 import { applicationGenerator } from '@nrwl/node';
-import { addPolarisDependenciesToPackageJson, getSloNames, runCallbacksSequentially } from '../../util';
+import { POLARIS_INIT_LIB_FN_NAME, addPolarisDependenciesToPackageJson, getSloNames, runCallbacksSequentially } from '../../util';
 import { SloControllerGeneratorNormalizedSchema, SloControllerGeneratorSchema } from './schema';
 
 /**
@@ -82,6 +82,7 @@ function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormal
     const templateOptions = {
         ...sloNames,
         sloMappingTypePkg: options.sloMappingTypePkg,
+        initPolarisLibFn: POLARIS_INIT_LIB_FN_NAME,
         offsetFromRoot: offsetFromRoot(options.projectRoot),
         appsDir: options.appsDir,
         copyWorkspaceFilesCmd: generateDockerfileCopyWorkspaceConfig(host),

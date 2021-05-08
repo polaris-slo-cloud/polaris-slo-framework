@@ -1,5 +1,11 @@
 import { names } from '@nrwl/devkit';
 
+/** The name of the function used to initialize a Polaris library. */
+export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
+
+/** The name of the file that contains the function to initialize a Polaris library (.ts needs to be appended). */
+ export const POLARIS_INIT_FN_FILE_NAME = 'init-polaris-lib'
+
 const SLO_MAPPING_TYPE_SUFFIX = 'SloMapping';
 
 /**

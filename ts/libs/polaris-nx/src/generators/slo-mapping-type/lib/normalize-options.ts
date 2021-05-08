@@ -11,6 +11,7 @@ export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSch
         names: normalizedNames,
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
+        destDirInLib: options.directory,
         fileNameWithSuffix: normalizedNames.fileName + SLO_MAPPING_TYPE_FILE_SUFFIX,
     };
 }

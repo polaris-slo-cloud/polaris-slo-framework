@@ -85,10 +85,14 @@
       ]
     },
     "polaris-nx": {
-      "tags": []
+      "tags": [
+        "scope:cli"
+      ]
     },
     "polaris-nx-e2e": {
-      "tags": [],
+      "tags": [
+        "scope:cli"
+      ],
       "implicitDependencies": [
         "polaris-nx"
       ]

@@ -1,9 +1,9 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { <%= sloMappingType %>, <%= sloMappingSpecType %>, initPolarisLib as initMappingsLib } from '<%= sloMappingTypePkg %>';
+import { <%= sloMappingType %>, <%= sloMappingSpecType %>, <%= initPolarisLibFn %> as initSloMappingsLib } from '<%= sloMappingTypePkg %>';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
-import { <%= sloMicrocontrollerName %> } from './slo';
+import { <%= sloMicrocontrollerName %> } from './app/slo';
 import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
@@ -17,7 +17,7 @@ const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9
 initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, true);
 
 // Initialize the used Polaris mapping libraries
-initMappingsLib(polarisRuntime);
+initSloMappingsLib(polarisRuntime);
 
 // ToDo: Initialize any additional libraries, e.g., composed metrics.
 

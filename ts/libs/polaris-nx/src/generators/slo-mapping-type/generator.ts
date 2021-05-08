@@ -4,10 +4,10 @@ import {
     formatFiles,
     joinPathFragments,
 } from '@nrwl/devkit';
-import { adaptTsConfigForPolaris, addExportToIndex, addPolarisDependenciesToPackageJson } from '../../util';
-import { addFiles } from './lib/add-files';
+import { POLARIS_INIT_FN_FILE_NAME, adaptTsConfigForPolaris, addExportToIndex, addPolarisDependenciesToPackageJson } from '../../util';
+import { addOrExtendInitFn, addSloMappingTypeFile } from './lib/add-files';
 import { normalizeOptions } from './lib/normalize-options';
-import { SloMappingTypeGeneratorSchema } from './schema';
+import { SloMappingTypeGeneratorNormalizedSchema, SloMappingTypeGeneratorSchema } from './schema';
 
 /**
  * Generates a new Polaris SLO mapping type.
@@ -21,13 +21,12 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
     // Adapt tsconfig to allow decorators.
     adaptTsConfigForPolaris(host);
 
-    // Generate the SLO mapping file.
-    addFiles(host, normalizedOptions);
+    // Generate the SLO mapping and the init-polaris-lib files.
+    addSloMappingTypeFile(host, normalizedOptions);
+    const initFnFileAdded = addOrExtendInitFn(host, normalizedOptions);
 
-    // Export the contents of the new SLO mapping file from the library.
-    const indexFile = joinPathFragments(normalizedOptions.projectSrcRoot, 'index.ts')
-    const sloMappingFile = './' + joinPathFragments(normalizedOptions.destDir, normalizedOptions.fileNameWithSuffix)
-    addExportToIndex(host, indexFile, sloMappingFile);
+    // Add exports to .ts files.
+    addExports(host, normalizedOptions, initFnFileAdded);
 
     await formatFiles(host);
 
@@ -35,3 +34,18 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
 }
 
 export default generateSloMappingType;
+
+/**
+ * Export the contents of the new SLO mapping file and, optionally the init-polaris-lib.ts file, from the library.
+ */
+function addExports(host: Tree, options: SloMappingTypeGeneratorNormalizedSchema, includeInitPolarisLib: boolean): void {
+    const indexFile = joinPathFragments(options.projectSrcRoot, 'index.ts');
+
+    if (includeInitPolarisLib) {
+        const initFnFile = './' + joinPathFragments('lib', POLARIS_INIT_FN_FILE_NAME);
+        addExportToIndex(host, indexFile, initFnFile);
+    }
+
+    const sloMappingFile = './' + joinPathFragments(options.destDir, options.fileNameWithSuffix);
+    addExportToIndex(host, indexFile, sloMappingFile);
+}
