@@ -586,6 +586,16 @@
                 "output": "./src"
               },
               {
+                "input": "./libs/polaris-nx/src",
+                "glob": "**/.dockerignore__template__",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/polaris-nx/src",
+                "glob": "**/Dockerfile__template__",
+                "output": "./src"
+              },
+              {
                 "input": "./libs/polaris-nx",
                 "glob": "generators.json",
                 "output": "."
