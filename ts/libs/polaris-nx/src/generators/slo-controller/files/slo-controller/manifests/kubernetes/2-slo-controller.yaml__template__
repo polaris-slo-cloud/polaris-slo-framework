@@ -2,31 +2,32 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    component: cost-efficiency-slo-controller
+    component: <%= sloFileName %>-slo-controller
     tier: control-plane
-  name: cost-efficiency-slo-controller
+  name: <%= sloFileName %>-slo-controller
   namespace: polaris
 spec:
   selector:
     matchLabels:
-      component: cost-efficiency-slo-controller
+      component: <%= sloFileName %>-slo-controller
       tier: control-plane
   replicas: 1
   template:
     metadata:
       labels:
-        component: cost-efficiency-slo-controller
+        component: <%= sloFileName %>-slo-controller
         tier: control-plane
     spec:
-      serviceAccountName: cost-efficiency-slo-controller
+      serviceAccountName: <%= sloFileName %>-slo-controller
       containers:
-      - image: polarissloc/slo-cost-efficiency:latest
+      - image: polarissloc/slo-<%= sloFileName %>:latest
         name: slo-controller
         resources:
           limits:
             cpu: '1.0'
             memory: 512Mi
         env:
+          # The hostname and port of the Prometheus service:
           - name: PROMETHEUS_HOST
             value: prometheus-release-1-prome-prometheus.default.svc
           - name: PROMETHEUS_PORT

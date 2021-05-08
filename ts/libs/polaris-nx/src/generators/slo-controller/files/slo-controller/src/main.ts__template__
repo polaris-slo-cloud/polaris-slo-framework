@@ -1,10 +1,9 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { CostEfficiencySloMapping, CostEfficiencySloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
-import { initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
+import { <%= sloMappingType %>, <%= sloMappingSpecType %>, initPolarisLib as initMappingsLib } from '<%= sloMappingTypePkg %>';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
-import { <%= sloName %>Slo } from './slo';
+import { <%= sloMicrocontrollerName %> } from './slo';
 import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
@@ -18,14 +17,13 @@ const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9
 initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, true);
 
 // Initialize the used Polaris mapping libraries
-initCommonMappingsLib(polarisRuntime);
+initMappingsLib(polarisRuntime);
 
-// Initialize the composed metrics
-initCostEfficiencyMetrics(polarisRuntime);
+// ToDo: Initialize any additional libraries, e.g., composed metrics.
 
 // Create an SloControlLoop and register the factories for the ServiceLevelObjectives it will handle
 const sloControlLoop = polarisRuntime.createSloControlLoop();
-sloControlLoop.microcontrollerFactory.registerFactoryFn(CostEfficiencySloMappingSpec, () => new CostEfficiencySlo());
+sloControlLoop.microcontrollerFactory.registerFactoryFn(<%= sloMappingSpecType %>, () => new <%= sloMicrocontrollerName %>());
 
 // Create an SloEvaluator and start the control loop with an interval of 20 seconds.
 const sloEvaluator = polarisRuntime.createSloEvaluator();
@@ -36,5 +34,5 @@ sloControlLoop.start({
 
 // Create a WatchManager and watch the supported SLO mapping kinds.
 const watchManager = polarisRuntime.createWatchManager();
-watchManager.startWatchers([ new CostEfficiencySloMapping().objectKind ], sloControlLoop.watchHandler)
+watchManager.startWatchers([ new <%= sloMappingType %>().objectKind ], sloControlLoop.watchHandler)
     .catch(error => void console.error(error))

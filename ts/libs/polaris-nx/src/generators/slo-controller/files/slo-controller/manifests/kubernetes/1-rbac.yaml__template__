@@ -6,14 +6,14 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: cost-efficiency-slo-controller
+  name: <%= sloFileName %>-slo-controller
   namespace: polaris
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   # ClusterRoles are not namespaced
-  name: cost-efficiency-slo-controller
+  name: <%= sloFileName %>-slo-controller
 rules:
 
 # Allow reading all SLO mappings
@@ -30,7 +30,7 @@ rules:
 - apiGroups:
   - slo.sloc.github.io
   resources:
-  - costefficiencyslomappings
+  - <%= sloMappingK8sResources %>
   verbs:
   - get
   - watch
@@ -38,7 +38,7 @@ rules:
 - apiGroups:
   - slo.sloc.github.io
   resources:
-  - costefficiencyslomappings/status
+  - <%= sloMappingK8sResources %>/status
   verbs:
   - get
 
@@ -60,12 +60,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 # Optionally, we could create a RoleBinding and to scope the permissions to a specific namespace
 metadata:
-  name: control-cost-efficiency-slos
+  name: control-<%= sloFileName %>-slos
 subjects:
   - kind: ServiceAccount
-    name: cost-efficiency-slo-controller
+    name: <%= sloFileName %>-slo-controller
     namespace: polaris
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cost-efficiency-slo-controller
+  name: <%= sloFileName %>-slo-controller

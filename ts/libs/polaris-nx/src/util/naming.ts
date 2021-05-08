@@ -63,6 +63,16 @@ export interface SloNames {
      */
     sloMappingType: string;
 
+    /**
+     * @example 'CpuUsageSloMappingSpec'
+     */
+     sloMappingSpecType: string;
+
+    /**
+     * @example costefficiencyslomappings
+     */
+    sloMappingK8sResources: string;
+
 }
 
 /**
@@ -84,5 +94,7 @@ export function getSloNames(sloMappingTypeName: string): SloNames {
         sloFileName: names(sloName).fileName,
         sloConfigType: `${sloName}SloConfig`,
         sloMappingType: sloMappingTypeName,
+        sloMappingSpecType: `${sloMappingTypeName}Spec`,
+        sloMappingK8sResources: `${sloMappingTypeName.toLowerCase()}s`,
     };
 }
