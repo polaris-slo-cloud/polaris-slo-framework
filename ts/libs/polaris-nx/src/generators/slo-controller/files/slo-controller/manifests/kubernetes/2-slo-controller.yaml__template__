@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    component: <%= sloFileName %>-slo-controller
+    component: <%= controllerProjectName %>
     tier: control-plane
-  name: <%= sloFileName %>-slo-controller
+  name: <%= controllerProjectName %>
   namespace: polaris
 spec:
   selector:
     matchLabels:
-      component: <%= sloFileName %>-slo-controller
+      component: <%= controllerProjectName %>
       tier: control-plane
   replicas: 1
   template:
     metadata:
       labels:
-        component: <%= sloFileName %>-slo-controller
+        component: <%= controllerProjectName %>
         tier: control-plane
     spec:
-      serviceAccountName: <%= sloFileName %>-slo-controller
+      serviceAccountName: <%= controllerProjectName %>
       containers:
-      - image: polarissloc/slo-<%= sloFileName %>:latest
+      - image: polarissloc/<%= controllerProjectName %>:latest
         name: slo-controller
         resources:
           limits:

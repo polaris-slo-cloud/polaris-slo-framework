@@ -8,6 +8,8 @@ import {
     getWorkspaceLayout,
     names,
     offsetFromRoot,
+    readProjectConfiguration,
+    updateProjectConfiguration,
 } from '@nrwl/devkit';
 import { applicationGenerator } from '@nrwl/node';
 import { POLARIS_INIT_LIB_FN_NAME, addPolarisDependenciesToPackageJson, getSloNames, runCallbacksSequentially } from '../../util';
@@ -27,21 +29,7 @@ const generateSloController: Generator<SloControllerGeneratorSchema> =  async (h
 
     const installPkgsFn = addPolarisDependenciesToPackageJson(host);
 
-    // addProjectConfiguration(
-    //     host,
-    //     normalizedOptions.projectName,
-    //     {
-    //         root: normalizedOptions.projectRoot,
-    //         projectType: 'library',
-    //         sourceRoot: `${normalizedOptions.projectRoot}/src`,
-    //         targets: {
-    //             build: {
-    //                 executor: '@polaris-sloc/polaris-nx:build',
-    //             },
-    //         },
-    //         tags: normalizedOptions.parsedTags,
-    //     },
-    // );
+    addDockerBuildConfig(host, normalizedOptions);
 
     addWorkspaceRootFiles(host);
     addSloControllerFiles(host, normalizedOptions);
@@ -76,6 +64,23 @@ function normalizeOptions(host: Tree, options: SloControllerGeneratorSchema): Sl
     };
 }
 
+function addDockerBuildConfig(host: Tree, options: SloControllerGeneratorNormalizedSchema): void {
+    const projectConfig = readProjectConfiguration(host, options.projectName);
+
+    projectConfig.targets['docker-build'] = {
+        executor: '@nrwl/workspace:run-commands',
+        options: {
+            commands: [
+                // eslint-disable-next-line max-len
+                `docker build -f ./${options.projectRoot}/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=${options.projectName} -t polarissloc/${options.projectName}:latest .`,
+            ],
+            parallel: false,
+        },
+    };
+
+    updateProjectConfiguration(host, options.projectName, projectConfig);
+}
+
 function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormalizedSchema): void {
     const sloNames = getSloNames(options.sloMappingType);
 
@@ -83,6 +88,7 @@ function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormal
         ...sloNames,
         sloMappingTypePkg: options.sloMappingTypePkg,
         initPolarisLibFn: POLARIS_INIT_LIB_FN_NAME,
+        controllerProjectName: options.projectName,
         offsetFromRoot: offsetFromRoot(options.projectRoot),
         appsDir: options.appsDir,
         copyWorkspaceFilesCmd: generateDockerfileCopyWorkspaceConfig(host),

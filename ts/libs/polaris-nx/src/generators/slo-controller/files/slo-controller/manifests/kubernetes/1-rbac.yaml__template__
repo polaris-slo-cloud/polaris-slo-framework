@@ -6,14 +6,14 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: <%= sloFileName %>-slo-controller
+  name: <%= controllerProjectName %>
   namespace: polaris
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   # ClusterRoles are not namespaced
-  name: <%= sloFileName %>-slo-controller
+  name: <%= controllerProjectName %>
 rules:
 
 # Allow reading all SLO mappings
@@ -63,9 +63,9 @@ metadata:
   name: control-<%= sloFileName %>-slos
 subjects:
   - kind: ServiceAccount
-    name: <%= sloFileName %>-slo-controller
+    name: <%= controllerProjectName %>
     namespace: polaris
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: <%= sloFileName %>-slo-controller
+  name: <%= controllerProjectName %>
