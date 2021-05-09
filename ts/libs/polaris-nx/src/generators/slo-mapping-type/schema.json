@@ -25,6 +25,15 @@
             "description": "The directory within the project's src folder, where the SLO Mapping type should be created.",
             "alias": "d",
             "default": "slo-mappings"
+        },
+        "createLibProject": {
+            "type": "boolean",
+            "description": "Create a publishable library project for the SLO Mapping type.",
+            "default": false
+        },
+        "importPath": {
+            "type": "string",
+            "description": "The import path of the publishable library, e.g., '@my-org/my-lib' (only used and required if --createLibProject is true)."
         }
     },
     "required": [
