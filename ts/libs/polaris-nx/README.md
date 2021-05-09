@@ -37,20 +37,21 @@ Then, do the following (always replace `my-workspace` with your workspace's name
 
 ## `slo-mapping-type`
 
-An `slo-mapping-type` needs to be part of a buildable npm package (i.e., an existing library project).
+An `slo-mapping-type` needs to be part of a publishable npm package (i.e., a publishable library project).
 
-1. Create a node library project, if you don't have one.
-    ```shell
-    # Replace "my-slo-lib" with the name of your library and the import path with the final package name, the library should have.
-    nx g @nrwl/node:library my-slo-lib --publishable=true --importPath=@my-org/my-slo-lib
-    ```
+If you already have a library project, e.g., `my-slo-lib`, create the SLO Mapping type as follows:
 
-1. Create the SLO Mapping type.
-    ```shell
-    nx g @polaris-sloc/polaris-nx:slo-mapping-type cost-efficiency --project=my-slo-lib
-    ```
+```shell
+nx g @polaris-sloc/polaris-nx:slo-mapping-type cost-efficiency --project=my-slo-lib
+```
 
-This will generate the `CostEfficiencySlo` class in the file `cost-efficiency.slo.ts` and export it from the library.
+If you don't have a publishable library project yet, you can create one using the `@nrwl/node:library` generator, or let the `slo-mapping-type` generator create one for you:
+
+```shell
+nx g @polaris-sloc/polaris-nx:slo-mapping-type cost-efficiency --project=my-slo-lib --createLibProject=true --importPath=@my-org/my-slo-lib
+```
+
+Both versions will generate the `CostEfficiencySlo` class in the file `cost-efficiency.slo.ts` and export it from the library.
 
 
 
