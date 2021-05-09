@@ -11,5 +11,6 @@ module.exports = {
         '<rootDir>/libs/metrics/cost-efficiency',
         '<rootDir>/libs/polaris-nx',
         '<rootDir>/apps/polaris-nx-e2e',
+        '<rootDir>/apps/cli/polaris-cli',
     ],
 };

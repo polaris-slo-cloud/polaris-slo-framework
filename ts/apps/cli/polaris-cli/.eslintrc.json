@@ -1,0 +1,38 @@
+{
+    "extends": [
+        "../../../.eslintrc.js"
+    ],
+    "ignorePatterns": [
+        "!**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts",
+                "*.tsx",
+                "*.js",
+                "*.jsx"
+            ],
+            "parserOptions": {
+                "project": [
+                    "apps/cli/polaris-cli/tsconfig.*?.json"
+                ]
+            },
+            "rules": {}
+        },
+        {
+            "files": [
+                "*.ts",
+                "*.tsx"
+            ],
+            "rules": {}
+        },
+        {
+            "files": [
+                "*.js",
+                "*.jsx"
+            ],
+            "rules": {}
+        }
+    ]
+}

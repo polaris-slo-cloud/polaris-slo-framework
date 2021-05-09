@@ -625,6 +625,64 @@
           }
         }
       }
+    },
+    "cli-polaris-cli": {
+      "root": "apps/cli/polaris-cli",
+      "sourceRoot": "apps/cli/polaris-cli/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/cli/polaris-cli",
+            "main": "apps/cli/polaris-cli/src/main.ts",
+            "tsConfig": "apps/cli/polaris-cli/tsconfig.app.json",
+            "assets": [
+              "apps/cli/polaris-cli/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/cli/polaris-cli/src/environments/environment.ts",
+                  "with": "apps/cli/polaris-cli/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "cli-polaris-cli:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/cli/polaris-cli/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/cli/polaris-cli"
+          ],
+          "options": {
+            "jestConfig": "apps/cli/polaris-cli/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
