@@ -1,8 +1,9 @@
 import * as path from 'path';
 import {
     Generator,
+    NxJsonProjectConfiguration,
+    ProjectConfiguration,
     Tree,
-    addProjectConfiguration,
     formatFiles,
     generateFiles,
     getWorkspaceLayout,
@@ -14,6 +15,8 @@ import {
 import { applicationGenerator } from '@nrwl/node';
 import { POLARIS_INIT_LIB_FN_NAME, addPolarisDependenciesToPackageJson, getSloNames, runCallbacksSequentially } from '../../util';
 import { SloControllerGeneratorNormalizedSchema, SloControllerGeneratorSchema } from './schema';
+
+type ProjectConfig = ProjectConfiguration & NxJsonProjectConfiguration;
 
 /**
  * Generates a new Polaris SLO Controller..
@@ -29,7 +32,10 @@ const generateSloController: Generator<SloControllerGeneratorSchema> =  async (h
 
     const installPkgsFn = addPolarisDependenciesToPackageJson(host);
 
-    addDockerBuildConfig(host, normalizedOptions);
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    addDockerBuildConfig(projectConfig, normalizedOptions);
+    addDeployTarget(projectConfig, normalizedOptions);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     addWorkspaceRootFiles(host);
     addSloControllerFiles(host, normalizedOptions);
@@ -64,21 +70,37 @@ function normalizeOptions(host: Tree, options: SloControllerGeneratorSchema): Sl
     };
 }
 
-function addDockerBuildConfig(host: Tree, options: SloControllerGeneratorNormalizedSchema): void {
-    const projectConfig = readProjectConfiguration(host, options.projectName);
-
+/**
+ * Adds a `docker-build` target to the project's configuration.
+ */
+function addDockerBuildConfig(projectConfig: ProjectConfig, options: SloControllerGeneratorNormalizedSchema): void {
     projectConfig.targets['docker-build'] = {
         executor: '@nrwl/workspace:run-commands',
         options: {
             commands: [
                 // eslint-disable-next-line max-len
-                `docker build -f ./${options.projectRoot}/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=${options.projectName} -t polarissloc/${options.projectName}:latest .`,
+                `docker build -f ./${options.projectRoot}/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=${options.projectName} -t ${getContainerImageName(options)}:latest .`,
             ],
             parallel: false,
         },
     };
+}
 
-    updateProjectConfiguration(host, options.projectName, projectConfig);
+/**
+ * Adds a `deploy` target to the project's configuration to allow deploying the controller to an orchestrator.
+ */
+ function addDeployTarget(projectConfig: ProjectConfig, options: SloControllerGeneratorNormalizedSchema): void {
+    projectConfig.targets['deploy'] = {
+        executor: '@nrwl/workspace:run-commands',
+        options: {
+            commands: [
+                // Allows specifying the destination context, but if user does not specify the destination, its string value is 'undefined'
+                // `kubectl apply --context='{args.destination}' -f ./${options.projectRoot}/manifests/kubernetes`,
+                `kubectl apply -f ./${options.projectRoot}/manifests/kubernetes`,
+            ],
+            parallel: false,
+        },
+    };
 }
 
 function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormalizedSchema): void {
@@ -147,4 +169,11 @@ function generateDockerfilePackageInstallCmd(host: Tree): string {
         return 'RUN yarn install --non-interactive'
     }
     return 'RUN npm install --unsafe-perm';
+}
+
+/**
+ * Generates the name of the container image for this controller.
+ */
+function getContainerImageName(options: SloControllerGeneratorNormalizedSchema): string {
+    return `polarissloc/${options.projectName}`;
 }
