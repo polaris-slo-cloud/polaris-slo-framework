@@ -1,0 +1,14 @@
+{
+  "name": "@polaris-sloc/polaris-cli",
+  "version": "0.2.0-beta.0",
+  "license": "Apache-2.0",
+  "author": "Thomas Pusztai",
+  "private": false,
+  "bin": {
+    "polaris-cli": "./src/main.js"
+  },
+  "dependencies": {
+    "@polaris-sloc/polaris-nx": "0.2.0-beta.0",
+    "tslib": "^2.2.0"
+  }
+}

@@ -632,7 +632,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:package",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -640,7 +640,9 @@
             "outputPath": "dist/apps/cli/polaris-cli",
             "main": "apps/cli/polaris-cli/src/main.ts",
             "tsConfig": "apps/cli/polaris-cli/tsconfig.app.json",
+            "packageJson": "apps/cli/polaris-cli/package.json",
             "assets": [
+              "apps/cli/polaris-cli/*.md",
               "apps/cli/polaris-cli/src/assets"
             ]
           },
