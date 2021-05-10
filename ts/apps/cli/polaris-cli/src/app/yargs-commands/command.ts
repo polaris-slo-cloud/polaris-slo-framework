@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Arguments, CommandModule } from 'yargs';
 
 /**
  * Extends the yargs `CommandModule` to allow asynchronous handlers.
  */
-export interface Command<T = any, U = any> extends Omit<CommandModule<T, U>, 'handler'> {
+export interface Command<T = {}, U = {}> extends Omit<CommandModule<T, U>, 'handler'> {
 
     /** This handler is passed the parsed arguments. */
     handler: (args: Arguments<U>) => void | Promise<void>;
@@ -13,7 +14,7 @@ export interface Command<T = any, U = any> extends Omit<CommandModule<T, U>, 'ha
 /**
  * Creates a Yargs `CommandModule` from the specified `Command`.
  */
-export function createYargsCommand<T, U>(command: Command<T, U>): CommandModule<T, U> {
+export function createYargsCommand<T = {}, U = {}>(command: Command<T, U>): CommandModule<T, U> {
     const { handler, ...cmd } = command;
 
     const executeHandler: (args: Arguments<U>) => void = args => {

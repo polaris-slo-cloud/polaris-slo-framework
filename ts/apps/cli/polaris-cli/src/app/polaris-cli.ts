@@ -1,10 +1,13 @@
-import yargs, { Argv } from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
 import { createInitCommand } from './yargs-commands';
 
 /** Command used to execute the Nx CLI. */
 export const NX_CLI = 'nx';
+
+/** Polaris Nx CLI plugin. */
+export const POLARIS_NX = '@polaris-sloc/polaris-nx';
 
 export class PolarisCli {
 
@@ -26,21 +29,26 @@ export class PolarisCli {
             .scriptName('polaris-cli')
             .command(createInitCommand(this))
             .command({
-                command: 'generate',
+                command: 'generate <type> <name>',
                 aliases: 'g',
                 describe: 'Generate a Polaris project or component.',
                 builder: args => {
-                    args.positional('type', {
-                        array: false,
-                        type: 'string',
-                        description: 'The type of project/component that should be generated.',
-                        choices: [
-                            'slo-mapping-type',
-                            'slo-controller',
-                            'slo-mapping',
-                        ],
-                    });
-                    this.addNameParam(args);
+                    return args
+                        .positional('type', {
+                            array: false,
+                            type: 'string',
+                            description: 'The type of project/component that should be generated.',
+                            choices: [
+                                'slo-mapping-type',
+                                'slo-controller',
+                                'slo-mapping',
+                            ],
+                        })
+                        .positional('name', {
+                            array: false,
+                            type: 'string',
+                            description: 'The name of the project/component.',
+                        });
                     // args.options({
                     //     outDir: {
                     //         alias: 'o',
@@ -50,7 +58,6 @@ export class PolarisCli {
                     //         normalize: true,
                     //     },
                     // });
-                    return args;
                 },
                 handler: args => {
                     // analyze(argv['files'] as string[], argv['outDir'] as string)
@@ -86,20 +93,8 @@ export class PolarisCli {
 
                 },
             })
+            .help()
             .parse();
     }
-
-
-    /**
-     * Adds the commonly used `name` parameter to an `args` object.
-     */
-    addNameParam(args: Argv<any>): void {
-        args.positional('name', {
-            array: false,
-            type: 'string',
-            description: 'The name of the project/component.',
-        });
-    }
-
 
 }
