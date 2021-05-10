@@ -163,7 +163,12 @@ function generateDockerfileCopyWorkspaceConfig(host: Tree): string {
     };
 
     appendIfExists('package-lock.json');
+    appendIfExists('.npmrc');
     appendIfExists('yarn.lock');
+    appendIfExists('.yarnrc.yml');
+    appendIfExists('.pnpmfile.cjs');
+    appendIfExists('pnpm-lock.yaml');
+    appendIfExists('pnpm-workspace.yaml');
     appendIfExists('angular.json');
     appendIfExists('decorate-angular-cli.js');
     appendIfExists('workspace.json');
@@ -176,7 +181,10 @@ function generateDockerfileCopyWorkspaceConfig(host: Tree): string {
  */
 function generateDockerfilePackageInstallCmd(host: Tree): string {
     if (host.exists('yarn.lock')) {
-        return 'RUN yarn install --non-interactive'
+        return 'RUN yarn install --non-interactive';
+    }
+    if (host.exists('pnpm-lock.yaml')) {
+        return 'RUN npm install -g pnpm && pnpm install';
     }
     return 'RUN npm install --unsafe-perm';
 }
