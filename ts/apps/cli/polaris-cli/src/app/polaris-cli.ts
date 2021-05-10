@@ -1,7 +1,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
-import { createInitCommand } from './yargs-commands';
+import { createBuildCommand, createInitCommand } from './yargs-commands';
 
 /** Command used to execute the Nx CLI. */
 export const NX_CLI = 'nx';
@@ -66,14 +66,7 @@ export class PolarisCli {
 
                 },
             })
-            .command({
-                command: 'build',
-                describe: 'Builds a Polaris project or an SLO Mapping.',
-                builder: args => args,
-                handler: args => {
-
-                },
-            })
+            .command(createBuildCommand(this))
             .command({
                 command: 'build-docker',
                 describe: 'Builds the Docker image of a compatible Polaris project.',

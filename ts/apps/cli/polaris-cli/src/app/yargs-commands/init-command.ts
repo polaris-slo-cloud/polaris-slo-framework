@@ -37,7 +37,6 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
                         'pnpm',
                     ],
                     default: 'npm',
-                    normalize: true,
                 });
         },
         handler: args => {
