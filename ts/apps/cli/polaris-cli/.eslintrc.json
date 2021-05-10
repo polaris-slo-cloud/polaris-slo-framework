@@ -25,7 +25,11 @@
                 "*.ts",
                 "*.tsx"
             ],
-            "rules": {}
+            "rules": {
+                "arrow-body-style": "off",
+                "@typescript-eslint/no-unsafe-member-access": "off",
+                "@typescript-eslint/restrict-template-expressions": "off"
+            }
         },
         {
             "files": [
