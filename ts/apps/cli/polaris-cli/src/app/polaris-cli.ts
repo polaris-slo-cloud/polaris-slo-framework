@@ -1,7 +1,11 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
-import { createBuildCommand, createInitCommand } from './yargs-commands';
+import {
+    createBuildCommand,
+    createGenerateCommand,
+    createInitCommand,
+} from './yargs-commands';
 
 /** Command used to execute the Nx CLI. */
 export const NX_CLI = 'nx';
@@ -27,45 +31,11 @@ export class PolarisCli {
     run(): void {
         yargs(hideBin(process.argv))
             .scriptName('polaris-cli')
-            .command(createInitCommand(this))
-            .command({
-                command: 'generate <type> <name>',
-                aliases: 'g',
-                describe: 'Generate a Polaris project or component.',
-                builder: args => {
-                    return args
-                        .positional('type', {
-                            array: false,
-                            type: 'string',
-                            description: 'The type of project/component that should be generated.',
-                            choices: [
-                                'slo-mapping-type',
-                                'slo-controller',
-                                'slo-mapping',
-                            ],
-                        })
-                        .positional('name', {
-                            array: false,
-                            type: 'string',
-                            description: 'The name of the project/component.',
-                        });
-                    // args.options({
-                    //     outDir: {
-                    //         alias: 'o',
-                    //         default: './',
-                    //         string: true,
-                    //         desc: 'The directory, where the output CSV files will be created.',
-                    //         normalize: true,
-                    //     },
-                    // });
-                },
-                handler: args => {
-                    // analyze(argv['files'] as string[], argv['outDir'] as string)
-                    //     .then()
-                    //     .catch(err => console.error(err));
-
-                },
+            .parserConfiguration({
+                'unknown-options-as-args': true,
             })
+            .command(createInitCommand(this))
+            .command(createGenerateCommand(this))
             .command(createBuildCommand(this))
             .command({
                 command: 'build-docker',
@@ -87,6 +57,7 @@ export class PolarisCli {
                 },
             })
             .help()
+            .recommendCommands()
             .parse();
     }
 
