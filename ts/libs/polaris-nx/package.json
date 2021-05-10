@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/polaris-nx",
-  "version": "0.2.0",
+  "version": "0.2.0-beta.1",
   "license": "Apache-2.0",
   "author": "Thomas Pusztai",
   "private": false,
@@ -8,6 +8,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
+    "@angular-devkit/schematics": "~11.2.0",
     "@nrwl/devkit": "*",
     "@nrwl/node": "*",
     "@nrwl/workspace": "*",
