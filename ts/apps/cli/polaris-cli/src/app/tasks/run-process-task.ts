@@ -28,12 +28,21 @@ export class RunProcessTask implements Task {
     constructor(public config: ProcessConfig) { }
 
     execute(): Promise<void> {
-        execSync(this.config.command, {
-            maxBuffer: BUFFER_SIZE,
-            stdio: [0, 1, 2],
-            cwd: this.config.workingDir || process.cwd(),
+        return new Promise((resolve, reject) => {
+            try {
+                execSync(this.config.command, {
+                    maxBuffer: BUFFER_SIZE,
+                    stdio: [0, 1, 2],
+                    cwd: this.config.workingDir || process.cwd(),
+                });
+                resolve();
+            } catch (err) {
+                reject(new RunProcessTaskError(
+                    `Error executing command: ${this.config.command}`,
+                    err,
+                ));
+            }
         });
-        return Promise.resolve();
     }
 
 }
@@ -48,6 +57,14 @@ export class RunNpmBinaryTask extends RunProcessTask {
             ...config,
             command: `npx ${config.command}`,
         });
+    }
+
+}
+
+class RunProcessTaskError extends Error {
+
+    constructor(msg: string, public cause?: Error) {
+        super(msg);
     }
 
 }
