@@ -13,7 +13,14 @@ import {
     updateProjectConfiguration,
 } from '@nrwl/devkit';
 import { applicationGenerator } from '@nrwl/node';
-import { POLARIS_INIT_LIB_FN_NAME, addPolarisDependenciesToPackageJson, getSloNames, runCallbacksSequentially } from '../../util';
+import {
+    NPM_PACKAGES,
+    POLARIS_INIT_LIB_FN_NAME,
+    VERSIONS,
+    addPolarisDependenciesToPackageJson,
+    getSloNames,
+    runCallbacksSequentially,
+} from '../../util';
 import { SloControllerGeneratorNormalizedSchema, SloControllerGeneratorSchema } from './schema';
 
 type ProjectConfig = ProjectConfiguration & NxJsonProjectConfiguration;
@@ -21,7 +28,7 @@ type ProjectConfig = ProjectConfiguration & NxJsonProjectConfiguration;
 /**
  * Generates a new Polaris SLO Controller..
  */
-const generateSloController: Generator<SloControllerGeneratorSchema> =  async (host: Tree, options: SloControllerGeneratorSchema) => {
+const generateSloController: Generator<SloControllerGeneratorSchema> = async (host: Tree, options: SloControllerGeneratorSchema) => {
     const normalizedOptions = normalizeOptions(host, options);
 
     const nodeAppResult = await applicationGenerator(host, {
@@ -30,7 +37,10 @@ const generateSloController: Generator<SloControllerGeneratorSchema> =  async (h
         tags: options.tags,
     });
 
-    const installPkgsFn = addPolarisDependenciesToPackageJson(host);
+    const installPkgsFn = addPolarisDependenciesToPackageJson(host, {
+        [NPM_PACKAGES.polaris.orchestrators.kubernetes]: VERSIONS.polaris,
+        [NPM_PACKAGES.polaris.queryBackends.prometheus]: VERSIONS.polaris,
+    });
 
     const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
     addDockerBuildConfig(projectConfig, normalizedOptions);
@@ -89,7 +99,7 @@ function addDockerBuildConfig(projectConfig: ProjectConfig, options: SloControll
 /**
  * Adds a `deploy` target to the project's configuration to allow deploying the controller to an orchestrator.
  */
- function addDeployTarget(projectConfig: ProjectConfig, options: SloControllerGeneratorNormalizedSchema): void {
+function addDeployTarget(projectConfig: ProjectConfig, options: SloControllerGeneratorNormalizedSchema): void {
     projectConfig.targets['deploy'] = {
         executor: '@nrwl/workspace:run-commands',
         options: {
