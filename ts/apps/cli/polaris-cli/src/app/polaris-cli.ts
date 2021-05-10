@@ -3,6 +3,8 @@ import { hideBin } from 'yargs/helpers';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
 import {
     createBuildCommand,
+    createDeployCommand,
+    createDockerBuildCommand,
     createGenerateCommand,
     createInitCommand,
 } from './yargs-commands';
@@ -37,25 +39,8 @@ export class PolarisCli {
             .command(createInitCommand(this))
             .command(createGenerateCommand(this))
             .command(createBuildCommand(this))
-            .command({
-                command: 'build-docker',
-                describe: 'Builds the Docker image of a compatible Polaris project.',
-                builder: args => {
-                    console.log('test');
-                    return args;
-                },
-                handler: args => {
-
-                },
-            })
-            .command({
-                command: 'deploy',
-                describe: 'Deploys a Polaris project or an SLO Mapping.',
-                builder: args => args,
-                handler: args => {
-
-                },
-            })
+            .command(createDockerBuildCommand(this))
+            .command(createDeployCommand(this))
             .help()
             .recommendCommands()
             .parse();

@@ -11,7 +11,7 @@ const SKIP_BUILD_CACHE = 'skipBuildCache';
  */
 export function createBuildCommand(cli: PolarisCli): CommandModule<any, any> {
     return createYargsCommand(
-        `build <${NAME}>'`,
+        `build <${NAME}>`,
         'Builds a Polaris project or an SLO Mapping.',
         args => {
             return args.positional(NAME, {
