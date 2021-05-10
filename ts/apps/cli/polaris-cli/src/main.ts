@@ -1,16 +1,20 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable id-blacklist */
 /* eslint-disable no-shadow */
 import yargs, { Argv } from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { Task, runTasksSequentially } from './app/tasks';
+import { DefaultTaskExecutor } from './app/tasks';
 
 const NX_CLI = 'npx nx';
 
-main();
+try {
+    main();
+} catch (e) {
+    console.error(e);
+}
 
 function main(): void {
-    // These tasks will be executed after evaluating the arguments.
-    const tasks: Task[] = [];
+    const taskExecutor = new DefaultTaskExecutor();
 
     yargs(hideBin(process.argv))
         .scriptName('polaris-cli')
@@ -18,12 +22,11 @@ function main(): void {
             command: 'init',
             describe: 'Creates a new Nx workspace for creating Polaris projects.',
             builder: args => {
-                args.positional('name', {
+                return args.positional('name', {
                     array: false,
                     type: 'string',
                     description: 'The name of the workspace (will be the folder name).',
                 });
-                return args;
             },
             handler: args => {
 
@@ -90,10 +93,6 @@ function main(): void {
             },
         })
         .parse();
-
-    runTasksSequentially(...tasks)
-        .then(() => {})
-        .catch(err => console.error(err));
 }
 
 

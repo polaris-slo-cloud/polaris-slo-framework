@@ -2,22 +2,14 @@
 /**
  * Represents an executable command in the CLI.
  */
-export interface Task {
+export interface Task<R = void> {
 
-    /** Runs this command. */
-    execute(): Promise<void>;
+    /**
+     * Runs this task.
+     *
+     * @returns A promise that resolves to the result of the task.
+     */
+    execute(): Promise<R>;
 
 }
 
-/**
- * Executes the specified commands in sequence.
- */
-export async function runTasksSequentially(...tasks: Task[]): Promise<void> {
-    if (!tasks) {
-        return;
-    }
-
-    for (const task of tasks) {
-        await task.execute();
-    }
-}
