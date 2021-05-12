@@ -33,7 +33,7 @@ NPM_PKGS=(
     "./libs/query-backends/prometheus"
     "./libs/metrics/cost-efficiency"
     "./libs/polaris-nx"
-    "./libs/cli/polaris-cli"
+    "./apps/cli/polaris-cli"
 )
 
 cd ./dist
