@@ -43,6 +43,7 @@ const generateSloController: Generator<SloControllerGeneratorSchema> = async (ho
     });
 
     const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    changeBuildDependencyBundling(projectConfig);
     addDockerBuildConfig(projectConfig, normalizedOptions);
     addDeployTarget(projectConfig, normalizedOptions);
     updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
@@ -78,6 +79,14 @@ function normalizeOptions(host: Tree, options: SloControllerGeneratorSchema): Sl
         appsDir: workspaceInfo.appsDir,
         libsDir: workspaceInfo.libsDir,
     };
+}
+
+/**
+ * Changes the build configuration to bundle all external dependencies into the output js file.
+ */
+function changeBuildDependencyBundling(projectConfig: ProjectConfig): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    projectConfig.targets['build'].options['externalDependencies'] = 'none';
 }
 
 /**
