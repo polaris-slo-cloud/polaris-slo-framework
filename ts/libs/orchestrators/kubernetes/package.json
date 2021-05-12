@@ -2,7 +2,7 @@
   "name": "@polaris-sloc/kubernetes",
   "version": "0.2.0",
   "license": "Apache-2.0",
-  "author": "Thomas Pusztai",
+  "author": "Polaris SLO Cloud Authors",
   "private": false,
   "dependencies": {
     "@polaris-sloc/core": "~0.2.0",

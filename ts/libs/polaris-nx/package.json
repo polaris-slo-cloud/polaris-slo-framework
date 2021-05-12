@@ -2,7 +2,7 @@
   "name": "@polaris-sloc/polaris-nx",
   "version": "0.2.0-beta.2",
   "license": "Apache-2.0",
-  "author": "Thomas Pusztai",
+  "author": "Polaris SLO Cloud Authors",
   "private": false,
   "main": "src/index.js",
   "generators": "./generators.json",

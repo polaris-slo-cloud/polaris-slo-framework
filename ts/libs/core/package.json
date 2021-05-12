@@ -2,7 +2,7 @@
   "name": "@polaris-sloc/core",
   "version": "0.2.0",
   "license": "Apache-2.0",
-  "author": "Thomas Pusztai",
+  "author": "Polaris SLO Cloud Authors",
   "private": false,
   "dependencies": {
     "class-transformer": "~0.4.0",
