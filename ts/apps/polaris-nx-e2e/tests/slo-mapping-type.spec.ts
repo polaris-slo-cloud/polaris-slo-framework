@@ -20,9 +20,10 @@ describe('slo-mapping-type e2e', () => {
         const sloMappingNames = names(sloMappingType);
 
         ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
-        await runNxCommandAsync(`generate @nrwl/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
+        // await runNxCommandAsync(`generate @nrwl/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
 
-        const result = await runNxCommandAsync(`generate @polaris-sloc/polaris-nx:slo-mapping-type ${sloMappingType} --project=${libProj}`);
+        // eslint-disable-next-line max-len
+        const result = await runNxCommandAsync(`generate @polaris-sloc/polaris-nx:slo-mapping-type ${sloMappingType} --project=${libProj} --createLibProject=true --importPath=${WORKSPACE_NPM_ORG}/${libProj}`);
         if (result.stderr) {
             console.log(result.stderr);
         }

@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Tree, readJson, updateJson } from '@nrwl/devkit';
+import {
+    Tree,
+    joinPathFragments,
+    readJson,
+    readProjectConfiguration,
+    updateJson,
+} from '@nrwl/devkit';
 
 const TS_CONFIG_FILES = [
     'tsconfig.base.json',
@@ -26,6 +32,33 @@ export function adaptTsConfigForPolaris(host: Tree): void {
             json.compilerOptions = { experimentalDecorators: true };
         }
         return json;
+    });
+}
+
+/**
+ * Changes the module code generation type for the specified library project to 'es2015'.
+ */
+export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): void {
+    const project = readProjectConfiguration(host, projectName);
+    const tsConfigs = [
+        joinPathFragments(project.root, 'tsconfig.lib.json'),
+        // joinPathFragments(project.root, 'tsconfig.spec.json'),
+    ];
+
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const updateFn = (json: any) => {
+        if (json.compilerOptions) {
+            json.compilerOptions.module = 'es2015';
+        } else {
+            json.compilerOptions = { module: 'es2015' };
+        }
+        return json;
+    }
+
+    tsConfigs.forEach(tsConfig => {
+        if (host.exists(tsConfig)) {
+            updateJson(host, tsConfig, updateFn);
+        }
     });
 }
 

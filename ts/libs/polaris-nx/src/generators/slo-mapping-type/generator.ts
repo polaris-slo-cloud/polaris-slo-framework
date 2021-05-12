@@ -9,6 +9,7 @@ import {
 import { libraryGenerator } from '@nrwl/node';
 import {
     POLARIS_INIT_FN_FILE_NAME,
+    adaptLibModuleTypeForPolaris,
     adaptTsConfigForPolaris,
     addExportToIndex,
     addPolarisDependenciesToPackageJson,
@@ -56,7 +57,7 @@ export default generateSloMappingType;
  *
  * Throws an error if the project already exists.
  */
-function createLibProject(host: Tree, options: SloMappingTypeGeneratorSchema): Promise<GeneratorCallback> {
+async function createLibProject(host: Tree, options: SloMappingTypeGeneratorSchema): Promise<GeneratorCallback> {
     let projectExists = false;
     try {
         projectExists = !!readProjectConfiguration(host, options.project);
@@ -65,13 +66,16 @@ function createLibProject(host: Tree, options: SloMappingTypeGeneratorSchema): P
         throw new Error(`Cannot create a new library project, because a project with the name ${options.project} already exists.`);
     }
 
-    return libraryGenerator(
+    const ret = await libraryGenerator(
         host, {
             name: options.project,
             publishable: true,
             importPath: options.importPath,
         },
     );
+
+    adaptLibModuleTypeForPolaris(host, options.project);
+    return ret;
 }
 
 /**
