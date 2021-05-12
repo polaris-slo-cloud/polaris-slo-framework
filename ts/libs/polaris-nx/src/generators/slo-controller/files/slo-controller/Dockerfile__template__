@@ -34,6 +34,6 @@ ENV POLARIS_APP_NAME ${POLARIS_APP_NAME}
 WORKDIR /usr/apps/${POLARIS_APP_NAME}
 
 # Copy the build output.
-COPY --from=builder /usr/src/polaris/dist/apps/${POLARIS_APP_TYPE}/${POLARIS_APP_NAME} .
+COPY --from=builder /usr/src/polaris/dist/apps/${POLARIS_APP_NAME} .
 
 CMD ["node", "main.js"]
