@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { PolarisCli } from './app/polaris-cli';
 
 try {
