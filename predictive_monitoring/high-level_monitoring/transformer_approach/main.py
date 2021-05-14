@@ -8,7 +8,7 @@ from transformer_train import *
 import os
 
 
-def asha_training(exp_name, num_samples=100, max_num_epochs=60, gpus_per_trial=1, cpus_per_trial=10):
+def asha_training(exp_name, num_samples=1200, max_num_epochs=20, gpus_per_trial=1, cpus_per_trial=10):
     data_path = "../data/task-usage_job-ID-3418339_total.csv"
     columns_file = "../columns_selection.json"
     columns_scheme = "LSTM_efficiency_1"
@@ -29,21 +29,21 @@ def asha_training(exp_name, num_samples=100, max_num_epochs=60, gpus_per_trial=1
     print(device)
 
     config = {
-        "lr": tune.loguniform(1e-4, 5e-1),
-        "lr_step": tune.randint(1, 10),
-        "gamma": tune.loguniform(0.85, 0.9999),
-        "epochs": tune.choice([10, 15, 20, 25, 30, 35, 40, 45, 50, 60]),
-        "n_heads": tune.randint(2, 10),
-        "dim_val": tune.choice([2, 4, 6]),  # FIXME requires numero parell...
-        "dim_att": tune.randint(2, 10),
-        "encoder_layers": tune.randint(1, 7),
-        "decoder_layers": tune.randint(1, 7),
-        "batch_size": tune.randint(1, 10),
+        "lr": tune.choice([0.01]),
+        "lr_step": tune.choice([2]),
+        "gamma": tune.choice([0.99]),
+        "epochs": tune.choice([20]),
+        "n_heads": tune.randint(2, 16),
+        "dim_val": tune.choice([2, 4, 6, 8, 10, 12, 14, 16, 18]),  # FIXME requires numero parell...
+        "dim_att": tune.randint(2, 20),
+        "encoder_layers": tune.randint(1, 10),
+        "decoder_layers": tune.randint(1, 10),
+        "batch_size": tune.choice([4]),
         "input_feat_enc": tune.choice([15]),
         "input_feat_dec": tune.choice([1]),
-        "seq_len": tune.choice([16, 32, 64, 96, 128, 156, 212]),
+        "seq_len": tune.choice([64]),
         # [16, 32, 64, 128, 256, 512, 1024, 2048]
-        "prediction_step": tune.choice([4])
+        "prediction_step": tune.choice([1])
     }
 
     scheduler = ASHAScheduler(
@@ -53,8 +53,8 @@ def asha_training(exp_name, num_samples=100, max_num_epochs=60, gpus_per_trial=1
         grace_period=6,
         reduction_factor=2)
     reporter = CLIReporter(
-        parameter_columns=["lr", "lr_step", "gamma", "epochs", "n_heads", "dim_val", "dim_att", "encoder_layers",
-                           "decoder_layers", "batch_size", "seq_len"],
+        parameter_columns=["n_heads", "dim_val", "dim_att", "encoder_layers",
+                           "decoder_layers"],
         metric_columns=["loss", "training_iteration"])
     result = tune.run(
         partial(transformer_train, df=df, device=device),
@@ -87,8 +87,7 @@ if __name__ == '__main__':
 
     print(torch.__version__)
 
-    # asha_training(exp_name="testing_pstep")
-
+    # Training, validation and test of the best model for the ASHA scheduler.
     exp_name = None
     if len(sys.argv) != 2:
         print("Provide experiment name")
@@ -97,6 +96,7 @@ if __name__ == '__main__':
         exp_name = sys.argv[1]
         asha_training(exp_name)
 
+    # For debugging purposes.
     # data_path = "../data/task-usage_job-ID-3418339_total.csv"
     # columns_file = "../columns_selection.json"
     # columns_scheme = "LSTM_efficiency_1"

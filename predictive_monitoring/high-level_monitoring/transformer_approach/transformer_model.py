@@ -16,9 +16,6 @@ class EncoderLayer(torch.nn.Module):
         a = self.attn(x)
         x = self.norm1(x + a)
 
-        # device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-        # device = 'cpu'
-
         elu_tensor = F.elu(self.fc2(x))  # .to(device)
 
         a = self.fc1(elu_tensor)  # FIXME to check!
@@ -46,9 +43,6 @@ class DecoderLayer(torch.nn.Module):
         a = self.attn2(x, kv=enc)
         x = self.norm2(a + x)
 
-        # device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-        # device = 'cpu'
-        # elu_tensor = F.elu(self.fc2(x)).to(device)
         elu_tensor = F.elu(self.fc2(x))
 
         a = self.fc1(elu_tensor)  # FIXME to check!
@@ -59,28 +53,24 @@ class DecoderLayer(torch.nn.Module):
 
 class Transformer(torch.nn.Module):
     def __init__(self, dim_val, dim_attn, input_feat_enc, input_feat_dec, seq_len, n_decoder_layers=1,
-                 n_encoder_layers=1, n_heads=1, prediction_step=1 ,device="cpu"):
+                 n_encoder_layers=1, n_heads=1, prediction_step=1, device="cpu"):
         super(Transformer, self).__init__()
-        # self.dec_seq_len = dec_seq_len
         self.seq_len = seq_len
 
-        # device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-        # device = 'cpu'
         # Initiate encoder and Decoder layers
         self.encs = []
         for i in range(n_encoder_layers):
-            self.encs.append(EncoderLayer(dim_val, dim_attn, n_heads, device))  # .to(device))
+            self.encs.append(EncoderLayer(dim_val, dim_attn, n_heads, device))
 
         self.decs = []
         for i in range(n_decoder_layers):
-            self.decs.append(DecoderLayer(dim_val, dim_attn, n_heads, device))  # .to(device))
+            self.decs.append(DecoderLayer(dim_val, dim_attn, n_heads, device))
 
         self.pos = PositionalEncoding(dim_val)
 
         # Dense layers for managing network inputs and outputs
         self.enc_input_fc = nn.Linear(input_feat_enc, dim_val)
         self.dec_input_fc = nn.Linear(input_feat_dec, dim_val)
-        # self.out_fc = nn.Linear(self.seq_len * dim_val, input_feat_dec)
         self.out_fc = nn.Linear(self.seq_len * dim_val, prediction_step)
 
     def forward(self, x_enc, x_dec):
@@ -92,7 +82,6 @@ class Transformer(torch.nn.Module):
             e = enc(e)
 
         # decoder
-        # d = self.decs[0](self.dec_input_fc(x[:,-self.dec_seq_len:]), e)
         d = self.decs[0](self.dec_input_fc(x_dec), e)
         for dec in self.decs[1:]:
             d = dec(d, e)

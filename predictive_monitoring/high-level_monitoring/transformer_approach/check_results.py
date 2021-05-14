@@ -15,9 +15,9 @@ if __name__ == '__main__':
     cuda_id = 1
 
 
-    extra_ds = "task-usage_job-ID-5546501684_total.csv"
-    data_path = "/data/cloud_data/Google-clusterdata-2011-2/processed_data/high-level_monitoring/" + extra_ds
-    path_to_save = "/data/results/vcpujol/transformers/single_deployment/google_traces/other_ds/"
+    # extra_ds = "task-usage_job-ID-5546501684_total.csv"
+    # data_path = "/data/cloud_data/Google-clusterdata-2011-2/processed_data/high-level_monitoring/" + extra_ds
+    path_to_save = "/data/results/vcpujol/transformers/single_deployment/google_traces/model_config_best/"
 
     df = prepare_data(data_path, columns_file, columns_scheme)
 
@@ -26,15 +26,15 @@ if __name__ == '__main__':
     device ='cpu'
 
     results_path = "/data/results/vcpujol/transformers/single_deployment/google_traces/"
-    experiment = "MSE_large/"
+    experiment = "model_config4/"
     path = results_path + experiment
 
     folders_list = []
-    # for _, dirnames, _ in walk(path):
-    #     folders_list.extend(dirnames)
-    #     break
-    folders_list.append("DEFAULT_ffb5e_00042_42_batch_size=2,decoder_layers=2,dim_att=9,dim_val=6,encoder_layers=6,epochs=40,gamma=0.98802,input_feat_dec=1_2021-04-24_22-59-46")
-    folders_list.append("DEFAULT_ffb5e_00221_221_batch_size=9,decoder_layers=3,dim_att=9,dim_val=4,encoder_layers=2,epochs=40,gamma=0.93813,input_feat_dec=_2021-04-25_07-25-27")
+    for _, dirnames, _ in walk(path):
+        folders_list.extend(dirnames)
+        break
+    # folders_list.append("DEFAULT_ffb5e_00042_42_batch_size=2,decoder_layers=2,dim_att=9,dim_val=6,encoder_layers=6,epochs=40,gamma=0.98802,input_feat_dec=1_2021-04-24_22-59-46")
+    # folders_list.append("DEFAULT_ffb5e_00221_221_batch_size=9,decoder_layers=3,dim_att=9,dim_val=4,encoder_layers=2,epochs=40,gamma=0.93813,input_feat_dec=_2021-04-25_07-25-27")
 
     ii = 0
     for folder in folders_list:
@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
         val_avg_loss = sum(loss_evolution)/len(loss_evolution)
         print("validation loss: " + str(val_avg_loss))
-        if val_avg_loss < 0.0005:
+        if val_avg_loss < 0.01:
             plt.figure(figsize=(20, 8))
             plt.plot(loss_evolution, '-', color='indigo', label='Loss', linewidth=2)
             plt.legend()

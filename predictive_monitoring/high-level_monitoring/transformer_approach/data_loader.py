@@ -25,20 +25,16 @@ class LoadGoogleDataset(Dataset):
 
         if mode == "train":
             self.data_set = data_frame[(data_frame.index < last_40pct)]  # Training data are 80% of total data
-            # print("Rows for training: " + str(len(self.data_set)))
         elif mode == "validation":
             self.data_set = data_frame[(data_frame.index >= last_40pct) & (data_frame.index < last_20pct)]
-            # print("Rows for validation: " + str(len(self.data_set)))
         elif mode == "test":
             self.data_set = data_frame[(data_frame.index >= last_20pct)]
-            # print("Rows for testing: " + str(len(self.data_set)))
 
         if self.seq_len > len(self.data_set) - self.p_steps:
             self.seq_len = len(self.data_set) - self.p_steps - 1
-        # self.data_set_len = int(np.ceil((len(self.data_set) - self.p_steps - self.batch_size) / self.step) + 1)
 
     def __len__(self):
-        return len(self.data_set)-(self.seq_len+self.p_steps) + 1
+        return len(self.data_set) - (self.seq_len + self.p_steps) + 1
 
     def __getitem__(self, idx):
         if self.mode == 'test':

@@ -20,11 +20,9 @@ def attention(Q, K, V):
 class AttentionBlock(torch.nn.Module):
     def __init__(self, dim_val, dim_attn):
         super(AttentionBlock, self).__init__()
-        # device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-        # device = "cpu"
-        self.value = Value(dim_val, dim_val)  # .to(device)
-        self.key = Key(dim_val, dim_attn)  # .to(device)
-        self.query = Query(dim_val, dim_attn)  # .to(device)
+        self.value = Value(dim_val, dim_val)
+        self.key = Key(dim_val, dim_attn)
+        self.query = Query(dim_val, dim_attn)
 
     def forward(self, x, kv=None):
         if (kv is None):
@@ -39,8 +37,6 @@ class MultiHeadAttentionBlock(torch.nn.Module):
     def __init__(self, dim_val, dim_attn, n_heads, device):
         super(MultiHeadAttentionBlock, self).__init__()
         self.heads = []
-        # device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-        # device = "cpu"
         for i in range(n_heads):
             self.heads.append(AttentionBlock(dim_val, dim_attn))
 
@@ -67,12 +63,9 @@ class Value(torch.nn.Module):
         self.dim_val = dim_val
 
         self.fc1 = nn.Linear(dim_input, dim_val, bias=False)
-        # self.fc2 = nn.Linear(5, dim_val)
 
     def forward(self, x):
         x = self.fc1(x)
-        # x = self.fc2(x)
-
         return x
 
 
@@ -82,11 +75,9 @@ class Key(torch.nn.Module):
         self.dim_attn = dim_attn
 
         self.fc1 = nn.Linear(dim_input, dim_attn, bias=False)
-        # self.fc2 = nn.Linear(5, dim_attn)
 
     def forward(self, x):
         x = self.fc1(x)
-        # x = self.fc2(x)
 
         return x
 
@@ -97,12 +88,9 @@ class Query(torch.nn.Module):
         self.dim_attn = dim_attn
 
         self.fc1 = nn.Linear(dim_input, dim_attn, bias=False)
-        # self.fc2 = nn.Linear(5, dim_attn)
 
     def forward(self, x):
         x = self.fc1(x)
-        # print(x.shape)
-        # x = self.fc2(x)
 
         return x
 
