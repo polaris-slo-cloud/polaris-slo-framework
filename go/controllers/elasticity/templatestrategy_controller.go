@@ -38,7 +38,7 @@ type TemplateStrategyReconciler struct {
 
 // +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=templatestrategies,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=templatestrategies/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=autoscaling,resources=hpa,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=autoscaling,resources=horizontalpodautoscalers,verbs=get;list;watch;create;update;patch;delete
 
 // Reconcile is called by the manager, whenever its underlying informers report that an
 // object has been added, updated, or deleted.
