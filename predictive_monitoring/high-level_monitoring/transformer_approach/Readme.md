@@ -1,5 +1,7 @@
 Data series forecasting using a transformer.
 
+Follow the example.py in the folder to see a very simple usage of the model
+
 Transfomer model adapted from: 
 
 Wu, N., Green, B., Ben, X., & O’Banion, S. (2020). Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case. ArXiv. http://arxiv.org/abs/2001.08317

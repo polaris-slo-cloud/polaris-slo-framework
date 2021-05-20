@@ -1,0 +1,16 @@
+{
+  "batch_size": 4,
+  "decoder_layers": 1,
+  "dim_att": 13,
+  "dim_val": 12,
+  "encoder_layers": 9,
+  "epochs": 20,
+  "gamma": 0.99,
+  "input_feat_dec": 1,
+  "input_feat_enc": 15,
+  "lr": 0.01,
+  "lr_step": 2,
+  "n_heads": 2,
+  "prediction_step": 1,
+  "seq_len": 64
+}
