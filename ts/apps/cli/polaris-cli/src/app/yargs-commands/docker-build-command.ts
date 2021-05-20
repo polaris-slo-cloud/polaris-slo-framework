@@ -11,7 +11,7 @@ const NAME = 'name';
 export function createDockerBuildCommand(cli: PolarisCli): CommandModule<any, any> {
     return createYargsCommand(
         `docker-build <${NAME}>`,
-        'Builds a Polaris project or an SLO Mapping.',
+        'Builds the Docker container image for a Polaris controller project.',
         args => {
             return args.positional(NAME, {
                 type: 'string',

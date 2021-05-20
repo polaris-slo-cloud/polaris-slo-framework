@@ -11,7 +11,7 @@ const NAME = 'name';
 export function createDeployCommand(cli: PolarisCli): CommandModule<any, any> {
     return createYargsCommand(
         `deploy <${NAME}>`,
-        'Builds a Polaris project or an SLO Mapping.',
+        'Deploys a Polaris project or an SLO Mapping to an orchestrator.',
         args => {
             return args.positional(NAME, {
                 type: 'string',
