@@ -80,8 +80,10 @@ All code for this project is contained in this repository.
 | [`ts`](./ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
 
 
-## Documentation
+## Documentation and Demos
 
 Documentation for the Polaris project can be found in the [docs](./docs) folder.
 
 This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC, is used).
+
+Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
