@@ -10,16 +10,16 @@ import { IndexByKey, initSelf } from '../util';
 export class ApiObjectMetadata {
 
     /**
-     * Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata.
-     * They are not queryable and should be preserved when modifying objects.
-     */
-    annotations?: IndexByKey<string>;
-
-    /**
      * The timestamp representing the server time when this object was created.
      */
     @PolarisType(() => Date)
     creationTimestamp?: Date;
+
+    /**
+     * Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata.
+     * They are not queryable and should be preserved when modifying objects.
+     */
+    annotations?: IndexByKey<string>;
 
     /**
      * Map of string keys and values that can be used to organize and categorize (scope and select) objects.
