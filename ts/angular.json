@@ -66,7 +66,6 @@
             "main": "apps/ui/polaris-ui/src/main.ts",
             "polyfills": "apps/ui/polaris-ui/src/polyfills.ts",
             "tsConfig": "apps/ui/polaris-ui/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/ui/polaris-ui/src/favicon.ico",
               "apps/ui/polaris-ui/src/assets"
@@ -79,7 +78,13 @@
                 "apps/ui/polaris-ui/src/styles"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -112,7 +117,8 @@
           },
           "outputs": [
             "{options.outputPath}"
-          ]
+          ],
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
