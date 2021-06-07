@@ -2,6 +2,18 @@ import { Constructor, ObjectKind, ObjectReference, PolarisTransformationService,
 import { CrossVersionObjectReference } from '../../../model';
 import { ObjectKindTransformer } from './object-kind.transformer';
 
+/**
+ * Transforms an `ObjectReference` between the Polaris format and Kubernetes format.
+ *
+ * **PolarisTransformer info:**
+ * - **Inheritable**: Yes
+ * - **Reusable in other transformers**: Yes
+ * - **Handled orchestrator object properties**:
+ *      - `apiVersion` (inherited)
+ *      - `kind` (inherited)
+ *      - `name`
+ * - **Unknown property handling**: Ignores unknown properties
+ */
 export class ObjectReferenceTransformer implements ReusablePolarisTransformer<ObjectReference, CrossVersionObjectReference> {
 
     private parentTransformer = new ObjectKindTransformer();

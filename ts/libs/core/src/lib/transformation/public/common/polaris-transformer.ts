@@ -7,8 +7,15 @@ import { PolarisTransformationService } from './../service';
  *
  * @note A generic `PolarisTransformer` may handle multiple Polaris types.
  *
+ * It is recommended to document the following properties for each transformer:
+ * - **Inheritable**: Is it designed to be inherited by subclasses of `T`?
+ * - **Reusable in other transformers**: Can this transformer be wrapped and reused in another transformer (e.g., a subclass of `T`)?
+ * - **Handled orchestrator object properties**: The properties of a plain orchestrator object that are handled by the transformer.
+ * - **Unknown property handling**: How does the transformer handle unknown properties on orchestrator objects (orchestrator -> Polaris)
+ *   or on subclasses of `T` (Polaris -> orchestrator)?
+ *
  * @param T The orchestrator-independent Polaris type that is handled by this `PolarisTransformer`.
- * @param P (optional) The orchestrtor-specific plain object type that the Polaris object type is converted to/from by this `PolarisTransformer`.
+ * @param P (optional) The orchestrator-specific plain object type that the Polaris object type is converted to/from by this `PolarisTransformer`.
  */
 export interface PolarisTransformer<T, P = any> {
 
@@ -22,7 +29,7 @@ export interface PolarisTransformer<T, P = any> {
      * @param orchPlainObj The orchestrator-specific plain object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `PolarisTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
-     * @retuns A new Polaris object that results from transforming `orchPlainObj`.
+     * @returns A new Polaris object that results from transforming `orchPlainObj`.
      */
     transformToPolarisObject(polarisType: Constructor<T>, orchPlainObj: P, transformationService: PolarisTransformationService): T;
 
@@ -32,7 +39,7 @@ export interface PolarisTransformer<T, P = any> {
      * @param polarisObj The Polaris object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `PolarisTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
-     * @retuns A new orchestrator-specific plain object that may be serialized without any further changes.
+     * @returns A new orchestrator-specific plain object that may be serialized without any further changes.
      */
     transformToOrchestratorPlainObject(polarisObj: T, transformationService: PolarisTransformationService): P;
 
@@ -49,6 +56,17 @@ export interface PolarisTransformer<T, P = any> {
  * transformer to obtain the transformed data for the parent without instantiating an unneeded
  * instance of the parent class. The transformer of the subclass can then add its own data and
  * finally instantiate the subclass directly.
+ *
+ * Every reusable `ReusablePolarisTransformer` should document whether how it handles unknown properties
+ * of orchestrator objects (orchestrator -> Polaris) or subclasses of `T` (Polaris -> orchestrator).
+ * It is recommended to choose one of the following two options, depending on how many additional transformations
+ * the subclasses are expected to require:
+ *
+ * - Ignore unknown properties and require a specific transformer for the subclass to handle them. Recommended, if subclasses will
+ *   contain many properties that need to be transformed.
+ * - Copy unknown properties to the init data object (orchestrator -> Polaris) or the orchestrator object (Polaris -> orchestrator).
+ *   Transformers of subclasses can then delete those properties that need to be modified. Recommended, if most of the
+ *   subclasses' properties can be copied without transformation.
  */
 export interface ReusablePolarisTransformer<T, P = any> extends PolarisTransformer<T, P> {
 
@@ -64,7 +82,7 @@ export interface ReusablePolarisTransformer<T, P = any> extends PolarisTransform
      * @param orchPlainObj The orchestrator-specific plain object to be transformed. This is guaranteed to be neither `null` nor `undefined`.
      * @param transformationService The `PolarisTransformationService` that issued this call. It can be used to delegate the
      * transformation of nested objects.
-     * @retuns The init data for a Polaris object of type `T` that results from transforming `orchPlainObj`.
+     * @returns The init data for a Polaris object of type `T` that results from transforming `orchPlainObj`.
      */
     extractPolarisObjectInitData(polarisType: Constructor<T>, orchPlainObj: P, transformationService: PolarisTransformationService): Partial<T>;
 

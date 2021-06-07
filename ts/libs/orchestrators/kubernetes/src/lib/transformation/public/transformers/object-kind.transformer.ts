@@ -17,6 +17,14 @@ import { ApiVersionKind } from '../../../model';
  *      kind: polarisObj.kind
  * }
  * ```
+ *
+ * **PolarisTransformer info:**
+ * - **Inheritable**: Yes
+ * - **Reusable in other transformers**: Yes
+ * - **Handled orchestrator object properties**:
+ *      - `apiVersion`
+ *      - `kind`
+ * - **Unknown property handling**: Ignores unknown properties
  */
 export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectKind, ApiVersionKind> {
 

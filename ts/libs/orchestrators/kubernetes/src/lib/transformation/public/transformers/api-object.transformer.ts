@@ -10,6 +10,20 @@ import {
 } from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 
+/**
+ * Transforms plain orchestrator API objects to Polaris to instances of `ApiObject` or a subclass thereof,
+ * based on their object kinds.
+ *
+ * **PolarisTransformer info:**
+ * - **Inheritable**: Yes
+ * - **Reusable in other transformers**: Yes
+ * - **Handled orchestrator object properties**:
+ *      - `apiVersion`
+ *      - `kind`
+ *      - `metadata`
+ *      - `spec`
+ * - **Unknown property handling**: Ignores unknown properties of the root `ApiObject`.
+ */
 export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {
 
     extractPolarisObjectInitData(
