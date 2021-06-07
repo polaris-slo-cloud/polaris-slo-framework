@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: <%= controllerProjectName %>
+    tier: control-plane
+  name: <%= controllerProjectName %>
+  namespace: polaris
+spec:
+  selector:
+    matchLabels:
+      component: <%= controllerProjectName %>
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: <%= controllerProjectName %>
+        tier: control-plane
+    spec:
+      serviceAccountName: <%= controllerProjectName %>
+      containers:
+      - image: polarissloc/<%= controllerProjectName %>:latest
+        name: slo-controller
+        resources:
+          limits:
+            cpu: '1.0'
+            memory: 512Mi
+        env:
+          # The hostname and port of the Prometheus service:
+          - name: PROMETHEUS_HOST
+            value: prometheus-release-1-prome-prometheus.default.svc
+          - name: PROMETHEUS_PORT
+            value: '9090'
+        securityContext:
+          privileged: false
+

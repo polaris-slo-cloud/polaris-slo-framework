@@ -1,0 +1,42 @@
+{
+    "extends": [
+        "../../../.eslintrc.js"
+    ],
+    "ignorePatterns": [
+        "!**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts",
+                "*.tsx",
+                "*.js",
+                "*.jsx"
+            ],
+            "parserOptions": {
+                "project": [
+                    "apps/cli/polaris-cli/tsconfig.*?.json"
+                ]
+            },
+            "rules": {}
+        },
+        {
+            "files": [
+                "*.ts",
+                "*.tsx"
+            ],
+            "rules": {
+                "arrow-body-style": "off",
+                "@typescript-eslint/no-unsafe-member-access": "off",
+                "@typescript-eslint/restrict-template-expressions": "off"
+            }
+        },
+        {
+            "files": [
+                "*.js",
+                "*.jsx"
+            ],
+            "rules": {}
+        }
+    ]
+}

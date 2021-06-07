@@ -13,13 +13,27 @@ export abstract class ComposedMetricType<V, P extends ComposedMetricParams = Com
 
     /**
      * This property is needed to trigger type checking for the `V` parameter.
+     * DO NOT use this property in your code.
+     *
+     * It cannot be a private property, because then TypeScript would omit the type
+     * in the .d.ts file that is shipped in the npm package.
+     *
+     * @private
      */
-    private _metricValueType: TypeFn<V>;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    protected __metricValueType: TypeFn<V>;
 
     /**
      * This property is needed to trigger type checking for the `P` parameter.
+     * DO NOT use this property in your code.
+     *
+     * It cannot be a private property, because then TypeScript would omit the type
+     * in the .d.ts file that is shipped in the npm package.
+     *
+     * @private
      */
-    private _paramsType: TypeFn<P>;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    protected __paramsType: TypeFn<P>;
 
     /**
      * The fully qualified name of the this metric type.

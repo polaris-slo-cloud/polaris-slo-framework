@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: polaris
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: <%= controllerProjectName %>
+  namespace: polaris
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # ClusterRoles are not namespaced
+  name: <%= controllerProjectName %>
+rules:
+
+# Allow reading all SLO mappings
+# - apiGroups:
+#   - slo.sloc.github.io
+#   resources:
+#   - "*"
+#   verbs:
+#   - get
+#   - watch
+#   - list
+
+# Allow reading supported SLO mappings
+- apiGroups:
+  - slo.sloc.github.io
+  resources:
+  - <%= sloMappingK8sResources %>
+  verbs:
+  - get
+  - watch
+  - list
+- apiGroups:
+  - slo.sloc.github.io
+  resources:
+  - <%= sloMappingK8sResources %>/status
+  verbs:
+  - get
+
+# Allow writing all elasticity strategies
+- apiGroups:
+  - elasticity.sloc.github.io
+  resources:
+  - "*"
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+# Optionally, we could create a RoleBinding and to scope the permissions to a specific namespace
+metadata:
+  name: control-<%= sloFileName %>-slos
+subjects:
+  - kind: ServiceAccount
+    name: <%= controllerProjectName %>
+    namespace: polaris
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: <%= controllerProjectName %>

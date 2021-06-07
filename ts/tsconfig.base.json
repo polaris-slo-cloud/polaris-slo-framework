@@ -41,6 +41,9 @@
             ],
             "@polaris-sloc/cost-efficiency": [
                 "libs/metrics/cost-efficiency/src/index.ts"
+            ],
+            "@polaris-sloc/polaris-nx": [
+                "libs/polaris-nx/src/index.ts"
             ]
         }
     },

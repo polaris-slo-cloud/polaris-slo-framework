@@ -1,0 +1,14 @@
+{
+  "name": "@polaris-sloc/cli",
+  "version": "0.2.0-beta.7",
+  "license": "Apache-2.0",
+  "author": "Polaris SLO Cloud Authors",
+  "private": false,
+  "bin": {
+    "polaris-cli": "./src/main.js"
+  },
+  "dependencies": {
+    "tslib": "^2.2.0",
+    "yargs": "^17.0.1"
+  }
+}

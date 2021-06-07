@@ -1,5 +1,4 @@
 {
-  "npmScope": "polaris-sloc",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
@@ -10,6 +9,10 @@
     "nx.json": "*",
     "tsconfig.base.json": "*"
   },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "npmScope": "polaris-sloc",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
@@ -83,9 +86,24 @@
         "scope:core",
         "scope:metric"
       ]
+    },
+    "polaris-nx": {
+      "tags": [
+        "scope:cli"
+      ]
+    },
+    "polaris-nx-e2e": {
+      "tags": [
+        "scope:cli"
+      ],
+      "implicitDependencies": [
+        "polaris-nx"
+      ]
+    },
+    "cli-polaris-cli": {
+      "tags": [
+        "cli"
+      ]
     }
-  },
-  "affected": {
-    "defaultBase": "master"
   }
 }

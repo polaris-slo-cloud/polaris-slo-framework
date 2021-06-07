@@ -9,5 +9,8 @@ module.exports = {
         '<rootDir>/libs/query-backends/prometheus',
         '<rootDir>/apps/slo/cost-efficiency-slo-controller',
         '<rootDir>/libs/metrics/cost-efficiency',
+        '<rootDir>/libs/polaris-nx',
+        '<rootDir>/apps/polaris-nx-e2e',
+        '<rootDir>/apps/cli/polaris-cli',
     ],
 };
