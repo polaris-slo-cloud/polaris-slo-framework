@@ -1,5 +1,6 @@
 import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
+import { OwnerReference } from './owner-reference';
 
 /**
  * Provides metadata about an `ApiObject`.
@@ -14,6 +15,15 @@ export class ApiObjectMetadata {
      */
     @PolarisType(() => Date)
     creationTimestamp?: Date;
+
+    /**
+     * The owners of this `ApiObject`.
+     *
+     * When creating a new `ApiObject`, an owner reference should be set in the metadata
+     * to ensure that the new object is garbage collected if the owner is deleted.
+     */
+    @PolarisType(() => OwnerReference)
+    ownerReferences?: OwnerReference[];
 
     /**
      * Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata.

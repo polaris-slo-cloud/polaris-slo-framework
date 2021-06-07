@@ -1,4 +1,5 @@
 import { ApiObjectMetadata, ElasticityStrategy, ElasticityStrategyKind, ElasticityStrategySpec } from '../../../model';
+import { OwnerReference } from '../../../model/owner-reference';
 import { SloOutput } from '../../../slo';
 import { PolarisTransformationService } from '../../../transformation';
 import { PolarisConstructor } from '../../../util';
@@ -20,6 +21,14 @@ export class DefaultElasticityStrategyService implements ElasticityStrategyServi
             metadata: new ApiObjectMetadata({
                 name,
                 namespace: sloOutput.sloMapping.metadata.namespace,
+                ownerReferences: [
+                    new OwnerReference({
+                        ...sloOutput.sloMapping.objectKind,
+                        name: sloOutput.sloMapping.metadata.name,
+                        uid: sloOutput.sloMapping.metadata.uid,
+                        blockOwnerDeletion: true,
+                    }),
+                ],
             }),
             spec: new specCtor({
                 targetRef: sloOutput.sloMapping.spec.targetRef,

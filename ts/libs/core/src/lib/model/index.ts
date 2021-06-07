@@ -4,6 +4,7 @@ export * from './elasticity-strategy';
 export * from './elasticity-strategy-kind';
 export * from './object-kind';
 export * from './object-reference';
+export * from './owner-reference';
 export * from './slo-compliance';
 export * from './slo-mapping';
 export * from './slo-target';
