@@ -20,8 +20,12 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
         return this.k8sClient.create(
             k8sElasticityStrat,
         ).catch(err => {
-            console.log('Create resource failed, trying to replace the resource');
-            return this.updateExistingElasticityStrategy(k8sElasticityStrat);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (err?.body?.reason === 'AlreadyExists') {
+                console.log('Resource already exists, trying to replace it');
+                return this.updateExistingElasticityStrategy(k8sElasticityStrat);
+            }
+            throw err;
         }).then(
             () => console.log('Resource successfully created/replaced'),
         );
