@@ -5,8 +5,6 @@ import json
 import torch
 
 if __name__ == '__main__':
-    torch.manual_seed(23)
-
     # Set paths to data
     data_path = "../data/task-usage_job-ID-3418339_total.csv"
     # Select columns from dataset
@@ -41,7 +39,7 @@ if __name__ == '__main__':
             x_enc, x_dec, target = x_enc.to(device), x_dec.to(device), target.to(device)
             x_dec = x_dec.unsqueeze(-1)
             # Forecast
-            out = model.forward(x_enc.float(), x_dec.float())
+            out = model.forward(x_enc.float(), x_dec.float(), training=False)
             # Compute loss
             loss = loss_f(out.double(), target.double())
             # Keep loss values in a list

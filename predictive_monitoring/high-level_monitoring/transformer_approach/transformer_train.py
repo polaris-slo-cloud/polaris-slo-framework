@@ -19,6 +19,7 @@ def dummy_config():
     :return:
     """
     config = {
+        "random_seed": 1,
         "lr": 0.01,
         "lr_step": 2,
         "gamma": 0.99,
@@ -116,6 +117,7 @@ def transformer_train(config, df, device):
     :param device: usually cpu or cuda
     :return: It is prepared for the ASHA scheduler, it does not return anything but it saves the models.
     """
+    torch.manual_seed(config["random_seed"])
     # model initialization
     model = init_transformer(config, device)
     # loss function selection
@@ -135,11 +137,12 @@ def transformer_train(config, df, device):
 
     # Training loop
     for e in range(config["epochs"]):
+        model.train(mode=True)
         for x_enc, x_dec, target in train_loader:
             optimizer.zero_grad()
             x_enc, x_dec, target = x_enc.to(device), x_dec.to(device), target.to(device)
             x_dec = x_dec.unsqueeze(-1)
-            out = model.forward(x_enc.float(), x_dec.float())
+            out = model.forward(x_enc.float(), x_dec.float(), training=True)
             loss = loss_f(out.double(), target.double())
             loss.backward()
             optimizer.step()
@@ -147,11 +150,12 @@ def transformer_train(config, df, device):
         # Validate model
         val_loss = 0.0
         val_steps = 0
+        model.train(mode=False)
         for x_enc, x_dec, target in validation_loader:
             with torch.no_grad():
                 x_enc, x_dec, target = x_enc.to(device), x_dec.to(device), target.to(device)
                 x_dec = x_dec.unsqueeze(-1)
-                out = model.forward(x_enc.float(), x_dec.float())
+                out = model.forward(x_enc.float(), x_dec.float(), training=False)
 
                 loss = loss_f(out.double(), target.double())
                 val_loss += loss.cpu().numpy()
@@ -177,6 +181,7 @@ def transformer_test(model, df, device, config, save_dir, experiment_name):
     :param experiment_name: Saving name, for figures
     :return: Returns the mean loss of the test.
     """
+    torch.manual_seed(config["random_seed"])
     save_dir = save_dir
     experiment_name = experiment_name
     # Loss function
@@ -198,11 +203,12 @@ def transformer_test(model, df, device, config, save_dir, experiment_name):
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
     # Test/forecast loop
+    model.train(mode=False)
     for x_enc, x_dec, target in test_loader:
         with torch.no_grad():
             x_enc, x_dec, target = x_enc.to(device), x_dec.to(device), target.to(device)
             x_dec = x_dec.unsqueeze(-1)
-            out = model.forward(x_enc.float(), x_dec.float())
+            out = model.forward(x_enc.float(), x_dec.float(), training=False)
 
             loss = loss_f(out.double(), target.double())
 
@@ -219,7 +225,7 @@ def transformer_test(model, df, device, config, save_dir, experiment_name):
     mean_loss = sum(loss_progress) / len(loss_progress)
 
     # Plotting only relevant results.
-    if mean_loss < 0.05:
+    if mean_loss < 0.001:
         plot_loss(loss_progress, mean_loss, save_dir, experiment_name)
         if config["prediction_step"] > 1:
             for ii in range(config["prediction_step"]):

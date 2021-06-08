@@ -5,8 +5,8 @@ from os import walk
 
 if __name__ == '__main__':
 
-    results_path = "/data/results/vcpujol/transformers/single_deployment/google_traces/model_config_best/"
-    test_data_path = "/data/results/vcpujol/transformers/single_deployment/google_traces/model_config_best/test_loss.json"
+    results_path = "/data/results/vcpujol/transformers/single_deployment/google_traces/model_params_best/"
+    test_data_path = "/data/results/vcpujol/transformers/single_deployment/google_traces/model_params_best/test_loss.json"
     with open(test_data_path) as jfile:
         test_values = json.load(jfile)
 

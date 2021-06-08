@@ -8,7 +8,7 @@ from transformer_train import *
 import os
 
 
-def asha_training(exp_name, num_samples=1200, max_num_epochs=20, gpus_per_trial=1, cpus_per_trial=10):
+def asha_training(exp_name, num_samples=500, max_num_epochs=30, gpus_per_trial=1, cpus_per_trial=10):
     data_path = "../data/task-usage_job-ID-3418339_total.csv"
     columns_file = "../columns_selection.json"
     columns_scheme = "LSTM_efficiency_1"
@@ -29,10 +29,11 @@ def asha_training(exp_name, num_samples=1200, max_num_epochs=20, gpus_per_trial=
     print(device)
 
     config = {
+        "random_seed": tune.randint(1, 10000),
         "lr": tune.choice([0.01]),
         "lr_step": tune.choice([2]),
         "gamma": tune.choice([0.99]),
-        "epochs": tune.choice([20]),
+        "epochs": tune.choice([30]),
         "n_heads": tune.randint(2, 16),
         "dim_val": tune.choice([2, 4, 6, 8, 10, 12, 14, 16, 18]),  # FIXME requires numero parell...
         "dim_att": tune.randint(2, 20),
@@ -50,7 +51,7 @@ def asha_training(exp_name, num_samples=1200, max_num_epochs=20, gpus_per_trial=
         metric="loss",
         mode="min",
         max_t=max_num_epochs,
-        grace_period=6,
+        grace_period=5,
         reduction_factor=2)
     reporter = CLIReporter(
         parameter_columns=["n_heads", "dim_val", "dim_att", "encoder_layers",

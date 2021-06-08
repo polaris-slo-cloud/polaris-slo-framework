@@ -18,7 +18,7 @@ class EncoderLayer(torch.nn.Module):
 
         elu_tensor = F.elu(self.fc2(x))  # .to(device)
 
-        a = self.fc1(elu_tensor)  # FIXME to check!
+        a = self.fc1(elu_tensor)
         x = self.norm2(x + a)
 
         return x
@@ -45,7 +45,7 @@ class DecoderLayer(torch.nn.Module):
 
         elu_tensor = F.elu(self.fc2(x))
 
-        a = self.fc1(elu_tensor)  # FIXME to check!
+        a = self.fc1(elu_tensor)
 
         x = self.norm3(x + a)
         return x
@@ -58,11 +58,11 @@ class Transformer(torch.nn.Module):
         self.seq_len = seq_len
 
         # Initiate encoder and Decoder layers
-        self.encs = []
+        self.encs = nn.ModuleList()
         for i in range(n_encoder_layers):
             self.encs.append(EncoderLayer(dim_val, dim_attn, n_heads, device))
 
-        self.decs = []
+        self.decs = nn.ModuleList()
         for i in range(n_decoder_layers):
             self.decs.append(DecoderLayer(dim_val, dim_attn, n_heads, device))
 
@@ -73,7 +73,17 @@ class Transformer(torch.nn.Module):
         self.dec_input_fc = nn.Linear(input_feat_dec, dim_val)
         self.out_fc = nn.Linear(self.seq_len * dim_val, prediction_step)
 
-    def forward(self, x_enc, x_dec):
+    def forward(self, x_enc, x_dec, training=True):
+        if not training:
+            for e_layer in self.encs:
+                e_layer.eval()
+            for d_layer in self.decs:
+                d_layer.eval()
+        else:
+            for e_layer in self.encs:
+                e_layer.train()
+            for d_layer in self.decs:
+                d_layer.train()
         # encoder
         first_layer = self.enc_input_fc(x_enc)
         pos_encoder = self.pos(first_layer)
