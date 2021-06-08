@@ -1,10 +1,10 @@
 
 ---
-apiVersion: apiextensions.k8s.io/v1beta1
+apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.5
+    controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
   name: costefficiencyslomappings.slo.sloc.github.io
 spec:
@@ -15,102 +15,103 @@ spec:
     plural: costefficiencyslomappings
     singular: costefficiencyslomapping
   scope: Namespaced
-  validation:
-    openAPIV3Schema:
-      description: CostEfficiencySloMapping is the Schema for the costefficiencyslomappings
-        API
-      properties:
-        apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-          type: string
-        kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-          type: string
-        metadata:
-          type: object
-        spec:
-          description: CostEfficiencySloMappingSpec defines the desired state of CostEfficiencySloMapping
-          properties:
-            elasticityStrategy:
-              description: Specifies the type of ElasticityStrategy to use for this
-                SLO mapping.
-              properties:
-                apiVersion:
-                  description: The API group and version of the ElasticityStrategy.
-                  type: string
-                kind:
-                  description: The kind of ElasticityStrategy.
-                  type: string
-              required:
-              - apiVersion
-              - kind
-              type: object
-            sloConfig:
-              description: CostEfficiencySloConfig contains the configuration for
-                a CostEfficiencySloMappingSpec.
-              properties:
-                minRequestsPercentile;omitempty:
-                  description: The minimum percentile of requests that should be handled
-                    within the time threshold.
-                  format: int32
-                  type: integer
-                responseTimeThresholdMs:
-                  description: The number of milliseconds, within which the requests
-                    should be handled.
-                  format: int32
-                  minimum: 0
-                  type: integer
-                targetCostEfficiency:
-                  description: The desired cost efficiency.
-                  format: int32
-                  minimum: 0
-                  type: integer
-              required:
-              - responseTimeThresholdMs
-              - targetCostEfficiency
-              type: object
-            staticElasticityStrategyConfig:
-              description: "Any static configuration parameters, which are unknown
-                to the SLO, but which may be required to configure the chosen kind
-                of elasticity strategy should be specified here. They will be copied
-                over into the spec of the elasticity strategy. \n // Note that the
-                Go deepCopy() method will only be able to create shallow copies of
-                this field, because it does not know its internal structure."
-              type: object
-            targetRef:
-              description: Specifies the target on which to execute the elasticity
-                strategy.
-              properties:
-                apiVersion:
-                  description: API version of the referent
-                  type: string
-                kind:
-                  description: 'Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"'
-                  type: string
-                name:
-                  description: 'Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names'
-                  type: string
-              required:
-              - kind
-              - name
-              type: object
-          required:
-          - elasticityStrategy
-          - sloConfig
-          - targetRef
-          type: object
-        status:
-          description: CostEfficiencySloMappingStatus defines the observed state of
-            CostEfficiencySloMapping
-          type: object
-      type: object
-  version: v1
   versions:
   - name: v1
+    schema:
+      openAPIV3Schema:
+        description: CostEfficiencySloMapping is the Schema for the costefficiencyslomappings
+          API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: CostEfficiencySloMappingSpec defines the desired state of
+              CostEfficiencySloMapping
+            properties:
+              elasticityStrategy:
+                description: Specifies the type of ElasticityStrategy to use for this
+                  SLO mapping.
+                properties:
+                  apiVersion:
+                    description: The API group and version of the ElasticityStrategy.
+                    type: string
+                  kind:
+                    description: The kind of ElasticityStrategy.
+                    type: string
+                required:
+                - apiVersion
+                - kind
+                type: object
+              sloConfig:
+                description: CostEfficiencySloConfig contains the configuration for
+                  a CostEfficiencySloMappingSpec.
+                properties:
+                  minRequestsPercentile;omitempty:
+                    description: The minimum percentile of requests that should be
+                      handled within the time threshold.
+                    format: int32
+                    type: integer
+                  responseTimeThresholdMs:
+                    description: The number of milliseconds, within which the requests
+                      should be handled.
+                    format: int32
+                    minimum: 0
+                    type: integer
+                  targetCostEfficiency:
+                    description: The desired cost efficiency.
+                    format: int32
+                    minimum: 0
+                    type: integer
+                required:
+                - responseTimeThresholdMs
+                - targetCostEfficiency
+                type: object
+              staticElasticityStrategyConfig:
+                description: "Any static configuration parameters, which are unknown
+                  to the SLO, but which may be required to configure the chosen kind
+                  of elasticity strategy should be specified here. They will be copied
+                  over into the spec of the elasticity strategy. \n // Note that the
+                  Go deepCopy() method will only be able to create shallow copies
+                  of this field, because it does not know its internal structure."
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
+              targetRef:
+                description: Specifies the target on which to execute the elasticity
+                  strategy.
+                properties:
+                  apiVersion:
+                    description: API version of the referent
+                    type: string
+                  kind:
+                    description: 'Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"'
+                    type: string
+                  name:
+                    description: 'Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names'
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+            required:
+            - elasticityStrategy
+            - sloConfig
+            - targetRef
+            type: object
+          status:
+            description: CostEfficiencySloMappingStatus defines the observed state
+              of CostEfficiencySloMapping
+            type: object
+        type: object
     served: true
     storage: true
 status:

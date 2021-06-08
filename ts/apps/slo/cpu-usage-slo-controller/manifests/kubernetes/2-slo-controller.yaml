@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: cpu-usage-slo-controller
+    tier: control-plane
+  name: cpu-usage-slo-controller
+  namespace: polaris
+spec:
+  selector:
+    matchLabels:
+      component: cpu-usage-slo-controller
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: cpu-usage-slo-controller
+        tier: control-plane
+    spec:
+      serviceAccountName: cpu-usage-slo-controller
+      containers:
+      - image: polarissloc/slo-cpu-usage:latest
+        name: slo-controller
+        resources:
+          limits:
+            cpu: '1.0'
+            memory: 512Mi
+        env:
+          - name: PROMETHEUS_HOST
+            value: prometheus-release-1-prome-prometheus.default.svc
+          - name: PROMETHEUS_PORT
+            value: '9090'
+        securityContext:
+          privileged: false
+

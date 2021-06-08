@@ -17,6 +17,14 @@ import { ApiVersionKind } from '../../../model';
  *      kind: polarisObj.kind
  * }
  * ```
+ *
+ * **PolarisTransformer info:**
+ * - **Inheritable**: Yes
+ * - **Reusable in other transformers**: Yes
+ * - **Handled orchestrator object properties**:
+ *      - `apiVersion`
+ *      - `kind`
+ * - **Unknown property handling**: Copies unknown properties, because for Kubernetes the properties of most subclasses do not require transformation.
  */
 export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectKind, ApiVersionKind> {
 
@@ -31,14 +39,15 @@ export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectK
     }
 
     transformToOrchestratorPlainObject(polarisObj: ObjectKind, transformationService: PolarisTransformationService): ApiVersionKind {
-        const ret: ApiVersionKind = {
-            kind: polarisObj.kind,
-        };
-        if (polarisObj.group) {
-            ret.apiVersion = polarisObj.group;
-            if (polarisObj.version) {
+        // Copy everything other than apiVersion to allow easy reuse for subclasses of ObjectKind.
+        const { group, version, ...other } = polarisObj;
+        const ret: ApiVersionKind = other;
+
+        if (group) {
+            ret.apiVersion = group;
+            if (version) {
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                ret.apiVersion += `/${polarisObj.version}`;
+                ret.apiVersion += `/${version}`;
             }
         }
         return ret;
@@ -49,11 +58,12 @@ export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectK
         orchPlainObj: ApiVersionKind,
         transformationService: PolarisTransformationService,
     ): Partial<ObjectKind> {
-        const data: Partial<ObjectKind> = {
-            kind: orchPlainObj.kind,
-        };
-        if (orchPlainObj.apiVersion) {
-            const segments = orchPlainObj.apiVersion.split('/');
+        // Copy everything other than apiVersion to allow easy reuse for subclasses of ObjectKind.
+        const { apiVersion, ...other } = orchPlainObj;
+        const data: Partial<ObjectKind> = other;
+
+        if (apiVersion) {
+            const segments = apiVersion.split('/');
             if (segments.length > 2) {
                 throw new OrchestratorToPolarisTransformationError(polarisType, orchPlainObj, '"apiVersion" must not contain more than one slash.');
             }

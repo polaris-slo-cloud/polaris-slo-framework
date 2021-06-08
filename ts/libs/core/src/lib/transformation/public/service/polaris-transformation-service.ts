@@ -77,6 +77,15 @@ export interface PolarisTransformationService {
     transformToPolarisObject<T>(polarisType: PolarisConstructor<T>, orchPlainObj: any): T;
 
     /**
+     * Transforms the specified array of orchestrator-specific plain objects into an array of corresponding Polaris objects.
+     *
+     * @param polarisType The Polaris type into which the plain objects should be transformed.
+     * @param orchPlainObjArray The array of orchestrator-specific plain objects to be transformed.
+     * @returns A new array of Polaris objects that result from transforming `orchPlainObjArray` or `null` if `orchPlainObjArray` was `null` or `undefined`.
+     */
+    transformToPolarisObject<T>(polarisType: PolarisConstructor<T>, orchPlainObjArray: any[]): T[];
+
+    /**
      * Transforms the specified orchestrator-specific plain object into a corresponding Polaris object.
      *
      * @param kind The registered `ObjectKind` that can be used to deduce the Polaris type of the object.
@@ -86,12 +95,31 @@ export interface PolarisTransformationService {
     transformToPolarisObject(kind: ObjectKind, orchPlainObj: any): any;
 
     /**
+     * Transforms the specified array of orchestrator-specific plain objects into an array of corresponding Polaris objects.
+     *
+     * @param kind The registered `ObjectKind` that can be used to deduce the Polaris type of the objects.
+     * @param orchPlainObjArray The array of orchestrator-specific plain objects to be transformed.
+     * @returns A new array of Polaris objects that result from transforming `orchPlainObjArray` or `null` if `orchPlainObjArray` was `null` or `undefined`.
+     */
+    transformToPolarisObject(kind: ObjectKind, orchPlainObjArray: any[]): any[];
+
+    /**
      * Transforms the specified Polaris object into an orchestrator-specific plain object that may be serialized without any further changes.
      *
      * @param polarisObj The Polaris object to be transformed.
      * @returns A new orchestrator-specific plain object that may be serialized without any further changes or `null` if `polarisObj` was `null` or `undefined.
      */
     transformToOrchestratorPlainObject(polarisObj: any): any;
+
+    /**
+     * Transforms the specified array of Polaris objects into an array of orchestrator-specific plain objects
+     * that may be serialized without any further changes.
+     *
+     * @param polarisArray The array of Polaris objects to be transformed.
+     * @returns A new array of orchestrator-specific plain objects that may be serialized without any further changes
+     * or `null` if `polarisArray` was `null` or `undefined.
+     */
+    transformToOrchestratorPlainObject(polarisArray: any[]): any[];
 
     /**
      * Gets the type that has been defined for the property `propertyKey` of the class `polarisType` using

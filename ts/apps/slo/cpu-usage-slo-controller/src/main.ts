@@ -4,9 +4,7 @@ import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
 import { CpuUsageSlo } from './app/cpu-usage-slo';
-
-// ToDo: This file should be generated automatically during the build process.
-// ToDo: It should be possible to build the SLO controller easily for multiple orchestrators.
+import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
 const k8sConfig = new KubeConfig();
@@ -14,8 +12,9 @@ k8sConfig.loadFromDefault();
 const polarisRuntime = initPolarisKubernetes(k8sConfig);
 
 // Initialize the Prometheus query backend.
-// initPrometheusQueryBackend(polarisRuntime, { host: 'prometheus-release-1-prome-prometheus.default' }, true);
-initPrometheusQueryBackend(polarisRuntime, { host: 'localhost', port: 30900 }, true);
+const promHost = getEnvironmentVariable('PROMETHEUS_HOST') || 'localhost';
+const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9090
+initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, true);
 
 // Initialize the used Polaris mapping libraries
 initCommonMappingsLib(polarisRuntime);
