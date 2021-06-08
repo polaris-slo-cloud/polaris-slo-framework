@@ -48,8 +48,10 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
     }
 
     transformToPolarisObject<T>(polarisType: PolarisConstructor<T>, orchPlainObj: any): T;
+    transformToPolarisObject<T>(polarisType: PolarisConstructor<T>, orchPlainObjArray: any[]): T[];
     transformToPolarisObject(kind: ObjectKind, orchPlainObj: any): any;
-    transformToPolarisObject<T = any>(polarisTypeOrKind: PolarisConstructor<T> | ObjectKind, orchPlainObj: any): T {
+    transformToPolarisObject(kind: ObjectKind, orchPlainObjArray: any[]): any[];
+    transformToPolarisObject<T = any>(polarisTypeOrKind: PolarisConstructor<T> | ObjectKind, orchPlainObj: any | any[]): T | T[] {
         if (orchPlainObj === null || orchPlainObj === undefined) {
             return null;
         }
@@ -66,16 +68,20 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         }
 
         const transformer = this.getTransformer(polarisType);
+
+        if (Array.isArray(orchPlainObj)) {
+            return orchPlainObj.map(obj => transformer.transformToPolarisObject(polarisType, obj, this));
+        }
         return transformer.transformToPolarisObject(polarisType, orchPlainObj, this);
     }
 
-    transformToOrchestratorPlainObject(polarisObj: any): any {
-        if (polarisObj === null || polarisObj === undefined) {
-            return null;
+    transformToOrchestratorPlainObject(polarisObj: any): any;
+    transformToOrchestratorPlainObject(polarisObj: any[]): any[];
+    transformToOrchestratorPlainObject(polarisObj: any | any[]): any[] {
+        if (Array.isArray(polarisObj)) {
+            return polarisObj.map(obj => this.transformSingleObjToOrchestratorPlainObj(obj));
         }
-
-        const transformer = this.getTransformer(polarisObj);
-        return transformer.transformToOrchestratorPlainObject(polarisObj, this);
+        return this.transformSingleObjToOrchestratorPlainObj(polarisObj);
     }
 
     getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {
@@ -90,6 +96,15 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
     private getTransformer<T>(polarisObjOrType: T | PolarisConstructor<T>): PolarisTransformer<T, any> {
         const transformMeta = PolarisMetadataUtils.getPolarisTransformationMetadata(polarisObjOrType);
         return transformMeta ? transformMeta.transformer : this.defaultTransformer;
+    }
+
+    private transformSingleObjToOrchestratorPlainObj(polarisObj: any): any {
+        if (polarisObj === null || polarisObj === undefined) {
+            return null;
+        }
+
+        const transformer = this.getTransformer(polarisObj);
+        return transformer.transformToOrchestratorPlainObject(polarisObj, this);
     }
 
 }

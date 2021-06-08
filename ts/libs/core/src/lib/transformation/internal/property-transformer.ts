@@ -31,7 +31,7 @@ export class PropertyTransformer<T> {
             case TransformationType.PLAIN_TO_CLASS:
                 return runtime.transformer.transformToPolarisObject(this.polarisType, transformParams.value);
             default:
-                throw new Error(`Unexpected tranformation type: ${transformParams.type}`);
+                throw new Error(`Unexpected transformation type: ${transformParams.type}`);
         }
     }
 }
