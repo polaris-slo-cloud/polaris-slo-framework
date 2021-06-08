@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/prometheus",
-  "version": "0.2.0-beta.7",
+  "version": "0.2.0-beta.8",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
@@ -8,6 +8,6 @@
     "prometheus-query": "^3.0.0"
   },
   "peerDependencies": {
-    "@polaris-sloc/core": "~0.2.0-beta.7"
+    "@polaris-sloc/core": "~0.2.0-beta.8"
   }
 }
