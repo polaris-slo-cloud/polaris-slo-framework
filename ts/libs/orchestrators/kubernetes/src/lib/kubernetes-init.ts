@@ -1,8 +1,7 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { ApiObject, ObjectKind, ObjectReference, PolarisRuntime, initPolarisRuntime } from '@polaris-sloc/core';
+import { ApiObject, ObjectKind, PolarisRuntime, initPolarisRuntime } from '@polaris-sloc/core';
 import { KubernetesPolarisRuntime } from './runtime';
-import { ObjectKindTransformer, ObjectReferenceTransformer } from './transformation';
-import { ApiObjectTransformer } from './transformation/public/transformers/api-object.transformer';
+import { ApiObjectTransformer, ObjectKindTransformer } from './transformation';
 
 /**
  * Initializes the Kubernetes Polaris runtime and sets it as the global singleton.
@@ -18,8 +17,8 @@ export function initPolarisKubernetes(kubeConfig: KubeConfig): PolarisRuntime {
 }
 
 function registerTransformers(runtime: PolarisRuntime): void {
+    // Registering ObjectKindTransformer as inheritable for the ObjectKind class makes it available for ObjectReference, SloTarget, and OwnerReference as well.
     runtime.transformer.registerTransformer(ObjectKind, new ObjectKindTransformer(), { inheritable: true });
-    // Registering ObjectReferenceTransformer as inheritable for the ObjectReference class makes it available for SloTarget as well.
-    runtime.transformer.registerTransformer(ObjectReference, new ObjectReferenceTransformer(), { inheritable: true });
+
     runtime.transformer.registerTransformer(ApiObject, new ApiObjectTransformer<any>(), { inheritable: true });
 }
