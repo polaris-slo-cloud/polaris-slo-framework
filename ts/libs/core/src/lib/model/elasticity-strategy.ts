@@ -7,7 +7,7 @@ import { SloTarget } from './slo-target';
  * A generic class that is used to set up specs for an elasticity strategy.
  *
  * A concrete `ElasticityStrategy` may use `ElasticityStrategySpec<T>` directly as the type for
- * its spec, or a class dervived from this one, if, e.g., the transformation needs to be customized.
+ * its spec, or a class derived from this one, if, e.g., the transformation needs to be customized.
  *
  * Parameters that are defined by the output of the SLO are stored in `sloOutputParams`.
  * The type of this property determines if an elasticity strategy is compatible with a certain SLO.
