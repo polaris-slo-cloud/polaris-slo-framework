@@ -23,7 +23,7 @@ export interface OrchestratorClient {
      *
      * @note Reading lists is currently not supported, but may be added in the future, if needed.
      *
-     * @param query The `ObjectKind` and `ApiObjectMetadata` that identify the object to be read.
+     * @param query The `ObjectKind` and `ApiObjectMetadata` that identify the object to be read - the `spec` property is not required.
      * This must be an instance of an `ApiObject` class to ensure that transformation works correctly.
      * @returns A promise that resolves to the desired object. If the object cannot be found or in other
      * error cases, the promise rejects with an `OrchestratorRequestError`.
@@ -42,7 +42,7 @@ export interface OrchestratorClient {
     /**
      * Deletes the object matched by the `query` object from the orchestrator.
      *
-     * @param query The `ObjectKind` and `ApiObjectMetadata` that identify the object to be deleted.
+     * @param query The `ObjectKind` and `ApiObjectMetadata` that identify the object to be deleted - the `spec` property is not required.
      * @returns A promise that resolves to `void` if the deletion completed successfully.
      * In case of an error, the promise rejects with an `OrchestratorRequestError`.
      */
