@@ -47,7 +47,8 @@ export enum CommonOrchestratorErrorCodes {
 export class OrchestratorRequestError extends Error {
 
     /**
-     * The HTTP status code returned by the request.
+     * The HTTP status code returned by the request or `0` if the error
+     * occurred in the local process.
      *
      * If the orchestrator does not use HTTP status codes, the respective orchestrator connector
      * library converts the orchestrator-specific error codes into HTTP status codes.
