@@ -1,4 +1,4 @@
-import { ApiObject } from '../../../model';
+import { ApiObject, NamespacedObjectReference, Scale } from '../../../model';
 
 /**
  * A client for performing CRUD operations on single `ApiObjects` on the orchestrator.
@@ -47,5 +47,24 @@ export interface OrchestratorClient {
      * In case of an error, the promise rejects with an `OrchestratorRequestError`.
      */
     delete<T extends ApiObject<any>>(query: T): Promise<void>;
+
+    /**
+     * Gets the scale of a scalable `ApiObject`.
+     *
+     * @param target The target object, for which to get the reference.
+     * @returns A promise that resolves to a `Scale` object. In case of an error (also if the target is not scalable),
+     * the promise rejects with an `OrchestratorRequestError`.
+     */
+    getScale(target: NamespacedObjectReference): Promise<Scale>;
+
+    /**
+     * Sets the scale of a scalable `ApiObject`.
+     *
+     * @param target The target object, for which to get the reference.
+     * @param newScale The new scale object to be set on the target.
+     * @returns A promise that resolves to the updated `Scale` object, as returned by the orchestrator.
+     * In case of an error (also if the target is not scalable), the promise rejects with an `OrchestratorRequestError`.
+     */
+    setScale(target: NamespacedObjectReference, newScale: Scale): Promise<Scale>;
 
 }
