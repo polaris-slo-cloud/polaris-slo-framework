@@ -1,5 +1,16 @@
-import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ApiObject, OrchestratorClient, PolarisConstructor, PolarisRuntime, PolarisTransformationService } from '@polaris-sloc/core';
+import { KubeConfig, KubernetesObject, KubernetesObjectApi } from '@kubernetes/client-node';
+import {
+    ApiObject,
+    ApiObjectMetadata,
+    NamespacedObjectReference,
+    ObjectKind,
+    OrchestratorClient,
+    PolarisConstructor,
+    PolarisRuntime,
+    PolarisTransformationService,
+    Scale,
+} from '@polaris-sloc/core';
+import { KubernetesScaleApi } from '../kubernetes-scale-api/kubernetes-scale-api';
 import { convertKubernetesErrorToPolaris } from './error-converter';
 
 /**
@@ -10,6 +21,9 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
     /** The native Kubernetes client. */
     protected k8sClient: KubernetesObjectApi;
 
+    /** The native Kubernetes client for reading the scale subresource. */
+    protected k8sScaleClient: KubernetesScaleApi;
+
     /** The service used to convert between Polaris objects and Kubernetes objects. */
     protected transformer: PolarisTransformationService;
 
@@ -19,6 +33,7 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
     ) {
         this.transformer = polarisRuntime.transformer;
         this.k8sClient = KubernetesObjectApi.makeApiClient(k8sConfig);
+        this.k8sScaleClient = KubernetesScaleApi.makeScaleApiClient(k8sConfig);
     }
 
     create<T extends ApiObject<any>>(newObj: T): Promise<T> {
@@ -55,6 +70,23 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
         });
     }
 
+    getScale(target: NamespacedObjectReference): Promise<Scale> {
+        return this.execRequestSafely(async () => {
+            const k8sObj = this.objectRefToK8sObject(target);
+            const response = await this.k8sScaleClient.readScale(k8sObj);
+            return this.transformer.transformToPolarisObject(Scale, response.body);
+        });
+    }
+
+    setScale(target: NamespacedObjectReference, newScale: Scale): Promise<Scale> {
+        return this.execRequestSafely(async () => {
+            const k8sObj = this.objectRefToK8sObject(target);
+            const k8sScale = this.transformer.transformToOrchestratorPlainObject(newScale);
+            const response = await this.k8sScaleClient.replaceScale(k8sObj, k8sScale);
+            return this.transformer.transformToPolarisObject(Scale, response.body);
+        });
+    }
+
     /**
      * Safely executes the request function, by catching any error or promise rejection and
      * converting it to an `OrchestratorRequestError`.
@@ -71,6 +103,22 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
     private getPolarisType<T extends ApiObject<any>>(obj: T): PolarisConstructor<T> {
         // eslint-disable-next-line @typescript-eslint/ban-types
         return (obj as Object).constructor as any;
+    }
+
+    private objectRefToK8sObject(objRef: NamespacedObjectReference): KubernetesObject {
+        const apiObj = new ApiObject<any>({
+            objectKind: new ObjectKind({
+                group: objRef.group,
+                version: objRef.version,
+                kind: objRef.kind,
+            }),
+            metadata: new ApiObjectMetadata({
+                namespace: objRef.namespace,
+                name: objRef.name,
+            }),
+        });
+
+        return this.transformer.transformToOrchestratorPlainObject(apiObj);
     }
 
 }
