@@ -5,7 +5,7 @@ export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind<Slo
 
     constructor() {
         super({
-            group: 'elasticity.sloc.github.io',
+            group: 'elasticity.polaris-slo-cloud.github.io',
             version: 'v1',
             kind: 'HorizontalElasticityStrategy',
         });

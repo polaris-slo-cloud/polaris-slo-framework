@@ -1,7 +1,7 @@
 package elasticitystrategies
 
 import (
-	crds "sloc.github.io/sloc/apis/elasticity/v1"
+	crds "polaris-slo-cloud.github.io/polaris/apis/elasticity/v1"
 )
 
 // SloComplianceElasticityStrategy is implemented by all elasticity services that require only SloCompliance values to be enforced.

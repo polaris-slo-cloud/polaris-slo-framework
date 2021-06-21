@@ -1,6 +1,6 @@
-domain: sloc.github.io
+domain: polaris-slo-cloud.github.io
 multigroup: true
-repo: sloc.github.io/sloc
+repo: polaris-slo-cloud.github.io/polaris
 resources:
 - group: elasticity
   kind: TemplateStrategy

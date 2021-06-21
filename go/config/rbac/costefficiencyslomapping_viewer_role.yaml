@@ -5,7 +5,7 @@ metadata:
   name: costefficiencyslomapping-viewer-role
 rules:
 - apiGroups:
-  - slo.sloc.github.io
+  - slo.polaris-slo-cloud.github.io
   resources:
   - costefficiencyslomappings
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - slo.sloc.github.io
+  - slo.polaris-slo-cloud.github.io
   resources:
   - costefficiencyslomappings/status
   verbs:

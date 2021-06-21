@@ -9,9 +9,9 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	scaleClient "k8s.io/client-go/scale"
+	eStrategies "polaris-slo-cloud.github.io/polaris/pkg/elasticitystrategies"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
 
 // scaleHelper is used for obtaining and updating the Scale subresource of a target.

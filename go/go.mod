@@ -1,4 +1,4 @@
-module sloc.github.io/sloc
+module polaris-slo-cloud.github.io/polaris
 
 go 1.15
 

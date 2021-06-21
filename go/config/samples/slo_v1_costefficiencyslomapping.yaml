@@ -1,4 +1,4 @@
-apiVersion: slo.sloc.github.io/v1
+apiVersion: slo.polaris-slo-cloud.github.io/v1
 kind: CostEfficiencySloMapping
 metadata:
   name: costefficiencyslomapping-sample

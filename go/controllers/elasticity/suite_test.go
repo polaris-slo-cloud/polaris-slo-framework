@@ -28,7 +28,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	elasticityv1 "sloc.github.io/sloc/apis/elasticity/v1"
+	elasticityv1 "polaris-slo-cloud.github.io/polaris/apis/elasticity/v1"
 	// +kubebuilder:scaffold:imports
 )
 

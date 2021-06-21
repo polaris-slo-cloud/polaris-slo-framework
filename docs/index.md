@@ -74,10 +74,10 @@ All code for this project is contained in this repository.
 
 | Directory                | Contents |
 |--------------------------|----------|
-| [`docs`](https://github.com/SLOCloud/SLOC/tree/master/docs)         | Documentation files (Work in progress) |
-| [`go`](https://github.com/SLOCloud/SLOC/tree/master/go)             | Go code, i.e., Kubernetes-specific controllers, etc. |
-| [`testbeds`](https://github.com/SLOCloud/SLOC/tree/master/testbeds) | Configurations and demo applications, we use for testing |
-| [`ts`](https://github.com/SLOCloud/SLOC/tree/master/ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
+| [`docs`](https://github.com/polaris-slo-cloud/polaris/tree/master/docs)         | Documentation files (Work in progress) |
+| [`go`](https://github.com/polaris-slo-cloud/polaris/tree/master/go)             | Go code, i.e., Kubernetes-specific controllers, etc. |
+| [`testbeds`](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds) | Configurations and demo applications, we use for testing |
+| [`ts`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
 
 
 ## Documentation, Tutorial, and Demos

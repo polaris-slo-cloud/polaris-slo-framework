@@ -25,8 +25,8 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	elasticityStrategies "sloc.github.io/sloc/apis/elasticity/v1"
-	"sloc.github.io/sloc/internal/util"
+	elasticityStrategies "polaris-slo-cloud.github.io/polaris/apis/elasticity/v1"
+	"polaris-slo-cloud.github.io/polaris/internal/util"
 )
 
 // TemplateStrategyReconciler reconciles a TemplateStrategy object
@@ -36,8 +36,8 @@ type TemplateStrategyReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=templatestrategies,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=templatestrategies/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=elasticity.polaris-slo-cloud.github.io,resources=templatestrategies,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=elasticity.polaris-slo-cloud.github.io,resources=templatestrategies/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=autoscaling,resources=horizontalpodautoscalers,verbs=get;list;watch;create;update;patch;delete
 
 // Reconcile is called by the manager, whenever its underlying informers report that an

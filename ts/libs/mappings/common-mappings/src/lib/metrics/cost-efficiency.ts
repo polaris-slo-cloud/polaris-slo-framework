@@ -70,6 +70,6 @@ export class CostEfficiencyMetric extends ComposedMetricType<CostEfficiency, Cos
     /** The singleton instance of this type. */
     static readonly instance = new CostEfficiencyMetric();
 
-    readonly metricTypeName = 'metrics.sloc.github.io/cost-efficiency';
+    readonly metricTypeName = 'metrics.polaris-slo-cloud.github.io/cost-efficiency';
 
 }
