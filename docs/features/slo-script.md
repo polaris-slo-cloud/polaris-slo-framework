@@ -35,11 +35,11 @@ The `SloMapping` contains the SloConfiguration, which are the SLO-specific bound
 When defining a `ServiceLevelObjective` using SLO Script’s `StronglyTypedSLO` mechanism, the service provider must first create an `SloConfiguration` data type that will be used by the service consumer to configure the `ServiceLevelObjective` and an `SloOutput` data type to describe its output.
 While each `ServiceLevelObjective` will likely have its own `SloConfiguration` type, it is recommended to reuse an `SloOutput` data type for multiple `ServiceLevelObjective`s to allow for loose coupling between `ServiceLevelObjectives` and `ElasticityStrategies`.
 
-To create the actual SLO, a service provider must create a class that implements the [ServiceLevelObjective](https://github.com/SLOCloud/SLOC/blob/master/ts/libs/core/src/lib/slo/public/common/service-level-objective.ts) interface.
+To create the actual SLO, a service provider must create a class that implements the [ServiceLevelObjective](https://github.com/polaris-slo-cloud/polaris/blob/master/ts/libs/core/src/lib/slo/public/common/service-level-objective.ts) interface.
 It takes three generic parameters to enable type safety:
 
 * `C` is used for the type of `SloConfiguration` object that will carry the parameters from an `SloMapping`,
-* `O` is used for the type of [SloOutput](https://github.com/SLOCloud/SLOC/blob/master/ts/libs/core/src/lib/slo/public/common/slo-output.ts), which will be fed to the elasticity strategy, and
+* `O` is used for the type of [SloOutput](https://github.com/polaris-slo-cloud/polaris/blob/master/ts/libs/core/src/lib/slo/public/common/slo-output.ts), which will be fed to the elasticity strategy, and
 * `T` is used to define the type of target workload the SLO supports.
 
 An `ElasticityStrategy` uses the same mechanism to define the type of `SloOutput` that it expects as input.

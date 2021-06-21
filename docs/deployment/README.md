@@ -25,7 +25,7 @@ When running Polaris components locally, the current context configured in your 
 
 The following sections show you how to build and run Polaris components.
 A part of Polaris is implemented in Go and another part in TypeScript.
-The [go](https://github.com/SLOCloud/SLOC/tree/master/go) and [ts](https://github.com/SLOCloud/SLOC/tree/master/ts) folders contain all code in the respective languages as a monorepository.
+The [go](https://github.com/polaris-slo-cloud/polaris/tree/master/go) and [ts](https://github.com/polaris-slo-cloud/polaris/tree/master/ts) folders contain all code in the respective languages as a monorepository.
 
 
 ### Elasticity Strategies
@@ -33,7 +33,7 @@ The [go](https://github.com/SLOCloud/SLOC/tree/master/go) and [ts](https://githu
 The elasticity strategy controllers are written in Go and compiled into a single binary.
 To build and run them, follow these steps:
 
-1. Open a terminal in the [go](https://github.com/SLOCloud/SLOC/tree/master/go) folder of the Polaris repository.
+1. Open a terminal in the [go](https://github.com/polaris-slo-cloud/polaris/tree/master/go) folder of the Polaris repository.
 1. Download all dependencies and build the controllers by running
 ```make```
 1. Install the Custom Resource Definitions to your Kubernetes cluster by executing
@@ -47,10 +47,10 @@ To build and run them, follow these steps:
 The SLO controllers are implemented in TypeScript.
 To build and run the cost efficiency SLO controller, which is demonstrated in [this video](https://www.youtube.com/watch?v=33P3YGOmnyI), follow these steps:
 
-1. Open a terminal in the [ts](https://github.com/SLOCloud/SLOC/tree/master/ts) folder of the Polaris repository.
+1. Open a terminal in the [ts](https://github.com/polaris-slo-cloud/polaris/tree/master/ts) folder of the Polaris repository.
 1. Install the dependencies:
 ```npm install```
-1. Configure the connection to your Prometheus instance in [this file](https://github.com/SLOCloud/SLOC/tree/master/ts/apps/slo/cost-efficiency-slo-controller/src/main.ts).
+1. Configure the connection to your Prometheus instance in [this file](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/slo/cost-efficiency-slo-controller/src/main.ts).
 1. Build the controller:
 ```npm run build slo-cost-efficiency-slo-controller --with-deps=true```
 1. Make sure that you have the CRDs from the [elasticity strategies](#elasticity-strategies) installed.
@@ -64,9 +64,9 @@ Currently SLO mappings need to be serialized to YAML and manually added to the c
 In the future, there will be an automated controller for this.
 To manually add an SLO mapping:
 
-1. Add a new `.ts` file or open an [existing SLO mapping](https://github.com/SLOCloud/SLOC/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app) .ts file in the [polaris-k8s-serializer](https://github.com/SLOCloud/SLOC/tree/master/ts/apps/cli/sloc-k8s-serializer) subproject.
+1. Add a new `.ts` file or open an [existing SLO mapping](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app) .ts file in the [polaris-k8s-serializer](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer) subproject.
 1. Configure the SLO mapping.
-1. Import and serialize it in the [`main.ts`](https://github.com/SLOCloud/SLOC/tree/master/ts/apps/cli/sloc-k8s-serializer/src/main.ts) file of the polaris-k8s-serializer.
+1. Import and serialize it in the [`main.ts`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/main.ts) file of the polaris-k8s-serializer.
 1. Build the polaris-k8s-serializer:
 ```npm run build cli-sloc-k8s-serializer --with-deps=true```
 1. Run the serializer and apply its YAML output to the cluster:
@@ -76,6 +76,6 @@ If the respective SLO's controller is running, it will pick up and enforce the S
 
 ### Run the CMS Workload
 
-The [testbeds](https://github.com/SLOCloud/SLOC/tree/master/testbeds) include a deployment of the open-source headless CMS [Gentics Mesh](https://getmesh.io).
-To install it, please follow [these steps](https://github.com/SLOCloud/SLOC/tree/master/testbeds/kubernetes/gentics-mesh).
-The defined cost efficiency SLO mapping defined [here](https://github.com/SLOCloud/SLOC/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app/cost-efficiency.slo.ts) is configured to operate on the deployed Gentics Mesh stateful set.
+The [testbeds](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds) include a deployment of the open-source headless CMS [Gentics Mesh](https://getmesh.io).
+To install it, please follow [these steps](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds/kubernetes/gentics-mesh).
+The defined cost efficiency SLO mapping defined [here](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app/cost-efficiency.slo.ts) is configured to operate on the deployed Gentics Mesh stateful set.

@@ -4,4 +4,4 @@ The Polaris project contains a set of generic elasticity strategy controllers an
 
 Currently, we provide the following elasticity strategies:
 
-* `HorizontalElasticityStrategy` ([SLO Script type](https://github.com/SLOCloud/SLOC/blob/master/ts/libs/mappings/common-mappings/src/lib/elasticity/horizontal-elasticity-strategy-kind.ts), [controller](https://github.com/SLOCloud/SLOC/tree/master/go/internal/elasticityservices/horizontal))
+* `HorizontalElasticityStrategy` ([SLO Script type](https://github.com/polaris-slo-cloud/polaris/blob/master/ts/libs/mappings/common-mappings/src/lib/elasticity/horizontal-elasticity-strategy-kind.ts), [controller](https://github.com/polaris-slo-cloud/polaris/tree/master/go/internal/elasticityservices/horizontal))
