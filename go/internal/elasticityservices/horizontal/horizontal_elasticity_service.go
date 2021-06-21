@@ -7,10 +7,10 @@ import (
 
 	"github.com/go-logr/logr"
 	autoscaling "k8s.io/api/autoscaling/v1"
+	crds "polaris-slo-cloud.github.io/polaris/apis/elasticity/v1"
+	eStrategies "polaris-slo-cloud.github.io/polaris/pkg/elasticitystrategies"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	crds "sloc.github.io/sloc/apis/elasticity/v1"
-	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
 )
 
 // HorizontalElasticityService performs horizontal scaling operations based on a HorizontalElasticityStrategy.

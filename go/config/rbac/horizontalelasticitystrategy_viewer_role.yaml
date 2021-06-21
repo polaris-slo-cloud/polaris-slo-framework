@@ -5,7 +5,7 @@ metadata:
   name: horizontalelasticitystrategy-viewer-role
 rules:
 - apiGroups:
-  - elasticity.sloc.github.io
+  - elasticity.polaris-slo-cloud.github.io
   resources:
   - horizontalelasticitystrategies
   verbs:
@@ -13,7 +13,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - elasticity.sloc.github.io
+  - elasticity.polaris-slo-cloud.github.io
   resources:
   - horizontalelasticitystrategies/status
   verbs:

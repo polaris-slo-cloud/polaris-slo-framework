@@ -6,9 +6,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
-  name: templatestrategies.elasticity.sloc.github.io
+  name: templatestrategies.elasticity.polaris-slo-cloud.github.io
 spec:
-  group: elasticity.sloc.github.io
+  group: elasticity.polaris-slo-cloud.github.io
   names:
     kind: TemplateStrategy
     listKind: TemplateStrategyList

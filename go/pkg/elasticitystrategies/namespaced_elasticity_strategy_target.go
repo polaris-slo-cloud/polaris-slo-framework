@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	crds "sloc.github.io/sloc/apis/slo/v1"
+	crds "polaris-slo-cloud.github.io/polaris/apis/slo/v1"
 )
 
 // NamespacedSloTarget is an ElasticityStrategyTarget with an additional property for storing the namespace.

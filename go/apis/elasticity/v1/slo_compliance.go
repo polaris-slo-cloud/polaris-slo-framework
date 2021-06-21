@@ -1,7 +1,7 @@
 package v1
 
 import (
-	sloCrds "sloc.github.io/sloc/apis/slo/v1"
+	sloCrds "polaris-slo-cloud.github.io/polaris/apis/slo/v1"
 )
 
 const (

@@ -24,9 +24,9 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	elasticityv1 "sloc.github.io/sloc/apis/elasticity/v1"
-	slov1 "sloc.github.io/sloc/apis/slo/v1"
-	elasticitycontroller "sloc.github.io/sloc/controllers/elasticity"
+	elasticityv1 "polaris-slo-cloud.github.io/polaris/apis/elasticity/v1"
+	slov1 "polaris-slo-cloud.github.io/polaris/apis/slo/v1"
+	elasticitycontroller "polaris-slo-cloud.github.io/polaris/controllers/elasticity"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -59,7 +59,7 @@ func main() {
 		MetricsBindAddress: metricsAddr,
 		Port:               9443,
 		LeaderElection:     enableLeaderElection,
-		LeaderElectionID:   "5108eb73.sloc.github.io",
+		LeaderElectionID:   "5108eb73.polaris-slo-cloud.github.io",
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")

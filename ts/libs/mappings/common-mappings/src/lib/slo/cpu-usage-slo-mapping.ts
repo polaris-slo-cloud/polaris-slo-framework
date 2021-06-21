@@ -35,7 +35,7 @@ export class CpuUsageSloMapping extends SloMappingBase<CpuUsageSloMappingSpec> {
     constructor(initData?: SloMappingInitData<CpuUsageSloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
-            group: 'slo.sloc.github.io',
+            group: 'slo.polaris-slo-cloud.github.io',
             version: 'v1',
             kind: 'CPUUsageSloMapping',
         });

@@ -1,4 +1,4 @@
-apiVersion: slo.sloc.github.io/v1
+apiVersion: slo.polaris-slo-cloud.github.io/v1
 kind: CPUUsageSloMapping
 metadata:
   name: cpuusageslomapping-sample
@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: twitter-clone
   elasticityStrategy:
-    apiVersion: elasticity.sloc.github.io/v1
+    apiVersion: elasticity.polaris-slo-cloud.github.io/v1
     kind: HorizontalElasticityStrategy
   sloConfig:
     targetAvgCPUUtilizationPercentage: 70

@@ -6,20 +6,20 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
-  name: costefficiencyslomappings.slo.sloc.github.io
+  name: cpuusageslomappings.slo.polaris-slo-cloud.github.io
 spec:
-  group: slo.sloc.github.io
+  group: slo.polaris-slo-cloud.github.io
   names:
-    kind: CostEfficiencySloMapping
-    listKind: CostEfficiencySloMappingList
-    plural: costefficiencyslomappings
-    singular: costefficiencyslomapping
+    kind: CPUUsageSloMapping
+    listKind: CPUUsageSloMappingList
+    plural: cpuusageslomappings
+    singular: cpuusageslomapping
   scope: Namespaced
   versions:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: CostEfficiencySloMapping is the Schema for the costefficiencyslomappings
+        description: CPUUsageSloMapping is the Schema for the cpuusageslomappings
           API
         properties:
           apiVersion:
@@ -35,8 +35,8 @@ spec:
           metadata:
             type: object
           spec:
-            description: CostEfficiencySloMappingSpec defines the desired state of
-              CostEfficiencySloMapping
+            description: CPUUsageSloMappingSpec is used to apply a CPUUsageSLO to
+              a target workload.
             properties:
               elasticityStrategy:
                 description: Specifies the type of ElasticityStrategy to use for this
@@ -53,28 +53,17 @@ spec:
                 - kind
                 type: object
               sloConfig:
-                description: CostEfficiencySloConfig contains the configuration for
-                  a CostEfficiencySloMappingSpec.
+                description: CPUUsageSloConfig contains the configuration for a CPUUsageSloMappingSpec.
                 properties:
-                  minRequestsPercentile;omitempty:
-                    description: The minimum percentile of requests that should be
-                      handled within the time threshold.
+                  targetAvgCPUUtilizationPercentage:
+                    description: The target average CPU utilization percentage of
+                      the workload's pods (percentage of the allocated CPUs).
                     format: int32
-                    type: integer
-                  responseTimeThresholdMs:
-                    description: The number of milliseconds, within which the requests
-                      should be handled.
-                    format: int32
-                    minimum: 0
-                    type: integer
-                  targetCostEfficiency:
-                    description: The desired cost efficiency.
-                    format: int32
-                    minimum: 0
+                    maximum: 100
+                    minimum: 1
                     type: integer
                 required:
-                - responseTimeThresholdMs
-                - targetCostEfficiency
+                - targetAvgCPUUtilizationPercentage
                 type: object
               staticElasticityStrategyConfig:
                 description: "Any static configuration parameters, which are unknown
@@ -108,8 +97,7 @@ spec:
             - targetRef
             type: object
           status:
-            description: CostEfficiencySloMappingStatus defines the observed state
-              of CostEfficiencySloMapping
+            description: CPUUsageSloMappingStatus defines the observed state of CPUUsageSloMapping
             type: object
         type: object
     served: true

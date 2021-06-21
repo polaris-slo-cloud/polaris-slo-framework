@@ -22,9 +22,9 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	crds "sloc.github.io/sloc/apis/elasticity/v1"
-	"sloc.github.io/sloc/internal/elasticityservices/horizontal"
-	eStrategies "sloc.github.io/sloc/pkg/elasticitystrategies"
+	crds "polaris-slo-cloud.github.io/polaris/apis/elasticity/v1"
+	"polaris-slo-cloud.github.io/polaris/internal/elasticityservices/horizontal"
+	eStrategies "polaris-slo-cloud.github.io/polaris/pkg/elasticitystrategies"
 )
 
 // HorizontalElasticityStrategyReconciler reconciles a HorizontalElasticityStrategy object
@@ -39,8 +39,8 @@ type HorizontalElasticityStrategyReconciler struct {
 // ToDo: We need to find a way to request access to all scale subresources.
 // The strategy should be able to work with resource types, which are not known at compile time.
 
-// +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=horizontalelasticitystrategies,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=elasticity.sloc.github.io,resources=horizontalelasticitystrategies/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=elasticity.polaris-slo-cloud.github.io,resources=horizontalelasticitystrategies,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=elasticity.polaris-slo-cloud.github.io,resources=horizontalelasticitystrategies/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=*/scale,verbs=get;update;patch
 
 // Reconcile is triggered whenever a HorizontalElasticityStrategy is added or changed and performs any scaling operations

@@ -1,4 +1,4 @@
-apiVersion: elasticity.sloc.github.io/v1
+apiVersion: elasticity.polaris-slo-cloud.github.io/v1
 kind: TemplateStrategy
 metadata:
   name: templatestrategy-sample

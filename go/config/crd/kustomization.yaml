@@ -2,10 +2,10 @@
 # since it depends on service name and namespace that are out of this kustomize package.
 # It should be run by config/default
 resources:
-- bases/elasticity.sloc.github.io_templatestrategies.yaml
-- bases/elasticity.sloc.github.io_horizontalelasticitystrategies.yaml
-- bases/slo.sloc.github.io_cpuusageslomappings.yaml
-- bases/slo.sloc.github.io_costefficiencyslomappings.yaml
+- bases/elasticity.polaris-slo-cloud.github.io_templatestrategies.yaml
+- bases/elasticity.polaris-slo-cloud.github.io_horizontalelasticitystrategies.yaml
+- bases/slo.polaris-slo-cloud.github.io_cpuusageslomappings.yaml
+- bases/slo.polaris-slo-cloud.github.io_costefficiencyslomappings.yaml
 # +kubebuilder:scaffold:crdkustomizeresource
 
 patchesStrategicMerge:

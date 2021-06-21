@@ -27,7 +27,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticity.sloc.github.io
+  - elasticity.polaris-slo-cloud.github.io
   resources:
   - horizontalelasticitystrategies
   verbs:
@@ -39,7 +39,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticity.sloc.github.io
+  - elasticity.polaris-slo-cloud.github.io
   resources:
   - horizontalelasticitystrategies/status
   verbs:
@@ -47,7 +47,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - elasticity.sloc.github.io
+  - elasticity.polaris-slo-cloud.github.io
   resources:
   - templatestrategies
   verbs:
@@ -59,7 +59,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - elasticity.sloc.github.io
+  - elasticity.polaris-slo-cloud.github.io
   resources:
   - templatestrategies/status
   verbs:

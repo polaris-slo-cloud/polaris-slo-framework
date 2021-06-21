@@ -58,7 +58,7 @@ export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMa
     constructor(initData?: SloMappingInitData<CostEfficiencySloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
-            group: 'slo.sloc.github.io',
+            group: 'slo.polaris-slo-cloud.github.io',
             version: 'v1',
             kind: 'CostEfficiencySloMapping',
         });
