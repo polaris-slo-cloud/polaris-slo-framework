@@ -52,7 +52,7 @@ export class KubernetesScaleApi extends KubernetesObjectApi {
             json: true,
         };
 
-        return this.requestPromise(localVarRequestOptions);
+        return this.requestPromise(localVarRequestOptions, 'V1Scale');
     }
 
 
@@ -78,7 +78,7 @@ export class KubernetesScaleApi extends KubernetesObjectApi {
         dryRun?: string,
         fieldManager?: string,
         options: { headers: { [name: string]: string } } = { headers: {} },
-    ): Promise<{ body: KubernetesObject; response: http.IncomingMessage }> {
+    ): Promise<{ body: V1Scale; response: http.IncomingMessage }> {
         // verify required parameter 'spec' is not null or undefined
         if (spec === null || spec === undefined) {
             throw new Error('Required parameter spec was null or undefined when calling replace.');
@@ -107,10 +107,10 @@ export class KubernetesScaleApi extends KubernetesObjectApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(scale, 'KubernetesObject'),
+            body: ObjectSerializer.serialize(scale, 'V1Scale'),
         };
 
-        return this.requestPromise(localVarRequestOptions);
+        return this.requestPromise(localVarRequestOptions, 'V1Scale');
     }
 
 }
