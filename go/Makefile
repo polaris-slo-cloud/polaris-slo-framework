@@ -38,6 +38,10 @@ deploy: manifests
 	cd config/manager && kustomize edit set image controller=${IMG}
 	kustomize build config/default | kubectl apply -f -
 
+deployment-yaml: manifests ## Build YAML files that can be used for deployment by customers
+	cd config/manager && kustomize edit set image controller=${IMG}
+	kustomize build config/default > ../deployment/1-horizontal-elasticity-strategy.yaml
+
 # Generate manifests e.g. CRD, RBAC etc.
 manifests: controller-gen
 	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases
