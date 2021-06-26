@@ -62,9 +62,30 @@ spec:
                     type: integer
                 type: object
               staticConfig:
-                description: Static configuration that was supplied using `SloMapping.StaticElasticityStrategyConfig`.
+                description: Optional static configuration parameters for a HorizontalElasticityStrategy
+                properties:
+                  maxReplicas:
+                    description: "The maximum number of replicas that the target workload
+                      may have. \n Default: unlimited"
+                    format: int32
+                    minimum: 1
+                    type: integer
+                  minReplicas:
+                    default: 1
+                    description: "The minium number of replicas that the target workload
+                      must have. \n Default: 1"
+                    format: int32
+                    minimum: 0
+                    type: integer
+                  stabilizationWindowSeconds:
+                    default: 60
+                    description: "The number of seconds to wait after a scaling operation
+                      on a target workload, before executing another scaling operation
+                      if the SLo continues to be violated. \n Default: 60"
+                    format: int32
+                    minimum: 0
+                    type: integer
                 type: object
-                x-kubernetes-preserve-unknown-fields: true
               targetRef:
                 description: Specifies the target on which to execute the elasticity
                   strategy.

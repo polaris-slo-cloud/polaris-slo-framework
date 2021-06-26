@@ -5,8 +5,10 @@ import (
 )
 
 // ElasticityStrategySpecBase should be embedded inline in an ElasticityStrategySpec.
-// In addition to the fields provided by this base type, an `SloOutputParams` field
-// must be added to hold the output of the SLO.
+//
+// In addition to TargetRef field provided by this base type, the following fields must/may be added to an ElasticityStrategy spec:
+// 	- `SloOutputParams` must be added to hold the output of the SLO.
+//	- `StaticConfig` (optional) may be added to allow additional static configuration for the elasticity strategy.
 type ElasticityStrategySpecBase struct {
 
 	// Specifies the target on which to execute the elasticity strategy.
@@ -17,5 +19,8 @@ type ElasticityStrategySpecBase struct {
 	// SloOutputParams SloOutputType `json:"sloOutputParams"`
 
 	// Static configuration that was supplied using `SloMapping.StaticElasticityStrategyConfig`.
-	StaticConfig sloCrds.ArbitraryConfigObject `json:"staticConfig,omitempty"`
+	// This must be optional.
+	// Since we have no generics in Go (yet), this field needs to be added to the conrete ElasticityStrategySpec type.
+	// +optional
+	// StaticConfig sloCrds.ArbitraryConfigObject `json:"staticConfig,omitempty"`
 }

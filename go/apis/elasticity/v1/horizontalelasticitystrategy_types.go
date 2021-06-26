@@ -28,6 +28,42 @@ type HorizontalElasticityStrategySpec struct {
 
 	// Specifies how much the current state of the system complies with the SLO.
 	SloOutputParams SloCompliance `json:"sloOutputParams"`
+
+	// Optional static configuration parameters for a HorizontalElasticityStrategy
+	//
+	// +optional
+	StaticConfig *HorizontalElasticityStrategyStaticConfig `json:"staticConfig,omitempty"`
+}
+
+// Optional static configuration parameters for a HorizontalElasticityStrategy
+type HorizontalElasticityStrategyStaticConfig struct {
+
+	// The minium number of replicas that the target workload must have.
+	//
+	// Default: 1
+	//
+	// +optional
+	// +kubebuilder:default=1
+	// +kubebuilder:validation:Minimum=0
+	MinReplicas *int32 `json:"minReplicas,omitempty"`
+
+	// The maximum number of replicas that the target workload may have.
+	//
+	// Default: unlimited
+	//
+	// +optional
+	// +kubebuilder:validation:Minimum=1
+	MaxReplicas *int32 `json:"maxReplicas,omitempty"`
+
+	// The number of seconds to wait after a scaling operation on a target workload, before
+	// executing another scaling operation if the SLo continues to be violated.
+	//
+	// Default: 60
+	//
+	// +optional
+	// +kubebuilder:default=60
+	// +kubebuilder:validation:Minimum=0
+	StabilizationWindowSeconds *int32 `json:"stabilizationWindowSeconds,omitempty"`
 }
 
 // HorizontalElasticityStrategyStatus defines the observed state of HorizontalElasticityStrategy
