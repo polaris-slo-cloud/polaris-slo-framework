@@ -1,5 +1,5 @@
 import { PolarisType } from '../transformation';
-import { initSelf } from '../util';
+import { IndexByKey, initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { SloTarget } from './slo-target';
 
@@ -18,8 +18,9 @@ import { SloTarget } from './slo-target';
  *
  * @param O The type of output parameters from the SLO/input parameters of the elasticity strategy.
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
+ * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
+export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     @PolarisType(() => SloTarget)
@@ -33,7 +34,7 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
     /**
      * Static configuration that was supplied using `SloMappingSpec.staticElasticityStrategyConfig`.
      */
-    staticConfig?: any;
+    staticConfig?: C;
 
     constructor(initData?: Partial<ElasticityStrategySpec<O>>) {
         initSelf(this, initData);
@@ -53,13 +54,14 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
  *
  * @param O The type of output parameters from the SLO/input parameters of the elasticity strategy.
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
+ * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategy<O, T extends SloTarget = SloTarget> extends ApiObject<ElasticityStrategySpec<O, T>> {
+export class ElasticityStrategy<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> extends ApiObject<ElasticityStrategySpec<O, T, C>> {
 
     @PolarisType(() => ElasticityStrategySpec)
-    spec: ElasticityStrategySpec<O, T>;
+    spec: ElasticityStrategySpec<O, T, C>;
 
-    constructor(initData?: Partial<ElasticityStrategy<O, T>>) {
+    constructor(initData?: Partial<ElasticityStrategy<O, T, C>>) {
         super(initData);
     }
 
