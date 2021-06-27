@@ -1,4 +1,4 @@
-import { ElasticityStrategyService } from '../../../elasticity';
+import { ElasticityStrategyManager, ElasticityStrategyService } from '../../../elasticity';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { PolarisTransformationService } from '../../../transformation';
 import { MetricsSourcesManager } from '../metrics-source';
@@ -68,6 +68,11 @@ export interface PolarisRuntime {
      * Creates an instance of the `SloControlLoop` specific to this runtime implementation.
      */
     createSloControlLoop(): SloControlLoop;
+
+    /**
+     * Creates an `ElasticityStrategyManager` instance.
+     */
+    createElasticityStrategyManager(): ElasticityStrategyManager;
 
     /**
      * Creates an `ObjectKindWatcher` specific to this runtime implementation.

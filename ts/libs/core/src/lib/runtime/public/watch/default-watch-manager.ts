@@ -3,7 +3,7 @@ import { PolarisRuntime } from '../polaris-runtime';
 import { ObjectKindsAlreadyWatchedError } from './errors';
 import { ObjectKindWatcher } from './object-kind-watcher';
 import { WatchEventsHandler } from './watch-events-handler';
-import { WatchManager } from './watch-manager';
+import { ObjectKindWatchHandlerPair, WatchManager } from './watch-manager';
 
 export class DefaultWatchManager implements WatchManager {
 
@@ -15,17 +15,16 @@ export class DefaultWatchManager implements WatchManager {
         return Array.from(this.watchers.values());
     }
 
-    async startWatchers(kinds: ObjectKind[], handler: WatchEventsHandler<ApiObject<any>>): Promise<ObjectKindWatcher[]> {
-        this.assertNoExistingWatchers(kinds);
-
-        const watchers = kinds.map(async kind => {
-            const watcher = this.polarisRuntime.createObjectKindWatcher();
-            await watcher.startWatch(kind, handler);
-            this.watchers.set(kind.toString(), watcher);
-            return watcher;
-        });
-
-        return Promise.all(watchers);
+    startWatchers(kinds: ObjectKind[], handler: WatchEventsHandler<ApiObject<any>>): Promise<ObjectKindWatcher[]>;
+    startWatchers(kindHandlerPairs: ObjectKindWatchHandlerPair[]): Promise<ObjectKindWatcher[]>;
+    startWatchers(kindOrPairs: ObjectKind[] | ObjectKindWatchHandlerPair[], handler?: WatchEventsHandler<ApiObject<any>>): Promise<ObjectKindWatcher[]> {
+        let kindHandlerPairs: ObjectKindWatchHandlerPair[];
+        if (handler) {
+            kindHandlerPairs = (kindOrPairs as ObjectKind[]).map(kind => ({ kind, handler }))
+        } else {
+            kindHandlerPairs = kindOrPairs as ObjectKindWatchHandlerPair[];
+        }
+        return this.startWatchersInternal(kindHandlerPairs);
     }
 
     stopWatchers(kinds: ObjectKind[]): void {
@@ -39,10 +38,24 @@ export class DefaultWatchManager implements WatchManager {
         });
     }
 
-    private assertNoExistingWatchers(kinds: ObjectKind[]): void {
-        const watchedKinds = kinds.filter(kind => this.watchers.has(kind.toString()));
+    private async startWatchersInternal(kindHandlerPairs: ObjectKindWatchHandlerPair[]): Promise<ObjectKindWatcher[]> {
+        this.assertNoExistingWatchers(kindHandlerPairs);
+
+        const watchers = kindHandlerPairs.map(async pair => {
+            const watcher = this.polarisRuntime.createObjectKindWatcher();
+            await watcher.startWatch(pair.kind, pair.handler);
+            this.watchers.set(pair.kind.toString(), watcher);
+            return watcher;
+        });
+
+        return Promise.all(watchers);
+    }
+
+    private assertNoExistingWatchers(kindsAndHandlers: ObjectKindWatchHandlerPair[]): void {
+        const watchedKinds = kindsAndHandlers.filter(pair => this.watchers.has(pair.kind.toString()));
         if (watchedKinds.length > 0) {
-            throw new ObjectKindsAlreadyWatchedError(this, watchedKinds);
+            const kinds = watchedKinds.map(pair => pair.kind);
+            throw new ObjectKindsAlreadyWatchedError(this, kinds);
         }
     }
 

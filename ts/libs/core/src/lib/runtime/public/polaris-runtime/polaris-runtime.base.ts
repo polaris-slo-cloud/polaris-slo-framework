@@ -1,4 +1,9 @@
-import { DefaultElasticityStrategyService, ElasticityStrategyService } from '../../../elasticity';
+import {
+    DefaultElasticityStrategyManager,
+    DefaultElasticityStrategyService,
+    ElasticityStrategyManager,
+    ElasticityStrategyService,
+} from '../../../elasticity';
 import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../../slo';
 import { DefaultPolarisTransformationService, PolarisTransformationService } from '../../../transformation/public/service';
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
@@ -27,6 +32,10 @@ export abstract class PolarisRuntimeBase implements PolarisRuntime {
 
     createSloControlLoop(): SloControlLoop {
         return new DefaultSloControlLoop();
+    }
+
+    createElasticityStrategyManager(): ElasticityStrategyManager {
+        return new DefaultElasticityStrategyManager(this);
     }
 
     createWatchManager(): WatchManager {
