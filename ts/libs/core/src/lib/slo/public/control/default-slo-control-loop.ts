@@ -65,13 +65,16 @@ export class DefaultSloControlLoop implements SloControlLoop {
             catchError(err => {
                 const errorMsg = `An error occurred while configuring SLO ${key}.`;
                 console.error(errorMsg, err);
-                throw new SloControlLoopError(this, errorMsg, err);
+                return throwError(new SloControlLoopError(this, errorMsg, err));
             }),
-            timeout(SLO_DEFAULT_TIMEOUT_MS),
-            catchError(() => {
+            timeout(this.loopConfig.sloTimeoutMs),
+            catchError(err => {
+                if (err instanceof SloEvaluationError) {
+                    return throwError(err);
+                }
                 const errorMsg = `SLO ${key} has timed out during configuration.`;
                 console.error(errorMsg);
-                throw new SloControlLoopError(this, errorMsg);
+                return throwError(new SloControlLoopError(this, errorMsg));
             }),
             map(() => {
                 this.registeredSlos.set(key, { slo, stopper: new ObservableStopper() });
