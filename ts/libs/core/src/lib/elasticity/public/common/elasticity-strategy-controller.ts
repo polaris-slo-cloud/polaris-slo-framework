@@ -32,4 +32,11 @@ export interface ElasticityStrategyController<O, T extends SloTarget = SloTarget
      */
     execute(elasticityStrategy: ElasticityStrategy<O, T, C>): Promise<void>;
 
+    /**
+     * This method is called when this controller is about to be destroyed.
+     *
+     * Its implementation is optional and it can be used to for cleanup.
+     */
+     onDestroy?(): void;
+
 }
