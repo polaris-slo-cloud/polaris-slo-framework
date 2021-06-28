@@ -1,18 +1,13 @@
-import {
-    ElasticityStrategy,
-    HorizontalElasticityStrategyConfig,
-    NamespacedObjectReference,
-    OrchestratorClient,
-    PolarisRuntime,
-    SloCompliance,
-    SloComplianceElasticityStrategyControllerBase,
-    SloTarget,
-} from '@polaris-sloc/core';
+import { ElasticityStrategy, NamespacedObjectReference, SloCompliance, SloTarget } from '../../../../model';
+import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
+import { HorizontalElasticityStrategyConfig } from '../../common';
+import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
 /**
- * Controller for executing a `HorizontalElasticityStrategy`.
+ * Common superclass for controller for executing an elasticity strategy that employs horizontal scaling.
  */
-export class HorizontalElasticityStrategyController extends SloComplianceElasticityStrategyControllerBase<SloTarget, HorizontalElasticityStrategyConfig> {
+export abstract class HorizontalElasticityStrategyControllerBase
+    extends SloComplianceElasticityStrategyControllerBase<SloTarget, HorizontalElasticityStrategyConfig> {
 
     private orchClient: OrchestratorClient;
 
