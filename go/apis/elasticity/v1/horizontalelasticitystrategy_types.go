@@ -54,16 +54,6 @@ type HorizontalElasticityStrategyStaticConfig struct {
 	// +optional
 	// +kubebuilder:validation:Minimum=1
 	MaxReplicas *int32 `json:"maxReplicas,omitempty"`
-
-	// The number of seconds to wait after a scaling operation on a target workload, before
-	// executing another scaling operation if the SLo continues to be violated.
-	//
-	// Default: 60
-	//
-	// +optional
-	// +kubebuilder:default=60
-	// +kubebuilder:validation:Minimum=0
-	StabilizationWindowSeconds *int32 `json:"stabilizationWindowSeconds,omitempty"`
 }
 
 // HorizontalElasticityStrategyStatus defines the observed state of HorizontalElasticityStrategy

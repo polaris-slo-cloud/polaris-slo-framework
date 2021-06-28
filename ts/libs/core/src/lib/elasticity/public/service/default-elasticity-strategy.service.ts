@@ -33,6 +33,7 @@ export class DefaultElasticityStrategyService implements ElasticityStrategyServi
             spec: new specCtor({
                 targetRef: sloOutput.sloMapping.spec.targetRef,
                 sloOutputParams: sloOutput.elasticityStrategyParams,
+                stabilizationWindow: sloOutput.sloMapping.spec.stabilizationWindow,
                 staticConfig: sloOutput.sloMapping.spec.staticElasticityStrategyConfig,
             }),
         });

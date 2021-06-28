@@ -11,6 +11,12 @@ type SloMapping struct {
 	// Specifies the type of ElasticityStrategy to use for this SLO mapping.
 	ElasticityStrategy ElasticityStrategyKind `json:"elasticityStrategy"`
 
+	// Configures the duration of the period after the last elasticity strategy execution,
+	// during which the strategy will not be executed again (to avoid unnecessary scaling).
+	//
+	// +optional
+	StabilizationWindow *StabilizationWindow `json:"stabilizationWindow,omitempty"`
+
 	// Any static configuration parameters, which are unknown to the SLO, but which may be required to configure
 	// the chosen kind of elasticity strategy should be specified here. They will be copied over
 	// into the spec of the elasticity strategy.

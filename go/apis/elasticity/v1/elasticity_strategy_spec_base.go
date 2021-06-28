@@ -18,6 +18,12 @@ type ElasticityStrategySpecBase struct {
 	// Since we have no generics in Go (yet), this field needs to be added to the conrete ElasticityStrategySpec type.
 	// SloOutputParams SloOutputType `json:"sloOutputParams"`
 
+	// Configures the duration of the period after the last elasticity strategy execution,
+	// during which the strategy will not be executed again (to avoid unnecessary scaling).
+	//
+	// +optional
+	StabilizationWindow *sloCrds.StabilizationWindow `json:"stabilizationWindow,omitempty"`
+
 	// Static configuration that was supplied using `SloMapping.StaticElasticityStrategyConfig`.
 	// This must be optional.
 	// Since we have no generics in Go (yet), this field needs to be added to the conrete ElasticityStrategySpec type.

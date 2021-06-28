@@ -2,6 +2,7 @@ import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { SloTarget } from './slo-target';
+import { StabilizationWindow } from './stabilization-window';
 
 /**
  * A generic class that is used to set up specs for an elasticity strategy.
@@ -30,6 +31,14 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget, C = Inde
      * The output parameters from the last `ServiceLevelObjective.evaluate()` call.
      */
     sloOutputParams: O;
+
+    /**
+     * Configures the duration of the period after the last elasticity strategy execution,
+     * during which the strategy will not be executed again (to avoid unnecessary scaling).
+     */
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    @PolarisType(() => StabilizationWindow)
+    stabilizationWindow?: StabilizationWindow;
 
     /**
      * Static configuration that was supplied using `SloMappingSpec.staticElasticityStrategyConfig`.

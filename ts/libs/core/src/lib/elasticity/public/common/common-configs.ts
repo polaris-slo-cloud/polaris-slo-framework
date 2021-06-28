@@ -19,14 +19,6 @@ export interface HorizontalElasticityStrategyConfig {
      */
     maxReplicas?: number;
 
-    /**
-     * The number of seconds to wait after a scaling operation on a target workload, before
-     * executing another scaling operation if the SLo continues to be violated.
-     *
-     * @default 60
-     */
-    stabilizationWindowSeconds?: number;
-
 }
 
 /**
