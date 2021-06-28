@@ -12,5 +12,6 @@ module.exports = {
         '<rootDir>/libs/polaris-nx',
         '<rootDir>/apps/polaris-nx-e2e',
         '<rootDir>/apps/cli/polaris-cli',
+        '<rootDir>/apps/elasticity/horizontal-elasticity-strategy-controller',
     ],
 };

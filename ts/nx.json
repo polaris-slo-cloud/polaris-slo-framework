@@ -104,6 +104,12 @@
       "tags": [
         "cli"
       ]
+    },
+    "elasticity-horizontal-elasticity-strategy-controller": {
+      "tags": [
+        "scope:elasticity",
+        "orchestrator:kubernetes"
+      ]
     }
   }
 }

@@ -63,6 +63,10 @@ module.exports = {
                             // { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo" ] },
                             { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "*" ] },
 
+                            // Elasticity strategy controllers may only depend on core and other elasticity libraries.
+                            // ToDo: Same as for scope:slo.
+                            { "sourceTag": "scope:elasticity", "onlyDependOnLibsWithTags": [ "*" ] },
+
                             // ElasticityStrategies may depend on core, metrics, SLOs, and other strategies.
                             { "sourceTag": "scope:elasticity-strategy", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo", "scope:elasticity-strategy" ] },
 
