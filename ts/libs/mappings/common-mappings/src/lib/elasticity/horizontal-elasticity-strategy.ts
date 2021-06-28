@@ -1,4 +1,4 @@
-import { ElasticityStrategy, ElasticityStrategyKind, SloCompliance, SloTarget, initSelf } from '@polaris-sloc/core';
+import { ElasticityStrategy, ElasticityStrategyKind, HorizontalElasticityStrategyConfig, SloCompliance, SloTarget, initSelf } from '@polaris-sloc/core';
 import { ReplicableTarget } from '../slo-targets';
 
 /**
@@ -13,36 +13,6 @@ export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind<Slo
             kind: 'HorizontalElasticityStrategy',
         });
     }
-
-}
-
-/**
- * Optional static configuration for a `HorizontalElasticityStrategy`.
- */
-export interface HorizontalElasticityStrategyConfig {
-
-    /**
-     * The minium number of replicas that the target workload must have.
-     *
-     * @default 1
-     */
-    minReplicas?: number;
-
-    /**
-     * The maximum number of replicas that the target workload may have.
-     *
-     * @default unlimited
-     */
-    maxReplicas?: number;
-
-
-    /**
-     * The number of seconds to wait after a scaling operation on a target workload, before
-     * executing another scaling operation if the SLo continues to be violated.
-     *
-     * @default 60
-     */
-    stabilizationWindowSeconds?: number;
 
 }
 

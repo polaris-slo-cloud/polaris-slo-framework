@@ -1,6 +1,6 @@
-import { HorizontalElasticityStrategyConfig } from '@polaris-sloc/common-mappings';
 import {
     ElasticityStrategy,
+    HorizontalElasticityStrategyConfig,
     NamespacedObjectReference,
     OrchestratorClient,
     PolarisRuntime,
