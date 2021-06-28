@@ -1,6 +1,6 @@
 import { ElasticityStrategy, SloCompliance, SloTarget } from '../../../model';
 import { IndexByKey } from '../../../util';
-import { ElasticityStrategyController } from './elasticity-strategy-controller';
+import { ElasticityStrategyController } from '../common';
 
 /**
  * Common superclass for elasticity strategy controllers that expect `SloCompliance` objects as input.
