@@ -12,6 +12,11 @@
             "label": "build-cost-efficiency-slo-controller",
             "type": "shell",
             "command": "npx nx build slo-cost-efficiency-slo-controller --with-deps=true --source-map=true"
+        },
+        {
+            "label": "build-horizontal-elasticity-strategy-controller",
+            "type": "shell",
+            "command": "npx nx build elasticity-horizontal-elasticity-strategy-controller --with-deps=true --source-map=true"
         }
     ]
 }

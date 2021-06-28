@@ -719,6 +719,7 @@
             "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
             "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
             "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
+            "externalDependencies": "none",
             "assets": [
               "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
             ]
