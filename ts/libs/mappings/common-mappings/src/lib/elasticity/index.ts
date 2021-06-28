@@ -1,1 +1,1 @@
-export * from './horizontal-elasticity-strategy-kind';
+export * from './horizontal-elasticity-strategy';
