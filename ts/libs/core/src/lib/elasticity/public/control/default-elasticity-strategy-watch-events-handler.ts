@@ -30,7 +30,9 @@ export class DefaultElasticityStrategyWatchEventsHandler<O = any, T extends SloT
     }
 
     onObjectDeleted(obj: ElasticityStrategy<O, T, C>): void {
-        // Nothing to do for the ElasticityStrategyController here.
+        if (this.controller.onElasticityStrategyDeleted) {
+            executeSafely(() => this.controller.onElasticityStrategyDeleted(obj));
+        }
     }
 
     private processElasticityStrategy(elasticityStrategy: ElasticityStrategy<O, T, C>): void {

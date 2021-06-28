@@ -33,10 +33,20 @@ export interface ElasticityStrategyController<O, T extends SloTarget = SloTarget
     execute(elasticityStrategy: ElasticityStrategy<O, T, C>): Promise<void>;
 
     /**
+     * This method is called to notify this controller that the specified `elasticityStrategy` instance
+     * has been deleted - this can be used to clear cached resources.
+     *
+     * The implementation of this method is optional.
+     *
+     * @param elasticityStrategy The `elasticityStrategy` instance that has been deleted.
+     */
+    onElasticityStrategyDeleted?(elasticityStrategy: ElasticityStrategy<O, T, C>): void;
+
+    /**
      * This method is called when this controller is about to be destroyed.
      *
      * Its implementation is optional and it can be used to for cleanup.
      */
-     onDestroy?(): void;
+    onDestroy?(): void;
 
 }
