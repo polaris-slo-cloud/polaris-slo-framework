@@ -7,7 +7,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: twitter-clone
-  currSloCompliance: 200
-  sloTargetCompliance: 100
-  tolerance: 10
+  sloOutputParams:
+    currSloCompliancePercentage: 200
+    tolerance: 10
+
+  # Optional static configuration
+  staticConfig:
+    minReplicas: 1
+    maxReplicas: 10
+    stabilizationWindowSeconds: 180
 

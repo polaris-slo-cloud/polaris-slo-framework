@@ -30,7 +30,8 @@ export class HorizontalElasticityStrategyController extends SloComplianceElastic
         });
         const scale = await this.orchClient.getScale(targetRef);
 
-        let newReplicaCount = Math.ceil(scale.spec.replicas * elasticityStrategy.spec.sloOutputParams.currSloCompliancePercentage);
+        const multiplier = elasticityStrategy.spec.sloOutputParams.currSloCompliancePercentage / 100;
+        let newReplicaCount = Math.ceil(scale.spec.replicas * multiplier);
         newReplicaCount = Math.max(newReplicaCount, this.getMinReplicas(elasticityStrategy.spec.staticConfig));
         newReplicaCount = Math.min(newReplicaCount, this.getMaxReplicas(elasticityStrategy.spec.staticConfig));
 
