@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: horizontal-elasticity-strategy-controller
+    tier: control-plane
+  name: horizontal-elasticity-strategy-controller
+  namespace: polaris
+spec:
+  selector:
+    matchLabels:
+      component: horizontal-elasticity-strategy-controller
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: horizontal-elasticity-strategy-controller
+        tier: control-plane
+    spec:
+      serviceAccountName: horizontal-elasticity-strategy-controller
+      containers:
+      - image: polarissloc/horizontal-elasticity-strategy:latest
+        name: slo-controller
+        resources:
+          limits:
+            cpu: '1.0'
+            memory: 1Gi
+        securityContext:
+          privileged: false
+
