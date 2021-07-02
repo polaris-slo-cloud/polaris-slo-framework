@@ -10,7 +10,5 @@ export interface SloControllerGeneratorSchema {
 
 interface SloControllerGeneratorNormalizedSchema extends NormalizedProjectGeneratorSchema, SloControllerGeneratorSchema {
     projectDirectory: string;
-    parsedTags: string[]
-    appsDir: string;
-    libsDir: string;
+    parsedTags: string[];
 }

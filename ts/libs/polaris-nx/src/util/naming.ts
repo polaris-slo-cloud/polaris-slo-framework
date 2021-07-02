@@ -7,6 +7,7 @@ export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
  export const POLARIS_INIT_FN_FILE_NAME = 'init-polaris-lib'
 
 const SLO_MAPPING_TYPE_SUFFIX = 'SloMapping';
+const ELASTICITY_STRATEGY_TYPE_SUFFIX = 'ElasticityStrategy';
 
 /**
  * Represents a set of commonly used forms of the same name, as returned by the `name()` function of `@nrwl/devkit`.
@@ -82,6 +83,49 @@ export interface SloNames {
 }
 
 /**
+ * Represents a set of commonly used forms of an ElasticityStrategy name.
+ */
+export interface ElasticityStrategyNames {
+
+    /**
+     * @example 'Horizontal'
+     */
+    eStratName: string;
+
+    /**
+     * @example 'HorizontalElasticityStrategyController'
+     */
+    eStratControllerName: string;
+
+    /**
+     * @example 'horizontal-elasticity-strategy'
+     */
+    eStratFileName: string;
+
+    /**
+     * @example 'HorizontalElasticityStrategyConfig'
+     */
+    eStratConfigType: string;
+
+    /**
+     * @example 'HorizontalElasticityStrategy'
+     */
+    eStratType: string;
+
+    /**
+     * @example 'HorizontalElasticityStrategyKind'
+     */
+    eStratKind: string;
+
+    /**
+     * @example horizontalelasticitystrategies
+     */
+    eStratK8sResources: string;
+
+}
+
+
+/**
  * Generates various SLO-related names, based on the name of an SLO mapping class.
  *
  * @param sloMappingTypeName The name of the SLO mapping class.
@@ -101,6 +145,41 @@ export function getSloNames(sloMappingTypeName: string): SloNames {
         sloConfigType: `${sloName}SloConfig`,
         sloMappingType: sloMappingTypeName,
         sloMappingSpecType: `${sloMappingTypeName}Spec`,
-        sloMappingK8sResources: `${sloMappingTypeName.toLowerCase()}s`,
+        sloMappingK8sResources: getPlural(sloMappingTypeName.toLowerCase()),
     };
+}
+
+
+/**
+ * Generates various ElasticityStrategy-related names, based on the name of an ElasticityStrategy class.
+ *
+ * @param eStratTypeName The name of the SLO mapping class.
+ */
+export function getElasticityStrategyNames(eStratTypeName: string): ElasticityStrategyNames {
+    let eStratName: string;
+    if (eStratTypeName.endsWith(ELASTICITY_STRATEGY_TYPE_SUFFIX)) {
+        eStratName = eStratTypeName.substring(0, eStratTypeName.length - ELASTICITY_STRATEGY_TYPE_SUFFIX.length);
+    } else {
+        eStratTypeName += ELASTICITY_STRATEGY_TYPE_SUFFIX;
+    }
+
+    return {
+        eStratName,
+        eStratControllerName: `${eStratTypeName}Controller`,
+        eStratFileName: names(eStratTypeName).fileName,
+        eStratConfigType: `${eStratTypeName}Config`,
+        eStratType: eStratTypeName,
+        eStratKind: `${eStratTypeName}Kind`,
+        eStratK8sResources: getPlural(eStratTypeName.toLowerCase()),
+    };
+}
+
+/**
+ * @returns The plural form of the specified `singular`.
+ */
+export function getPlural(singular: string): string {
+    if (singular.endsWith('y')) {
+        return singular.substring(0, singular.length - 1) + 'ies';
+    }
+    return singular + 's';
 }

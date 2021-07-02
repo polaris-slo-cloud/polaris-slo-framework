@@ -3,7 +3,7 @@ import { ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testin
 import { WORKSPACE_NPM_PACKAGE } from './util';
 
 
-describe('slo-controller e2e', () => {
+describe('elasticity-strategy-controller e2e', () => {
 
     beforeAll(() => {
         jest.setTimeout(120000);
@@ -13,15 +13,15 @@ describe('slo-controller e2e', () => {
         jest.setTimeout(5000);
     });
 
-    it('should create an slo-controller', async done => {
-        const controllerName = uniq('slo-controller-test');
-        const sloMappingType = 'CostEfficiencySloMapping';
-        const sloMappingTypePkg = '@polaris-sloc/common-mappings';
+    it('should create an elasticity-strategy-controller', async done => {
+        const controllerName = uniq('elasticity-strategy-controller-test');
+        const eStratType = 'HorizontalElasticityStrategy';
+        const eStratTypePkg = '@polaris-sloc/common-mappings';
 
         ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
 
         const result = await runNxCommandAsync(
-            `g @polaris-sloc/polaris-nx:slo-controller ${controllerName} --sloMappingTypePkg=${sloMappingTypePkg} --sloMappingType=${sloMappingType}`,
+            `g @polaris-sloc/polaris-nx:elasticity-strategy-controller ${controllerName} --eStratTypePkg=${eStratTypePkg} --eStratType=${eStratType}`,
         );
         if (result.stderr) {
             console.log(result.stderr);

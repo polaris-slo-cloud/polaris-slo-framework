@@ -1,0 +1,54 @@
+import {
+    DefaultElasticityStrategyExecutionTracker,
+    ElasticityStrategyExecutionTracker,
+    OrchestratorClient,
+    PolarisRuntime,
+    SloComplianceElasticityStrategyControllerBase,
+    SloTarget,
+} from '@polaris-sloc/core';
+
+
+/** Tracked executions eviction interval of 20 minutes. */
+const EVICTION_INTERVAL_MSEC = 20 * 60 * 1000;
+
+/**
+ * Controller for the <%= eStratType %>.
+ *
+ * ToDo:
+ *  1. If you want to restrict the type of workloads that this elasticity strategy can be applied to,
+ *     change the first generic parameter from `SloTarget` to the appropriate type.
+ *  2. If your elasticity strategy output is not of type `SloCompliance`, change the definition of the controller class
+ *     to extend `ElasticityStrategyController` instead of `SloComplianceElasticityStrategyControllerBase`.
+ *  3. Implement the `execute()` method.
+ */
+export class <%= eStratControllerName %> extends SloComplianceElasticityStrategyControllerBase<SloTarget, <%= eStratConfigType %>> {
+
+    /** The client for accessing orchestrator resources. */
+    private orchClient: OrchestratorClient;
+
+    /** Tracks the most recent execution of each elasticity strategy instance. */
+    private executionTracker: ElasticityStrategyExecutionTracker<<%= eStratType %>, any> =
+        new DefaultElasticityStrategyExecutionTracker();
+
+    private evictionInterval: NodeJS.Timeout;
+
+    constructor(polarisRuntime: PolarisRuntime) {
+        super();
+        this.orchClient = polarisRuntime.createOrchestratorClient();
+
+        this.evictionInterval = setInterval(() => this.executionTracker.evictExpiredExecutions(), EVICTION_INTERVAL_MSEC);
+    }
+
+    async execute(elasticityStrategy: <%= eStratType %>): Promise<void> {
+        // ToDo: Implement this method
+    }
+
+    onDestroy(): void {
+        clearInterval(this.evictionInterval);
+    }
+
+    onElasticityStrategyDeleted(elasticityStrategy: <%= eStratType %>): void {
+        this.executionTracker.removeElasticityStrategy(elasticityStrategy);
+    }
+
+}
