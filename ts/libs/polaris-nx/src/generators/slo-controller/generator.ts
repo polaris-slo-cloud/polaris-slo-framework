@@ -19,12 +19,10 @@ import {
     addDockerBuildConfig,
     addPolarisDependenciesToPackageJson,
     changeBuildDependencyBundling,
-    generateDockerfileCopyLibs,
-    generateDockerfileCopyWorkspaceConfig,
-    generateDockerfilePackageInstallCmd,
     getSloNames,
     runCallbacksSequentially,
 } from '../../util';
+import { addCommonWorkspaceRootFiles, generateTypeScriptDockerfile } from '../common';
 import { SloControllerGeneratorNormalizedSchema, SloControllerGeneratorSchema } from './schema';
 
 /**
@@ -50,7 +48,7 @@ const generateSloController: Generator<SloControllerGeneratorSchema> = async (ho
     addDeployTarget(projectConfig, normalizedOptions);
     updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
-    addWorkspaceRootFiles(host);
+    addCommonWorkspaceRootFiles(host);
     addSloControllerFiles(host, normalizedOptions);
     await formatFiles(host);
 
@@ -93,19 +91,8 @@ function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormal
         controllerProjectName: options.projectName,
         offsetFromRoot: offsetFromRoot(options.projectRoot),
         appsDir: options.appsDir,
-        copyWorkspaceFilesCmd: generateDockerfileCopyWorkspaceConfig(host),
-        pkgInstallCmd: generateDockerfilePackageInstallCmd(host),
-        copyLibsDirCmd: generateDockerfileCopyLibs(host, options.libsDir),
         template: '',
     };
     generateFiles(host, path.join(__dirname, 'files/slo-controller'), options.projectRoot, templateOptions);
-}
-
-function addWorkspaceRootFiles(host: Tree): void {
-    if (!host.exists('.dockerignore')) {
-        const templateOptions = {
-            template: '',
-        };
-        generateFiles(host, path.join(__dirname, 'files/workspace-root'), '.', templateOptions);
-    }
+    generateTypeScriptDockerfile(host, options);
 }
