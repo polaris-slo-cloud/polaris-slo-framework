@@ -12,6 +12,10 @@ export abstract class SloComplianceElasticityStrategyControllerBase<T extends Sl
 
     abstract execute(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<void>;
 
+    abstract onElasticityStrategyDeleted?(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): void;
+
+    abstract onDestroy?(): void;
+
     checkIfActionNeeded(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<boolean> {
         const sloCompliance = elasticityStrategy.spec.sloOutputParams;
         const tolerance = sloCompliance.tolerance ?? this.getDefaultTolerance();
