@@ -81,7 +81,7 @@ spec:
                   elasticity strategy execution, during which the strategy will not
                   be executed again (to avoid unnecessary scaling).
                 properties:
-                  scaleInSeconds:
+                  scaleDownSeconds:
                     default: 300
                     description: The number of seconds after the previous scaling
                       operation to wait before an elasticity action that decreases

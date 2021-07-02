@@ -11,9 +11,13 @@ spec:
     currSloCompliancePercentage: 200
     tolerance: 10
 
+  # Optional configuration of the stabilization window, within which the elasticity strategy will not be executed twice.
+  stabilizationWindow:
+    scaleUpSeconds: 40
+    scaleDownSeconds: 60
+
   # Optional static configuration
   staticConfig:
     minReplicas: 1
     maxReplicas: 10
-    stabilizationWindowSeconds: 180
 

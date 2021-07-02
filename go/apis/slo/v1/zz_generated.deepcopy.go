@@ -320,8 +320,8 @@ func (in *StabilizationWindow) DeepCopyInto(out *StabilizationWindow) {
 		*out = new(int32)
 		**out = **in
 	}
-	if in.ScaleInSeconds != nil {
-		in, out := &in.ScaleInSeconds, &out.ScaleInSeconds
+	if in.ScaleDownSeconds != nil {
+		in, out := &in.ScaleDownSeconds, &out.ScaleDownSeconds
 		*out = new(int32)
 		**out = **in
 	}

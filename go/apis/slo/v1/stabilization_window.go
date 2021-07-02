@@ -26,5 +26,5 @@ type StabilizationWindow struct {
 	// +optional
 	// +kubebuilder:default=300
 	// +kubebuilder:validation:Minimum=0
-	ScaleInSeconds *int32 `json:"scaleInSeconds,omitempty"`
+	ScaleDownSeconds *int32 `json:"scaleDownSeconds,omitempty"`
 }
