@@ -67,13 +67,16 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
         }
 
         if (!this.checkIfOutsideStabilizationWindow(elasticityStrategy, oldReplicaCount, newScale)) {
-            console.log(`Skipping scaling from ${oldReplicaCount} to ${newScale.spec.replicas}, because stabilization window has not yet passed.`);
+            console.log(
+                `Skipping scaling from ${oldReplicaCount} to ${newScale.spec.replicas} replicas, because stabilization window has not yet passed for:`,
+                elasticityStrategy,
+            );
             return;
         }
 
         await this.orchClient.setScale(targetRef, newScale);
         this.executionTracker.addExecution(elasticityStrategy, newScale);
-        console.log(`Successfully updated scale subresource from ${oldReplicaCount} to:`, newScale);
+        console.log(`Successfully updated scale subresource from ${oldReplicaCount} to ${newScale.spec.replicas} replicas for:`, elasticityStrategy);
     }
 
     onDestroy(): void {
