@@ -1,9 +1,9 @@
 import { PolarisRuntime } from '@polaris-sloc/core';
-import { <%= sloMappingType %> } from './<%= destDirInLib %>/<%= sloMappingFileName %>';
+import { <%= className %> } from './<%= destDirInLib %>/<%= classFileName %>';
 
 /**
  * Initializes this library and registers its types with the transformer in the `PolarisRuntime`.
  */
 export function <%= initPolarisLibFn %>(polarisRuntime: PolarisRuntime): void {
-    polarisRuntime.transformer.registerObjectKind(new <%= sloMappingType %>().objectKind, <%= sloMappingType %>);
+    polarisRuntime.transformer.registerObjectKind(new <%= className %>().objectKind, <%= className %>);
 }

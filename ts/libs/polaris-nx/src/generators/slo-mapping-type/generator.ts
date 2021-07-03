@@ -3,21 +3,18 @@ import {
     GeneratorCallback,
     Tree,
     formatFiles,
-    joinPathFragments,
-    readProjectConfiguration,
 } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/node';
 import {
-    POLARIS_INIT_FN_FILE_NAME,
-    adaptLibModuleTypeForPolaris,
     adaptTsConfigForPolaris,
-    addExportToIndex,
+    addExports,
     addPolarisDependenciesToPackageJson,
+    createLibProject,
     runCallbacksSequentially,
 } from '../../util';
-import { addOrExtendInitFn, addSloMappingTypeFile } from './lib/add-files';
+import { addOrExtendInitFn } from '../common';
+import { addSloMappingTypeFile } from './lib/add-files';
 import { normalizeOptions } from './lib/normalize-options';
-import { SloMappingTypeGeneratorNormalizedSchema, SloMappingTypeGeneratorSchema } from './schema';
+import { SloMappingTypeGeneratorSchema } from './schema';
 
 /**
  * Generates a new Polaris SLO mapping type.
@@ -26,7 +23,7 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
     const callbacks: GeneratorCallback[] = [];
 
     if (options.createLibProject) {
-        callbacks.push(await createLibProject(host, options));
+        callbacks.push(await createLibProject(host, { projectName: options.project, importPath: options.importPath }));
     }
 
     const normalizedOptions = normalizeOptions(host, options);
@@ -51,44 +48,3 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
 
 // Export the generator function as the default export to enable integration with Nx.
 export default generateSloMappingType;
-
-/**
- * Creates a new library project for the SLO Mapping type.
- *
- * Throws an error if the project already exists.
- */
-async function createLibProject(host: Tree, options: SloMappingTypeGeneratorSchema): Promise<GeneratorCallback> {
-    let projectExists = false;
-    try {
-        projectExists = !!readProjectConfiguration(host, options.project);
-    } catch (e) {}
-    if (projectExists) {
-        throw new Error(`Cannot create a new library project, because a project with the name ${options.project} already exists.`);
-    }
-
-    const ret = await libraryGenerator(
-        host, {
-            name: options.project,
-            publishable: true,
-            importPath: options.importPath,
-        },
-    );
-
-    adaptLibModuleTypeForPolaris(host, options.project);
-    return ret;
-}
-
-/**
- * Export the contents of the new SLO mapping file and, optionally the init-polaris-lib.ts file, from the library.
- */
-function addExports(host: Tree, options: SloMappingTypeGeneratorNormalizedSchema, includeInitPolarisLib: boolean): void {
-    const indexFile = joinPathFragments(options.projectSrcRoot, 'index.ts');
-
-    if (includeInitPolarisLib) {
-        const initFnFile = './' + joinPathFragments('lib', POLARIS_INIT_FN_FILE_NAME);
-        addExportToIndex(host, indexFile, initFnFile);
-    }
-
-    const sloMappingFile = './' + joinPathFragments(options.destDir, options.fileNameWithSuffix);
-    addExportToIndex(host, indexFile, sloMappingFile);
-}
