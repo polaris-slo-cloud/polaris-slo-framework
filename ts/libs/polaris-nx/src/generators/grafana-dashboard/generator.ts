@@ -130,7 +130,7 @@ function generateDashboard(options: GrafanaDashboardGeneratorNormalizedSchema): 
     row.addPanel(panel);
     dashboard.addRow(row);
 
-    const prometheusDashboard = sanitizeForPrometheus(dashboard, options.datasource).generate();
+    const prometheusDashboard = sanitizeForPrometheus(dashboard.generate(), options.datasource);
     return JSON.stringify(prometheusDashboard);
 }
 
