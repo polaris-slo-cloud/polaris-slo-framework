@@ -17,6 +17,11 @@
             "factory": "./src/generators/elasticity-strategy-controller/generator",
             "schema": "./src/generators/elasticity-strategy-controller/schema.json",
             "description": "elasticity-strategy-controller generator"
+        },
+        "elasticity-strategy": {
+            "factory": "./src/generators/elasticity-strategy/generator",
+            "schema": "./src/generators/elasticity-strategy/schema.json",
+            "description": "elasticity-strategy generator"
         }
     }
 }
