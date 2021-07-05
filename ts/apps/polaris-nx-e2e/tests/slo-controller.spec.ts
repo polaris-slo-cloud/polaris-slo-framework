@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
 import { WORKSPACE_NPM_PACKAGE } from './util';
 
 
@@ -26,6 +26,17 @@ describe('slo-controller e2e', () => {
         if (result.stderr) {
             console.log(result.stderr);
         }
+        expect(() => checkFilesExist(
+            `apps/${controllerName}/src/app/slo/cost-efficiency.slo.ts`,
+            `apps/${controllerName}/src/app/slo/index.ts`,
+            `apps/${controllerName}/src/app/util/environment-var-helper.ts`,
+            `apps/${controllerName}/src/main.ts`,
+            `apps/${controllerName}/manifests/kubernetes/1-rbac.yaml`,
+            `apps/${controllerName}/manifests/kubernetes/2-slo-controller.yaml`,
+            `apps/${controllerName}/Dockerfile`,
+            '.dockerignore',
+        )).not.toThrow();
+
 
         done();
     });

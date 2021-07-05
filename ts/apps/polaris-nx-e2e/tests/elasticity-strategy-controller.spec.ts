@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
 import { WORKSPACE_NPM_PACKAGE } from './util';
 
 
@@ -26,6 +26,13 @@ describe('elasticity-strategy-controller e2e', () => {
         if (result.stderr) {
             console.log(result.stderr);
         }
+        expect(() => checkFilesExist(
+            `apps/${controllerName}/src/app/elasticity/horizontal-elasticity-strategy-controller.ts`,
+            `apps/${controllerName}/src/app/elasticity/index.ts`,
+            `apps/${controllerName}/src/main.ts`,
+            `apps/${controllerName}/Dockerfile`,
+            '.dockerignore',
+        )).not.toThrow();
 
         done();
     });

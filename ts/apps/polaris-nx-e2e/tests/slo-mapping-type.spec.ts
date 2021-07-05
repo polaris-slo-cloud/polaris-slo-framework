@@ -15,7 +15,7 @@ describe('slo-mapping-type e2e', () => {
     });
 
     it('should create an slo-mapping-type', async done => {
-        const libProj = uniq('mappings-lib');
+        const libProj = uniq('slo-mappings-lib');
         const sloMappingType = uniq('MyTest');
         const sloMappingNames = names(sloMappingType);
 
