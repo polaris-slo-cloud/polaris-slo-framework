@@ -6,7 +6,15 @@ import { GrafanaDashboardGeneratorSchema } from './schema';
 
 describe('grafana-dashboard generator', () => {
     let appTree: Tree;
-    const options: GrafanaDashboardGeneratorSchema = { name: 'test' };
+    const options: GrafanaDashboardGeneratorSchema = {
+        asRate: false,
+        dashboard: '',
+        directory: '',
+        panelType: '',
+        refresh: '',
+        tags: '',
+        name: 'test',
+    };
 
     beforeEach(() => {
         appTree = createTreeWithEmptyWorkspace();
