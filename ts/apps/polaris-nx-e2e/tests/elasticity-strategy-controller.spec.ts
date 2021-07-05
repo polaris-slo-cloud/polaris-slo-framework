@@ -30,6 +30,8 @@ describe('elasticity-strategy-controller e2e', () => {
             `apps/${controllerName}/src/app/elasticity/horizontal-elasticity-strategy-controller.ts`,
             `apps/${controllerName}/src/app/elasticity/index.ts`,
             `apps/${controllerName}/src/main.ts`,
+            `apps/${controllerName}/manifests/kubernetes/1-rbac.yaml`,
+            `apps/${controllerName}/manifests/kubernetes/2-elasticity-strategy-controller.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
         )).not.toThrow();

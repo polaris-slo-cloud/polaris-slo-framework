@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    component: horizontal-elasticity-strategy-controller
+    component: <%= controllerProjectName %>
     tier: control-plane
-  name: horizontal-elasticity-strategy-controller
+  name: <%= controllerProjectName %>
   namespace: polaris
 spec:
   selector:
     matchLabels:
-      component: horizontal-elasticity-strategy-controller
+      component: <%= controllerProjectName %>
       tier: control-plane
   replicas: 1
   template:
     metadata:
       labels:
-        component: horizontal-elasticity-strategy-controller
+        component: <%= controllerProjectName %>
         tier: control-plane
     spec:
-      serviceAccountName: horizontal-elasticity-strategy-controller
+      serviceAccountName: <%= controllerProjectName %>
       containers:
-      - image: polarissloc/horizontal-elasticity-strategy:latest
+      - image: polarissloc/<%= controllerProjectName %>:latest
         name: elasticity-controller
         resources:
           limits:
