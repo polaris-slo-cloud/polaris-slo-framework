@@ -119,7 +119,7 @@ function generateDashboard(options: GrafanaDashboardGeneratorNormalizedSchema): 
         title: 'Basic Metrics',
     });
 
-    const panel = createPanel('process_cpu_seconds_total', options.panelType, options.asRate, 'Process CPU seconds total');
+    const panel = createPanel('instance:node_load1_per_cpu:ratio', options.panelType, options.asRate, 'Process CPU seconds total');
 
     const dashboard = new Dashboard({
         title: `${options.name} Dashboard`,
