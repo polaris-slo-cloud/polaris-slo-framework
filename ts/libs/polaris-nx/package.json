@@ -12,6 +12,7 @@
     "@nrwl/devkit": "*",
     "@nrwl/node": "*",
     "@nrwl/workspace": "*",
+    "grafana-dash-gen": "^3.2.1",
     "tslib": "^2.0.0"
   }
 }

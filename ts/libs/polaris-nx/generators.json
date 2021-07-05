@@ -22,6 +22,11 @@
             "factory": "./src/generators/elasticity-strategy/generator",
             "schema": "./src/generators/elasticity-strategy/schema.json",
             "description": "elasticity-strategy generator"
+        },
+        "grafana-dashboard": {
+            "factory": "./src/generators/grafana-dashboard/generator",
+            "schema": "./src/generators/grafana-dashboard/schema.json",
+            "description": "Create a Grafana dashboard"
         }
     }
 }
