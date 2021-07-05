@@ -16,12 +16,12 @@
         },
         "panelType": {
             "type": "string",
-            "description": "Specify the panel type for the metric",
+            "description": "Specify the panel type for the metric (i.e., graph, gauge, bargauge, table, stat)",
             "alias": "p"
         },
         "directory": {
             "type": "string",
-            "description": "A directory where the project is placed",
+            "description": "A directory where the project is placed (working directory is base directory)",
             "alias": "d"
         },
         "tags": {
@@ -36,7 +36,7 @@
         },
         "refresh": {
             "type": "string",
-            "description": "The refresh rate of the dashboard",
+            "description": "The refresh rate of the dashboard (i.e., 5s, 10s, 1m,...)",
             "alias": "r"
         },
         "asRate": {
