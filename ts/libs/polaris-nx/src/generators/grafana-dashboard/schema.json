@@ -43,6 +43,16 @@
             "type": "boolean",
             "description": "Display the metric as rate with 5m",
             "default": false
+        },
+        "grafanaUrl": {
+            "type": "string",
+            "description": "Grafana base URL (i.e., http://localhost:3000)",
+            "alias": "u"
+        },
+        "bearerToken": {
+            "type": "string",
+            "description": "Bearer Token for Grafana API (must be Admin)",
+            "alias": "b"
         }
     },
     "required": [

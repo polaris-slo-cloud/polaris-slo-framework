@@ -1,7 +1,12 @@
 import { Tree, names } from '@nrwl/devkit';
+import axios from 'axios';
 import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
-import { GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema } from './schema';
-
+import {
+    GrafanaDashboardDbError,
+    GrafanaDashboardDbResponse,
+    GrafanaDashboardGeneratorNormalizedSchema,
+    GrafanaDashboardGeneratorSchema,
+} from './schema';
 
 function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): GrafanaDashboardGeneratorNormalizedSchema {
     const normalizedName = names(options.name).name;
@@ -12,6 +17,13 @@ function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema):
         ? options.tags.split(',').map((s) => s.trim())
         : [];
     const asRate = options.asRate || false;
+    const grafanaUrl = options.grafanaUrl || '';
+    const bearerToken = options.bearerToken || '';
+    let toDisk = false;
+
+    if (grafanaUrl === '' || bearerToken === '') {
+        toDisk = true;
+    }
 
     return {
         name: normalizedName,
@@ -20,6 +32,9 @@ function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema):
         refresh,
         parsedTags,
         asRate,
+        grafanaUrl,
+        bearerToken,
+        toDisk,
         destDir: options.directory || './',
     };
 }
@@ -130,15 +145,61 @@ function generateDashboard(options: GrafanaDashboardGeneratorNormalizedSchema): 
     row.addPanel(panel);
     dashboard.addRow(row);
 
-    const prometheusDashboard = sanitizeForPrometheus(dashboard.generate(), options.datasource);
-    return JSON.stringify(prometheusDashboard);
+    return sanitizeForPrometheus(dashboard.generate(), options.datasource);
+}
+
+/**
+ * Calls the Grafana REST API and creates a new dashboard
+ *
+ * @param dashboard
+ * @param options
+ */
+function createDashboardApi(dashboard: string, options: GrafanaDashboardGeneratorNormalizedSchema): Promise<void> {
+    const body = {
+        dashboard,
+        folderId: 0,
+        message: `Create dashboard ${options.name}`,
+        overwrite: false,
+    };
+    const config = {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        headers: { Authorization: `Bearer ${options.bearerToken}` },
+        // in ms
+        timeout: 5000,
+    };
+    const url = `${options.grafanaUrl}/api/dashboards/db`;
+    return axios.post<GrafanaDashboardDbResponse>(url, body, config).then(response => {
+        const data: GrafanaDashboardDbResponse = response.data;
+        console.log(`Dashboard created successfully: ${options.grafanaUrl}${data.url}`);
+    }).catch((error: GrafanaDashboardDbError) => {
+        const message = error.response.data.message;
+        const status = error.response.data.status;
+        console.error(`Creating dashboard failed: Status: ${status} - Message: ${message}`);
+    });
+}
+
+/**
+ * Depending on the given options, will write the dashboard either to disk or POST it to the specified Grafana API
+ * For more info on the REST API: https://grafana.com/docs/grafana/latest/http_api/dashboard/
+ *
+ * @param host used in case the dashboard should be written to disk
+ * @param dashboard the dashboard as JSON
+ * @param options specifies mode of operation (to, and contains API Bearer token and URL
+ */
+function saveDashboard(host: Tree, dashboard: typeof Dashboard, options: GrafanaDashboardGeneratorNormalizedSchema): Promise<void> {
+    if (options.toDisk) {
+        const stringified = JSON.stringify(dashboard);
+        host.write(`${options.destDir}/${options.name}.json`, `${stringified}`);
+        return Promise.resolve();
+    } else {
+        return createDashboardApi(dashboard, options);
+    }
 }
 
 export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
     const normalizedOptions = normalizeOptions(host, options);
 
     const dashboard = generateDashboard(normalizedOptions);
-    host.write(`${normalizedOptions.destDir}/${normalizedOptions.name}.json`, `${dashboard}`);
 
-    return Promise.resolve();
+    return saveDashboard(host, dashboard, normalizedOptions);
 }
