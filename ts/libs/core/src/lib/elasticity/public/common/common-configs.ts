@@ -1,5 +1,7 @@
 // This file provides common static configuration interfaces for elasticity strategies.
 
+import { Resources } from '../../../model';
+
 /**
  * Commonly used, optional, static configuration for an elasticity strategy that employs horizontal scaling.
  */
@@ -26,16 +28,10 @@ export interface HorizontalElasticityStrategyConfig {
  */
 export interface VerticalElasticityStrategyConfig {
 
-    /** The minimum milli CPU count that is allowed for a single workload instance. */
-    minMilliCpu?: number;
+    /** The minimum resources allowed for a single workload instance. */
+    minResources: Resources;
 
-    /** The maximum milli CPU count that is allowed for a single workload instance. */
-    maxMilliCpu?: number;
-
-    /** The minimum MiB of memory that is allowed for a single workload instance. */
-    minMemoryMiB?: number;
-
-    /** The maximum MiB of memory that is allowed for a single workload instance. */
-    maxMemoryMiB?: number;
+    /** The maximum resources allowed for a single workload instance. */
+    maxResources: Resources;
 
 }
