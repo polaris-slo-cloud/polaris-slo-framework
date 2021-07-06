@@ -6,6 +6,7 @@ import {
     SloComplianceElasticityStrategyControllerBase,
     SloTarget,
 } from '@polaris-sloc/core';
+import { <%= eStratConfigType %>, <%= eStratType %> } from '<%= eStratTypePkg %>';
 
 
 /** Tracked executions eviction interval of 20 minutes. */
