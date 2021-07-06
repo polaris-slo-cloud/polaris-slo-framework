@@ -1,3 +1,4 @@
+import { initSelf } from '../util';
 
 /** The default value for `StabilizationWindow.scaleUpSeconds`. */
 export const DEFAULT_SCALE_UP_STABILIZATION_WINDOW_SECONDS = 60;
@@ -30,6 +31,10 @@ export class StabilizationWindow {
      * can be issued due to an SLO violation.
      */
     scaleDownSeconds?: number;
+
+    constructor(initData?: Partial<StabilizationWindow>) {
+        initSelf(this, initData);
+    }
 
     /**
      * @returns `window?.scaleUpSeconds`, if it is set, or its default value.

@@ -1,4 +1,5 @@
 import { PolarisType } from '../transformation';
+import { initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { ObjectKind } from './object-kind';
 
@@ -13,6 +14,10 @@ export class ScaleSpec {
      * @example `replicas = 4` for a workload means that there should be 4 active instances of this workload.
      */
     replicas: number;
+
+    constructor(initData?: Partial<ScaleSpec>) {
+        initSelf(this, initData);
+    }
 
 }
 
