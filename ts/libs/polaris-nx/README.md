@@ -93,3 +93,5 @@ To set breakpoints inside polaris-nx, they must be set in the files in the `dist
 To set breakpoints inside a third-party library, they must be set in the files in the `dist/libs/polaris-nx/node_modules` directory.
 
 If files without an extension should be included by a generator (e.g., Dockerfile), they must be explicitly added to the `assets` of the `polaris-nx` project in `angular.json`.
+
+To test the Polaris CLI wrapper around the Nx plugin, please see the [README](../../apps/cli/polaris-cli/README.md) of the Polaris CLI.
