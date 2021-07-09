@@ -1,0 +1,20 @@
+# permissions for end users to view verticalelasticitystrategies.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: verticalelasticitystrategy-viewer-role
+rules:
+- apiGroups:
+  - elasticity.polaris-slo-cloud.github.io
+  resources:
+  - verticalelasticitystrategies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - elasticity.polaris-slo-cloud.github.io
+  resources:
+  - verticalelasticitystrategies/status
+  verbs:
+  - get

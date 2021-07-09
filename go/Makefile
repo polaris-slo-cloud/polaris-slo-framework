@@ -40,7 +40,7 @@ deploy: manifests
 
 deployment-yaml: manifests ## Build YAML files that can be used for deployment by customers
 	cd config/manager && kustomize edit set image controller=${IMG}
-	kustomize build config/default > ../deployment/1-horizontal-elasticity-strategy.yaml
+	kustomize build config/default > ../deployment/1-elasticity-strategies.yaml
 
 # Generate manifests e.g. CRD, RBAC etc.
 manifests: controller-gen

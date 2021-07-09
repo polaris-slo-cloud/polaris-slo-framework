@@ -1,0 +1,7 @@
+apiVersion: elasticity.polaris-slo-cloud.github.io/v1
+kind: VerticalElasticityStrategy
+metadata:
+  name: verticalelasticitystrategy-sample
+spec:
+  # Add fields here
+  foo: bar
