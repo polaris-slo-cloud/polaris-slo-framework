@@ -29,3 +29,25 @@ export class ContainerResources implements Resources {
     }
 
 }
+
+/**
+ * Specification of a container that can be executed in a pod.
+ */
+export class Container {
+
+    /** The name of the container as a DNS_LABEL. */
+    name: string;
+
+    /** Container image name and version. */
+    image: string;
+
+    /** The resources requested/used by this container. */
+    @PolarisType(() => ContainerResources)
+    resources?: ContainerResources;
+
+    // ToDo: Add other properties that may be of interest.
+
+    constructor(initData?: Partial<Container>) {
+        initSelf(this, initData);
+    }
+}
