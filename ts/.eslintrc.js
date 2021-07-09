@@ -159,9 +159,10 @@ module.exports = {
                             "protected-abstract-field",
                             "private-abstract-field",
 
-                            "public-decorated-field",
-                            "protected-decorated-field",
-                            "private-decorated-field",
+                            // We don't require that decorated fields are placed in a particular order in respect to other instance fields.
+                            // "public-decorated-field",
+                            // "protected-decorated-field",
+                            // "private-decorated-field",
 
                             "public-instance-field",
                             "protected-instance-field",
@@ -175,7 +176,7 @@ module.exports = {
                             "instance-field",
                             "abstract-field",
 
-                            "decorated-field",
+                            // "decorated-field",
 
                             "field",
 
