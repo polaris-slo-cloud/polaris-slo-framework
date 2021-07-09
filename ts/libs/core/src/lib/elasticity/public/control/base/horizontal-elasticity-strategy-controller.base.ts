@@ -1,7 +1,7 @@
-import { ElasticityStrategy, NamespacedObjectReference, Scale, SloCompliance, SloTarget, StabilizationWindow } from '../../../../model';
+import { ElasticityStrategy, NamespacedObjectReference, Scale, SloCompliance, SloTarget } from '../../../../model';
 import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
-import { ElasticityStrategyExecutionTracker, HorizontalElasticityStrategyConfig } from '../../common';
-import { DefaultElasticityStrategyExecutionTracker } from '../default-elasticity-strategy-execution-tracker';
+import { HorizontalElasticityStrategyConfig, StabilizationWindowTracker } from '../../common';
+import { DefaultStabilizationWindowTracker } from '../default-stabilization-window-tracker';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
 /** Tracked executions eviction interval of 20 minutes. */
@@ -19,9 +19,8 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
     /** The `PolarisRuntime` instance. */
     protected polarisRuntime: PolarisRuntime
 
-    /** Tracks the most recent execution of each elasticity strategy instance. */
-    protected executionTracker: ElasticityStrategyExecutionTracker<ElasticityStrategy<SloCompliance, T, C>, Scale> =
-        new DefaultElasticityStrategyExecutionTracker();
+    /** Tracks the stabilization windows of the ElasticityStrategy instances. */
+    protected stabilizationWindowTracker: StabilizationWindowTracker<ElasticityStrategy<SloCompliance, T, C>> = new DefaultStabilizationWindowTracker();
 
     private evictionInterval: NodeJS.Timeout;
 
@@ -30,7 +29,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
         this.polarisRuntime = polarisRuntime;
         this.orchClient = polarisRuntime.createOrchestratorClient();
 
-        this.evictionInterval = setInterval(() => this.executionTracker.evictExpiredExecutions(), EVICTION_INTERVAL_MSEC);
+        this.evictionInterval = setInterval(() => this.stabilizationWindowTracker.evictExpiredExecutions(), EVICTION_INTERVAL_MSEC);
     }
 
     /**
@@ -75,7 +74,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
         }
 
         await this.orchClient.setScale(targetRef, newScale);
-        this.executionTracker.addExecution(elasticityStrategy, newScale);
+        this.stabilizationWindowTracker.trackExecution(elasticityStrategy);
         console.log(`Successfully updated scale subresource from ${oldReplicaCount} to ${newScale.spec.replicas} replicas for:`, elasticityStrategy);
     }
 
@@ -84,7 +83,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
     }
 
     onElasticityStrategyDeleted(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): void {
-        this.executionTracker.removeElasticityStrategy(elasticityStrategy);
+        this.stabilizationWindowTracker.removeElasticityStrategy(elasticityStrategy);
     }
 
     /**
@@ -118,22 +117,13 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
         oldReplicaCount: number,
         newScale: Scale,
     ): boolean {
-        const lastExecution = this.executionTracker.getLastExecution(elasticityStrategy);
-        if (!lastExecution) {
-            return true;
-        }
-
-        const timeDiffSec = (new Date().valueOf() - lastExecution.timestamp.valueOf()) / 1000;
-        let stabilizationWindow: number;
-
         if (newScale.spec.replicas > oldReplicaCount) {
             // We want to scale out.
-            stabilizationWindow = StabilizationWindow.getScaleUpSecondsOrDefault(elasticityStrategy.spec.stabilizationWindow);
+            return this.stabilizationWindowTracker.isOutsideStabilizationWindowForScaleUp(elasticityStrategy);
         } else {
             // We want to scale in
-            stabilizationWindow = StabilizationWindow.getScaleDownSecondsOrDefault(elasticityStrategy.spec.stabilizationWindow);
+            return this.stabilizationWindowTracker.isOutsideStabilizationWindowForScaleDown(elasticityStrategy);
         }
-        return timeDiffSec > stabilizationWindow;
     }
 
 }

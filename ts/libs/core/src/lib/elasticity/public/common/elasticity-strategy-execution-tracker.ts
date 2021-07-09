@@ -35,7 +35,7 @@ export interface ElasticityStrategyExecutionTracker<E extends ElasticityStrategy
     /**
      * Gets the last recorded `ElasticityStrategyExecution` for the specified `target`.
      *
-     * @param elasticityStrategy The `SloTarget`, for which the execution should be retrieved.
+     * @param elasticityStrategy The `ElasticityStrategy` instance, for which the execution should be retrieved.
      * @returns The last recorded `ElasticityStrategyExecution` for the specified `elasticityStrategy` (or any of its previous instances) or `undefined`,
      * if no such record exists (i.e., the elasticity strategy has never executed during the lifetime of the controller
      * or the last execution record has expired).

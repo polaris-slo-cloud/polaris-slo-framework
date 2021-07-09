@@ -1,10 +1,10 @@
 import {
-    DefaultElasticityStrategyExecutionTracker,
-    ElasticityStrategyExecutionTracker,
+    DefaultStabilizationWindowTracker,
     OrchestratorClient,
     PolarisRuntime,
     SloComplianceElasticityStrategyControllerBase,
     SloTarget,
+    StabilizationWindowTracker,
 } from '@polaris-sloc/core';
 import { <%= eStratConfigType %>, <%= eStratType %> } from '<%= eStratTypePkg %>';
 
@@ -27,9 +27,8 @@ export class <%= eStratControllerName %> extends SloComplianceElasticityStrategy
     /** The client for accessing orchestrator resources. */
     private orchClient: OrchestratorClient;
 
-    /** Tracks the most recent execution of each elasticity strategy instance. */
-    private executionTracker: ElasticityStrategyExecutionTracker<<%= eStratType %>, any> =
-        new DefaultElasticityStrategyExecutionTracker();
+    /** Tracks the stabilization windows of the ElasticityStrategy instances. */
+    private stabilizationWindowTracker: StabilizationWindowTracker<<%= eStratType %>> = new DefaultStabilizationWindowTracker();
 
     private evictionInterval: NodeJS.Timeout;
 
@@ -37,7 +36,7 @@ export class <%= eStratControllerName %> extends SloComplianceElasticityStrategy
         super();
         this.orchClient = polarisRuntime.createOrchestratorClient();
 
-        this.evictionInterval = setInterval(() => this.executionTracker.evictExpiredExecutions(), EVICTION_INTERVAL_MSEC);
+        this.evictionInterval = setInterval(() => this.stabilizationWindowTracker.evictExpiredExecutions(), EVICTION_INTERVAL_MSEC);
     }
 
     async execute(elasticityStrategy: <%= eStratType %>): Promise<void> {
@@ -49,7 +48,7 @@ export class <%= eStratControllerName %> extends SloComplianceElasticityStrategy
     }
 
     onElasticityStrategyDeleted(elasticityStrategy: <%= eStratType %>): void {
-        this.executionTracker.removeElasticityStrategy(elasticityStrategy);
+        this.stabilizationWindowTracker.removeElasticityStrategy(elasticityStrategy);
     }
 
 }
