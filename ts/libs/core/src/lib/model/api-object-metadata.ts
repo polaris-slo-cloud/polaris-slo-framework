@@ -52,6 +52,11 @@ export class ApiObjectMetadata {
     resourceVersion?: string;
 
     /**
+     * An auto-incremented counter that is incremented by the orchestrator on every update of the `ApiObject`.
+     */
+    generation?: number;
+
+    /**
      * UID is the unique in time and space value for this object.
      */
     uid?: string;
