@@ -21,6 +21,7 @@ const EVICTION_INTERVAL_MSEC = 20 * 60 * 1000;
  *  2. If your elasticity strategy output is not of type `SloCompliance`, change the definition of the controller class
  *     to extend `ElasticityStrategyController` instead of `SloComplianceElasticityStrategyControllerBase`.
  *  3. Implement the `execute()` method.
+ *  4. Adapt `manifests/1-rbac.yaml` to include get and update permissions on all resources that you update in the orchestrator during `execute()`.
  */
 export class <%= eStratControllerName %> extends SloComplianceElasticityStrategyControllerBase<SloTarget, <%= eStratConfigType %>> {
 
