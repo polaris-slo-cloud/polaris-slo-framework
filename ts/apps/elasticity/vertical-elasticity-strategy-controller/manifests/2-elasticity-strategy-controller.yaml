@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: vertical-elasticity-strategy-controller
+    tier: control-plane
+  name: vertical-elasticity-strategy-controller
+  namespace: polaris
+spec:
+  selector:
+    matchLabels:
+      component: vertical-elasticity-strategy-controller
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: vertical-elasticity-strategy-controller
+        tier: control-plane
+    spec:
+      serviceAccountName: vertical-elasticity-strategy-controller
+      containers:
+      - image: polarissloc/vertical-elasticity-strategy:latest
+        name: elasticity-controller
+        resources:
+          limits:
+            cpu: '1.0'
+            memory: 1Gi
+        securityContext:
+          privileged: false
+

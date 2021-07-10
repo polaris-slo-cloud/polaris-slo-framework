@@ -110,6 +110,12 @@
         "scope:elasticity",
         "orchestrator:kubernetes"
       ]
+    },
+    "elasticity-vertical-elasticity-strategy-controller": {
+      "tags": [
+        "scope:elasticity",
+        "orchestrator:kubernetes"
+      ]
     }
   }
 }
