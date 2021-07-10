@@ -64,6 +64,7 @@ export class DefaultElasticityStrategyWatchEventsHandler<O = any, T extends SloT
             finalize(() => this.executingStrategies.delete(elasticityStratId)),
         ).subscribe({
             next: () => {},
+            error: err => console.error(err),
         });
     }
 

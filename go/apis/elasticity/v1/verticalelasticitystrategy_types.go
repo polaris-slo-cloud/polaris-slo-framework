@@ -29,10 +29,8 @@ type VerticalElasticityStrategySpec struct {
 	// Specifies how much the current state of the system complies with the SLO.
 	SloOutputParams SloCompliance `json:"sloOutputParams"`
 
-	// Optional static configuration parameters for a VerticalElasticityStrategy
-	//
-	// +optional
-	StaticConfig *VerticalElasticityStrategyStaticConfig `json:"staticConfig,omitempty"`
+	// Static configuration parameters for a VerticalElasticityStrategy
+	StaticConfig VerticalElasticityStrategyStaticConfig `json:"staticConfig"`
 }
 
 // Static configuration parameters for a VerticalElasticityStrategy
@@ -43,6 +41,26 @@ type VerticalElasticityStrategyStaticConfig struct {
 
 	// The maximum resources allowed for a single workload instance.
 	MaxResources ContainerResources `json:"maxResources"`
+
+	// The percentage by which to increase the existing resources in a single scale up step.
+	//
+	// E.g., `scaleUpPercent: 10` means that the existing `memoryMib` and `milliCpu` values
+	// will be increased by 10 percent in a single scale up step.
+	//
+	// +optional
+	// +kubebuilder:default=10
+	// +kubebuilder:validation:Minimum=1
+	ScaleUpPercent int32 `json:"scaleUpPercent,omitempty"`
+
+	// The percentage by which to decrease the existing resources in a single scale down step.
+	//
+	// E.g., `scaleDownPercent: 10` means that the existing `memoryMib` and `milliCpu` values
+	// will be decreased by 10 percent in a single scale down step.
+	//
+	// +optional
+	// +kubebuilder:default=10
+	// +kubebuilder:validation:Minimum=1
+	ScaleDownPercent int32 `json:"scaleDownPercent,omitempty"`
 }
 
 // VerticalElasticityStrategyStatus defines the observed state of VerticalElasticityStrategy

@@ -27,7 +27,7 @@ const SUFFIX_MULTIPLIERS = {
     /* eslint-enable @typescript-eslint/naming-convention */
 }
 
-const NUMBER_REGEX = /[\.0-9]/.compile();
+const NUMBER_REGEX = /[\.0-9]/;
 
 export class KubernetesQuantityParserError extends Error {
     constructor(msg: string, public quantityStr: string, public cause?: Error) {

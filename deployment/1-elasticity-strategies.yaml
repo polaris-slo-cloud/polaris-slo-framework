@@ -506,7 +506,7 @@ spec:
                     type: integer
                 type: object
               staticConfig:
-                description: Optional static configuration parameters for a VerticalElasticityStrategy
+                description: Static configuration parameters for a VerticalElasticityStrategy
                 properties:
                   maxResources:
                     description: The maximum resources allowed for a single workload instance.
@@ -542,6 +542,18 @@ spec:
                     - memoryMiB
                     - milliCpu
                     type: object
+                  scaleDownPercent:
+                    default: 10
+                    description: "The percentage by which to decrease the existing resources in a single scale down step. \n E.g., `scaleDownPercent: 10` means that the existing `memoryMib` and `milliCpu` values will be decreased by 10 percent in a single scale down step."
+                    format: int32
+                    minimum: 1
+                    type: integer
+                  scaleUpPercent:
+                    default: 10
+                    description: "The percentage by which to increase the existing resources in a single scale up step. \n E.g., `scaleUpPercent: 10` means that the existing `memoryMib` and `milliCpu` values will be increased by 10 percent in a single scale up step."
+                    format: int32
+                    minimum: 1
+                    type: integer
                 required:
                 - maxResources
                 - minResources
@@ -564,6 +576,7 @@ spec:
                 type: object
             required:
             - sloOutputParams
+            - staticConfig
             - targetRef
             type: object
           status:

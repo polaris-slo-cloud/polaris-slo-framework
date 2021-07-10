@@ -6,11 +6,17 @@ import { initSelf } from '../util';
  */
 export interface Resources {
 
-    /** The memory in MiB. */
+    /**
+     * The memory in MiB.
+     *
+     * This must be an integer.
+     */
     memoryMiB: number;
 
     /**
      * The CPU cores in milli CPU (1000 milli CPU = 1 CPU core).
+     *
+     * This must be an integer.
      */
     milliCpu: number;
 
@@ -21,11 +27,35 @@ export interface Resources {
  */
 export class ContainerResources implements Resources {
 
+    private static readonly resourceNames: (keyof Resources)[] = [ 'memoryMiB', 'milliCpu' ];
+
     memoryMiB: number;
     milliCpu: number;
 
     constructor(initData?: Partial<ContainerResources>) {
         initSelf(this, initData);
+    }
+
+    /**
+     * Applies `scalingFn()` to each of the resource properties and stores the results, normalized to an integer, in a
+     * new ContainerResources object, which is returned.
+     *
+     * @param scalingFn A function that takes the name of the resource and its current value as input and returns its scaled value.
+     */
+    scale(scalingFn: (resourceName: keyof Resources, currValue: number) => number): ContainerResources {
+        const ret = new ContainerResources();
+        ContainerResources.resourceNames.forEach(key => {
+            const newValue = scalingFn(key, this[key]);
+            ret[key] = Math.ceil(newValue);
+        });
+        return ret;
+    }
+
+    /**
+     * @returns An array containing all resource names.
+     */
+    getResourceNames(): (keyof Resources)[] {
+        return [ ...ContainerResources.resourceNames ];
     }
 
 }

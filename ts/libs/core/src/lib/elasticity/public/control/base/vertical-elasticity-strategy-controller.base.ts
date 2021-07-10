@@ -1,11 +1,24 @@
 import { DefaultStabilizationWindowTracker } from '../';
-import { ApiObjectMetadata, Container, ElasticityStrategy, ObjectKind, PodTemplateContainer, Resources, SloCompliance, SloTarget } from '../../../../model';
+import {
+    ApiObjectMetadata,
+    Container,
+    ContainerResources,
+    ElasticityStrategy,
+    ObjectKind,
+    PodTemplateContainer,
+    Resources,
+    SloCompliance,
+    SloTarget,
+} from '../../../../model';
 import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
 import { ElasticityStrategyExecutionError, StabilizationWindowTracker, VerticalElasticityStrategyConfig } from '../../common';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
 /** Tracked executions eviction interval of 20 minutes. */
 const EVICTION_INTERVAL_MSEC = 20 * 60 * 1000;
+
+const SCALE_UP_PERCENT_DEFAULT = 10;
+const SCALE_DOWN_PERCENT_DEFAULT = 10;
 
 /**
  * Common superclass for controller for executing an elasticity strategy that employs vertical scaling.
@@ -35,11 +48,14 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
     /**
      * Computes the new resources for the specified `container` using the configuration from the `elasticityStrategy` instance.
      *
+     * The resource numbers calculated by this method will be normalized by `VerticalElasticityStrategyControllerBase`
+     * to fit into the limits defined by the `elasticityStrategy` instance.
+     *
      * @param elasticityStrategy The current elasticity strategy instance.
      * @param container The container, for which to compute the resources.
      * @returns A promise that resolves to the new resources that should be configured for the container.
      */
-    abstract computeResources(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>, container: Container): Promise<Resources>;
+    abstract computeResources(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>, container: Container): Promise<ContainerResources>;
 
     async execute(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<void> {
         console.log('Executing elasticity strategy:', elasticityStrategy);
@@ -55,8 +71,8 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
         }
 
         const container = containers[0];
-        const newResources = await this.computeResources(elasticityStrategy, container);
-        this.normalizeResources(newResources, elasticityStrategy.spec.staticConfig);
+        let newResources = await this.computeResources(elasticityStrategy, container);
+        newResources = this.normalizeResources(newResources, elasticityStrategy.spec.staticConfig);
 
         if (!this.checkIfOutsideStabilizationWindow(elasticityStrategy, container.resources, newResources)) {
             console.log(
@@ -80,7 +96,21 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
         clearInterval(this.evictionInterval);
     }
 
-    private loadTarget(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<PodTemplateContainer> {
+    /**
+     * @returns `config.scaleUpPercent` or, if it is not set, its default value.
+     */
+    protected getScaleUpPercentOrDefault(config: VerticalElasticityStrategyConfig): number {
+        return config.scaleUpPercent ?? SCALE_UP_PERCENT_DEFAULT;
+    }
+
+    /**
+     * @returns `config.scaleDownPercent` or, if it is not set, its default value.
+     */
+     protected getScaleDownPercentOrDefault(config: VerticalElasticityStrategyConfig): number {
+        return config.scaleDownPercent ?? SCALE_DOWN_PERCENT_DEFAULT;
+    }
+
+    private async loadTarget(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<PodTemplateContainer> {
         const targetRef = elasticityStrategy.spec.targetRef;
         const queryApiObj = new PodTemplateContainer({
             objectKind: new ObjectKind({
@@ -94,18 +124,21 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
             }),
         });
 
-        return this.orchClient.read(queryApiObj);
+        const ret = await this.orchClient.read(queryApiObj);
+        if (!ret.spec?.template) {
+            throw new ElasticityStrategyExecutionError('The SloTarget does not contain a pod template (spec.template field).', elasticityStrategy);
+        }
+        return ret;
     }
 
-    private normalizeResources(resources: Resources, config: VerticalElasticityStrategyConfig): void {
-        Object.keys(resources).forEach((key: keyof Resources) => {
+    private normalizeResources(resources: ContainerResources, config: VerticalElasticityStrategyConfig): ContainerResources {
+        return resources.scale((key, value) => {
             const min: number = config.minResources[key];
             const max: number = config.maxResources[key];
 
-            let value: number = resources[key];
             value = Math.max(min, value);
             value = Math.min(max, value);
-            resources[key] = value;
+            return value;
         });
     }
 
