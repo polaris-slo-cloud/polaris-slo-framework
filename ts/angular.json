@@ -1,5 +1,18 @@
 {
   "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "ui-polaris-ui",
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
   "projects": {
     "core": {
       "root": "libs/core",
@@ -691,19 +704,124 @@
           }
         }
       }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
     },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+    "elasticity-horizontal-elasticity-strategy-controller": {
+      "root": "apps/elasticity/horizontal-elasticity-strategy-controller",
+      "sourceRoot": "apps/elasticity/horizontal-elasticity-strategy-controller/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
+            "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
+            "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
+            "externalDependencies": "none",
+            "assets": [
+              "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/elasticity/horizontal-elasticity-strategy-controller/src/environments/environment.ts",
+                  "with": "apps/elasticity/horizontal-elasticity-strategy-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/elasticity/horizontal-elasticity-strategy-controller/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/elasticity/horizontal-elasticity-strategy-controller"
+          ],
+          "options": {
+            "jestConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "elasticity-vertical-elasticity-strategy-controller": {
+      "root": "apps/elasticity/vertical-elasticity-strategy-controller",
+      "sourceRoot": "apps/elasticity/vertical-elasticity-strategy-controller/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/elasticity/vertical-elasticity-strategy-controller",
+            "main": "apps/elasticity/vertical-elasticity-strategy-controller/src/main.ts",
+            "tsConfig": "apps/elasticity/vertical-elasticity-strategy-controller/tsconfig.app.json",
+            "externalDependencies": "none",
+            "assets": [
+              "apps/elasticity/vertical-elasticity-strategy-controller/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/elasticity/vertical-elasticity-strategy-controller/src/environments/environment.ts",
+                  "with": "apps/elasticity/vertical-elasticity-strategy-controller/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "elasticity-vertical-elasticity-strategy-controller:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/elasticity/vertical-elasticity-strategy-controller/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/elasticity/vertical-elasticity-strategy-controller"
+          ],
+          "options": {
+            "jestConfig": "apps/elasticity/vertical-elasticity-strategy-controller/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
-  },
-  "defaultProject": "ui-polaris-ui"
+  }
 }

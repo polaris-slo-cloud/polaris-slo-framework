@@ -3,7 +3,7 @@ import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/
 import { SloMapping, SloMappingSpec } from '../../../model';
 import { DefaultMicrocontrollerFactory, MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { getPolarisRuntime } from '../../../runtime/public/polaris-runtime';
-import { IndexByKey, ObservableStopper } from '../../../util';
+import { IndexByKey, ObservableStopper, executeSafely } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
 import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
 import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from './slo-control-loop';
@@ -29,6 +29,9 @@ interface RegisteredSlo {
  */
 export class DefaultSloControlLoop implements SloControlLoop {
 
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any>> =
+        new DefaultMicrocontrollerFactory();
+
     private stopper: ObservableStopper;
 
     private loopConfig: SloControlLoopConfig;
@@ -38,9 +41,6 @@ export class DefaultSloControlLoop implements SloControlLoop {
     private polarisRuntime = getPolarisRuntime();
 
     private _watchHandler: SloWatchEventsHandler;
-
-    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any>> =
-        new DefaultMicrocontrollerFactory();
 
     get isActive(): boolean {
         return !!this.loopConfig;
@@ -65,13 +65,16 @@ export class DefaultSloControlLoop implements SloControlLoop {
             catchError(err => {
                 const errorMsg = `An error occurred while configuring SLO ${key}.`;
                 console.error(errorMsg, err);
-                throw new SloControlLoopError(this, errorMsg, err);
+                return throwError(new SloControlLoopError(this, errorMsg, err));
             }),
-            timeout(SLO_DEFAULT_TIMEOUT_MS),
-            catchError(() => {
+            timeout(this.loopConfig.sloTimeoutMs),
+            catchError(err => {
+                if (err instanceof SloEvaluationError) {
+                    return throwError(err);
+                }
                 const errorMsg = `SLO ${key} has timed out during configuration.`;
                 console.error(errorMsg);
-                throw new SloControlLoopError(this, errorMsg);
+                return throwError(new SloControlLoopError(this, errorMsg));
             }),
             map(() => {
                 this.registeredSlos.set(key, { slo, stopper: new ObservableStopper() });
@@ -93,7 +96,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
         if (slo) {
             slo.stopper.stop();
             if (slo.slo.onDestroy) {
-                this.executeSafely(() => slo.slo.onDestroy());
+                executeSafely(() => slo.slo.onDestroy());
             }
             this.registeredSlos.delete(key);
             return true;
@@ -172,16 +175,6 @@ export class DefaultSloControlLoop implements SloControlLoop {
                 error: err => console.error(err),
             });
         });
-    }
-
-    private executeSafely(fn: () => void): boolean {
-        try {
-            fn();
-            return true;
-        } catch (err) {
-            console.log(err);
-            return false;
-        }
     }
 
 }

@@ -1,6 +1,7 @@
 import { KubeConfig, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ObjectKindWatcher, PolarisRuntimeBase, SloEvaluator } from '@polaris-sloc/core';
+import { ObjectKindWatcher, OrchestratorClient, PolarisRuntimeBase, SloEvaluator } from '@polaris-sloc/core';
 import { KubernetesSloEvaluator } from '../../slo';
+import { KubernetesOrchestratorClient } from './orchestrator-client';
 import { KubernetesObjectKindWatcher } from './watch';
 
 export class KubernetesPolarisRuntime extends PolarisRuntimeBase {
@@ -16,6 +17,10 @@ export class KubernetesPolarisRuntime extends PolarisRuntimeBase {
 
     createObjectKindWatcher(): ObjectKindWatcher {
         return new KubernetesObjectKindWatcher(this.kubeConfig, this.transformer);
+    }
+
+    createOrchestratorClient(): OrchestratorClient {
+        return new KubernetesOrchestratorClient(this, this.kubeConfig);
     }
 
 }

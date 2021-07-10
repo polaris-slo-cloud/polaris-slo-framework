@@ -1,3 +1,4 @@
+import { NormalizedProjectGeneratorSchema } from '../../util';
 
 export interface SloControllerGeneratorSchema {
     name: string;
@@ -7,11 +8,7 @@ export interface SloControllerGeneratorSchema {
     directory?: string;
 }
 
-interface SloControllerGeneratorNormalizedSchema extends SloControllerGeneratorSchema {
-    projectName: string;
-    projectRoot: string;
+interface SloControllerGeneratorNormalizedSchema extends NormalizedProjectGeneratorSchema, SloControllerGeneratorSchema {
     projectDirectory: string;
-    parsedTags: string[]
-    appsDir: string;
-    libsDir: string;
+    parsedTags: string[];
 }

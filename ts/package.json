@@ -1,6 +1,6 @@
 {
   "name": "polaris-sloc",
-  "version": "0.2.0-beta.9",
+  "version": "0.2.0-beta.12",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "nx",
@@ -10,6 +10,8 @@
     "build": "ng build",
     "docker:build:polaris-ui": "npm run build -- polaris-ui && mv ./dist/apps/polaris-ui ./apps/polaris-ui/dist && docker build -t polarissloc/polaris-ui:$npm_package_version -t polarissloc/polaris-ui:latest ./apps/polaris-ui",
     "docker:push-latest:polaris-ui": "docker push polarissloc/polaris-ui:$npm_package_version && docker push polarissloc/polaris-ui:latest",
+    "docker:build:elasticity-horizontal-elasticity-strategy-controller": "docker build -f ./apps/elasticity/horizontal-elasticity-strategy-controller/Dockerfile --build-arg POLARIS_APP_TYPE=elasticity --build-arg POLARIS_APP_NAME=horizontal-elasticity-strategy-controller -t polarissloc/horizontal-elasticity-strategy:latest .",
+    "docker:build:elasticity-vertical-elasticity-strategy-controller": "docker build -f ./apps/elasticity/vertical-elasticity-strategy-controller/Dockerfile --build-arg POLARIS_APP_TYPE=elasticity --build-arg POLARIS_APP_NAME=vertical-elasticity-strategy-controller -t polarissloc/vertical-elasticity-strategy:latest .",
     "docker:build:slo-cost-efficiency-slo-controller": "docker build -f ./apps/slo/cost-efficiency-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cost-efficiency-slo-controller -t polarissloc/slo-cost-efficiency:latest .",
     "docker:build:slo-cpu-usage-slo": "docker build -f ./apps/slo/cpu-usage-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cpu-usage-slo-controller -t polarissloc/slo-cpu-usage:latest .",
     "test": "ng test",

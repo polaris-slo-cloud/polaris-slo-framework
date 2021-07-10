@@ -61,10 +61,47 @@ spec:
                     format: int32
                     type: integer
                 type: object
-              staticConfig:
-                description: Static configuration that was supplied using `SloMapping.StaticElasticityStrategyConfig`.
+              stabilizationWindow:
+                description: Configures the duration of the period after the last
+                  elasticity strategy execution, during which the strategy will not
+                  be executed again (to avoid unnecessary scaling).
+                properties:
+                  scaleDownSeconds:
+                    default: 300
+                    description: The number of seconds after the previous scaling
+                      operation to wait before an elasticity action that decreases
+                      resources (e.g., scale down/in) or an equivalent configuration
+                      change can be issued due to an SLO violation.
+                    format: int32
+                    minimum: 0
+                    type: integer
+                  scaleUpSeconds:
+                    default: 60
+                    description: The number of seconds after the previous scaling
+                      operation to wait before an elasticity action that increases
+                      resources (e.g., scale up/out) or an equivalent configuration
+                      change can be issued due to an SLO violation.
+                    format: int32
+                    minimum: 0
+                    type: integer
                 type: object
-                x-kubernetes-preserve-unknown-fields: true
+              staticConfig:
+                description: Optional static configuration parameters for a HorizontalElasticityStrategy
+                properties:
+                  maxReplicas:
+                    description: "The maximum number of replicas that the target workload
+                      may have. \n Default: unlimited"
+                    format: int32
+                    minimum: 1
+                    type: integer
+                  minReplicas:
+                    default: 1
+                    description: "The minium number of replicas that the target workload
+                      must have. \n Default: 1"
+                    format: int32
+                    minimum: 0
+                    type: integer
+                type: object
               targetRef:
                 description: Specifies the target on which to execute the elasticity
                   strategy.

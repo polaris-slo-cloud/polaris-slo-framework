@@ -1,6 +1,8 @@
-import { ChangeType, Tree, applyChangesToString } from '@nrwl/devkit';
+import { ChangeType, Tree, applyChangesToString, joinPathFragments } from '@nrwl/devkit';
 import { findNodes } from '@nrwl/workspace'
 import * as ts from 'typescript';
+import { POLARIS_INIT_FN_FILE_NAME } from './naming';
+import { NormalizedLibraryClassGeneratorSchema } from './schema';
 
 /**
  * Represents a TypeScript file loaded in memory.
@@ -8,6 +10,21 @@ import * as ts from 'typescript';
 interface TypeScriptFile {
     sourceFile: ts.SourceFile;
     sourceStr: string;
+}
+
+/**
+ * Export the contents of the new file and, optionally the init-polaris-lib.ts file, from the library.
+ */
+export function addExports(host: Tree, options: NormalizedLibraryClassGeneratorSchema, includeInitPolarisLib: boolean): void {
+    const indexFile = joinPathFragments(options.projectSrcRoot, 'index.ts');
+
+    if (includeInitPolarisLib) {
+        const initFnFile = './' + joinPathFragments('lib', POLARIS_INIT_FN_FILE_NAME);
+        addExportToIndex(host, indexFile, initFnFile);
+    }
+
+    const sloMappingFile = './' + joinPathFragments(options.destDir, options.fileName);
+    addExportToIndex(host, indexFile, sloMappingFile);
 }
 
 /**

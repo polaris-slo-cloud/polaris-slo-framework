@@ -1,4 +1,6 @@
 import { PolarisRuntime } from '@polaris-sloc/core';
+import { VerticalElasticityStrategy, VerticalElasticityStrategyKind } from './elasticity';
+import { HorizontalElasticityStrategy, HorizontalElasticityStrategyKind } from './elasticity/horizontal-elasticity-strategy';
 import { CostEfficiencySloMapping, CpuUsageSloMapping } from './slo';
 import { RestServiceTarget } from './slo-targets';
 
@@ -9,4 +11,6 @@ export function initPolarisLib(polarisRuntime: PolarisRuntime): void {
     polarisRuntime.transformer.registerObjectKind(new RestServiceTarget(), RestServiceTarget);
     polarisRuntime.transformer.registerObjectKind(new CpuUsageSloMapping().objectKind, CpuUsageSloMapping);
     polarisRuntime.transformer.registerObjectKind(new CostEfficiencySloMapping().objectKind, CostEfficiencySloMapping);
+    polarisRuntime.transformer.registerObjectKind(new HorizontalElasticityStrategyKind(), HorizontalElasticityStrategy);
+    polarisRuntime.transformer.registerObjectKind(new VerticalElasticityStrategyKind(), VerticalElasticityStrategy);
 }

@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "id": "ElasticityStrategy",
+    "title": "Create an ElasticityStrategy type for use with Polaris SLO Cloud",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What class name would you like to use for the ElasticityStrategy type class?"
+        },
+        "project": {
+            "type": "string",
+            "description": "The name of the publishable library project, to which the ElasticityStrategy type should be added.",
+            "alias": "p",
+            "x-prompt": "To which project should the ElasticityStrategy type be added? This must be a publishable library project."
+        },
+        "directory": {
+            "type": "string",
+            "description": "The directory within the project's src folder, where the ElasticityStrategy type should be created.",
+            "alias": "d",
+            "default": "elasticity"
+        },
+        "createLibProject": {
+            "type": "boolean",
+            "description": "Create a publishable library project for the ElasticityStrategy type.",
+            "default": false
+        },
+        "importPath": {
+            "type": "string",
+            "description": "The import path of the publishable library, e.g., '@my-org/my-lib' (only used and required if --createLibProject is true)."
+        }
+    },
+    "required": [
+        "name",
+        "project"
+    ]
+}

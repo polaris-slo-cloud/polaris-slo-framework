@@ -1,0 +1,43 @@
+import { ElasticityStrategy, ElasticityStrategyKind, SloCompliance, SloTarget, initSelf } from '@polaris-sloc/core';
+
+// ToDo after code generation:
+// - Add configuration parameters to the <%= eStratConfigType %> interface.
+// - If the elasticity strategy does not take SloCompliance objects as input,
+//   adapt the first generic parameter of <%= eStratKind %> and <%= eStratType %> accordingly.
+// - If the elasticity strategy should operate on a subtype of SloTarget,
+//   adapt the second generic parameter of <%= eStratKind %> and <%= eStratType %> accordingly.
+
+/**
+ * Configuration options for <%= eStratType %>.
+ */
+export interface <%= eStratConfigType %> {
+
+}
+
+/**
+ * Denotes the elasticity strategy kind for the <%= eStratType %>.
+ */
+export class <%= eStratKind %> extends ElasticityStrategyKind<SloCompliance, SloTarget> {
+
+    constructor() {
+        super({
+            group: 'elasticity.polaris-slo-cloud.github.io',
+            version: 'v1',
+            kind: '<%= eStratType %>',
+        });
+    }
+
+}
+
+/**
+ * Defines the <%= eStratType %>.
+ */
+export class <%= eStratType %> extends ElasticityStrategy<SloCompliance, SloTarget, <%= eStratConfigType %>> {
+
+    constructor(initData?: Partial<<%= eStratType %>>) {
+        super(initData);
+        this.objectKind = new <%= eStratKind %>();
+        initSelf(this, initData);
+    }
+
+}

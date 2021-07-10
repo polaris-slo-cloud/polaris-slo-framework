@@ -9,9 +9,11 @@ export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSch
 
     return {
         names: normalizedNames,
+        className: `${normalizedNames.className}SloMapping`,
+        projectName: options.project,
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
-        fileNameWithSuffix: normalizedNames.fileName + SLO_MAPPING_TYPE_FILE_SUFFIX,
+        fileName: normalizedNames.fileName + SLO_MAPPING_TYPE_FILE_SUFFIX,
     };
 }

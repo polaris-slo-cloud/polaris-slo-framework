@@ -14,4 +14,7 @@ resources:
 - group: slo
   kind: CostEfficiencySloMapping
   version: v1
+- group: elasticity
+  kind: VerticalElasticityStrategy
+  version: v1
 version: "2"

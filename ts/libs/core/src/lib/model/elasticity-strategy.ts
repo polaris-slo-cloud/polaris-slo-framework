@@ -1,13 +1,14 @@
 import { PolarisType } from '../transformation';
-import { initSelf } from '../util';
+import { IndexByKey, initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { SloTarget } from './slo-target';
+import { StabilizationWindow } from './stabilization-window';
 
 /**
  * A generic class that is used to set up specs for an elasticity strategy.
  *
  * A concrete `ElasticityStrategy` may use `ElasticityStrategySpec<T>` directly as the type for
- * its spec, or a class dervived from this one, if, e.g., the transformation needs to be customized.
+ * its spec, or a class derived from this one, if, e.g., the transformation needs to be customized.
  *
  * Parameters that are defined by the output of the SLO are stored in `sloOutputParams`.
  * The type of this property determines if an elasticity strategy is compatible with a certain SLO.
@@ -18,8 +19,9 @@ import { SloTarget } from './slo-target';
  *
  * @param O The type of output parameters from the SLO/input parameters of the elasticity strategy.
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
+ * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
+export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     @PolarisType(() => SloTarget)
@@ -31,9 +33,17 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
     sloOutputParams: O;
 
     /**
+     * Configures the duration of the period after the last elasticity strategy execution,
+     * during which the strategy will not be executed again (to avoid unnecessary scaling).
+     */
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    @PolarisType(() => StabilizationWindow)
+    stabilizationWindow?: StabilizationWindow;
+
+    /**
      * Static configuration that was supplied using `SloMappingSpec.staticElasticityStrategyConfig`.
      */
-    staticConfig?: any;
+    staticConfig?: C;
 
     constructor(initData?: Partial<ElasticityStrategySpec<O>>) {
         initSelf(this, initData);
@@ -53,13 +63,14 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget> {
  *
  * @param O The type of output parameters from the SLO/input parameters of the elasticity strategy.
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
+ * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategy<O, T extends SloTarget = SloTarget> extends ApiObject<ElasticityStrategySpec<O, T>> {
+export class ElasticityStrategy<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> extends ApiObject<ElasticityStrategySpec<O, T, C>> {
 
     @PolarisType(() => ElasticityStrategySpec)
-    spec: ElasticityStrategySpec<O, T>;
+    spec: ElasticityStrategySpec<O, T, C>;
 
-    constructor(initData?: Partial<ElasticityStrategy<O, T>>) {
+    constructor(initData?: Partial<ElasticityStrategy<O, T, C>>) {
         super(initData);
     }
 

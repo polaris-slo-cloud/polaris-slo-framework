@@ -49,6 +49,56 @@
                 "${workspaceFolder}/dist/**/*.js"
             ],
             "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug horizontal-elasticity-strategy-controller",
+            "preLaunchTask": "build-horizontal-elasticity-strategy-controller",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/tslib/**"
+            ],
+            "port": 7777,
+            "runtimeExecutable": "npx",
+            "env": {
+                "PROMETHEUS_HOST": "localhost",
+                "PROMETHEUS_PORT": "30900"
+            },
+            "runtimeArgs": [
+                "nx",
+                "serve",
+                "elasticity-horizontal-elasticity-strategy-controller"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug vertical-elasticity-strategy-controller",
+            "preLaunchTask": "build-vertical-elasticity-strategy-controller",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/tslib/**"
+            ],
+            "port": 7777,
+            "runtimeExecutable": "npx",
+            "env": {
+                "PROMETHEUS_HOST": "localhost",
+                "PROMETHEUS_PORT": "30900"
+            },
+            "runtimeArgs": [
+                "nx",
+                "serve",
+                "elasticity-vertical-elasticity-strategy-controller"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "sourceMaps": true
         }
         // When adding a new app, make sure that it has "externalDependencies": "none", in angular.json set for the PROD build.
         // If this is always set to "none", (by default it's not set), debugging will take longer to start.

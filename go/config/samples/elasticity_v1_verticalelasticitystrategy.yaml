@@ -1,0 +1,27 @@
+apiVersion: elasticity.polaris-slo-cloud.github.io/v1
+kind: VerticalElasticityStrategy
+metadata:
+  name: verticalelasticitystrategy-sample
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: twitter-clone
+  sloOutputParams:
+    currSloCompliancePercentage: 200
+    tolerance: 10
+
+  # Optional configuration of the stabilization window, within which the elasticity strategy will not be executed twice.
+  stabilizationWindow:
+    scaleUpSeconds: 40
+    scaleDownSeconds: 60
+
+  # Optional static configuration
+  staticConfig:
+    minResources:
+      memoryMiB: 256
+      milliCpu: 500
+    maxResources:
+      memoryMiB: 2048
+      milliCpu: 2000
+

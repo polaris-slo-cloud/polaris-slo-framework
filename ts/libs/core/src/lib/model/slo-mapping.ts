@@ -3,6 +3,7 @@ import { IndexByKey, initSelf } from '../util';
 import { ApiObject } from './api-object';
 import { ElasticityStrategyKind } from './elasticity-strategy-kind';
 import { SloTarget } from './slo-target';
+import { StabilizationWindow } from './stabilization-window';
 
 /**
  * Defines the minimum configuration data that is needed for an SLO mapping.
@@ -18,6 +19,12 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
 
     /** Specifies the type of ElasticityStrategy to use for this SLO mapping. */
     elasticityStrategy: ElasticityStrategyKind<O, T>;
+
+    /**
+     * Configures the duration of the period after the last elasticity strategy execution,
+     * during which the strategy will not be executed again (to avoid unnecessary scaling).
+     */
+    stabilizationWindow?: StabilizationWindow;
 
     /**
      * Configuration parameters for the SLO.
@@ -71,6 +78,9 @@ export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> 
 
     @PolarisType(() => ElasticityStrategyKind)
     elasticityStrategy: ElasticityStrategyKind<O, T>;
+
+    @PolarisType(() => StabilizationWindow)
+    stabilizationWindow?: StabilizationWindow;
 
     sloConfig: C;
 

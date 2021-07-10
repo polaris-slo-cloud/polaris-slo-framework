@@ -1,0 +1,20 @@
+import { KubeConfig } from '@kubernetes/client-node';
+import { <%= eStratKind %>, <%= initPolarisLibFn %> as initMappingsLib } from '<%= eStratTypePkg %>';
+import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
+import { <%= eStratControllerName %> } from './app/elasticity';
+
+// Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
+const k8sConfig = new KubeConfig();
+k8sConfig.loadFromDefault();
+const polarisRuntime = initPolarisKubernetes(k8sConfig);
+
+// Initialize the used Polaris mapping libraries
+initMappingsLib(polarisRuntime);
+
+// Create an ElasticityStrategyManager and watch the supported elasticity strategy kinds.
+const manager = polarisRuntime.createElasticityStrategyManager();
+manager.startWatching({
+    kindsToWatch: [
+        { kind: new <%= eStratKind %>(), controller: new <%= eStratControllerName %>(polarisRuntime) },
+    ],
+}).catch(error => void console.error(error))

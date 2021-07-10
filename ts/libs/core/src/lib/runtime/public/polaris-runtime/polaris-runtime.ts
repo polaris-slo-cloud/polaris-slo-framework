@@ -1,7 +1,8 @@
-import { ElasticityStrategyService } from '../../../elasticity';
+import { ElasticityStrategyManager, ElasticityStrategyService } from '../../../elasticity';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { PolarisTransformationService } from '../../../transformation';
 import { MetricsSourcesManager } from '../metrics-source';
+import { OrchestratorClient } from '../orchestrator-client';
 import { ObjectKindWatcher, WatchManager } from '../watch';
 
 let polarisRuntimeSingleton: PolarisRuntime;
@@ -69,6 +70,11 @@ export interface PolarisRuntime {
     createSloControlLoop(): SloControlLoop;
 
     /**
+     * Creates an `ElasticityStrategyManager` instance.
+     */
+    createElasticityStrategyManager(): ElasticityStrategyManager;
+
+    /**
      * Creates an `ObjectKindWatcher` specific to this runtime implementation.
      */
     createObjectKindWatcher(): ObjectKindWatcher;
@@ -77,5 +83,10 @@ export interface PolarisRuntime {
      * Creates a new `WatchManager` for watching multiple `ObjectKinds`.
      */
     createWatchManager(): WatchManager;
+
+    /**
+     * Creates a new `OrchestratorClient` for performing CRUD operations on orchestrator objects.
+     */
+    createOrchestratorClient(): OrchestratorClient;
 
 }

@@ -7,7 +7,6 @@ import { interval } from 'rxjs';
 import { CostEfficiencySlo } from './app/cost-efficiency-slo';
 import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
-// ToDo: This file should be generated automatically during the build process.
 // ToDo: It should be possible to build the SLO controller easily for multiple orchestrators.
 
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
