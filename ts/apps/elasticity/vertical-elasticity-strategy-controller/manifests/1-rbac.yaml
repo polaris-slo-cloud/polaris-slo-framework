@@ -44,7 +44,7 @@ rules:
 
 # Allow reading and updating all Deployments, StatefulSets, ReplicaSets, and DaemonSets
 - apiGroups:
-  - 'apps/v1'
+  - 'apps'
   resources:
   - deployments
   - statefulsets
@@ -52,6 +52,7 @@ rules:
   - daemonsets
   verbs:
   - get
+  - list
   - update
   - watch
 ---
