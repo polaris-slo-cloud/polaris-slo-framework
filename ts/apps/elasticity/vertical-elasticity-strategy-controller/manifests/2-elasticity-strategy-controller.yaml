@@ -19,12 +19,27 @@ spec:
         tier: control-plane
     spec:
       serviceAccountName: vertical-elasticity-strategy-controller
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  # Ensure that the controller is only scheduled on Intel 64-bit nodes.
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+      tolerations:
+        # Ensure that the controller can be scheduled on master nodes.
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
       containers:
       - image: polarissloc/vertical-elasticity-strategy:latest
         name: elasticity-controller
         resources:
           limits:
-            cpu: '1.0'
+            cpu: 1000m
             memory: 1Gi
         securityContext:
           privileged: false
