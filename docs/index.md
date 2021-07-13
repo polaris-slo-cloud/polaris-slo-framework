@@ -90,4 +90,9 @@ This video provides an introduction to SLO script and shows an end-to-end demo (
     <img src="./assets/demo-video1-preview.png" alt="SLO Script Demo Video" width="640" height="360" border="10" />
 </a>
 
+The following two videos showcase the capabilities of the Polaris CLI:
+
+* [SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
+* [Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
+
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).

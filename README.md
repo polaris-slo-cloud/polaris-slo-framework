@@ -86,4 +86,9 @@ Documentation for the Polaris project can be found in the [docs](./docs) folder.
 
 This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC, is used).
 
+The following two videos showcase the capabilities of the Polaris CLI:
+
+* [SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
+* [Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
+
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
