@@ -14,6 +14,7 @@
     "docker:build:elasticity-vertical-elasticity-strategy-controller": "docker build -f ./apps/elasticity/vertical-elasticity-strategy-controller/Dockerfile --build-arg POLARIS_APP_TYPE=elasticity --build-arg POLARIS_APP_NAME=vertical-elasticity-strategy-controller -t polarissloc/vertical-elasticity-strategy:latest .",
     "docker:build:slo-cost-efficiency-slo-controller": "docker build -f ./apps/slo/cost-efficiency-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cost-efficiency-slo-controller -t polarissloc/slo-cost-efficiency:latest .",
     "docker:build:slo-cpu-usage-slo": "docker build -f ./apps/slo/cpu-usage-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cpu-usage-slo-controller -t polarissloc/slo-cpu-usage:latest .",
+    "docs:build": "npx typedoc --tsconfig ./tsconfig.typedoc.json",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -108,6 +109,7 @@
     "prettier": "2.2.1",
     "ts-jest": "26.5.5",
     "ts-node": "9.1.1",
+    "typedoc": "^0.21.4",
     "typescript": "4.2.4"
   }
 }

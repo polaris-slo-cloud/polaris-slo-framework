@@ -1,0 +1,30 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "noImplicitAny": false,
+    },
+    "exclude": [
+        "**/apps/**",
+        "**/*.spec.ts",
+        "**/*.po.ts"
+    ],
+    "typedocOptions": {
+        "name": "Polaris SLO Cloud",
+        "includeVersion": true,
+        "readme": "none",
+        "excludePrivate": true,
+        "out": "../docs/typedoc",
+        "entryPoints": [
+            "libs/core/src/index.ts",
+            "libs/mappings/common-mappings/src/index.ts",
+            "libs/metrics/cost-efficiency/src/lib/metrics/index.ts",
+            "libs/orchestrators/kubernetes/src/index.ts",
+            "libs/query-backends/prometheus/src/index.ts"
+        ],
+        "exclude": [
+            "**/apps/**",
+            "**/libs/polaris-nx/**",
+            "**/*.{spec,po}.ts"
+        ]
+    }
+}
