@@ -8,7 +8,7 @@ import { Resources } from '../../../model';
 export interface HorizontalElasticityStrategyConfig {
 
     /**
-     * The minium number of replicas that the target workload must have.
+     * The minimum number of replicas that the target workload must have.
      *
      * @default 1
      */
