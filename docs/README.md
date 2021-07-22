@@ -12,3 +12,4 @@ This is the main documentation of the project.
     * [Generic Elasticity Strategies](./features/generic-elasticity-strategies.md)
     * [Generic SLOs](./features/generic-slos.md)
     * [Predictions](./features/predictions.md)
+* [Documentation of interfaces, classes, etc.](./typedoc)

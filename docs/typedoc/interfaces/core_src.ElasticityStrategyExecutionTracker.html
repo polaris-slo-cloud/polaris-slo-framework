@@ -1,0 +1,371 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ElasticityStrategyExecutionTracker | Polaris SLO Cloud - v0.2.0-beta.13</title>
+	<meta name="description" content="Documentation for Polaris SLO Cloud - v0.2.0-beta.13">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Polaris SLO Cloud - v0.2.0-beta.13</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../index.html">Polaris SLO Cloud - v0.2.0-beta.13</a>
+				</li>
+				<li>
+					<a href="../modules/core_src.html">core/src</a>
+				</li>
+				<li>
+					<a href="core_src.ElasticityStrategyExecutionTracker.html">ElasticityStrategyExecutionTracker</a>
+				</li>
+			</ul>
+			<h1>Interface ElasticityStrategyExecutionTracker&lt;E, O&gt;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Allows tracking the last execution of an elasticity strategy for each target.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>E<span class="tsd-signature-symbol">: </span><a href="../classes/core_src.ElasticityStrategy.html" class="tsd-signature-type" data-tsd-kind="Class">ElasticityStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of <code>ElasticityStrategy</code> that is tracked.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<h4>O</h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>The type of operation or description of the operation that is executed for an elasticity strategy.</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">ElasticityStrategyExecutionTracker</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/core_src.DefaultElasticityStrategyExecutionTracker.html" class="tsd-signature-type" data-tsd-kind="Class">DefaultElasticityStrategyExecutionTracker</a></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core_src.ElasticityStrategyExecutionTracker.html#trackedElasticityStrategiesCount" class="tsd-kind-icon">tracked<wbr>Elasticity<wbr>Strategies<wbr>Count</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="core_src.ElasticityStrategyExecutionTracker.html#addExecution" class="tsd-kind-icon">add<wbr>Execution</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="core_src.ElasticityStrategyExecutionTracker.html#evictExpiredExecutions" class="tsd-kind-icon">evict<wbr>Expired<wbr>Executions</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="core_src.ElasticityStrategyExecutionTracker.html#getLastExecution" class="tsd-kind-icon">get<wbr>Last<wbr>Execution</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="core_src.ElasticityStrategyExecutionTracker.html#removeElasticityStrategy" class="tsd-kind-icon">remove<wbr>Elasticity<wbr>Strategy</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="trackedElasticityStrategiesCount" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> tracked<wbr>Elasticity<wbr>Strategies<wbr>Count</h3>
+					<div class="tsd-signature tsd-kind-icon">tracked<wbr>Elasticity<wbr>Strategies<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/polaris-slo-cloud/polaris/blob/831b9d0/ts/libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts#L33">libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts:33</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Gets the number of <code>ElasticityStrategies</code>, for which executions are currently on record.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="addExecution" class="tsd-anchor"></a>
+					<h3>add<wbr>Execution</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Execution<span class="tsd-signature-symbol">(</span>elasticityStrategy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span>, operation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_src.ElasticityStrategyExecution.html" class="tsd-signature-type" data-tsd-kind="Interface">ElasticityStrategyExecution</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/polaris-slo-cloud/polaris/blob/831b9d0/ts/libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts#L54">libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts:54</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an <code>ElasticityStrategyExecution</code> record for the specified <code>elasticityStrategy</code>.</p>
+								</div>
+								<p>The timestamp of the record is taken during the execution of this method.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>elasticityStrategy: <span class="tsd-signature-type">E</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The <code>ElasticityStrategy</code> instance, for which an execution should be recorded.</p>
+									</div>
+								</li>
+								<li>
+									<h5>operation: <span class="tsd-signature-type">O</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the operation or description of the operation that was executed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="core_src.ElasticityStrategyExecution.html" class="tsd-signature-type" data-tsd-kind="Interface">ElasticityStrategyExecution</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The new <code>ElasticityStrategyExecution</code> record.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="evictExpiredExecutions" class="tsd-anchor"></a>
+					<h3>evict<wbr>Expired<wbr>Executions</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">evict<wbr>Expired<wbr>Executions<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/polaris-slo-cloud/polaris/blob/831b9d0/ts/libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts#L68">libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts:68</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes all <code>ElasticityStrategyExecutions</code> that are older than their maximum <code>StabilizationWindow</code> time.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="getLastExecution" class="tsd-anchor"></a>
+					<h3>get<wbr>Last<wbr>Execution</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Last<wbr>Execution<span class="tsd-signature-symbol">(</span>elasticityStrategy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="core_src.ElasticityStrategyExecution.html" class="tsd-signature-type" data-tsd-kind="Interface">ElasticityStrategyExecution</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/polaris-slo-cloud/polaris/blob/831b9d0/ts/libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts#L43">libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts:43</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the last recorded <code>ElasticityStrategyExecution</code> for the specified <code>target</code>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>elasticityStrategy: <span class="tsd-signature-type">E</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The <code>ElasticityStrategy</code> instance, for which the execution should be retrieved.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="core_src.ElasticityStrategyExecution.html" class="tsd-signature-type" data-tsd-kind="Interface">ElasticityStrategyExecution</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">O</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The last recorded <code>ElasticityStrategyExecution</code> for the specified <code>elasticityStrategy</code> (or any of its previous instances) or <code>undefined</code>,
+								if no such record exists (i.e., the elasticity strategy has never executed during the lifetime of the controller
+							or the last execution record has expired).</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="removeElasticityStrategy" class="tsd-anchor"></a>
+					<h3>remove<wbr>Elasticity<wbr>Strategy</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Elasticity<wbr>Strategy<span class="tsd-signature-symbol">(</span>elasticityStrategy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/polaris-slo-cloud/polaris/blob/831b9d0/ts/libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts#L63">libs/core/src/lib/elasticity/public/common/elasticity-strategy-execution-tracker.ts:63</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes the specified <code>elasticityStrategy</code> and its record from this tracker.</p>
+								</div>
+								<p>If the specified <code>elasticityStrategy</code> is currently not tracked, this request is ignored.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>elasticityStrategy: <span class="tsd-signature-type">E</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The <code>ElasticityStrategy</code>, for which the tracked record should be removed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../index.html">Modules</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/core_src.html">core/src</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/mappings_common_mappings_src.html">mappings/common-<wbr>mappings/src</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/metrics_cost_efficiency_src_lib_metrics.html">metrics/cost-<wbr>efficiency/src/lib/metrics</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/orchestrators_kubernetes_src.html">orchestrators/kubernetes/src</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/query_backends_prometheus_src.html">query-<wbr>backends/prometheus/src</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="core_src.ElasticityStrategyExecutionTracker.html" class="tsd-kind-icon">Elasticity<wbr>Strategy<wbr>Execution<wbr>Tracker</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="core_src.ElasticityStrategyExecutionTracker.html#trackedElasticityStrategiesCount" class="tsd-kind-icon">tracked<wbr>Elasticity<wbr>Strategies<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="core_src.ElasticityStrategyExecutionTracker.html#addExecution" class="tsd-kind-icon">add<wbr>Execution</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="core_src.ElasticityStrategyExecutionTracker.html#evictExpiredExecutions" class="tsd-kind-icon">evict<wbr>Expired<wbr>Executions</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="core_src.ElasticityStrategyExecutionTracker.html#getLastExecution" class="tsd-kind-icon">get<wbr>Last<wbr>Execution</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="core_src.ElasticityStrategyExecutionTracker.html#removeElasticityStrategy" class="tsd-kind-icon">remove<wbr>Elasticity<wbr>Strategy</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
