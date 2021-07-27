@@ -95,3 +95,8 @@ The following videos showcase the capabilities of the Polaris CLI:
 * [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
 
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
+
+
+## Our Users
+
+The Polaris SLO Cloud project is actively used by the [orchestration layer](https://gitlab.com/rainbow-project1/rainbow-orchestration) of the [RAINBOW](https://rainbow-h2020.eu) project to bring complex SLOs to Fog Computing.
