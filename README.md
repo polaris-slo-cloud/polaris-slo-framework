@@ -90,7 +90,7 @@ This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introducti
 
 The following videos showcase the capabilities of the Polaris CLI:
 
-* [Quick walkthrough](https://www.youtube.com/watch?v=DWkApCpnX0Y)
+* [Quick walkthrough](https://www.youtube.com/watch?v=JVZ4hB2AmGs)
 * [Step-by-step SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
 * [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
 
