@@ -58,10 +58,12 @@ The Polaris project offers/will offer (the project is still under development) t
 * SLO Script, a language and framework for 
     * developing complex SLOs, based on one or more metrics
     * configuring these SLOs using SLO Mappings
-    * developing custom metrics by aggregating other metrics
+    * developing composed metrics by aggregating other metrics
     * using predictions in metrics and SLOs to employ proactive scaling
+    * developing custom elasticity strategies
 * Generic elasticity strategies that can be used with multiple SLOs
 * Generic SLOs that can be used with multiple elasticity strategies
+* AI-based prediction models for metrics (see [polaris-ai](https://github.com/polaris-slo-cloud/polaris-ai)), usable as a composed metrics library
 
 SLO Script consists of an orchestrator-independent core library and connector libraries for specific orchestrators.
 Currently, there is a connector for Kubernetes.
@@ -86,9 +88,10 @@ Documentation for the Polaris project can be found in the [docs](./docs) folder.
 
 This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC, is used).
 
-The following two videos showcase the capabilities of the Polaris CLI:
+The following videos showcase the capabilities of the Polaris CLI:
 
-* [SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
-* [Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
+* [Quick walkthrough](https://www.youtube.com/watch?v=DWkApCpnX0Y)
+* [Step-by-step SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
+* [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
 
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
