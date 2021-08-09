@@ -1,3 +1,4 @@
+import { CoreV1Api, KubeConfig } from '@kubernetes/client-node';
 import { Tree, names } from '@nrwl/devkit';
 import axios from 'axios';
 import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
@@ -8,7 +9,14 @@ import {
     GrafanaDashboardGeneratorSchema,
 } from './schema';
 
-function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): GrafanaDashboardGeneratorNormalizedSchema {
+async function readBearerToken(kubeConfig: KubeConfig): Promise<string> {
+    const client = kubeConfig.makeApiClient(CoreV1Api);
+    const secret = await client.readNamespacedSecret('grafana', 'default');
+    const bearerToken = secret.body.data['bearerToken'];
+    return Buffer.from(bearerToken, 'base64').toString('binary');
+}
+
+async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
     const normalizedName = names(options.name).name;
     const panelType = options.panelType || 'stat';
     const datasource = options.dashboard || 'default';
@@ -17,13 +25,30 @@ function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema):
         ? options.tags.split(',').map((s) => s.trim())
         : [];
     const asRate = options.asRate || false;
-    const grafanaUrl = options.grafanaUrl || '';
-    const bearerToken = options.bearerToken || '';
+    let grafanaUrl = options.grafanaUrl || '';
+    let bearerToken = options.bearerToken || '';
     let toDisk = false;
+    const destDir = options.directory || '';
 
-    if (grafanaUrl === '' || bearerToken === '') {
+    if (destDir !== '') {
         toDisk = true;
+    } else {
+        if (grafanaUrl === '') {
+            const grafanaHost = process.env['GRAFANA_HOST'] || 'localhost';
+            const grafanaPort = process.env['GRAFANA_PORT'] || 3000;
+            grafanaUrl = `http://${grafanaHost}:${grafanaPort}`;
+        }
+        console.log(grafanaUrl);
+        if (bearerToken === '') {
+            const kubeConfig = new KubeConfig();
+            kubeConfig.loadFromDefault();
+            if (bearerToken === '') {
+                bearerToken = await readBearerToken(kubeConfig);
+            }
+        }
+        console.log(bearerToken);
     }
+
 
     return {
         name: normalizedName,
@@ -35,7 +60,7 @@ function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema):
         grafanaUrl,
         bearerToken,
         toDisk,
-        destDir: options.directory || './',
+        destDir,
     };
 }
 
@@ -197,7 +222,7 @@ function saveDashboard(host: Tree, dashboard: typeof Dashboard, options: Grafana
 }
 
 export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
-    const normalizedOptions = normalizeOptions(host, options);
+    const normalizedOptions = await normalizeOptions(host, options);
 
     const dashboard = generateDashboard(normalizedOptions);
 

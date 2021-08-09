@@ -1,6 +1,6 @@
 export interface GrafanaDashboardGeneratorSchema {
     name: string;
-    asRate: boolean;
+    asRate?: boolean;
     panelType?: string;
     refresh?: string;
     dashboard?: string;
