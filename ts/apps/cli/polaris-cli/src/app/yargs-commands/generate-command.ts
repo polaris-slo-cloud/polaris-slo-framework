@@ -13,8 +13,7 @@ export function createGenerateCommand(cli: PolarisCli): CommandModule<any, any> 
     return createYargsCommand(
         [ 'generate <type> <name>', 'g' ],
         'Generates a new Polaris project/component.',
-        args => {
-            return args.positional(TYPE, {
+        args => args.positional(TYPE, {
                 type: 'string',
                 description: 'The type of the project/component that should be created.',
                 choices: [
@@ -29,10 +28,9 @@ export function createGenerateCommand(cli: PolarisCli): CommandModule<any, any> 
             .positional(NAME, {
                 type: 'string',
                 description: 'The name of the project/component.',
-            });
-        },
+            }),
         args => {
-            const options = args._.slice(1).join(' ') || '--help';
+            const options = args._.slice(0).join(' ') || '--help';
             return cli.taskExecutor.runTask(new RunNpmBinaryTask({
                 command: `${NX_CLI} g ${POLARIS_NX}:${args.type} ${args.name} ${options}`,
             }));
