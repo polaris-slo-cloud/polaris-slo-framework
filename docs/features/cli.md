@@ -1,9 +1,10 @@
 # Polaris-CLI
 
-## Grafana Dashboard Generation
+## Metrics Dashboard Generation
 
-The CLI provides means to generate Grafana dashboards from scratch that display relevant metrics. In the current state,
+The CLI provides means to generate metrics dashboards from scratch that display relevant metrics. In the current state,
 a static metric is used but can be displayed in different panel types (i.e., gauge).
+Further, the current implementation is configured to work with Grafana but we work on modularizing the internals to allow support for other implementations/dashboards. 
 
 Future versions of this feature will be able to extract relevant metrics from deployed SLOMappings.
 
@@ -40,5 +41,5 @@ Dhe dashboard will be exported to `<name>.json`, in case `directory` is set.
 
 Example usage (pushes dashboard to Grafana instance):
 
-    polaris-cli g grafana-dashboard test-dash 
+    polaris-cli g metrics-dashboard test-dash 
     

@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import generator from './generator';
 import { GrafanaDashboardGeneratorSchema } from './schema';
 
-describe('grafana-dashboard generator', () => {
+describe('metrics-dashboard generator', () => {
     let appTree: Tree;
     const options: GrafanaDashboardGeneratorSchema = {
         asRate: false,
