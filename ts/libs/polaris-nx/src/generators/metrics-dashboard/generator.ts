@@ -38,15 +38,19 @@ async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSc
             const grafanaPort = process.env['GRAFANA_PORT'] || 3000;
             grafanaUrl = `http://${grafanaHost}:${grafanaPort}`;
         }
-        console.log(grafanaUrl);
+        console.log(`Grafana instance: ${grafanaUrl}`);
         if (bearerToken === '') {
-            const kubeConfig = new KubeConfig();
-            kubeConfig.loadFromDefault();
-            if (bearerToken === '') {
-                bearerToken = await readBearerToken(kubeConfig);
+            try {
+                const kubeConfig = new KubeConfig();
+                kubeConfig.loadFromDefault();
+                if (bearerToken === '') {
+                    bearerToken = await readBearerToken(kubeConfig);
+                }
+            } catch (e) {
+                throw new Error('Failed to connect to kubeconfig - can not read Bearertoken.');
             }
+
         }
-        console.log(bearerToken);
     }
 
 
@@ -214,7 +218,9 @@ function createDashboardApi(dashboard: string, options: GrafanaDashboardGenerato
 function saveDashboard(host: Tree, dashboard: typeof Dashboard, options: GrafanaDashboardGeneratorNormalizedSchema): Promise<void> {
     if (options.toDisk) {
         const stringified = JSON.stringify(dashboard);
-        host.write(`${options.destDir}/${options.name}.json`, `${stringified}`);
+        const filePath = `${options.destDir}/${options.name}.json`;
+        console.log(`Write grafana dashboard to ${filePath}`);
+        host.write(filePath, `${stringified}`);
         return Promise.resolve();
     } else {
         return createDashboardApi(dashboard, options);
@@ -222,9 +228,15 @@ function saveDashboard(host: Tree, dashboard: typeof Dashboard, options: Grafana
 }
 
 export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
-    const normalizedOptions = await normalizeOptions(host, options);
+    try {
+        const normalizedOptions = await normalizeOptions(host, options);
+        const dashboard = generateDashboard(normalizedOptions);
 
-    const dashboard = generateDashboard(normalizedOptions);
-
-    return saveDashboard(host, dashboard, normalizedOptions);
+        return saveDashboard(host, dashboard, normalizedOptions).catch(e => {
+            console.error('Failed dashboard generation', e);
+        });
+    } catch (e) {
+        console.error(e)
+        return Promise.resolve();
+    }
 }
