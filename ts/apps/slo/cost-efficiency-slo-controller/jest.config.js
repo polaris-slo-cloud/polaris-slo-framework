@@ -9,4 +9,5 @@ module.exports = {
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/slo/cost-efficiency-slo-controller',
+    testEnvironment: 'node',
 };

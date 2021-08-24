@@ -11,4 +11,5 @@ module.exports = {
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/elasticity/vertical-elasticity-strategy-controller',
+    testEnvironment: 'node',
 };

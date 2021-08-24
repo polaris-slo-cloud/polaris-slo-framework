@@ -638,8 +638,6 @@
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "polaris-nx:build",
-            "npmPackageName": "@polaris-sloc/polaris-nx",
-            "pluginOutputPath": "dist/libs/polaris-nx",
             "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
           }
         }

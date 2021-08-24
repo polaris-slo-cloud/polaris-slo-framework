@@ -6,15 +6,7 @@ import { WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
 
 describe('slo-mapping-type e2e', () => {
 
-    beforeAll(() => {
-        jest.setTimeout(120000);
-    });
-
-    afterAll(() => {
-        jest.setTimeout(5000);
-    });
-
-    it('should create an ElasticityStrategy type', async done => {
+    it('should create an ElasticityStrategy type', async () => {
         const libProj = uniq('elasticity-mappings-lib');
         const elasticityStrategyType = uniq('MyTest') + 'ElasticityStrategy';
         const elasticityStrategyNames = names(elasticityStrategyType);
@@ -31,8 +23,6 @@ describe('slo-mapping-type e2e', () => {
             `libs/${libProj}/src/lib/elasticity/${elasticityStrategyNames.fileName}.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
         )).not.toThrow();
-
-        done();
     });
 
 });

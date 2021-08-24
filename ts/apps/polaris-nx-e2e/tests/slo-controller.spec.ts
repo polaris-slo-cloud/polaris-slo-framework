@@ -5,15 +5,7 @@ import { WORKSPACE_NPM_PACKAGE } from './util';
 
 describe('slo-controller e2e', () => {
 
-    beforeAll(() => {
-        jest.setTimeout(120000);
-    });
-
-    afterAll(() => {
-        jest.setTimeout(5000);
-    });
-
-    it('should create an slo-controller', async done => {
+    it('should create an slo-controller', async () => {
         const controllerName = uniq('slo-controller-test');
         const sloMappingType = 'CostEfficiencySloMapping';
         const sloMappingTypePkg = '@polaris-sloc/common-mappings';
@@ -36,9 +28,6 @@ describe('slo-controller e2e', () => {
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
         )).not.toThrow();
-
-
-        done();
     });
 
 });
