@@ -58,16 +58,16 @@
     "@angular/platform-browser-dynamic": "12.2.2",
     "@angular/router": "12.2.2",
     "@grafana/data": "^7.5.4",
-    "@kubernetes/client-node": "^0.14.3",
+    "@kubernetes/client-node": "^0.15.1",
     "@ngx-translate/core": "^13.0.0",
     "class-transformer": "~0.4.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
-    "prometheus-query": "^3.0.0",
+    "prometheus-query": "^3.0.1",
     "reflect-metadata": "~0.1.13",
     "rxjs": "6.5.5",
     "tslib": "^2.2.0",
-    "yargs": "^17.0.1",
+    "yargs": "^17.1.1",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
@@ -91,8 +91,8 @@
     "@nrwl/workspace": "12.7.2",
     "@types/jest": "27.0.1",
     "@types/lodash-es": "^4.17.4",
-    "@types/node": "14.14.33",
-    "@types/yargs": "^16.0.1",
+    "@types/node": "14.17.11",
+    "@types/yargs": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "4.29.3",
     "@typescript-eslint/parser": "4.29.3",
     "codelyzer": "6.0.2",
@@ -109,7 +109,7 @@
     "prettier": "2.3.2",
     "ts-jest": "27.0.5",
     "ts-node": "9.1.1",
-    "typedoc": "^0.21.4",
+    "typedoc": "^0.21.6",
     "typescript": "4.3.5"
   }
 }
