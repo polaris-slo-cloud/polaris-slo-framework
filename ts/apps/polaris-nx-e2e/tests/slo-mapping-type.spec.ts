@@ -6,15 +6,7 @@ import { WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
 
 describe('slo-mapping-type e2e', () => {
 
-    beforeAll(() => {
-        jest.setTimeout(120000);
-    });
-
-    afterAll(() => {
-        jest.setTimeout(5000);
-    });
-
-    it('should create an slo-mapping-type', async done => {
+    it('should create an slo-mapping-type', async () => {
         const libProj = uniq('slo-mappings-lib');
         const sloMappingType = uniq('MyTest');
         const sloMappingNames = names(sloMappingType);
@@ -34,8 +26,6 @@ describe('slo-mapping-type e2e', () => {
 
     //     const result = await runNxCommandAsync(`build ${plugin}`);
     //     expect(result.stdout).toContain('Executor ran');
-
-        done();
     });
 
     // describe('--directory', () => {

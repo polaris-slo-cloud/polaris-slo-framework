@@ -5,15 +5,7 @@ import { WORKSPACE_NPM_PACKAGE } from './util';
 
 describe('elasticity-strategy-controller e2e', () => {
 
-    beforeAll(() => {
-        jest.setTimeout(120000);
-    });
-
-    afterAll(() => {
-        jest.setTimeout(5000);
-    });
-
-    it('should create an elasticity-strategy-controller', async done => {
+    it('should create an elasticity-strategy-controller', async () => {
         const controllerName = uniq('elasticity-strategy-controller-test');
         const eStratType = 'HorizontalElasticityStrategy';
         const eStratTypePkg = '@polaris-sloc/common-mappings';
@@ -35,8 +27,6 @@ describe('elasticity-strategy-controller e2e', () => {
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
         )).not.toThrow();
-
-        done();
     });
 
 });
