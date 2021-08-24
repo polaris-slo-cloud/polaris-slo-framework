@@ -1,18 +1,9 @@
+const { getJestProjects } = require('@nrwl/jest');
+
 module.exports = {
     projects: [
-        '<rootDir>/libs/core',
+        ...getJestProjects(),
         '<rootDir>/libs/kubernetes',
-        '<rootDir>/apps/ui/polaris-ui',
-        '<rootDir>/apps/slo/cpu-usage-slo-controller',
-        '<rootDir>/apps/cli/polaris-k8s-serializer',
-        '<rootDir>/libs/mappings/common-mappings',
-        '<rootDir>/libs/query-backends/prometheus',
-        '<rootDir>/apps/slo/cost-efficiency-slo-controller',
-        '<rootDir>/libs/metrics/cost-efficiency',
-        '<rootDir>/libs/polaris-nx',
         '<rootDir>/apps/polaris-nx-e2e',
-        '<rootDir>/apps/cli/polaris-cli',
-        '<rootDir>/apps/elasticity/horizontal-elasticity-strategy-controller',
-        '<rootDir>/apps/elasticity/vertical-elasticity-strategy-controller',
-    ],
+    ]
 };

@@ -9,4 +9,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     coverageDirectory: '../../../coverage/libs/orchestrators/kubernetes',
     displayName: 'orchestrators-kubernetes',
+    testEnvironment: 'node',
 };

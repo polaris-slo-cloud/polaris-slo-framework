@@ -9,4 +9,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     coverageDirectory: '../../coverage/libs/core',
     displayName: 'core',
+    testEnvironment: 'node',
 };

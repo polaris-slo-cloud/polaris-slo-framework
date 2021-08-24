@@ -9,4 +9,5 @@ module.exports = {
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     coverageDirectory: '../../../coverage/libs/query-backends/prometheus',
+    testEnvironment: 'node',
 };

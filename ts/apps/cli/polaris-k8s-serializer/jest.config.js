@@ -9,4 +9,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/cli/polaris-k8s-serializer',
     displayName: 'cli-polaris-k8s-serializer',
+    testEnvironment: 'node',
 };

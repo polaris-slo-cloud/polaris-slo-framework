@@ -9,4 +9,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/slo/cpu-usage-slo-controller',
     displayName: 'slo-cpu-usage-slo-controller',
+    testEnvironment: 'node',
 };
