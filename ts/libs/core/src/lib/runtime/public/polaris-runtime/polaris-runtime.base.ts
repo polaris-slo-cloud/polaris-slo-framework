@@ -12,6 +12,9 @@ import { OrchestratorClient } from '../orchestrator-client';
 import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from '../watch';
 import { PolarisRuntime } from './polaris-runtime';
 
+/**
+ * `PolarisRuntimeBase` can be used as a superclass for orchestrator-specific {@link PolarisRuntime} implementations.
+ */
 export abstract class PolarisRuntimeBase implements PolarisRuntime {
 
     transformer: PolarisTransformationService = new DefaultPolarisTransformationService();
