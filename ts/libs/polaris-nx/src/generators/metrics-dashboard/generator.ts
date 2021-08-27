@@ -18,7 +18,7 @@ async function readBearerToken(kubeConfig: KubeConfig): Promise<string> {
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
     const normalizedName = names(options.name).name;
-    const panelType = options.panelType || 'stat';
+    const panelType = options.panelType || 'graph';
     const datasource = options.dashboard || 'default';
     const refresh = options.refresh || '5s';
     const parsedTags = options.tags
