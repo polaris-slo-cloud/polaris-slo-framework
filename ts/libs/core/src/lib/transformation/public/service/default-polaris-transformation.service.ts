@@ -6,9 +6,9 @@ import { DefaultTransformer } from '../transformers';
 import { PolarisTransformationService } from './polaris-transformation-service';
 
 /**
- * The default implementation of the `PolarisTransformationService`.
+ * The default implementation of the {@link PolarisTransformationService}.
  *
- * @note Please extend this class if you want to create your own `PolarisTransformationService`.
+ * @note Please extend this class if you want to create your own {@link PolarisTransformationService}.
  */
 export class DefaultPolarisTransformationService implements PolarisTransformationService {
 
@@ -39,7 +39,7 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         transformer?: PolarisTransformer<T, any>,
         config?: PolarisTransformationConfig,
     ): void {
-        const kindStr = kind.toString();
+        const kindStr = ObjectKind.stringify(kind);
         this.knownObjectKinds[kindStr] = polarisType;
 
         if (transformer) {
@@ -89,7 +89,7 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
     }
 
     getPolarisType(kind: ObjectKind): PolarisConstructor<any> {
-        const kindStr = kind.toString();
+        const kindStr = ObjectKind.stringify(kind);
         return this.knownObjectKinds[kindStr];
     }
 

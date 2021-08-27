@@ -45,7 +45,7 @@ export class WatchAlreadyStartedError extends ObjectKindWatcherError {
 export class ObjectKindsAlreadyWatchedError extends Error {
 
     constructor(public watchManager: WatchManager, public watchedKinds: ObjectKind[]) {
-        super(`The following ObjectKinds are already being watched by this WatchManager: ${watchedKinds.map(kind => kind.toString()).join(',\n')}`)
+        super(`The following ObjectKinds are already being watched by this WatchManager: ${watchedKinds.map(kind => ObjectKind.stringify(kind)).join(',\n')}`)
     }
 
 }

@@ -19,10 +19,16 @@ export class ObjectKind {
     }
 
     /**
-     * @returns A string that uniquely identifies this object kind.
+     * Creates a string that uniquely identifies the specified object kind.
+     *
+     * The returned string is of the following format: `group/version/kind`
+     *
+     * @param kind The `ObjectKind` that should be stringified.
+     * @returns The specified object kind as a `group/version/kind` string,
+     * which uniquely identifies this object kind.
      */
-    toString(): string {
-        return `${this.group}/${this.version}/${this.kind}`;
+    static stringify(kind: ObjectKind): string {
+        return `${kind.group}/${kind.version}/${kind.kind}`;
     }
 
 }
