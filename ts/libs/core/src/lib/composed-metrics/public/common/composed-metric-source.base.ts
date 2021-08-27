@@ -7,7 +7,7 @@ import { ComposedMetricSource } from './composed-metric-source';
 const POLLING_INTERVAL_MSEC = 10000;
 
 /**
- * `ComposedMetricSourceBase` may be used as a superclass for `ComposedMetricSource` implementations.
+ * `ComposedMetricSourceBase` may be used as a superclass for {@link ComposedMetricSource} implementations.
  *
  * It implements common operations in a reusable manner.
  */
@@ -15,13 +15,13 @@ export abstract class ComposedMetricSourceBase<V> implements ComposedMetricSourc
 
     constructor(protected polarisRuntime: PolarisRuntime) {}
 
+    abstract getValueStream(): Observable<Sample<V>>;
+
     getCurrentValue(): Observable<Sample<V>> {
         return this.getValueStream().pipe(
             take(1),
         );
     }
-
-    abstract getValueStream(): Observable<Sample<V>>;
 
     /**
      * Helper method to create an observable that emits immediately and then at the default polling interval.

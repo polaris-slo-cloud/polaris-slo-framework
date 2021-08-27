@@ -8,5 +8,9 @@ import { KubeCostMetricSourceFactory, RestApiCostEfficiencyMetricSourceFactory }
  */
 export function initCostEfficiencyMetrics(runtime: PolarisRuntime): void {
     runtime.metricsSourcesManager.addComposedMetricSourceFactory(new KubeCostMetricSourceFactory());
-    runtime.metricsSourcesManager.addComposedMetricSourceFactory(new RestApiCostEfficiencyMetricSourceFactory());
+
+    const restApiCostEffFactory = new RestApiCostEfficiencyMetricSourceFactory();
+    RestApiCostEfficiencyMetricSourceFactory.supportedSloTargetTypes.forEach(
+        sloTargetType => runtime.metricsSourcesManager.addComposedMetricSourceFactory(restApiCostEffFactory, sloTargetType),
+    );
 }

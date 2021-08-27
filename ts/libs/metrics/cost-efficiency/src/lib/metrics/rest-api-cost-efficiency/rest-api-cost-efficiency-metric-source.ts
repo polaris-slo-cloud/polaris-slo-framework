@@ -43,7 +43,7 @@ export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<
 
     getValueStream(): Observable<Sample<CostEfficiency>> {
         const { targetThreshold, ...costParams } = this.params;
-        const costSource = this.metricsSource.getComposedMetricSource(TotalCostMetric.instance, costParams, this.params.costMetricSourceName);
+        const costSource = this.metricsSource.getComposedMetricSource(TotalCostMetric.instance, costParams);
 
         return this.getDefaultPollingInterval().pipe(
             switchMap(() => this.getPercentileFasterThanThreshold()),

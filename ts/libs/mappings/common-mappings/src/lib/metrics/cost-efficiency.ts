@@ -44,14 +44,6 @@ export interface CostEfficiencyParams extends ComposedMetricParams {
      */
     targetThreshold: number;
 
-    /**
-     * (optional) The name of the metric source that supplies the `totalCost` of the target workload.
-     * The metric must supply the `TotalCostMetricType`.
-     *
-     * Set this, if you do not want to use the default total cost metric.
-     */
-    costMetricSourceName?: string;
-
 }
 
 

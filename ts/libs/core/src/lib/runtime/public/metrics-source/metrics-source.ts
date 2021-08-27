@@ -7,7 +7,7 @@ import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series'
 export interface MetricsSource {
 
     /**
-     * Gets the `TimeSeriesSource` with the specified `name` or the
+     * Gets the {@link TimeSeriesSource} with the specified `name` or the
      * default one, if no `name` is specified.
      *
      * @param name The fully qualified name of the `TimeSeriesSource`. If not specified, the default `TimeSeriesSource` is returned.
@@ -16,18 +16,16 @@ export interface MetricsSource {
     getTimeSeriesSource(name?: string): TimeSeriesSource;
 
     /**
-     * Gets a `ComposedMetricSource` for the specified `metricType` and `sloTarget`, optionally configured with `params`.
-     *
-     * This will return the default source for the `metricType`, unless `metricSourceName` is specified.
+     * Gets a {@link ComposedMetricSource} for the specified `metricType` and `SloTarget` type (contained in `params`).
      *
      * @param metricType The type of composed metric that the source should supply.
      * @param params Parameters to configure the composed metric source.
-     * @param metricSourceName (optional) The full name of the `ComposedMetricSource` that should be obtained
+     * @returns A new {@link ComposedMetricSource} for the {@link ComposedMetricType} and {@link SloTarget} type combination
+     * or `undefined` if none is registered for this combination and also no fallback has been registered.
      */
     getComposedMetricSource<V, P extends ComposedMetricParams>(
         metricType: ComposedMetricType<V, P>,
         params: P,
-        metricSourceName?: string,
     ): ComposedMetricSource<V>;
 
 }
