@@ -1,7 +1,9 @@
 {
     "extends": "../../tsconfig.base.json",
     "files": [],
-    "include": [],
+    "include": [
+        "src/typing.d.ts"
+    ],
     "references": [
         {
             "path": "./tsconfig.lib.json"

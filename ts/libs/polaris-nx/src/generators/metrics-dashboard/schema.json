@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "id": "MetricsDashboard",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What name would you like to use for the dashboard?"
+        },
+        "panelType": {
+            "type": "string",
+            "description": "Specify the panel type for the metric (i.e., graph, gauge, bargauge, table, stat)",
+            "alias": "p"
+        },
+        "directory": {
+            "type": "string",
+            "description": "A directory where the project is placed (working directory is base directory)",
+            "alias": "d"
+        },
+        "tags": {
+            "type": "string",
+            "description": "Add tags to the dashboard",
+            "alias": "t"
+        },
+        "datasource": {
+            "type": "string",
+            "description": "The datasource to connect the dashboard with",
+            "alias": "ds"
+        },
+        "refresh": {
+            "type": "string",
+            "description": "The refresh rate of the dashboard (i.e., 5s, 10s, 1m,...)",
+            "alias": "r"
+        },
+        "asRate": {
+            "type": "boolean",
+            "description": "Display the metric as rate with 5m",
+            "default": false
+        },
+        "grafanaUrl": {
+            "type": "string",
+            "description": "Grafana base URL (i.e., http://localhost:3000)",
+            "alias": "u"
+        },
+        "bearerToken": {
+            "type": "string",
+            "description": "Bearer Token for Grafana API (must be Admin)",
+            "alias": "b"
+        }
+    },
+    "required": [
+        "name"
+    ]
+}
