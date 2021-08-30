@@ -3,7 +3,7 @@ import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/
 import { SloMapping, SloMappingSpec } from '../../../model';
 import { DefaultMicrocontrollerFactory, MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
 import { getPolarisRuntime } from '../../../runtime/public/polaris-runtime';
-import { IndexByKey, ObservableStopper, executeSafely } from '../../../util';
+import { IndexByKey, Logger, ObservableStopper, executeSafely } from '../../../util';
 import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
 import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
 import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from './slo-control-loop';
@@ -78,7 +78,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
             }),
             map(() => {
                 this.registeredSlos.set(key, { slo, stopper: new ObservableStopper() });
-                console.log(`Control loop: Successfully added new SLO: ${key}`);
+                Logger.log(`Control loop: Successfully added new SLO: ${key}`);
                 return slo;
             }),
             take(1),
@@ -169,7 +169,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
                 take(1),
             );
             sloEval$.subscribe({
-                next: () => console.log(
+                next: () => Logger.log(
                     `SLO ${key} evaluated successfully in ${slo.lastEvaluationFinished.valueOf() - slo.lastEvaluationStarted.valueOf()}ms.`,
                 ),
                 error: err => console.error(err),

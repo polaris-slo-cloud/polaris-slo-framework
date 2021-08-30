@@ -1,4 +1,4 @@
-import { PolarisRuntime } from '@polaris-sloc/core'
+import { Logger, PolarisRuntime } from '@polaris-sloc/core'
 import { PrometheusComposedMetricSourceFactory } from './composed-metrics';
 import { PrometheusConfig } from './config'
 import { PrometheusTimeSeriesSource } from './time-series/public'
@@ -11,7 +11,7 @@ import { PrometheusTimeSeriesSource } from './time-series/public'
  * @param setAsDefaultSource If `true`, Prometheus will be set as the default `TimeSeriesSource` and as the composed metric fallback source.
  */
 export function initPrometheusQueryBackend(runtime: PolarisRuntime, config: PrometheusConfig, setAsDefaultSource: boolean = false): void {
-    console.log('Initializing PrometheusQueryBackend with config:', config);
+    Logger.log('Initializing PrometheusQueryBackend with config:', config);
     runtime.metricsSourcesManager.addTimeSeriesSource(new PrometheusTimeSeriesSource(config), setAsDefaultSource);
 
     if (setAsDefaultSource) {

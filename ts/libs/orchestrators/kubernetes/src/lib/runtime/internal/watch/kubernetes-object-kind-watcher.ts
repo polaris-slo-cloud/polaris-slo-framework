@@ -1,6 +1,7 @@
 import { KubeConfig, KubernetesObject, Watch } from '@kubernetes/client-node';
 import {
     ApiObject,
+    Logger,
     ObjectKind,
     ObjectKindPropertiesMissingError,
     ObjectKindWatcher,
@@ -66,20 +67,20 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                 // This is the done callback.
                 // It is called if the watch terminates normally.
                 if (err) {
-                    console.log(err);
+                    Logger.log(err);
                 }
                 this.watchReq = null;
                 this.stopWatch();
             },
         );
 
-        console.log(`Started watch on ${path}`);
+        Logger.log(`Started watch on ${path}`);
         this.watchReq = watchReq;
     }
 
     stopWatch(): void {
         if (this.watchReq) {
-            console.log(`Stopping watch on ${this.getWatchPath(this.kind)}`);
+            Logger.log(`Stopping watch on ${this.getWatchPath(this.kind)}`);
 
             // We need to avoid an infinite loop between the watch's done callback and stopWatch().
             const watchReq = this.watchReq;
@@ -87,7 +88,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
             try {
                 watchReq.abort();
             } catch(err) {
-                console.log(err);
+                Logger.log(err);
             }
         }
 
@@ -142,7 +143,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                 fn(polarisObj);
             }
         } catch (err) {
-            console.log(err);
+            Logger.log(err);
         }
     }
 

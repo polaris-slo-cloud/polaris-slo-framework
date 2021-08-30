@@ -1,5 +1,5 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { ApiObject, ContainerResources, ObjectKind, PolarisRuntime, initPolarisRuntime } from '@polaris-sloc/core';
+import { ApiObject, ContainerResources, Logger, ObjectKind, PolarisRuntime, initPolarisRuntime } from '@polaris-sloc/core';
 import { KubernetesPolarisRuntime } from './runtime';
 import { ApiObjectTransformer, ContainerResourcesTransformer, ObjectKindTransformer } from './transformation';
 
@@ -9,7 +9,7 @@ import { ApiObjectTransformer, ContainerResourcesTransformer, ObjectKindTransfor
  * @param kubeConfig The Kubernetes configuration that should be used to configure the `KubernetesPolarisRuntime`.
  */
 export function initPolarisKubernetes(kubeConfig: KubeConfig): PolarisRuntime {
-    console.log('Initializing Kubernetes connector with KUBECONFIG:', kubeConfig);
+    Logger.log('Initializing Kubernetes connector with KUBECONFIG:', kubeConfig);
     const runtime = new KubernetesPolarisRuntime(kubeConfig);
     registerTransformers(runtime);
     initPolarisRuntime(runtime);

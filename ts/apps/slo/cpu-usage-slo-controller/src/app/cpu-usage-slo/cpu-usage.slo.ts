@@ -1,6 +1,7 @@
 import { CpuUsageSloConfig } from '@polaris-sloc/common-mappings';
 import {
     LabelFilters,
+    Logger,
     MetricsSource,
     ObservableOrPromise,
     PolarisRuntime,
@@ -52,7 +53,7 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
             .filterOnLabel(LabelFilters.regex('pod', `${this.sloMapping.spec.targetRef.name}.*`))
             .execute()
             .then(result => {
-                console.log(JSON.stringify(result, null, '    '));
+                Logger.log(JSON.stringify(result, null, '    '));
                 if (result.results.length === 0) {
                     throw new Error('Metric could not be read.');
                 }

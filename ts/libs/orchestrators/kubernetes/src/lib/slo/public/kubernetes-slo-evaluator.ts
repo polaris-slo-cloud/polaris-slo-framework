@@ -1,5 +1,5 @@
 import { KubernetesObject, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ApiObject, PolarisRuntime, SloEvaluatorBase, SloOutput } from '@polaris-sloc/core';
+import { ApiObject, Logger, PolarisRuntime, SloEvaluatorBase, SloOutput } from '@polaris-sloc/core';
 import { KubernetesObjectWithSpec } from '../../model';
 
 export class KubernetesSloEvaluator extends SloEvaluatorBase {
@@ -16,18 +16,18 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
         const elasticityStrategy = this.polarisRuntime.elasticityStrategyService.fromSloOutput(elasticityStrategyName, sloOutput);
         const k8sElasticityStrat = this.transformToKubernetesObject(elasticityStrategy);
 
-        console.log(`SLO ${k8sElasticityStrat.metadata.name}: Applying elasticityStrategy`, k8sElasticityStrat);
+        Logger.log(`SLO ${k8sElasticityStrat.metadata.name}: Applying elasticityStrategy`, k8sElasticityStrat);
         return this.k8sClient.create(
             k8sElasticityStrat,
         ).catch(err => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (err?.body?.reason === 'AlreadyExists') {
-                console.log('Resource already exists, trying to replace it');
+                Logger.log('Resource already exists, trying to replace it');
                 return this.updateExistingElasticityStrategy(k8sElasticityStrat);
             }
             throw err;
         }).then(
-            () => console.log('Resource successfully created/replaced'),
+            () => Logger.log('Resource successfully created/replaced'),
         );
     }
 

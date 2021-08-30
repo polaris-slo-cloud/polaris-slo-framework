@@ -1,7 +1,7 @@
 import { of as observableOf, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, take, timeout } from 'rxjs/operators';
 import { ElasticityStrategy, ElasticityStrategyKind, SloTarget } from '../../../model';
-import { IndexByKey, executeSafely } from '../../../util';
+import { IndexByKey, Logger, executeSafely } from '../../../util';
 import { ElasticityStrategyController, ElasticityStrategyExecutionError } from '../common';
 import { ElasticityStrategyKindControllerPair, ElasticityStrategyWatchEventsHandler } from './elasticity-strategy-manager';
 
@@ -38,7 +38,7 @@ export class DefaultElasticityStrategyWatchEventsHandler<O = any, T extends SloT
     private processElasticityStrategy(elasticityStrategy: ElasticityStrategy<O, T, C>): void {
         const elasticityStratId = this.getElasticityStrategyId(elasticityStrategy);
         if (this.executingStrategies.has(elasticityStratId)) {
-            console.log('Skipping ElasticityStrategy, because it is already executing.', elasticityStrategy);
+            Logger.log('Skipping ElasticityStrategy, because it is already executing.', elasticityStrategy);
         }
 
         observableOf(null).pipe(

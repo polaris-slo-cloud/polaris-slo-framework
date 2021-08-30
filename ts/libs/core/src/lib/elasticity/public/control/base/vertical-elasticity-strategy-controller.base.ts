@@ -11,6 +11,7 @@ import {
     SloTarget,
 } from '../../../../model';
 import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
+import { Logger } from '../../../../util';
 import { ElasticityStrategyExecutionError, StabilizationWindowTracker, VerticalElasticityStrategyConfig } from '../../common';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
@@ -58,7 +59,7 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
     abstract computeResources(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>, container: Container): Promise<ContainerResources>;
 
     async execute(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<void> {
-        console.log('Executing elasticity strategy:', elasticityStrategy);
+        Logger.log('Executing elasticity strategy:', elasticityStrategy);
         const target = await this.loadTarget(elasticityStrategy);
 
         const containers = target.spec.template.spec.containers;
@@ -75,7 +76,7 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
         newResources = this.normalizeResources(newResources, elasticityStrategy.spec.staticConfig);
 
         if (!this.checkIfOutsideStabilizationWindow(elasticityStrategy, container.resources, newResources)) {
-            console.log(
+            Logger.log(
                 'Skipping scaling, because stabilization window has not yet passed for: ',
                 elasticityStrategy,
             );
@@ -85,7 +86,7 @@ export abstract class VerticalElasticityStrategyControllerBase<T extends SloTarg
         container.resources = newResources;
         await this.orchClient.update(target);
         this.stabilizationWindowTracker.trackExecution(elasticityStrategy);
-        console.log('Successfully scaled.', elasticityStrategy, newResources);
+        Logger.log('Successfully scaled.', elasticityStrategy, newResources);
     }
 
     onElasticityStrategyDeleted?(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): void {
