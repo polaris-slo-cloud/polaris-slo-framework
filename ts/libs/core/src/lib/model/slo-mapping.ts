@@ -29,7 +29,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
     /**
      * Configuration parameters for the SLO.
      *
-     * @note If `T` is a class, the `@PolarisType` decorator needs to be applied in the
+     * @note If `C` is a class, the `@PolarisType` decorator needs to be applied in the
      * concrete class that implements `SloMappingSpec`.
      */
     sloConfig: C;
@@ -117,6 +117,6 @@ export abstract class SloMappingBase<T extends SloMappingSpec<any, any, any>> ex
 export type SloMapping<C, O, T extends SloTarget = SloTarget> = SloMappingBase<SloMappingSpec<C, O, T>>;
 
 /**
- * Convenience type to define the type of initilization data for the constructor of an `SloMapping`.
+ * Convenience type to define the type of initialization data for the constructor of an `SloMapping`.
  */
 export type SloMappingInitData<T> = Partial<Omit<T, 'objectKind'>>;

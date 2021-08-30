@@ -6,7 +6,7 @@ import { PrometheusComposedMetricSource } from './prometheus-composed-metric-sou
  */
 export class PrometheusComposedMetricSourceFactory implements GenericComposedMetricSourceFactory  {
 
-    readonly metricSourceName = '*/prometheus-composed-metric-source';
+    readonly metricSourceName = 'metrics.polaris-slo-cloud.github.io/*/prometheus-composed-metric-source';
 
     createSource<M extends ComposedMetricType<V, P>, V = any, P extends ComposedMetricParams = ComposedMetricParams>(
         metricType: M, params: P, polarisRuntime: PolarisRuntime,
