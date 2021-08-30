@@ -41,27 +41,3 @@ export interface GrafanaDashboardGeneratorNormalizedSchema {
     toDisk: boolean;
 }
 
-/**
- * Types to store the response of /api/dashboards/db
- * See: https://grafana.com/docs/grafana/latest/http_api/dashboard/#create--update-dashboard
- */
-export interface GrafanaDashboardDbResponse {
-    id: number;
-    slug: string;
-    status: string;
-    uid: string;
-    url: string;
-    version: string;
-}
-
-export interface GrafanaDashboardDbError {
-    response: {
-        // HTTP code
-        status: number;
-        statusText: string;
-        data: {
-            message: string;
-            status: string;
-        }
-    }
-}

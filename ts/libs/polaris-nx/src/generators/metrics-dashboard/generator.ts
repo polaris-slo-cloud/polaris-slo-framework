@@ -1,20 +1,14 @@
-import { CoreV1Api, KubeConfig } from '@kubernetes/client-node';
 import { Tree, names } from '@nrwl/devkit';
-import axios from 'axios';
 import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
 import {
-    GrafanaDashboardDbError,
-    GrafanaDashboardDbResponse,
+    readGrafanaBearerTokenFromKubernetes,
+    readGrafanaUrlFromEnv, saveDashboard,
+} from '../../util/grafana';
+import {
     GrafanaDashboardGeneratorNormalizedSchema,
     GrafanaDashboardGeneratorSchema,
 } from './schema';
 
-async function readBearerToken(kubeConfig: KubeConfig): Promise<string> {
-    const client = kubeConfig.makeApiClient(CoreV1Api);
-    const secret = await client.readNamespacedSecret('grafana', 'default');
-    const bearerToken = secret.body.data['bearerToken'];
-    return Buffer.from(bearerToken, 'base64').toString('binary');
-}
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
     const normalizedName = names(options.name).name;
@@ -34,22 +28,11 @@ async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSc
         toDisk = true;
     } else {
         if (grafanaUrl === '') {
-            const grafanaHost = process.env['GRAFANA_HOST'] || 'localhost';
-            const grafanaPort = process.env['GRAFANA_PORT'] || 3000;
-            grafanaUrl = `http://${grafanaHost}:${grafanaPort}`;
+            grafanaUrl = readGrafanaUrlFromEnv();
         }
         console.log(`Grafana instance: ${grafanaUrl}`);
         if (bearerToken === '') {
-            try {
-                const kubeConfig = new KubeConfig();
-                kubeConfig.loadFromDefault();
-                if (bearerToken === '') {
-                    bearerToken = await readBearerToken(kubeConfig);
-                }
-            } catch (e) {
-                throw new Error('Failed to connect to kubeconfig - can not read Bearertoken.');
-            }
-
+            bearerToken = await readGrafanaBearerTokenFromKubernetes();
         }
     }
 
@@ -177,55 +160,6 @@ function generateDashboard(options: GrafanaDashboardGeneratorNormalizedSchema): 
     return sanitizeForPrometheus(dashboard.generate(), options.datasource);
 }
 
-/**
- * Calls the Grafana REST API and creates a new dashboard
- *
- * @param dashboard
- * @param options
- */
-function createDashboardApi(dashboard: string, options: GrafanaDashboardGeneratorNormalizedSchema): Promise<void> {
-    const body = {
-        dashboard,
-        folderId: 0,
-        message: `Create dashboard ${options.name}`,
-        overwrite: false,
-    };
-    const config = {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: { Authorization: `Bearer ${options.bearerToken}` },
-        // in ms
-        timeout: 5000,
-    };
-    const url = `${options.grafanaUrl}/api/dashboards/db`;
-    return axios.post<GrafanaDashboardDbResponse>(url, body, config).then(response => {
-        const data: GrafanaDashboardDbResponse = response.data;
-        console.log(`Dashboard created successfully: ${options.grafanaUrl}${data.url}`);
-    }).catch((error: GrafanaDashboardDbError) => {
-        const message = error.response.data.message;
-        const status = error.response.data.status;
-        console.error(`Creating dashboard failed: Status: ${status} - Message: ${message}`);
-    });
-}
-
-/**
- * Depending on the given options, will write the dashboard either to disk or POST it to the specified Grafana API
- * For more info on the REST API: https://grafana.com/docs/grafana/latest/http_api/dashboard/
- *
- * @param host used in case the dashboard should be written to disk
- * @param dashboard the dashboard as JSON
- * @param options specifies mode of operation (to, and contains API Bearer token and URL
- */
-function saveDashboard(host: Tree, dashboard: typeof Dashboard, options: GrafanaDashboardGeneratorNormalizedSchema): Promise<void> {
-    if (options.toDisk) {
-        const stringified = JSON.stringify(dashboard);
-        const filePath = `${options.destDir}/${options.name}.json`;
-        console.log(`Write grafana dashboard to ${filePath}`);
-        host.write(filePath, `${stringified}`);
-        return Promise.resolve();
-    } else {
-        return createDashboardApi(dashboard, options);
-    }
-}
 
 export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
     try {
@@ -236,7 +170,7 @@ export default async function(host: Tree, options: GrafanaDashboardGeneratorSche
             console.error('Failed dashboard generation', e);
         });
     } catch (e) {
-        console.error(e)
+        console.error(e);
         return Promise.resolve();
     }
 }

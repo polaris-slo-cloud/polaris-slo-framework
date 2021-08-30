@@ -43,3 +43,30 @@ Example usage (pushes dashboard to Grafana instance):
 
     polaris-cli g metrics-dashboard test-dash 
     
+## Metrics Alert Generation
+
+The CLI also provides means to add alerts to the dashboard.
+The current implementation targets the Grafana platform and therefore parameters orient towards this dashboard software.
+
+The following parameters are available (`name`/`dashboardId`, and `panel` are mandatory - the defaults are taken from a default Grafana installation)
+
+* `name`/`dashboardId`: the ID of the dashboard in which the panel resides
+* `panel`: the name of the panel to which you want to add an alert
+* `evaluateEvery`: Evaluation interval (default: 1m)
+* `for`: Evaluation duration (default: `5m`)
+  * `when`: Reducer function for metric (default: `avg`)
+* `of`: Query (default: `['A', '5m', 'now']`)
+* `threshold`: The threshold the metric is now allowed to surpass (default: `0.3`)
+* `grafanaUrl`: Grafana base URL (i.e., http://localhost:3000)
+    * default is read from following environment variables: `GRAFANA_URL` (default: `localhost`), `GRAFANA_PORT` (
+      default: `3000`)
+* `bearerToken`: Bearer Token for Grafana API (must be Admin)
+    * default: pulled from Kubernetes' Secrets (`namespace: default`, `name: grafana`
+      , `body: {"bearerToken": "secret_token"}`)
+        * created with `kubectl create secret generic grafana --from-literal=bearerToken=secret_token`
+* `directory`: dictates in which directory the file should be exported (relative to the working directory)
+    * default: empty - optional
+
+Example usage:
+
+    polaris-cli g metrics-alert wPD1Cn4nz --panel='"Process CPU seconds total"'
