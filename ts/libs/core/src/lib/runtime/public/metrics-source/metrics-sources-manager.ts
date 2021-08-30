@@ -1,4 +1,4 @@
-import { ComposedMetricSourceFactory, ComposedMetricType } from '../../../composed-metrics';
+import { ComposedMetricSourceFactory, ComposedMetricType, GenericComposedMetricSourceFactory } from '../../../composed-metrics';
 import { ObjectKind } from '../../../model';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
@@ -40,14 +40,14 @@ export interface MetricsSourcesManager extends MetricsSource {
     addComposedMetricSourceFactory(factory: ComposedMetricSourceFactory<ComposedMetricType<any, any>>, sloTargetType?: ObjectKind): void;
 
     /**
-     * Adds the specified {@link ComposedMetricSourceFactory} to this manager as the fallback factory to use
+     * Adds the specified {@link GenericComposedMetricSourceFactory} to this manager as the fallback factory to use
      * in the following cases:
      * - if no factory is registered for a particular `ComposedMetricType` or
      * - if none of the factories registered for a `ComposedMetricType` match the requested `SloTarget` type
      *   and there is no fallback factory within that `ComposedMetricType.
      *
-     * @param factory The `ComposedMetricSourceFactory` that should be added.
+     * @param factory The `GenericComposedMetricSourceFactory` that should be added.
      */
-    setFallbackComposedMetricSourceFactory(factory: ComposedMetricSourceFactory<ComposedMetricType<any, any>>): void;
+    setFallbackComposedMetricSourceFactory(factory: GenericComposedMetricSourceFactory): void;
 
 }

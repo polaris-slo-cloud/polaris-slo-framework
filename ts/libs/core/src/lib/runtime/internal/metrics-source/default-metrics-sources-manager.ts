@@ -1,4 +1,10 @@
-import { ComposedMetricParams, ComposedMetricSource, ComposedMetricSourceFactory, ComposedMetricType } from '../../../composed-metrics';
+import {
+    ComposedMetricParams,
+    ComposedMetricSource,
+    ComposedMetricSourceFactory,
+    ComposedMetricType,
+    GenericComposedMetricSourceFactory,
+} from '../../../composed-metrics';
 import { ObjectKind } from '../../../model';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
 import { PolarisRuntime } from '../../public';
@@ -35,7 +41,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
      */
     private composedMetricSourceFactories: Map<string, ComposedMetricTypeFactories> = new Map();
 
-    private fallbackComposedMetricSourceFactory: ComposedMetricSourceFactory<ComposedMetricType<any, any>>;
+    private fallbackComposedMetricSourceFactory: GenericComposedMetricSourceFactory;
 
     constructor(private polarisRuntime: PolarisRuntime) {}
 
@@ -80,7 +86,7 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         }
     }
 
-    setFallbackComposedMetricSourceFactory(factory: ComposedMetricSourceFactory<ComposedMetricType<any, any>>): void {
+    setFallbackComposedMetricSourceFactory(factory: GenericComposedMetricSourceFactory): void {
         this.fallbackComposedMetricSourceFactory = factory;
     }
 
@@ -88,22 +94,21 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         metricType: ComposedMetricType<V, P>,
         params: P,
     ): ComposedMetricSource<V> {
-        let factory: ComposedMetricSourceFactory<ComposedMetricType<any, any>>;
-
         const typeFactories = this.composedMetricSourceFactories.get(metricType.metricTypeName);
+
         if (typeFactories) {
             const targetTypeStr = ObjectKind.stringify(params.sloTarget);
-            factory = typeFactories.factories.get(targetTypeStr) ?? typeFactories.fallbackFactory;
-        }
-
-        if (!factory) {
-            factory = this.fallbackComposedMetricSourceFactory;
-            if (!factory) {
-                return undefined;
+            const factory = typeFactories.factories.get(targetTypeStr) ?? typeFactories.fallbackFactory;
+            if (factory) {
+                return factory.createSource(params, this.polarisRuntime);
             }
         }
 
-        return factory.createSource(params, this.polarisRuntime);
+        if (this.fallbackComposedMetricSourceFactory) {
+            return this.fallbackComposedMetricSourceFactory.createSource(metricType, params, this.polarisRuntime);
+        }
+
+        return undefined;
     }
 
 }
