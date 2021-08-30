@@ -17,4 +17,7 @@ resources:
 - group: elasticity
   kind: VerticalElasticityStrategy
   version: v1
+- group: metrics
+  kind: CostEfficiencyMetricMapping
+  version: v1
 version: "2"

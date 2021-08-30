@@ -1,4 +1,4 @@
-import { ComposedMetricParams, ComposedMetricType } from '@polaris-sloc/core';
+import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ComposedMetricType, ObjectKind } from '@polaris-sloc/core';
 import { TotalCost } from './total-cost';
 
 /**
@@ -63,5 +63,22 @@ export class CostEfficiencyMetric extends ComposedMetricType<CostEfficiency, Cos
     static readonly instance = new CostEfficiencyMetric();
 
     readonly metricTypeName = 'metrics.polaris-slo-cloud.github.io/cost-efficiency';
+
+}
+
+/**
+ * Used to configure a cost efficiency composed metric controller to compute
+ * its metric for a specific target.
+ */
+export class CostEfficiencyMetricMapping extends ComposedMetricMapping<ComposedMetricMappingSpec<CostEfficiencyParams>> {
+
+    constructor(initData?: Partial<CostEfficiencyMetricMapping>) {
+        super(initData);
+        this.objectKind = new ObjectKind({
+            group: 'metrics.polaris-slo-cloud.github.io',
+            version: 'v1',
+            kind: 'CostEfficiencyMetricMapping',
+        });
+    }
 
 }

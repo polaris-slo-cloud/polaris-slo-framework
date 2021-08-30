@@ -1,0 +1,24 @@
+# permissions for end users to edit costefficiencymetricmappings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: costefficiencymetricmapping-editor-role
+rules:
+- apiGroups:
+  - metrics.polaris-slo-cloud.github.io
+  resources:
+  - costefficiencymetricmappings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - metrics.polaris-slo-cloud.github.io
+  resources:
+  - costefficiencymetricmappings/status
+  verbs:
+  - get
