@@ -1,3 +1,4 @@
+import { ComposedMetricsManager, DefaultComposedMetricsManager } from '../../../composed-metrics';
 import {
     DefaultElasticityStrategyManager,
     DefaultElasticityStrategyService,
@@ -43,6 +44,10 @@ export abstract class PolarisRuntimeBase implements PolarisRuntime {
 
     createWatchManager(): WatchManager {
         return new DefaultWatchManager(this);
+    }
+
+    createComposedMetricsManager(): ComposedMetricsManager {
+        return new DefaultComposedMetricsManager(this);
     }
 
 }

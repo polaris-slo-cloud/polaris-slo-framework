@@ -3,8 +3,8 @@ import { ComposedMetricMapping, ObjectKind } from '../../../model';
 import { WatchEventsHandler } from '../../../runtime';
 import { ComposedMetricParams, ComposedMetricSourceFactory, ComposedMetricType } from '../../public/common';
 
-/** The default timeout period for composed metric calculations. */
-export const COMPOSED_METRIC_COMPUTATION_DEFAULT_TIMEOUT_MS = 60 * 1000;
+/** The default interval for composed metric calculations. */
+export const COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS = 5 * 1000;
 
 /**
  * Represents configuration for one a composed metric type that is calculated by a composed metric controller.
@@ -13,7 +13,11 @@ export const COMPOSED_METRIC_COMPUTATION_DEFAULT_TIMEOUT_MS = 60 * 1000;
  * @param V The TypeScript type that represents the values of the composed metric.
  * @param P Optional parameters that can be used to configure the {@link ComposedMetricSource}.
  */
-export interface ComposedMetricComputationConfig<M extends ComposedMetricType<V, P>, V = any, P extends ComposedMetricParams = ComposedMetricParams> {
+export interface ComposedMetricComputationConfig<
+    M extends ComposedMetricType<V, P> = ComposedMetricType<any, any>,
+    V = any,
+    P extends ComposedMetricParams = ComposedMetricParams
+> {
 
     /** The {@link ComposedMetricType} that should be computed. */
     metricType: M;
@@ -34,19 +38,19 @@ export interface ComposedMetricsManagerConfig {
     /**
      * The `ComposedMetricMapping` kinds that should be watched and their respective metric types and factories.
      */
-    kindsToWatch: ComposedMetricComputationConfig<any, any>[];
+    kindsToWatch: ComposedMetricComputationConfig[];
 
     /**
-     * The factory that will create the `ComposedMetricCollectors` for storing the computed metrics.
+     * The factories that will create the `ComposedMetricCollectors` for storing the computed metrics.
      */
-    collectorFactory: ComposedMetricCollectorFactory;
+    collectorFactories: ComposedMetricCollectorFactory[];
 
     /**
-     * The number of milliseconds after which a composed metric computation execution should time out.
+     * The length of the evaluation interval is milliseconds..
      *
-     * If this is not specified, {@link COMPOSED_METRIC_COMPUTATION_DEFAULT_TIMEOUT_MS} is used.
+     * If this is not specified, {@link COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS} is used.
      */
-    timeoutMs?: number;
+    evaluationIntervalMs?: number;
 
 }
 
