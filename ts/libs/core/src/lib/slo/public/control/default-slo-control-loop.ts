@@ -64,7 +64,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
             }),
             catchError(err => {
                 const errorMsg = `An error occurred while configuring SLO ${key}.`;
-                console.error(errorMsg, err);
+                Logger.error(errorMsg, err);
                 return throwError(new SloControlLoopError(this, errorMsg, err));
             }),
             timeout(this.loopConfig.sloTimeoutMs),
@@ -73,7 +73,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
                     return throwError(err);
                 }
                 const errorMsg = `SLO ${key} has timed out during configuration.`;
-                console.error(errorMsg);
+                Logger.error(errorMsg);
                 return throwError(new SloControlLoopError(this, errorMsg));
             }),
             map(() => {
@@ -128,7 +128,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
         ).subscribe({
             next: () => this.executeLoopIteration(),
             error: (err) => {
-                console.error(err);
+                Logger.error(err);
                 this.stop();
             },
         });
@@ -172,7 +172,7 @@ export class DefaultSloControlLoop implements SloControlLoop {
                 next: () => Logger.log(
                     `SLO ${key} evaluated successfully in ${slo.lastEvaluationFinished.valueOf() - slo.lastEvaluationStarted.valueOf()}ms.`,
                 ),
-                error: err => console.error(err),
+                error: err => Logger.error(err),
             });
         });
     }

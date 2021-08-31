@@ -1,10 +1,8 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import {
-    CostEfficiencyMetric,
-    CostEfficiencyMetricMapping,
-    initPolarisLib as initCommonMappingsLib,
-} from '@polaris-sloc/common-mappings';
+import { CostEfficiencyMetric, CostEfficiencyMetricMapping, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { Logger } from '@polaris-sloc/core';
 import { RestApiCostEfficiencyMetricSourceFactory, initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { PrometheusComposedMetricsCollectorManager, initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
@@ -43,4 +41,4 @@ manager.startWatching({
             metricSourceFactory: new RestApiCostEfficiencyMetricSourceFactory(),
         },
     ],
-}).catch(error => void console.error(error))
+}).catch(error => void Logger.error(error))

@@ -1,5 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { Logger } from '@polaris-sloc/core';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
@@ -33,4 +34,4 @@ sloControlLoop.start({
 // Create a WatchManager and watch the supported SLO mapping kinds.
 const watchManager = polarisRuntime.createWatchManager();
 watchManager.startWatchers([ new CpuUsageSloMapping().objectKind ], sloControlLoop.watchHandler)
-    .catch(error => void console.error(error))
+    .catch(error => void Logger.error(error))

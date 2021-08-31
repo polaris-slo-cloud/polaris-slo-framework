@@ -2,7 +2,7 @@ import { interval } from 'rxjs';
 import { finalize, take, takeUntil, timeout } from 'rxjs/operators';
 import { ComposedMetricMapping, ObjectKind } from '../../../model';
 import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../runtime';
-import { ObservableStopper, executeSafely } from '../../../util';
+import { Logger, ObservableStopper, executeSafely } from '../../../util';
 import { ComposedMetricError, ComposedMetricMappingError, ComposedMetricParams, ComposedMetricSource } from '../common';
 import { ComposedMetricCollector } from './composed-metric-collector';
 import {
@@ -72,7 +72,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager {
         ).subscribe({
             next: () => this.executeLoopIteration(),
             error: (err) => {
-                console.error(err);
+                Logger.error(err);
                 this.stopWatching();
             },
         });
@@ -168,7 +168,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager {
                         collector => executeSafely(() => collector.collect(value)),
                     );
                 },
-                error: err => console.error(err),
+                error: err => Logger.error(err),
             });
         });
     }

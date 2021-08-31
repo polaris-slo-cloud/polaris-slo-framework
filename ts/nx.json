@@ -69,10 +69,7 @@
     },
     "metrics-rest-api-cost-efficiency-controller": {
       "tags": [
-        "scope:core",
-        "scope:metric",
-        "orchestrator:kubernetes",
-        "query:prometheus"
+        "scope:metrics-controller"
       ]
     },
     "orchestrators-kubernetes": {
