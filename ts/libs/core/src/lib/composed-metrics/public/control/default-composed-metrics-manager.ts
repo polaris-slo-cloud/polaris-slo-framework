@@ -75,7 +75,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager {
                 console.error(err);
                 this.stopWatching();
             },
-        })
+        });
     }
 
     stopWatching(): void {

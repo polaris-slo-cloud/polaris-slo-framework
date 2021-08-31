@@ -26,3 +26,11 @@ export const PROM_COMPOSED_METRIC_LABELS = Object.freeze({
 export function getPrometheusMetricNameWithoutPrefix(metricType: ComposedMetricType<any>): string {
     return snakeCase(metricType.metricTypeName);
 }
+
+/**
+ * Gets the full Prometheus name of the composed metric with the `polaris_composed` prefix.
+ */
+ export function getPrometheusMetricName(metricType: ComposedMetricType<any>): string {
+    return `${PROM_COMPOSED_METRIC_LABELS.metricPrefix}_${getPrometheusMetricNameWithoutPrefix(metricType)}`;
+}
+
