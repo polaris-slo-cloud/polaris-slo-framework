@@ -27,28 +27,9 @@
     }
   },
   "projects": {
-    "core": {
+    "cli-polaris-cli": {
       "tags": [
-        "scope:core"
-      ]
-    },
-    "ui-polaris-ui": {
-      "tags": [
-        "scope:ui"
-      ]
-    },
-    "ui-polaris-ui-e2e": {
-      "tags": [
-        "scope:ui"
-      ],
-      "implicitDependencies": [
-        "ui-polaris-ui"
-      ]
-    },
-    "slo-cpu-usage-slo-controller": {
-      "tags": [
-        "scope:slo",
-        "orchestrator:kubernetes"
+        "cli"
       ]
     },
     "cli-polaris-k8s-serializer": {
@@ -58,8 +39,20 @@
         "query:prometheus"
       ]
     },
-    "orchestrators-kubernetes": {
+    "core": {
       "tags": [
+        "scope:core"
+      ]
+    },
+    "elasticity-horizontal-elasticity-strategy-controller": {
+      "tags": [
+        "scope:elasticity",
+        "orchestrator:kubernetes"
+      ]
+    },
+    "elasticity-vertical-elasticity-strategy-controller": {
+      "tags": [
+        "scope:elasticity",
         "orchestrator:kubernetes"
       ]
     },
@@ -68,23 +61,23 @@
         "scope:core"
       ]
     },
-    "query-backends-prometheus": {
-      "tags": [
-        "scope:core",
-        "query:prometheus"
-      ]
-    },
-    "slo-cost-efficiency-slo-controller": {
-      "tags": [
-        "scope:cli",
-        "orchestrator:kubernetes",
-        "query:prometheus"
-      ]
-    },
     "metrics-cost-efficiency": {
       "tags": [
         "scope:core",
         "scope:metric"
+      ]
+    },
+    "metrics-rest-api-cost-efficiency-controller": {
+      "tags": [
+        "scope:core",
+        "scope:metric",
+        "orchestrator:kubernetes",
+        "query:prometheus"
+      ]
+    },
+    "orchestrators-kubernetes": {
+      "tags": [
+        "orchestrator:kubernetes"
       ]
     },
     "polaris-nx": {
@@ -100,21 +93,36 @@
         "polaris-nx"
       ]
     },
-    "cli-polaris-cli": {
+    "query-backends-prometheus": {
       "tags": [
-        "cli"
+        "scope:core",
+        "query:prometheus"
       ]
     },
-    "elasticity-horizontal-elasticity-strategy-controller": {
+    "slo-cost-efficiency-slo-controller": {
       "tags": [
-        "scope:elasticity",
+        "scope:cli",
+        "orchestrator:kubernetes",
+        "query:prometheus"
+      ]
+    },
+    "slo-cpu-usage-slo-controller": {
+      "tags": [
+        "scope:slo",
         "orchestrator:kubernetes"
       ]
     },
-    "elasticity-vertical-elasticity-strategy-controller": {
+    "ui-polaris-ui": {
       "tags": [
-        "scope:elasticity",
-        "orchestrator:kubernetes"
+        "scope:ui"
+      ]
+    },
+    "ui-polaris-ui-e2e": {
+      "tags": [
+        "scope:ui"
+      ],
+      "implicitDependencies": [
+        "ui-polaris-ui"
       ]
     }
   },
