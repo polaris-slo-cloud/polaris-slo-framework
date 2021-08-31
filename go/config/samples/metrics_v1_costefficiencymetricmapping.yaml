@@ -3,5 +3,9 @@ kind: CostEfficiencyMetricMapping
 metadata:
   name: costefficiencymetricmapping-sample
 spec:
-  # Add fields here
-  foo: bar
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: mesh-gentics-mesh
+  metricConfig:
+    targetThreshold: 90

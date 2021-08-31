@@ -1,1 +1,46 @@
-console.log('Hello World!');
+import { KubeConfig } from '@kubernetes/client-node';
+import {
+    CostEfficiencyMetric,
+    CostEfficiencyMetricMapping,
+    initPolarisLib as initCommonMappingsLib,
+} from '@polaris-sloc/common-mappings';
+import { RestApiCostEfficiencyMetricSourceFactory, initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
+import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
+import { PrometheusComposedMetricsCollectorManager, initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
+import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
+
+// ToDo: It should be possible to build the composed metric controller easily for multiple orchestrators.
+
+// Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
+const k8sConfig = new KubeConfig();
+k8sConfig.loadFromDefault();
+const polarisRuntime = initPolarisKubernetes(k8sConfig);
+
+// Initialize the Prometheus query backend.
+const promHost = getEnvironmentVariable('PROMETHEUS_HOST') || 'localhost';
+const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9090
+initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, true);
+
+// Initialize the used Polaris mapping libraries
+initCommonMappingsLib(polarisRuntime);
+
+// Initialize the composed metrics
+// ToDo: remove this from SLO controller, because MetricType is enough.
+initCostEfficiencyMetrics(polarisRuntime);
+
+// Create the Prometheus scrapable endpoint.
+const promMetricsCollectorManager = new PrometheusComposedMetricsCollectorManager();
+promMetricsCollectorManager.start({});
+
+// Create a ComposedMetricsManager and watch the supported elasticity strategy kinds.
+const manager = polarisRuntime.createComposedMetricsManager();
+manager.startWatching({
+    collectorFactories: [ promMetricsCollectorManager ],
+    kindsToWatch: [
+        {
+            mappingKind: new CostEfficiencyMetricMapping().objectKind,
+            metricType: CostEfficiencyMetric.instance,
+            metricSourceFactory: new RestApiCostEfficiencyMetricSourceFactory(),
+        },
+    ],
+}).catch(error => void console.error(error))
