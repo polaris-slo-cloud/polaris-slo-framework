@@ -68,6 +68,7 @@
     "prometheus-query": "^3.0.1",
     "reflect-metadata": "~0.1.13",
     "rxjs": "6.5.5",
+    "safe-flat": "^2.0.2",
     "tslib": "^2.2.0",
     "yargs": "^17.1.1",
     "zone.js": "0.11.4"

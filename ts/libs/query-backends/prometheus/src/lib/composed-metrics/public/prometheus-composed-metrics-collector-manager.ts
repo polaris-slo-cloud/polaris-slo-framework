@@ -11,6 +11,7 @@ import {
 } from '@polaris-sloc/core';
 import * as express from 'express';
 import { Gauge, Registry, register } from 'prom-client';
+import { flattenObject } from '../internal';
 import { PROM_COMPOSED_METRIC_LABELS, getPrometheusMetricName } from './util';
 
 /** Default listen port for a Prometheus scrapable endpoint. */
@@ -32,11 +33,11 @@ export interface PrometheusCollectorManagerConfig {
 
 class SharedGauge {
 
-    readonly gauge: Gauge<string>;
-
     readonly metricName: string;
 
     private useCount = 0;
+
+    private gauge: Gauge<string>;
 
     constructor(
         metricName: string,
@@ -48,7 +49,24 @@ class SharedGauge {
             name: metricName,
             help: `Polaris ComposedMetric ${metricName}`,
             registers: [ registry ],
-            labelNames: [ PROM_COMPOSED_METRIC_LABELS.gvkLabel, PROM_COMPOSED_METRIC_LABELS.namespaceLabel, PROM_COMPOSED_METRIC_LABELS.targetNameLabel ],
+            labelNames: [
+                PROM_COMPOSED_METRIC_LABELS.gvkLabel,
+                PROM_COMPOSED_METRIC_LABELS.namespaceLabel,
+                PROM_COMPOSED_METRIC_LABELS.targetNameLabel,
+                PROM_COMPOSED_METRIC_LABELS.propertyKeyLabel,
+            ],
+        });
+    }
+
+    set(sample: Sample<any>, labels: Record<string, string>): void {
+        const flattened = flattenObject(sample.value);
+        Object.keys(flattened).forEach(propKey => {
+            const value = flattened[propKey];
+            const propLabels = {
+                ...labels,
+                [PROM_COMPOSED_METRIC_LABELS.propertyKeyLabel]: propKey,
+            };
+            this.gauge.set(propLabels, value);
         });
     }
 
@@ -84,7 +102,7 @@ class PrometheusComposedMetricCollector<V> implements ComposedMetricCollector<V>
     }
 
     collect(sample: Sample<V>): void {
-        this.sharedGauge.gauge.set({ ...this.labels }, sample.value as any);
+        this.sharedGauge.set(sample, this.labels);
     }
 
     dispose(): void {

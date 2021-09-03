@@ -16,6 +16,9 @@ export const PROM_COMPOSED_METRIC_LABELS = Object.freeze({
     /** The name of the label that stores the name of the `SloTarget`. */
     targetNameLabel: 'target_name',
 
+    /** The name of the label that stores the key of the TypeScript object's property that is stored in the respective Prometheus metric. */
+    propertyKeyLabel: 'prop_key',
+
 });
 
 /**
