@@ -28,6 +28,12 @@ export interface ComposedMetricComputationConfig<
     /** The {@link ComposedMetricSourceFactory} that creates a {@link ComposedMetricSource} when a new mapping instance is received. */
     metricSourceFactory: ComposedMetricSourceFactory<M, V, P>;
 
+    /**
+     * (optional) If set, limits the types of `SloTargets` that are supported by the {@link ComposedMetricSource}.
+     * `ComposedMetricMappings` with an `SloTarget` that does not match any of these kinds are ignored.
+     */
+    supportedSloTargetKinds?: ObjectKind[];
+
 }
 
 /**
