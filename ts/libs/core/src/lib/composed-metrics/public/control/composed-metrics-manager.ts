@@ -4,7 +4,7 @@ import { WatchEventsHandler } from '../../../runtime';
 import { ComposedMetricParams, ComposedMetricSourceFactory, ComposedMetricType } from '../../public/common';
 
 /** The default interval for composed metric calculations. */
-export const COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS = 5 * 1000;
+export const COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS = 20 * 1000;
 
 /**
  * Represents configuration for one a composed metric type that is calculated by a composed metric controller.

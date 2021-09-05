@@ -10,7 +10,7 @@ import {
     Sample,
 } from '@polaris-sloc/core';
 import * as express from 'express';
-import { Gauge, Registry, register } from 'prom-client';
+import { Gauge, Registry } from 'prom-client';
 import { flattenObject } from '../internal';
 import { PROM_COMPOSED_METRIC_LABELS, getPrometheusMetricName } from './util';
 
@@ -35,10 +35,13 @@ class SharedGauge {
 
     readonly metricName: string;
 
-    private useCount = 0;
+    private useCount = 1;
 
     private gauge: Gauge<string>;
 
+    /**
+     * Creates a new `SharedGauge` with a `useCount` of `1`.
+     */
     constructor(
         metricName: string,
         private registry: Registry,
@@ -141,8 +144,8 @@ export class PrometheusComposedMetricsCollectorManager implements ComposedMetric
 
         const expressApp = express();
         expressApp.get(this.config.path, (req, res) => {
-            res.set('Content-Type', register.contentType);
-            register.metrics()
+            res.set('Content-Type', this.registry.contentType);
+            this.registry.metrics()
                 .then(metrics => {
                     Logger.log('Scrape request - sending response:', metrics);
                     res.end(metrics);
