@@ -42,11 +42,14 @@ spec:
                 description: The cost efficiency configuration.
                 properties:
                   targetThreshold:
-                    description: "The target threshold for the `performance` metric.
-                      \n Depending on the specific metric implementation, the threshold
-                      may be considered as a lower bound (`performance` samples should
-                      be above the threshold) or as an upper bound (`performance`
-                      samples should be below the threshold)."
+                    description: "The target threshold for the `performance` part
+                      of the cost efficiency equation. \n Depending on the specific
+                      cost efficiency metric implementation, the threshold may be
+                      considered as a lower bound (`performance` samples should be
+                      above the threshold) or as an upper bound (`performance` samples
+                      should be below the threshold). \n If the implementation of
+                      the metric relies on a bucketing mechanism (e.g., Prometheus
+                      histograms), the set of allowed values may be limited."
                     format: int64
                     type: integer
                 required:

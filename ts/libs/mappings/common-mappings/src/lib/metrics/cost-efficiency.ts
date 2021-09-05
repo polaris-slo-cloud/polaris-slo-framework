@@ -36,11 +36,14 @@ export interface CostEfficiency {
 export interface CostEfficiencyParams extends ComposedMetricParams {
 
     /**
-     * The target threshold for the `performance` metric.
+     * The target threshold for the `performance` part of the cost efficiency equation.
      *
-     * Depending on the specific metric implementation, the threshold may be considered as
+     * Depending on the specific cost efficiency metric implementation, the threshold may be considered as
      * a lower bound (`performance` samples should be above the threshold) or as an
      * upper bound (`performance` samples should be below the threshold).
+     *
+     * If the implementation of the metric relies on a bucketing mechanism (e.g., Prometheus histograms),
+     * the set of allowed values may be limited.
      */
     targetThreshold: number;
 

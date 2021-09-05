@@ -8,4 +8,4 @@ spec:
     kind: StatefulSet
     name: mesh-gentics-mesh
   metricConfig:
-    targetThreshold: 90
+    targetThreshold: 250
