@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  namespace: polaris
+  name: metrics-rest-api-cost-efficiency-controller
+  labels:
+    component: metrics-rest-api-cost-efficiency-controller
+    tier: control-plane
+    polaris-controller-type: composed-metric
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      component: metrics-rest-api-cost-efficiency-controller
+      tier: control-plane
+      polaris-controller-type: composed-metric
+  endpoints:
+  - port: metrics
+    interval: 20s
