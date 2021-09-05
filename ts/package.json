@@ -14,6 +14,7 @@
     "docker:build:elasticity-vertical-elasticity-strategy-controller": "docker build -f ./apps/elasticity/vertical-elasticity-strategy-controller/Dockerfile --build-arg POLARIS_APP_TYPE=elasticity --build-arg POLARIS_APP_NAME=vertical-elasticity-strategy-controller -t polarissloc/vertical-elasticity-strategy:latest .",
     "docker:build:slo-cost-efficiency-slo-controller": "docker build -f ./apps/slo/cost-efficiency-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cost-efficiency-slo-controller -t polarissloc/slo-cost-efficiency:latest .",
     "docker:build:slo-cpu-usage-slo": "docker build -f ./apps/slo/cpu-usage-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cpu-usage-slo-controller -t polarissloc/slo-cpu-usage:latest .",
+    "docker:build:metrics-rest-api-cost-efficiency-controller": "docker build -f ./apps/metrics/rest-api-cost-efficiency-controller/Dockerfile --build-arg POLARIS_APP_TYPE=metrics --build-arg POLARIS_APP_NAME=rest-api-cost-efficiency-controller -t polarissloc/metrics-rest-api-cost-efficiency-controller:latest .",
     "docs:build": "npx typedoc --tsconfig ./tsconfig.typedoc.json",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",

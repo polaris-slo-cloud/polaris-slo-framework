@@ -16,7 +16,7 @@ const polarisRuntime = initPolarisKubernetes(k8sConfig);
 
 // Initialize the Prometheus query backend.
 const promHost = getEnvironmentVariable('PROMETHEUS_HOST') || 'localhost';
-const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9090
+const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9090;
 initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, true);
 
 // Initialize the used Polaris mapping libraries
@@ -27,8 +27,10 @@ initCommonMappingsLib(polarisRuntime);
 initCostEfficiencyMetrics(polarisRuntime);
 
 // Create the Prometheus scrapable endpoint.
+const metricsEndpointPath = getEnvironmentVariable('PROMETHEUS_METRICS_ENDPOINT_PATH');
+const metricsEndpointPort = getEnvironmentVariable('PROMETHEUS_METRICS_ENDPOINT_PORT', convertToNumber);
 const promMetricsCollectorManager = new PrometheusComposedMetricsCollectorManager();
-promMetricsCollectorManager.start({});
+promMetricsCollectorManager.start({ path: metricsEndpointPath, port: metricsEndpointPort });
 
 // Create a ComposedMetricsManager and watch the supported elasticity strategy kinds.
 const manager = polarisRuntime.createComposedMetricsManager();

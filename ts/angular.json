@@ -397,6 +397,7 @@
             "outputPath": "dist/apps/metrics/rest-api-cost-efficiency-controller",
             "main": "apps/metrics/rest-api-cost-efficiency-controller/src/main.ts",
             "tsConfig": "apps/metrics/rest-api-cost-efficiency-controller/tsconfig.app.json",
+            "externalDependencies": "none",
             "assets": [
               "apps/metrics/rest-api-cost-efficiency-controller/src/assets"
             ]
