@@ -1,13 +1,12 @@
-import { Tree, names } from '@nrwl/devkit';
-import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
+import {Tree, names} from '@nrwl/devkit';
+import {Dashboard, Panels, Row, Target} from 'grafana-dash-gen';
 import {
+    getPanels,
     readGrafanaBearerTokenFromKubernetes,
-    readGrafanaUrlFromEnv, saveDashboard,
+    readGrafanaUrlFromEnv,
+    saveDashboard,
 } from '../../util/grafana';
-import {
-    GrafanaDashboardGeneratorNormalizedSchema,
-    GrafanaDashboardGeneratorSchema,
-} from './schema';
+import {GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema} from './schema';
 
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
@@ -65,16 +64,12 @@ function sanitizeForPrometheus(dashboard: typeof Dashboard, datasource: string):
     /* eslint-disable @typescript-eslint/no-unsafe-member-access */
     /* eslint-disable @typescript-eslint/prefer-for-of */
     // During development the use of a for-of loop did not work (i.e., the variable always got the index assigned)
-    for (let i = 0; i < dashboard.rows.length; i++) {
-        const row = dashboard.rows[i];
-        row.datasource = datasource;
-        for (let j = 0; j < row.panels.length; j++) {
-            const panel = row.panels[j];
-            panel.datasource = datasource;
-            for (let k = 0; k < panel.targets.length; k++) {
-                const target = panel.targets[k];
-                delete Object.assign(target, { ['expr']: target['target'] })['target'];
-            }
+    const panels = getPanels(dashboard)
+    for (const panel of panels) {
+        panel.datasource = datasource;
+        for (let k = 0; k < panel.targets.length; k++) {
+            const target = panel.targets[k];
+            delete Object.assign(target, {['expr']: target['target']})['target'];
         }
     }
     return dashboard;
@@ -161,7 +156,7 @@ function generateDashboard(options: GrafanaDashboardGeneratorNormalizedSchema): 
 }
 
 
-export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
+export default async function (host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
     try {
         const normalizedOptions = await normalizeOptions(host, options);
         const dashboard = generateDashboard(normalizedOptions);

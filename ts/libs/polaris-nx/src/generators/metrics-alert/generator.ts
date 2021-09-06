@@ -1,10 +1,13 @@
-import { Tree } from '@nrwl/devkit';
+import {Tree} from '@nrwl/devkit';
+import {Dashboard} from 'grafana-dash-gen';
 import {
     getDashboard,
+    getPanels,
     readGrafanaBearerTokenFromKubernetes,
-    readGrafanaUrlFromEnv, saveDashboard,
+    readGrafanaUrlFromEnv,
+    saveDashboard,
 } from '../../util/grafana';
-import { MetricsAlertGeneratorSchema, MetricsAlertGeneratorSchemaNormalized } from './schema';
+import {MetricsAlertGeneratorSchema, MetricsAlertGeneratorSchemaNormalized} from './schema';
 
 async function normalizeOptions(host: Tree, options: MetricsAlertGeneratorSchema): Promise<MetricsAlertGeneratorSchemaNormalized> {
     console.log(options);
@@ -99,19 +102,21 @@ function thresholds(m: MetricsAlertGeneratorSchemaNormalized): any {
 }
 
 
-function addAlert(dashboard: any, options: MetricsAlertGeneratorSchemaNormalized): any {
+function addAlert(dashboard: typeof Dashboard, options: MetricsAlertGeneratorSchemaNormalized): any {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    for (const a of dashboard.panels) {
+    for (const panel of getPanels(dashboard)) {
         /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-        if (a['title'] === options.panel) {
-            a['alert'] = createAlert(options);
-            a['thresholds'] = thresholds(options);
+        if (panel['title'] === options.panel) {
+            panel['alert'] = createAlert(options);
+            panel['thresholds'] = thresholds(options);
+            panel['datasource'] = null;
         }
     }
+
     return dashboard;
 }
 
-export default async function(host: Tree, options: MetricsAlertGeneratorSchema): Promise<void> {
+export default async function (host: Tree, options: MetricsAlertGeneratorSchema): Promise<void> {
     try {
         const normalizedOptions = await normalizeOptions(host, options);
         let dashboard = await getDashboard(normalizedOptions.dashboardId, normalizedOptions.grafanaUrl, normalizedOptions.bearerToken);

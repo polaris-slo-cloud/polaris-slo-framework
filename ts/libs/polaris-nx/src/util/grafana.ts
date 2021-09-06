@@ -1,7 +1,7 @@
-import { Tree } from '@nrwl/devkit';
-import axios, { AxiosResponse } from 'axios';
-import { Dashboard } from 'grafana-dash-gen';
-import { createKubeConfig, readKubernetesSecret } from './kubernetes';
+import {Tree} from '@nrwl/devkit';
+import axios, {AxiosResponse} from 'axios';
+import {Dashboard, Panel} from 'grafana-dash-gen';
+import {createKubeConfig, readKubernetesSecret} from './kubernetes';
 
 export function readGrafanaUrlFromEnv(): string {
     const grafanaHost = process.env['GRAFANA_HOST'] || 'localhost';
@@ -16,6 +16,31 @@ export async function readGrafanaBearerTokenFromKubernetes(): Promise<string> {
     } catch (e) {
         throw new Error('Failed to connect to kubeconfig - can not read Bearertoken.');
     }
+}
+
+export function getPanels(dashboard: typeof Dashboard): typeof Panel[] {
+    const panels: typeof Panel = [];
+    if ('panels' in dashboard) {
+        /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+        /* eslint-disable @typescript-eslint/prefer-for-of */
+        /* eslint-disable @typescript-eslint/no-unsafe-call */
+        for (let i = 0; i < dashboard.panels.length; i++) {
+            const panel = dashboard.panels[i];
+            panels.push(panel);
+        }
+    }
+
+    if ('rows' in dashboard) {
+        for (let i = 0; i < dashboard.rows.length; i++) {
+            const row = dashboard.rows[i];
+            for (let j = 0; j < row.panels.length; j++) {
+                const panel = row.panels[j];
+                panels.push(panel);
+            }
+        }
+    }
+
+    return panels
 }
 
 
@@ -38,7 +63,7 @@ export function createDashboardApi(options: { name: string, bearerToken: string,
     };
     const config = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: { Authorization: `Bearer ${options.bearerToken}` },
+        headers: {Authorization: `Bearer ${options.bearerToken}`},
         // in ms
         timeout: 5000,
     };
@@ -57,7 +82,7 @@ export async function getDashboard(dashboardId: string, grafanaUrl: string, bear
     const url = `${grafanaUrl}/api/dashboards/uid/${dashboardId}`;
     const config = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: { Authorization: `Bearer ${bearerToken}` },
+        headers: {Authorization: `Bearer ${bearerToken}`},
         // in ms
         timeout: 5000,
     };
