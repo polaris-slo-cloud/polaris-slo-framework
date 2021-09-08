@@ -48,6 +48,10 @@ spec:
         securityContext:
           privileged: false
         env:
+          - name: PROMETHEUS_HOST
+            value: prometheus-release-1-prome-prometheus.default.svc
+          - name: PROMETHEUS_PORT
+            value: '9090'
           - name: PROMETHEUS_METRICS_ENDPOINT_PORT
             value: '3000' # If this is changed, the containerPort above needs to be changed accordingly as well.
           - name: PROMETHEUS_METRICS_ENDPOINT_PATH
@@ -55,4 +59,22 @@ spec:
           # Workaround for an issue with kubernetes-client when using IPv6 (https://github.com/kubernetes-client/javascript/issues/599)
           - name: KUBERNETES_SERVICE_HOST
             value: kubernetes.default.svc
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: polaris
+  name: metrics-rest-api-cost-efficiency-controller
+  labels:
+    component: metrics-rest-api-cost-efficiency-controller
+    tier: control-plane
+    polaris-controller-type: composed-metric
+spec:
+  selector:
+    component: metrics-rest-api-cost-efficiency-controller
+    tier: control-plane
+    polaris-controller-type: composed-metric
+  ports:
+    - name: metrics
+      port: 3000
+      targetPort: metrics

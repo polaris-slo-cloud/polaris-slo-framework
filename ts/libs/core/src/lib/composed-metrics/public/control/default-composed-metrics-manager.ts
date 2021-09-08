@@ -129,6 +129,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager {
             collectors: this.config.collectorFactories.map(factory => factory.createCollector(computationConfig.metricType, metricParams)),
             stopper: new ObservableStopper(),
         };
+        Logger.log('Added composed metric mapping', mapping, metricParams);
         this.activeComposedMetrics.set(key, activeMetric);
     }
 

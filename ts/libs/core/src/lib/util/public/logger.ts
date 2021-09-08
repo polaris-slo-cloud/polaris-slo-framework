@@ -37,7 +37,7 @@ export class Logger {
         const time = new Date().toISOString();
 
         let msg: string;
-        if (Array.isArray(messageOrData)) {
+        if (typeof messageOrData !== 'string') {
             msg = time + ': ';
             data = messageOrData;
         } else {
