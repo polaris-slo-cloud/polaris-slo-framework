@@ -62,7 +62,7 @@ export class PrometheusComposedMetricSource<V> extends ComposedMetricSourceBase<
         polarisRuntime: PolarisRuntime,
     ) {
         super(polarisRuntime);
-        const timeSeriesSource = polarisRuntime.metricsSourcesManager.getTimeSeriesSource(PrometheusTimeSeriesSource.name);
+        const timeSeriesSource = polarisRuntime.metricsSourcesManager.getTimeSeriesSource(PrometheusTimeSeriesSource.fullName);
         this.query = this.createQuery(timeSeriesSource);
     }
 

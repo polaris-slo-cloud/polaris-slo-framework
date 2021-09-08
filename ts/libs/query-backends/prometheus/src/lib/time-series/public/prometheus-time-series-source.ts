@@ -5,7 +5,9 @@ import { PrometheusNativeQueryBuilder } from '../internal';
 
 export class PrometheusTimeSeriesSource extends TimeSeriesSourceBase {
 
-    readonly name = 'polaris-sloc.time-series-sources.Prometheus';
+    static readonly fullName = 'polaris-sloc.time-series-sources.Prometheus';
+
+    readonly fullName = PrometheusTimeSeriesSource.fullName;
 
     constructor(protected config: PrometheusConfig) {
         super();

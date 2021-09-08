@@ -50,9 +50,9 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
             setAsDefault = true;
         }
 
-        this.timeSeriesSources.set(source.name, source);
+        this.timeSeriesSources.set(source.fullName, source);
         if (setAsDefault) {
-            this.setDefaultTimeSeriesSource(source.name);
+            this.setDefaultTimeSeriesSource(source.fullName);
         }
     }
 

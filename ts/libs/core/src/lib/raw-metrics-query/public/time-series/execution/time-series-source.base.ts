@@ -12,7 +12,12 @@ import { LabelFilterableTimeInstantQueryImpl, LabelFilterableTimeRangeQueryImpl 
  */
 export abstract class TimeSeriesSourceBase implements TimeSeriesSource {
 
-    abstract name: string;
+    abstract fullName: string;
+
+    /**
+     * @returns The `NativeQueryBuilderFactoryFn` used to create new `NativeQueryBuilders` for the DB.
+     */
+    protected abstract getNativeQueryBuilderFactory(): NativeQueryBuilderFactoryFn;
 
     select<T = any>(appName: string, metricName: string): LabelFilterableTimeInstantQuery<T>;
     select<T = any>(appName: string, metricName: string, range: TimeRange): LabelFilterableTimeRangeQuery<T>;
@@ -30,10 +35,5 @@ export abstract class TimeSeriesSourceBase implements TimeSeriesSource {
             return new LabelFilterableTimeInstantQueryImpl(null, queryContent, queryBuilderFactory);
         }
     }
-
-    /**
-     * @returns The `NativeQueryBuilderFactoryFn` used to create new `NativeQueryBuilders` for the DB.
-     */
-    protected abstract getNativeQueryBuilderFactory(): NativeQueryBuilderFactoryFn;
 
 }
