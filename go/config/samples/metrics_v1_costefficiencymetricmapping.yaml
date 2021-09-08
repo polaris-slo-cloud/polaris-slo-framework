@@ -1,7 +1,13 @@
 apiVersion: metrics.polaris-slo-cloud.github.io/v1
 kind: CostEfficiencyMetricMapping
 metadata:
-  name: costefficiencymetricmapping-sample
+  namespace: mesh
+  name: cms-cost-efficiency
+  # ownerReferences:
+  #   - apiVersion: slo.polaris-slo-cloud.github.io/v1
+  #     kind: CostEfficiencySloMapping
+  #     name: cms-cost-efficiency
+  #     uid: a6ae1e21-cf21-4b00-98f3-7371d07b6b95
 spec:
   targetRef:
     apiVersion: apps/v1

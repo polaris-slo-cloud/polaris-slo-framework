@@ -1,7 +1,17 @@
 apiVersion: slo.polaris-slo-cloud.github.io/v1
 kind: CostEfficiencySloMapping
 metadata:
-  name: costefficiencyslomapping-sample
+  namespace: mesh
+  name: cms-cost-efficiency
 spec:
-  # Add fields here
-  foo: bar
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: mesh-gentics-mesh
+  elasticityStrategy:
+    apiVersion: elasticity.polaris-slo-cloud.github.io/v1
+    kind: HorizontalElasticityStrategy
+  sloConfig:
+    responseTimeThresholdMs: 250
+    targetCostEfficiency: 90
+
