@@ -50,3 +50,25 @@ npm run build -- cli-polaris-k8s-serializer --with-deps=true
 ```
 
 The output can then be found in the `dist` folder.
+
+
+## Debugging in VS Code
+
+For some applications, there are debug configurations in `.vscode/launch.json`.
+These can be launched directly from the VS Code "Run and Debug" panel.
+
+For applications without a dedicated debug config, the easiest way to debug them is the following:
+
+1. Build the respective application project (see [Building and Running](#building-and-running)).
+
+2. Open a "JavaScript Debug Terminal" in VS Code.
+
+3. Run the application using Node.JS.
+
+```sh
+node ./dist/apps/<app-type>/<app-name>/main.js
+
+# If necessary, set any environment variables for your development environment.
+# E.g., If debugging the cost efficiency SLO controller when Prometheus is available on port 30900:
+PROMETHEUS_PORT=30900 node ./dist/apps/slo/cost-efficiency-slo-controller/main.js
+```
