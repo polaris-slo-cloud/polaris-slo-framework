@@ -23,7 +23,9 @@ initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, t
 // Initialize the used Polaris mapping libraries
 initCommonMappingsLib(polarisRuntime);
 
-// Initialize the composed metrics
+// Initialize the composed metrics for computing them within the SLO controller process.
+// To retrieve the cost efficiency composed metric from Prometheus instead (i.e., if it is
+// computed by a dedicated cost efficiency composed metric controller), comment out the next line.
 initCostEfficiencyMetrics(polarisRuntime);
 
 // Create an SloControlLoop and register the factories for the ServiceLevelObjectives it will handle
