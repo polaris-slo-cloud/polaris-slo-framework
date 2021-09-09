@@ -33,13 +33,13 @@ export class Logger {
         }
     }
 
-    private static normalizeLogData(messageOrData: string | any[], ...data: any[]): LogData {
+    private static normalizeLogData(messageOrData: string | any, data: any[]): LogData {
         const time = new Date().toISOString();
 
         let msg: string;
         if (typeof messageOrData !== 'string') {
             msg = time + ': ';
-            data = messageOrData;
+            data = [ messageOrData ];
         } else {
             msg = `${time}: ${messageOrData}`;
         }
