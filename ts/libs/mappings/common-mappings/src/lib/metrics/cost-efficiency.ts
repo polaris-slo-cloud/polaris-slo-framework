@@ -1,4 +1,4 @@
-import { ComposedMetricParams, ComposedMetricType } from '@polaris-sloc/core';
+import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ComposedMetricType, ObjectKind } from '@polaris-sloc/core';
 import { TotalCost } from './total-cost';
 
 /**
@@ -36,21 +36,16 @@ export interface CostEfficiency {
 export interface CostEfficiencyParams extends ComposedMetricParams {
 
     /**
-     * The target threshold for the `performance` metric.
+     * The target threshold for the `performance` part of the cost efficiency equation.
      *
-     * Depending on the specific metric implementation, the threshold may be considered as
+     * Depending on the specific cost efficiency metric implementation, the threshold may be considered as
      * a lower bound (`performance` samples should be above the threshold) or as an
      * upper bound (`performance` samples should be below the threshold).
+     *
+     * If the implementation of the metric relies on a bucketing mechanism (e.g., Prometheus histograms),
+     * the set of allowed values may be limited.
      */
     targetThreshold: number;
-
-    /**
-     * (optional) The name of the metric source that supplies the `totalCost` of the target workload.
-     * The metric must supply the `TotalCostMetricType`.
-     *
-     * Set this, if you do not want to use the default total cost metric.
-     */
-    costMetricSourceName?: string;
 
 }
 
@@ -71,5 +66,22 @@ export class CostEfficiencyMetric extends ComposedMetricType<CostEfficiency, Cos
     static readonly instance = new CostEfficiencyMetric();
 
     readonly metricTypeName = 'metrics.polaris-slo-cloud.github.io/cost-efficiency';
+
+}
+
+/**
+ * Used to configure a cost efficiency composed metric controller to compute
+ * its metric for a specific target.
+ */
+export class CostEfficiencyMetricMapping extends ComposedMetricMapping<ComposedMetricMappingSpec<CostEfficiencyParams>> {
+
+    constructor(initData?: Partial<CostEfficiencyMetricMapping>) {
+        super(initData);
+        this.objectKind = new ObjectKind({
+            group: 'metrics.polaris-slo-cloud.github.io',
+            version: 'v1',
+            kind: 'CostEfficiencyMetricMapping',
+        });
+    }
 
 }

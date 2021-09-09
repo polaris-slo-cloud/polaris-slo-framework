@@ -29,7 +29,7 @@ export class DefaultWatchManager implements WatchManager {
 
     stopWatchers(kinds: ObjectKind[]): void {
         kinds.forEach(kind => {
-            const key = kind.toString();
+            const key = ObjectKind.stringify(kind);
             const watcher = this.watchers.get(key);
             if (watcher) {
                 watcher.stopWatch();
@@ -44,7 +44,7 @@ export class DefaultWatchManager implements WatchManager {
         const watchers = kindHandlerPairs.map(async pair => {
             const watcher = this.polarisRuntime.createObjectKindWatcher();
             await watcher.startWatch(pair.kind, pair.handler);
-            this.watchers.set(pair.kind.toString(), watcher);
+            this.watchers.set(ObjectKind.stringify(pair.kind), watcher);
             return watcher;
         });
 
@@ -52,7 +52,7 @@ export class DefaultWatchManager implements WatchManager {
     }
 
     private assertNoExistingWatchers(kindsAndHandlers: ObjectKindWatchHandlerPair[]): void {
-        const watchedKinds = kindsAndHandlers.filter(pair => this.watchers.has(pair.kind.toString()));
+        const watchedKinds = kindsAndHandlers.filter(pair => this.watchers.has(ObjectKind.stringify(pair.kind)));
         if (watchedKinds.length > 0) {
             const kinds = watchedKinds.map(pair => pair.kind);
             throw new ObjectKindsAlreadyWatchedError(this, kinds);

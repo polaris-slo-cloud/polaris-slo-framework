@@ -1,3 +1,4 @@
+import { ComposedMetricsManager } from '../../../composed-metrics';
 import { ElasticityStrategyManager, ElasticityStrategyService } from '../../../elasticity';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { PolarisTransformationService } from '../../../transformation';
@@ -88,5 +89,10 @@ export interface PolarisRuntime {
      * Creates a new `OrchestratorClient` for performing CRUD operations on orchestrator objects.
      */
     createOrchestratorClient(): OrchestratorClient;
+
+    /**
+     * Creates a new `ComposedMetricsManager` for computing composed metrics in a dedicated controller.
+     */
+    createComposedMetricsManager(): ComposedMetricsManager;
 
 }

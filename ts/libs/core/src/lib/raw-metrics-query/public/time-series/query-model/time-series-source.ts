@@ -8,7 +8,7 @@ import { LabelFilterableTimeRangeQuery } from './time-range-query';
 export interface TimeSeriesSource {
 
     /** The fully qualified name of this `TimeSeriesSource`. */
-    readonly name: string;
+    readonly fullName: string;
 
     /**
      * Creates a new `TimeInstantQuery` that selects all `TimeSeries` that have the specified `metricName`.

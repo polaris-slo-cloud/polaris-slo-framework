@@ -1,5 +1,6 @@
 export * from './api-object';
 export * from './api-object-metadata';
+export * from './composed-metric-mapping';
 export * from './container';
 export * from './elasticity-strategy';
 export * from './elasticity-strategy-kind';

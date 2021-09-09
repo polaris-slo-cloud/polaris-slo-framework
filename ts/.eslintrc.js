@@ -82,6 +82,10 @@ module.exports = {
 
                             // UI projects may depend on any library project.
                             { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": [ "*" ] },
+
+                            // ToDo:
+                            { "sourceTag": "query:prometheus", "onlyDependOnLibsWithTags": [ "*" ] },
+                            { "sourceTag": "scope:metrics-controller", "onlyDependOnLibsWithTags": [ "*" ] },
                         ]
                     }
                 ],

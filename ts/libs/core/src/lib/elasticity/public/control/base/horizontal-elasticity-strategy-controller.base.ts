@@ -1,5 +1,6 @@
 import { ElasticityStrategy, NamespacedObjectReference, Scale, SloCompliance, SloTarget } from '../../../../model';
 import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
+import { Logger } from '../../../../util';
 import { HorizontalElasticityStrategyConfig, StabilizationWindowTracker } from '../../common';
 import { DefaultStabilizationWindowTracker } from '../default-stabilization-window-tracker';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
@@ -45,7 +46,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
     protected abstract computeScale(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>, currScale: Scale): Promise<Scale>;
 
     async execute(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<void> {
-        console.log('Executing elasticity strategy:', elasticityStrategy);
+        Logger.log('Executing elasticity strategy:', elasticityStrategy);
 
         const targetRef = new NamespacedObjectReference({
             namespace: elasticityStrategy.metadata.namespace,
@@ -58,7 +59,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
         newScale.spec.replicas = this.normalizeReplicaCount(newScale.spec.replicas, elasticityStrategy.spec.staticConfig);
 
         if (newScale.spec.replicas === oldReplicaCount) {
-            console.log(
+            Logger.log(
                 'No scaling possible, because new replica count after min/max check is equal to old replica count.',
                 newScale,
             );
@@ -66,7 +67,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
         }
 
         if (!this.checkIfOutsideStabilizationWindow(elasticityStrategy, oldReplicaCount, newScale)) {
-            console.log(
+            Logger.log(
                 `Skipping scaling from ${oldReplicaCount} to ${newScale.spec.replicas} replicas, because stabilization window has not yet passed for:`,
                 elasticityStrategy,
             );
@@ -75,7 +76,7 @@ export abstract class HorizontalElasticityStrategyControllerBase<T extends SloTa
 
         await this.orchClient.setScale(targetRef, newScale);
         this.stabilizationWindowTracker.trackExecution(elasticityStrategy);
-        console.log(`Successfully updated scale subresource from ${oldReplicaCount} to ${newScale.spec.replicas} replicas for:`, elasticityStrategy);
+        Logger.log(`Successfully updated scale subresource from ${oldReplicaCount} to ${newScale.spec.replicas} replicas for:`, elasticityStrategy);
     }
 
     onDestroy(): void {

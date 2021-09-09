@@ -1,4 +1,5 @@
 import { SloMapping } from '../../../model';
+import { Logger, executeSafely } from '../../../util';
 import { SloControlLoop, SloWatchEventsHandler } from './slo-control-loop';
 
 /**
@@ -18,7 +19,7 @@ export class DefaultSloWatchEventsHandler implements SloWatchEventsHandler {
 
     onObjectDeleted(obj: SloMapping<any, any>): void {
         const key = this.getFullSloName(obj);
-        this.controlLoop.removeSlo(key);
+        executeSafely(() => this.controlLoop.removeSlo(key));
     }
 
     private getFullSloName(sloMapping: SloMapping<any, any>): string {
@@ -29,7 +30,7 @@ export class DefaultSloWatchEventsHandler implements SloWatchEventsHandler {
         const key = this.getFullSloName(sloMapping);
         this.controlLoop.addSlo(key, sloMapping)
             .then()
-            .catch(err => console.error(err));
+            .catch(err => Logger.error(err));
     }
 
 }

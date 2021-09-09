@@ -1,5 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CostEfficiencySloMapping, CostEfficiencySloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { Logger } from '@polaris-sloc/core';
 import { initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
@@ -22,7 +23,9 @@ initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, t
 // Initialize the used Polaris mapping libraries
 initCommonMappingsLib(polarisRuntime);
 
-// Initialize the composed metrics
+// Initialize the composed metrics for computing them within the SLO controller process.
+// To retrieve the cost efficiency composed metric from Prometheus instead (i.e., if it is
+// computed by a dedicated cost efficiency composed metric controller), comment out the next line.
 initCostEfficiencyMetrics(polarisRuntime);
 
 // Create an SloControlLoop and register the factories for the ServiceLevelObjectives it will handle
@@ -39,4 +42,4 @@ sloControlLoop.start({
 // Create a WatchManager and watch the supported SLO mapping kinds.
 const watchManager = polarisRuntime.createWatchManager();
 watchManager.startWatchers([ new CostEfficiencySloMapping().objectKind ], sloControlLoop.watchHandler)
-    .catch(error => void console.error(error))
+    .catch(error => void Logger.error(error))

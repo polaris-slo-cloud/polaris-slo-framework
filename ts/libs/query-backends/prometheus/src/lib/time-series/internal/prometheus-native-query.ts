@@ -37,8 +37,8 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
 
     execute(): Promise<PolarisQueryResult<TimeSeries<any>>> {
         const config = this.buildPrometheusQueryConfig();
-        // console.log(config);
-        // console.log(this.promQlQuery);
+        // Logger.log(config);
+        // Logger.log(this.promQlQuery);
         const promQuery = new PrometheusDriver(config);
 
         switch (this.resultType) {

@@ -1,5 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { HorizontalElasticityStrategyKind, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
+import { Logger } from '@polaris-sloc/core';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { HorizontalElasticityStrategyController } from './app/horizontal-elasticity-strategy';
 
@@ -19,4 +20,4 @@ manager.startWatching({
     kindsToWatch: [
         { kind: new HorizontalElasticityStrategyKind(), controller: new HorizontalElasticityStrategyController(polarisRuntime) },
     ],
-}).catch(error => void console.error(error))
+}).catch(error => void Logger.error(error))

@@ -4,6 +4,8 @@ import { KubeCostMetricSource } from './kube-cost-metric-source';
 
 /**
  * Factory for creating `KubeCostMetricSource` instances that supply metrics of type `TotalCostMetric`.
+ *
+ * This factory supports all `SloTarget` types.
  */
 export class KubeCostMetricSourceFactory implements ComposedMetricSourceFactory<TotalCostMetric, TotalCost> {
 

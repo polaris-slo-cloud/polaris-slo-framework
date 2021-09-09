@@ -1,3 +1,4 @@
+import { Logger } from './logger';
 
 /**
  * Executes the specified function in a try-catch block and logs the error,
@@ -11,7 +12,7 @@ export function executeSafely(fn: () => void): boolean {
         fn();
         return true;
     } catch (err) {
-        console.log(err);
+        Logger.log(err);
         return false;
     }
 }
