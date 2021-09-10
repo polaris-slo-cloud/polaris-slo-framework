@@ -3,6 +3,13 @@ kind: CostEfficiencyMetricMapping
 metadata:
   namespace: mesh
   name: cms-cost-efficiency
+  # Owner references can currently not be queried through selectors (https://github.com/kubernetes/kubernetes/issues/54498),
+  # so we need these labels to be able to find all metric mappings that are children of a particular SloMapping.
+  labels:
+    polaris-slo-cloud.github.io/owner-api-group: slo.polaris-slo-cloud.github.io
+    polaris-slo-cloud.github.io/owner-api-version: v1
+    polaris-slo-cloud.github.io/owner-kind: CostEfficiencySloMapping
+    polaris-slo-cloud.github.io/owner-name: cms-cost-efficiency
   # ownerReferences:
   #   - apiVersion: slo.polaris-slo-cloud.github.io/v1
   #     kind: CostEfficiencySloMapping
