@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "cli": "nx",
+    "title": "MetricsAlert generator",
+    "properties": {
+        "dashboardId": {
+            "type": "string",
+            "description": "The ID of the dashboard",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "panel": {
+            "type": "string",
+            "description": "The panel to add the alert to"
+        },
+        "evaluateEvery": {
+            "type": "string",
+            "description": "Evaluation interval (default: 1m)"
+        },
+        "for": {
+            "type": "string",
+            "description": "Evaluation duration (default: 5m)"
+        },
+        "when": {
+            "type": "string",
+            "description": "Reducer function for metric (default: avg)"
+        },
+        "of": {
+            "type": "string",
+            "description": "Query (default ['A', '5m', 'now'])"
+        },
+        "threshold": {
+            "type": "number",
+            "description": "The threshold (default: 0.3)"
+        },
+        "grafanaUrl": {
+            "type": "string",
+            "description": "Grafana base URL (i.e., http://localhost:3000)",
+            "alias": "u"
+        },
+        "bearerToken": {
+            "type": "string",
+            "description": "Bearer Token for Grafana API (must be Admin)",
+            "alias": "b"
+        },
+        "directory": {
+            "type": "string",
+            "description": "A directory where the project is placed (working directory is base directory)",
+            "alias": "d"
+        }
+    },
+    "required": [
+        "dashboardId",
+        "panel"
+    ]
+}
