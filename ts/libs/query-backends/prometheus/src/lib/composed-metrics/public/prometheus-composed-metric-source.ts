@@ -21,11 +21,40 @@ import { PROM_COMPOSED_METRIC_LABELS, getPrometheusMetricNameWithoutPrefix } fro
 /**
  * A {@link ComposedMetricSource} that fetches composed metrics from Prometheus.
  *
+ * **Naming Scheme**:
  * Composed metrics that are stored in Prometheus use the following naming scheme:
  * ```
- * polaris_composed_<metricType>{gvk="ObjectKind.stringify(sloTarget)", namespace="sloTargetNamespace", target_name="sloTarget.name" prop_key="objPropKey"}`
+ * polaris_composed_<metricType>{
+ *
+ *     // Group Version Kind string of the SLO Target resource.
+ *     target_gvk="ObjectKind.stringify(sloTarget)",
+ *
+ *     // Namespace of the SLO Target resource (not to be confused with the `namespace` label added by Prometheus).
+ *     target_namespace="sloTargetNamespace",
+ *
+ *     // Name of the SLO Target resource.
+ *     target_name="sloTarget.name",
+ *
+ *     // Path of the composed value metric property that this time series represents.
+ *     // Prometheus can only store single valued metrics. This is used to decompose
+ *     // a multi-valued metric (i.e., an object) into multiple single values (see examples below).
+ *     metric_prop_key="objPropKey"
+ * }
  * ```
  *
+ * `metricType` is the snake case version of the respective `ComposedMetricType.instance.metricTypeName`.
+ * `metricType` can also be inferred from a MetricMapping CRD by using the snake case of `<crd_api_group>_<crd_kind_without_metric_mapping_suffix>`.
+ * For example:
+ * ```
+ * // CRD:
+ * apiVersion: metrics.polaris-slo-cloud.github.io/v1
+ * kind: CostEfficiencyMetricMapping
+ *
+ * // Prometheus time series name:
+ * polaris_composed_metrics_polaris_slo_cloud_github_io_cost_efficiency
+ * ```
+ *
+ * **Multi-valued composed metric example**:
  * Since Prometheus supports only a single floating point value per metric sample, we store the properties of a composed metric object
  * using multiple samples and a classifier label. For example:
  * ```
@@ -39,14 +68,15 @@ import { PROM_COMPOSED_METRIC_LABELS, getPrometheusMetricNameWithoutPrefix } fro
  * }
  *
  * // Prometheus samples:
- * polaris_composed_example_metric{gvk="apps/v1/Deployment", namespace="default", target_name="test" prop_key="a"} 100
- * polaris_composed_example_metric{gvk="apps/v1/Deployment", namespace="default", target_name="test" prop_key="b.c"} 1.1
- * polaris_composed_example_metric{gvk="apps/v1/Deployment", namespace="default", target_name="test" prop_key="b.d"} 2.2
+ * polaris_composed_example_metric{target_gvk="apps/v1/Deployment", target_namespace="default", target_name="test" metric_prop_key="a"} 100
+ * polaris_composed_example_metric{target_gvk="apps/v1/Deployment", target_namespace="default", target_name="test" metric_prop_key="b.c"} 1.1
+ * polaris_composed_example_metric{target_gvk="apps/v1/Deployment", target_namespace="default", target_name="test" metric_prop_key="b.d"} 2.2
  * ```
  *
+ * **Single-valued composed metric example**:
  * Composed metrics that consist of a single value only use '.' as the `prop_key`.
  * ```
- * polaris_composed_single_valued_metric{gvk="apps/v1/Deployment", namespace="default", target_name="test" prop_key="."} 100
+ * polaris_composed_single_valued_metric{target_gvk="apps/v1/Deployment", target_namespace="default", target_name="test" metric_prop_key="."} 100
  * ```
  *
  * @param V The TypeScript type that represents the values of the composed metric.
