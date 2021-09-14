@@ -1,4 +1,11 @@
-import { ComposedMetricParams, ComposedMetricSource, ComposedMetricType, GenericComposedMetricSourceFactory, PolarisRuntime } from '@polaris-sloc/core';
+import {
+    ComposedMetricParams,
+    ComposedMetricSource,
+    ComposedMetricType,
+    GenericComposedMetricSourceFactory,
+    POLARIS_API,
+    PolarisRuntime,
+} from '@polaris-sloc/core';
 import { PrometheusComposedMetricSource } from './prometheus-composed-metric-source';
 
 /**
@@ -6,7 +13,7 @@ import { PrometheusComposedMetricSource } from './prometheus-composed-metric-sou
  */
 export class PrometheusComposedMetricSourceFactory implements GenericComposedMetricSourceFactory  {
 
-    readonly metricSourceName = 'metrics.polaris-slo-cloud.github.io/*/prometheus-composed-metric-source';
+    readonly metricSourceName =  POLARIS_API.METRICS_GROUP + '/*/prometheus-composed-metric-source';
 
     createSource<M extends ComposedMetricType<V, P>, V = any, P extends ComposedMetricParams = ComposedMetricParams>(
         metricType: M, params: P, polarisRuntime: PolarisRuntime,

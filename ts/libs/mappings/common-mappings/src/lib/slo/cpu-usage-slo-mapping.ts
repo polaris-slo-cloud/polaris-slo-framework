@@ -1,4 +1,4 @@
-import { ObjectKind, PolarisType, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, initSelf } from '@polaris-sloc/core';
+import { ObjectKind, POLARIS_API, PolarisType, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, initSelf } from '@polaris-sloc/core';
 
 /**
  * Configuration for a `CpuUsageSloMapping`.
@@ -35,7 +35,7 @@ export class CpuUsageSloMapping extends SloMappingBase<CpuUsageSloMappingSpec> {
     constructor(initData?: SloMappingInitData<CpuUsageSloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
-            group: 'slo.polaris-slo-cloud.github.io',
+            group: POLARIS_API.SLO_GROUP,
             version: 'v1',
             kind: 'CPUUsageSloMapping',
         });
