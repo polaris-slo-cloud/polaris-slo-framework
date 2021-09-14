@@ -31,6 +31,28 @@ export class ComposedMetricMappingSpec<C extends ComposedMetricParams, T extends
 /**
  * Used to submit/retrieve an composed metric mapping to/from the orchestrator.
  *
+ * To allow querying the orchestrator for all composed metric mappings associated with an SLO Mapping
+ * (e.g., for the automatic generation of dashboards) we use dedicated labels in the `ComposedMetricMapping` to reference its owner `ApiObject`.
+ * The owner is the `ApiObject` that triggered the creation of the `ComposedMetricMapping`, e.g., an `SloMapping` or another `ComposedMetricMapping`.
+ *
+ * The use of labels in addition of `ownerReferences` is necessary, because, e.g., in Kubernetes it is not possible to query all child objects of an owner
+ * (https://github.com/kubernetes/kubernetes/issues/54498). The default label names are available in
+ * the `POLARIS_API` constant object.
+ *
+ * Example:
+ * ```
+    labels:
+      polaris-slo-cloud.github.io/owner-api-group: slo.polaris-slo-cloud.github.io
+      polaris-slo-cloud.github.io/owner-api-version: v1
+      polaris-slo-cloud.github.io/owner-kind: CostEfficiencySloMapping
+      polaris-slo-cloud.github.io/owner-name: cms-cost-efficiency
+    ownerReferences:
+      - apiVersion: slo.polaris-slo-cloud.github.io/v1
+        kind: CostEfficiencySloMapping
+        name: cms-cost-efficiency
+        uid: a6ae1e21-cf21-4b00-98f3-7371d07b6b95
+ * ```
+ *
  * @param T The type of {@link ComposedMetricMappingSpec} - decorate `spec` with `@PolarisType` if you set this parameter explicitly.
  */
 export class ComposedMetricMapping<T extends ComposedMetricMappingSpec<any, any> = ComposedMetricMappingSpec<any>> extends ApiObject<T> {
