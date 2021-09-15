@@ -1,4 +1,4 @@
-import { camelCase, startCase } from 'lodash';
+import { camelCase, pascalCase } from 'change-case';
 import { ComposedMetricError, ComposedMetricParams, ComposedMetricType } from '../composed-metrics';
 import { PolarisType } from '../transformation';
 import { ApiObject } from './api-object';
@@ -80,7 +80,7 @@ export class ComposedMetricMapping<T extends ComposedMetricMappingSpec<any, any>
         const gvk = new ObjectKind({
             group: override?.group ?? gvkComponents[0],
             version: override?.version ?? gvkComponents[1],
-            kind: override?.kind ?? startCase(camelCase(gvkComponents[2])).replace(' ', '') + 'MetricMapping',
+            kind: override?.kind ?? pascalCase(gvkComponents[2]) + 'MetricMapping',
         });
         return gvk;
     }
