@@ -80,7 +80,7 @@ export class ComposedMetricMapping<T extends ComposedMetricMappingSpec<any, any>
         const gvk = new ObjectKind({
             group: override?.group ?? gvkComponents[0],
             version: override?.version ?? gvkComponents[1],
-            kind: override?.kind ?? startCase(camelCase(gvkComponents[2])) + 'MetricMapping',
+            kind: override?.kind ?? startCase(camelCase(gvkComponents[2])).replace(' ', '') + 'MetricMapping',
         });
         return gvk;
     }
