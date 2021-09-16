@@ -15,6 +15,7 @@ export function initPrometheusQueryBackend(runtime: PolarisRuntime, config: Prom
     runtime.metricsSourcesManager.addTimeSeriesSource(new PrometheusTimeSeriesSource(config), setAsDefaultSource);
 
     if (setAsDefaultSource) {
-        runtime.metricsSourcesManager.setFallbackComposedMetricSourceFactory(new PrometheusComposedMetricSourceFactory());
+        const mappingMgr = runtime.metricsSourcesManager.createComposedMetricMappingManager();
+        runtime.metricsSourcesManager.setFallbackComposedMetricSourceFactory(new PrometheusComposedMetricSourceFactory(mappingMgr));
     }
 }

@@ -7,7 +7,7 @@ import { ComposedMetricParams } from './composed-metric-params';
  * Each `ComposedMetricType` may be supplied by multiple `ComposedMetricSources`.
  *
  * @param V The TypeScript type that represents the values of the composed metric.
- * @param P Optional parameters that can be used to configure the `ComposedMetricSource`.
+ * @param P Parameters used to configure the `ComposedMetricSource`.
  */
 export abstract class ComposedMetricType<V, P extends ComposedMetricParams = ComposedMetricParams> {
 

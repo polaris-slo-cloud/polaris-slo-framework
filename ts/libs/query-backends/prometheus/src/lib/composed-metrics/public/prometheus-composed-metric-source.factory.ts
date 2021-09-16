@@ -1,4 +1,5 @@
 import {
+    ComposedMetricMappingManager,
     ComposedMetricParams,
     ComposedMetricSource,
     ComposedMetricType,
@@ -15,10 +16,12 @@ export class PrometheusComposedMetricSourceFactory implements GenericComposedMet
 
     readonly metricSourceName =  POLARIS_API.METRICS_GROUP + '/*/prometheus-composed-metric-source';
 
+    constructor(private composedMetricMappingManager: ComposedMetricMappingManager) {}
+
     createSource<M extends ComposedMetricType<V, P>, V = any, P extends ComposedMetricParams = ComposedMetricParams>(
         metricType: M, params: P, polarisRuntime: PolarisRuntime,
     ): ComposedMetricSource<V> {
-        return new PrometheusComposedMetricSource(metricType, params, polarisRuntime);
+        return new PrometheusComposedMetricSource(metricType, params, this.composedMetricMappingManager, polarisRuntime);
     }
 
 }

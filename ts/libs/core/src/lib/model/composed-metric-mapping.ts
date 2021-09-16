@@ -1,8 +1,9 @@
-import { camelCase, pascalCase } from 'change-case';
+import { pascalCase } from 'change-case';
 import { ComposedMetricError, ComposedMetricParams, ComposedMetricType } from '../composed-metrics';
 import { PolarisType } from '../transformation';
 import { ApiObject } from './api-object';
 import { ObjectKind } from './object-kind';
+import { OwnerReference } from './owner-reference';
 import { SloTarget } from './slo-target';
 
 /**
@@ -23,9 +24,11 @@ export class ComposedMetricMappingSpec<C extends ComposedMetricParams, T extends
     /**
      * The configuration parameters, specific to this metric.
      *
+     * This excludes parameters that can be reconstructed from other parts of the mapping (e.g., the `sloTarget`).
+     *
      * @note If `C` is a class, the `@PolarisType` decorator needs to be applied in a subclass of `ComposedMetricMappingSpec`.
      */
-    metricConfig: Omit<C, 'namespace' | 'sloTarget'>;
+    metricConfig: Omit<C, keyof ComposedMetricParams>;
 }
 
 /**
@@ -83,6 +86,31 @@ export class ComposedMetricMapping<T extends ComposedMetricMappingSpec<any, any>
             kind: override?.kind ?? pascalCase(gvkComponents[2]) + 'MetricMapping',
         });
         return gvk;
+    }
+
+    /**
+     * @returns The reference to the `ApiObject` that owns this `ComposedMetricMapping`.
+     */
+    getOwnerRef(): OwnerReference {
+        if (this.metadata.ownerReferences) {
+            return this.metadata.ownerReferences[0];
+        }
+        return undefined;
+    }
+
+    /**
+     * Sets the reference to the `ApiObject` that owns this `ComposedMetricMapping`.
+     *
+     * @param owner The reference to the owning `ApiObject`.
+     */
+    setOwnerRef(owner: OwnerReference): void {
+        if (!this.metadata.ownerReferences) {
+            this.metadata.ownerReferences = [];
+        }
+
+        const ownerAndController = new OwnerReference(owner);
+        ownerAndController.controller = true;
+        this.metadata.ownerReferences[0] = ownerAndController;
     }
 
 }
