@@ -1,4 +1,4 @@
-import { ComposedMetricType } from '@polaris-sloc/core';
+import { ComposedMetricType, POLARIS_API } from '@polaris-sloc/core';
 
 /**
  * Describes the total cost for an `SloTarget`.
@@ -25,6 +25,6 @@ export class TotalCostMetric extends ComposedMetricType<TotalCost> {
     /** The singleton instance of this type. */
     static readonly instance = new TotalCostMetric();
 
-    readonly metricTypeName = 'metrics.polaris-slo-cloud.github.io/total-cost';
+    readonly metricTypeName =  POLARIS_API.METRICS_GROUP + '/v1/total-cost';
 
 }

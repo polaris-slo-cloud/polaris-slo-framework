@@ -1,4 +1,4 @@
-import { ObjectKind, PolarisType, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, initSelf } from '@polaris-sloc/core';
+import { ObjectKind, POLARIS_API, PolarisType, SloCompliance, SloMappingBase, SloMappingInitData, SloMappingSpecBase, initSelf } from '@polaris-sloc/core';
 import { RestServiceTarget } from '../slo-targets';
 
 /**
@@ -58,7 +58,7 @@ export class CostEfficiencySloMapping extends SloMappingBase<CostEfficiencySloMa
     constructor(initData?: SloMappingInitData<CostEfficiencySloMapping>) {
         super(initData);
         this.objectKind = new ObjectKind({
-            group: 'slo.polaris-slo-cloud.github.io',
+            group: POLARIS_API.SLO_GROUP,
             version: 'v1',
             kind: 'CostEfficiencySloMapping',
         });

@@ -1,4 +1,12 @@
-import { ElasticityStrategy, ElasticityStrategyKind, HorizontalElasticityStrategyConfig, SloCompliance, SloTarget, initSelf } from '@polaris-sloc/core';
+import {
+    ElasticityStrategy,
+    ElasticityStrategyKind,
+    HorizontalElasticityStrategyConfig,
+    POLARIS_API,
+    SloCompliance,
+    SloTarget,
+    initSelf,
+} from '@polaris-sloc/core';
 import { ReplicableTarget } from '../slo-targets';
 
 // Re-export HorizontalElasticityStrategyConfig for easier imports in the code generator.
@@ -11,7 +19,7 @@ export class HorizontalElasticityStrategyKind extends ElasticityStrategyKind<Slo
 
     constructor() {
         super({
-            group: 'elasticity.polaris-slo-cloud.github.io',
+            group: POLARIS_API.ELASTICITY_GROUP,
             version: 'v1',
             kind: 'HorizontalElasticityStrategy',
         });

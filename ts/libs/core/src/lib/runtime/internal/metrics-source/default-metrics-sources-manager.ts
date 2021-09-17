@@ -1,8 +1,10 @@
 import {
+    ComposedMetricMappingManager,
     ComposedMetricParams,
     ComposedMetricSource,
     ComposedMetricSourceFactory,
     ComposedMetricType,
+    DefaultComposedMetricMappingManager,
     GenericComposedMetricSourceFactory,
 } from '../../../composed-metrics';
 import { ObjectKind } from '../../../model';
@@ -109,6 +111,10 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
         }
 
         return undefined;
+    }
+
+    createComposedMetricMappingManager(): ComposedMetricMappingManager {
+        return new DefaultComposedMetricMappingManager(this.polarisRuntime.createOrchestratorClient());
     }
 
 }

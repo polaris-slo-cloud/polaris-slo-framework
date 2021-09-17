@@ -1,4 +1,4 @@
-import { ComposedMetricSourceFactory, ComposedMetricType, GenericComposedMetricSourceFactory } from '../../../composed-metrics';
+import { ComposedMetricMappingManager, ComposedMetricSourceFactory, ComposedMetricType, GenericComposedMetricSourceFactory } from '../../../composed-metrics';
 import { ObjectKind } from '../../../model';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
@@ -49,5 +49,10 @@ export interface MetricsSourcesManager extends MetricsSource {
      * @param factory The `GenericComposedMetricSourceFactory` that should be added.
      */
     setFallbackComposedMetricSourceFactory(factory: GenericComposedMetricSourceFactory): void;
+
+    /**
+     * Creates a new {@link ComposedMetricMappingManager} instance.
+     */
+    createComposedMetricMappingManager(): ComposedMetricMappingManager;
 
 }

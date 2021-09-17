@@ -7,9 +7,16 @@ import { ComposedMetricParams } from './composed-metric-params';
  * Each `ComposedMetricType` may be supplied by multiple `ComposedMetricSources`.
  *
  * @param V The TypeScript type that represents the values of the composed metric.
- * @param P Optional parameters that can be used to configure the `ComposedMetricSource`.
+ * @param P Parameters used to configure the `ComposedMetricSource`.
  */
 export abstract class ComposedMetricType<V, P extends ComposedMetricParams = ComposedMetricParams> {
+
+    /**
+     * The fully qualified name of the this metric type in the `group/version/kind` format.
+     *
+     * @example 'metrics.polaris-slo-cloud.github.io/v1/cost-efficiency'
+     */
+    abstract readonly metricTypeName: string;
 
     /**
      * This property is needed to trigger type checking for the `V` parameter.
@@ -34,10 +41,5 @@ export abstract class ComposedMetricType<V, P extends ComposedMetricParams = Com
      */
     // eslint-disable-next-line @typescript-eslint/naming-convention
     protected __paramsType: TypeFn<P>;
-
-    /**
-     * The fully qualified name of the this metric type.
-     */
-    abstract readonly metricTypeName: string;
 
 }

@@ -1,5 +1,5 @@
 import { ComposedMetricType } from '@polaris-sloc/core';
-import { snakeCase } from 'lodash';
+import { snakeCase } from 'change-case';
 
 /** Constants used for naming Polaris composed metrics in Prometheus. */
 export const PROM_COMPOSED_METRIC_LABELS = Object.freeze({
@@ -27,6 +27,7 @@ export const PROM_COMPOSED_METRIC_LABELS = Object.freeze({
  * a `TimeSeriesQuery`.
  */
 export function getPrometheusMetricNameWithoutPrefix(metricType: ComposedMetricType<any>): string {
+    // We use the change-case library instead of lodash, because lodash would convert 'v1' to 'v_1' in snake case, instead of leaving it unchanged.
     return snakeCase(metricType.metricTypeName);
 }
 

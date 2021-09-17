@@ -1,5 +1,15 @@
-import { CostEfficiencyMetric, CostEfficiencyParams, CostEfficiencySloConfig } from '@polaris-sloc/common-mappings';
-import { MetricsSource, ObservableOrPromise, PolarisRuntime, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput } from '@polaris-sloc/core';
+import { CostEfficiency, CostEfficiencyMetric, CostEfficiencyParams, CostEfficiencySloConfig } from '@polaris-sloc/common-mappings';
+import {
+    ComposedMetricSource,
+    MetricsSource,
+    ObservableOrPromise,
+    PolarisRuntime,
+    ServiceLevelObjective,
+    SloCompliance,
+    SloMapping,
+    SloOutput,
+    createOwnerReference,
+} from '@polaris-sloc/core';
 import { of as observableOf } from 'rxjs';
 
 /**
@@ -11,7 +21,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
 
     private metricsSource: MetricsSource;
 
-    private costEfficiencyParams: CostEfficiencyParams;
+    private costEffMetricSource: ComposedMetricSource<CostEfficiency>;
     private minRequestsPercentile: number;
 
     configure(
@@ -22,11 +32,13 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;
 
-        this.costEfficiencyParams = {
+        const costEfficiencyParams: CostEfficiencyParams = {
             sloTarget: sloMapping.spec.targetRef,
             namespace: sloMapping.metadata.namespace,
             targetThreshold: sloMapping.spec.sloConfig.responseTimeThresholdMs,
+            owner: createOwnerReference(sloMapping),
         };
+        this.costEffMetricSource = this.metricsSource.getComposedMetricSource(CostEfficiencyMetric.instance, costEfficiencyParams);
 
         if (typeof sloMapping.spec.sloConfig.minRequestsPercentile === 'number') {
             this.minRequestsPercentile = sloMapping.spec.sloConfig.minRequestsPercentile / 100;
@@ -48,8 +60,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     }
 
     private async calculateSloCompliance(): Promise<number> {
-        const costEffMetric = this.metricsSource.getComposedMetricSource(CostEfficiencyMetric.instance, this.costEfficiencyParams);
-        const costEff = await costEffMetric.getCurrentValue().toPromise();
+        const costEff = await this.costEffMetricSource.getCurrentValue().toPromise();
 
         if (costEff.value.totalCost.currentCostPerHour === 0 || costEff.value.percentileBetterThanThreshold >= this.minRequestsPercentile) {
             return 100;

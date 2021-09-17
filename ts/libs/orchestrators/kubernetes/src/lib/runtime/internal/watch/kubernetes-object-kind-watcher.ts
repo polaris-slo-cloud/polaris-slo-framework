@@ -5,6 +5,7 @@ import {
     ObjectKind,
     ObjectKindPropertiesMissingError,
     ObjectKindWatcher,
+    ObjectKindWatcherError,
     PolarisTransformationService,
     WatchAlreadyStartedError,
     WatchEventsHandler,
@@ -67,6 +68,9 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                 // This is the done callback.
                 // It is called if the watch terminates normally.
                 if (err) {
+                    if ((err as Error)?.message === 'Not Found') {
+                        err = new ObjectKindWatcherError(this, 'ObjectKind not found');
+                    }
                     Logger.log(err);
                 }
                 this.watchReq = null;

@@ -1,4 +1,4 @@
-import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ComposedMetricType, ObjectKind } from '@polaris-sloc/core';
+import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ComposedMetricType, ObjectKind, POLARIS_API } from '@polaris-sloc/core';
 import { TotalCost } from './total-cost';
 
 /**
@@ -65,7 +65,7 @@ export class CostEfficiencyMetric extends ComposedMetricType<CostEfficiency, Cos
     /** The singleton instance of this type. */
     static readonly instance = new CostEfficiencyMetric();
 
-    readonly metricTypeName = 'metrics.polaris-slo-cloud.github.io/cost-efficiency';
+    readonly metricTypeName = POLARIS_API.METRICS_GROUP + '/v1/cost-efficiency';
 
 }
 
@@ -77,11 +77,7 @@ export class CostEfficiencyMetricMapping extends ComposedMetricMapping<ComposedM
 
     constructor(initData?: Partial<CostEfficiencyMetricMapping>) {
         super(initData);
-        this.objectKind = new ObjectKind({
-            group: 'metrics.polaris-slo-cloud.github.io',
-            version: 'v1',
-            kind: 'CostEfficiencyMetricMapping',
-        });
+        this.objectKind = CostEfficiencyMetricMapping.getMappingObjectKind(CostEfficiencyMetric.instance);
     }
 
 }

@@ -16,6 +16,7 @@ RUN npm install --unsafe-perm
 # Copy source code.
 COPY ./apps ./apps
 COPY ./libs ./libs
+COPY ./typings ./typings
 
 # Build the app.
 # It is important that "externalDependencies" is set to "none" in the node builder's options in angular.json

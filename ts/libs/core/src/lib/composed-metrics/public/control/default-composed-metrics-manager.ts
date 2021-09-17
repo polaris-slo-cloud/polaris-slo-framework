@@ -119,6 +119,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager {
         const metricParams: ComposedMetricParams = {
             sloTarget: mapping.spec.targetRef,
             namespace: mapping.metadata.namespace,
+            owner: mapping.getOwnerRef(),
             ...mapping.spec.metricConfig,
         };
 
