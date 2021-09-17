@@ -42,11 +42,11 @@ The [`apps`](./apps) folder contains the following application projects:
 
 To build any application/library use the following command:
 ```
-npm run build -- <subproject-name> --with-deps=true
+npm run build -- <subproject-name>
 ```
 For example, to build the cli-polaris-k8s-serializer app:
 ```
-npm run build -- cli-polaris-k8s-serializer --with-deps=true
+npm run build -- cli-polaris-k8s-serializer
 ```
 
 The output can then be found in the `dist` folder.
