@@ -48,7 +48,7 @@ export function generateDockerfilePackageInstallCmd(host: Tree): string {
     if (host.exists('pnpm-lock.yaml')) {
         return 'RUN npm install -g pnpm && pnpm install';
     }
-    return 'RUN npm install --unsafe-perm';
+    return 'RUN npm ci --unsafe-perm';
 }
 
 /**
