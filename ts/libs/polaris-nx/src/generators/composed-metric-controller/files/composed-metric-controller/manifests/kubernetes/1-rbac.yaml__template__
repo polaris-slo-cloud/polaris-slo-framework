@@ -6,14 +6,14 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: metrics-rest-api-cost-efficiency-controller
+  name: <%= controllerProjectName %>
   namespace: polaris
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   # ClusterRoles are not namespaced
-  name: metrics-rest-api-cost-efficiency-controller
+  name: <%= controllerProjectName %>
 rules:
 
 # Allow reading all Composed Metric Mapping types
@@ -30,7 +30,7 @@ rules:
 - apiGroups:
   - metrics.polaris-slo-cloud.github.io
   resources:
-  - costefficiencymetricmappings
+  - <%= compMetricK8sResources %>
   verbs:
   - get
   - watch
@@ -38,7 +38,7 @@ rules:
 - apiGroups:
   - metrics.polaris-slo-cloud.github.io
   resources:
-  - costefficiencymetricmappings/status
+  - <%= compMetricK8sResources %>/status
   verbs:
   - get
 
@@ -47,12 +47,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 # Optionally, we could create a RoleBinding and to scope the permissions to a specific namespace
 metadata:
-  name: control-rest-api-cost-efficiency-metrics
+  name: control-<%= compMetricFileName %>
 subjects:
   - kind: ServiceAccount
-    name: metrics-rest-api-cost-efficiency-controller
+    name: <%= controllerProjectName %>
     namespace: polaris
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: metrics-rest-api-cost-efficiency-controller
+  name: <%= controllerProjectName %>

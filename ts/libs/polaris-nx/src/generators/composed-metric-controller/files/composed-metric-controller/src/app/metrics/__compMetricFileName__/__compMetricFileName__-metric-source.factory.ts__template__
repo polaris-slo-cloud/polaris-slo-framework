@@ -1,0 +1,44 @@
+import { ComposedMetricSource, ComposedMetricSourceFactory, ObjectKind, PolarisRuntime } from '@polaris-sloc/core';
+import { <%= compMetricValueType %>, <%= compMetricType %>, <%= compMetricParams %> } from '<%= compMetricTypePkg %>';
+import { <%= compMetricType %>Source } from './<%= compMetricFileName%>-metric-source';
+
+/**
+ * Factory for creating `<%= compMetricType %>Source` instances that supply metrics of type `<%= compMetricType %>`.
+ */
+export class <%= compMetricType %>SourceFactory implements ComposedMetricSourceFactory<<%= compMetricType %>, <%= compMetricValueType %>, <%= compMetricParams %>> {
+
+    // ToDo: Adapt this list, if necessary.
+    /** The list of supported `SloTarget` types. */
+    static supportedSloTargetTypes: ObjectKind[] = [
+        new ObjectKind({
+            group: 'apps',
+            version: 'v1',
+            kind: 'Deployment',
+        }),
+        new ObjectKind({
+            group: 'apps',
+            version: 'v1',
+            kind: 'StatefulSet',
+        }),
+        new ObjectKind({
+            group: 'apps',
+            version: 'v1',
+            kind: 'ReplicaSet',
+        }),
+        new ObjectKind({
+            group: 'apps',
+            version: 'v1',
+            kind: 'DaemonSet',
+        }),
+    ];
+
+    readonly metricType = <%= compMetricType %>.instance;
+
+    // ToDo: Adapt this, if necessary.
+    readonly metricSourceName = `${<%= compMetricType %>.instance.metricTypeName}/generic-<%= compMetricUniqueTypeName %>`;
+
+    createSource(params: <%= compMetricParams %>, polarisRuntime: PolarisRuntime): ComposedMetricSource<<%= compMetricValueType %>> {
+        return new <%= compMetricType %>Source(params, polarisRuntime);
+    }
+
+}

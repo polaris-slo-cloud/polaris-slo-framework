@@ -1,0 +1,2 @@
+export * from './<%= compMetricFileName %>-metric-source';
+export * from './<%= compMetricFileName %>-metric-source.factory';

@@ -2,24 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    component: metrics-rest-api-cost-efficiency-controller
+    component: <%= controllerProjectName %>
     tier: control-plane
-  name: metrics-rest-api-cost-efficiency-controller
+  name: <%= controllerProjectName %>
   namespace: polaris
 spec:
   selector:
     matchLabels:
-      component: metrics-rest-api-cost-efficiency-controller
+      component: <%= controllerProjectName %>
       tier: control-plane
   replicas: 1
   template:
     metadata:
       labels:
-        component: metrics-rest-api-cost-efficiency-controller
+        component: <%= controllerProjectName %>
         tier: control-plane
         polaris-controller-type: composed-metric
     spec:
-      serviceAccountName: metrics-rest-api-cost-efficiency-controller
+      serviceAccountName: <%= controllerProjectName %>
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -36,7 +36,7 @@ spec:
           operator: Exists
           effect: NoSchedule
       containers:
-      - image: polarissloc/metrics-rest-api-cost-efficiency-controller:latest
+      - image: polarissloc/<%= controllerProjectName %>:latest
         name: metrics-controller
         resources:
           limits:
@@ -65,14 +65,14 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: polaris
-  name: metrics-rest-api-cost-efficiency-controller
+  name: <%= controllerProjectName %>
   labels:
-    component: metrics-rest-api-cost-efficiency-controller
+    component: <%= controllerProjectName %>
     tier: control-plane
     polaris-controller-type: composed-metric
 spec:
   selector:
-    component: metrics-rest-api-cost-efficiency-controller
+    component: <%= controllerProjectName %>
     tier: control-plane
     polaris-controller-type: composed-metric
   ports:

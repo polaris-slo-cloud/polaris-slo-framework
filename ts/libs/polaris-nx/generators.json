@@ -37,6 +37,11 @@
             "factory": "./src/generators/composed-metric-type/generator",
             "schema": "./src/generators/composed-metric-type/schema.json",
             "description": "Create a Composed Metric Type"
+        },
+        "composed-metric-controller": {
+            "factory": "./src/generators/composed-metric-controller/generator",
+            "schema": "./src/generators/composed-metric-controller/schema.json",
+            "description": "Create a Composed Metric Controller for an existing Composed Metric Type"
         }
     }
 }

@@ -74,7 +74,7 @@ export interface SloNames {
     /**
      * @example 'CpuUsageSloMappingSpec'
      */
-     sloMappingSpecType: string;
+    sloMappingSpecType: string;
 
     /**
      * @example costefficiencyslomappings
