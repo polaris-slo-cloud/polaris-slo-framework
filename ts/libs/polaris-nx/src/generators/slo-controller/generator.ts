@@ -4,8 +4,6 @@ import {
     Tree,
     formatFiles,
     generateFiles,
-    getWorkspaceLayout,
-    names,
     offsetFromRoot,
     readProjectConfiguration,
     updateProjectConfiguration,
@@ -20,6 +18,7 @@ import {
     addPolarisDependenciesToPackageJson,
     changeBuildDependencyBundling,
     getSloNames,
+    normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
 } from '../../util';
 import { addCommonWorkspaceRootFiles, generateTypeScriptDockerfile } from '../common';
@@ -29,7 +28,7 @@ import { SloControllerGeneratorNormalizedSchema, SloControllerGeneratorSchema } 
  * Generates a new Polaris SLO Controller..
  */
 const generateSloController: Generator<SloControllerGeneratorSchema> = async (host: Tree, options: SloControllerGeneratorSchema) => {
-    const normalizedOptions = normalizeOptions(host, options);
+    const normalizedOptions = normalizeProjectGeneratorOptions(host, options);
 
     const nodeAppResult = await applicationGenerator(host, {
         name: options.name,
@@ -56,30 +55,6 @@ const generateSloController: Generator<SloControllerGeneratorSchema> = async (ho
 };
 
 export default generateSloController;
-
-
-function normalizeOptions(host: Tree, options: SloControllerGeneratorSchema): SloControllerGeneratorNormalizedSchema {
-    const workspaceInfo = getWorkspaceLayout(host);
-    const name = names(options.name).fileName;
-    const projectDirectory = options.directory
-        ? `${names(options.directory).fileName}/${name}`
-        : name;
-    const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-    const projectRoot = `${workspaceInfo.appsDir}/${projectDirectory}`;
-    const parsedTags = options.tags
-        ? options.tags.split(',').map((s) => s.trim())
-        : [];
-
-    return {
-        ...options,
-        projectName,
-        projectRoot,
-        projectDirectory,
-        parsedTags,
-        appsDir: workspaceInfo.appsDir,
-        libsDir: workspaceInfo.libsDir,
-    };
-}
 
 function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormalizedSchema): void {
     const sloNames = getSloNames(options.sloMappingType);

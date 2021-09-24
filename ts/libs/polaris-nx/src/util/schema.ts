@@ -1,3 +1,4 @@
+import { Tree, getWorkspaceLayout, names } from '@nrwl/devkit';
 import { NormalizedNames } from './naming';
 
 /** Common interface for all project generator schemas. */
@@ -83,4 +84,28 @@ export interface NormalizedLibraryClassGeneratorSchema {
     /** The destination path for the class' file relative to the lib directory within `projectSrcRoot`. */
     destDirInLib: string;
 
+}
+
+/** Normalizes a {@link ProjectGeneratorSchema} into a {@link NormalizedProjectGeneratorSchema}. */
+export function normalizeProjectGeneratorOptions<T extends ProjectGeneratorSchema>(host: Tree, options: T): NormalizedProjectGeneratorSchema & T {
+    const workspaceInfo = getWorkspaceLayout(host);
+    const name = names(options.name).fileName;
+    const projectDirectory = options.directory
+        ? `${names(options.directory).fileName}/${name}`
+        : name;
+    const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+    const projectRoot = `${workspaceInfo.appsDir}/${projectDirectory}`;
+    const parsedTags = options.tags
+        ? options.tags.split(',').map((s) => s.trim())
+        : [];
+
+    return {
+        ...options,
+        projectName,
+        projectRoot,
+        projectDirectory,
+        parsedTags,
+        appsDir: workspaceInfo.appsDir,
+        libsDir: workspaceInfo.libsDir,
+    };
 }
