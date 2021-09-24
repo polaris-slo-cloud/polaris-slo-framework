@@ -1,14 +1,8 @@
-import { NormalizedProjectGeneratorSchema } from '../../util';
+import { NormalizedProjectGeneratorSchema, ProjectGeneratorSchema } from '../../util';
 
-export interface ElasticityStrategyControllerGeneratorSchema {
-    name: string;
+export interface ElasticityStrategyControllerGeneratorSchema extends ProjectGeneratorSchema {
     eStratTypePkg: string;
     eStratType: string;
-    tags?: string;
-    directory?: string;
 }
 
-interface ElasticityStrategyControllerGeneratorNormalizedSchema extends NormalizedProjectGeneratorSchema, ElasticityStrategyControllerGeneratorSchema {
-    projectDirectory: string;
-    parsedTags: string[]
-}
+interface ElasticityStrategyControllerGeneratorNormalizedSchema extends NormalizedProjectGeneratorSchema, ElasticityStrategyControllerGeneratorSchema {}
