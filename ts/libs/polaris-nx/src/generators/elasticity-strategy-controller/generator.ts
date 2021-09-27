@@ -4,8 +4,6 @@ import {
     Tree,
     formatFiles,
     generateFiles,
-    getWorkspaceLayout,
-    names,
     offsetFromRoot,
     readProjectConfiguration,
     updateProjectConfiguration,
@@ -20,6 +18,7 @@ import {
     addPolarisDependenciesToPackageJson,
     changeBuildDependencyBundling,
     getElasticityStrategyNames,
+    normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
 } from '../../util';
 import { addCommonWorkspaceRootFiles, generateTypeScriptDockerfile } from '../common';
@@ -28,11 +27,11 @@ import { ElasticityStrategyControllerGeneratorNormalizedSchema, ElasticityStrate
 /**
  * Generates a new Polaris Elasticity Strategy Controller..
  */
-const generateSloController: Generator<ElasticityStrategyControllerGeneratorSchema> = async (
+const generateElasticityStrategyController: Generator<ElasticityStrategyControllerGeneratorSchema> = async (
     host: Tree,
     options: ElasticityStrategyControllerGeneratorSchema,
 ) => {
-    const normalizedOptions = normalizeOptions(host, options);
+    const normalizedOptions = normalizeProjectGeneratorOptions(host, options);
 
     const nodeAppResult = await applicationGenerator(host, {
         name: options.name,
@@ -57,31 +56,7 @@ const generateSloController: Generator<ElasticityStrategyControllerGeneratorSche
     return runCallbacksSequentially(nodeAppResult, installPkgsFn);
 };
 
-export default generateSloController;
-
-
-function normalizeOptions(host: Tree, options: ElasticityStrategyControllerGeneratorSchema): ElasticityStrategyControllerGeneratorNormalizedSchema {
-    const workspaceInfo = getWorkspaceLayout(host);
-    const name = names(options.name).fileName;
-    const projectDirectory = options.directory
-        ? `${names(options.directory).fileName}/${name}`
-        : name;
-    const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-    const projectRoot = `${workspaceInfo.appsDir}/${projectDirectory}`;
-    const parsedTags = options.tags
-        ? options.tags.split(',').map((s) => s.trim())
-        : [];
-
-    return {
-        ...options,
-        projectName,
-        projectRoot,
-        projectDirectory,
-        parsedTags,
-        appsDir: workspaceInfo.appsDir,
-        libsDir: workspaceInfo.libsDir,
-    };
-}
+export default generateElasticityStrategyController;
 
 function addElasticityStrategyControllerFiles(host: Tree, options: ElasticityStrategyControllerGeneratorNormalizedSchema): void {
     const eStratNames = getElasticityStrategyNames(options.eStratType);

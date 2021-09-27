@@ -1,14 +1,8 @@
-import { NormalizedProjectGeneratorSchema } from '../../util';
+import { NormalizedProjectGeneratorSchema, ProjectGeneratorSchema } from '../../util';
 
-export interface SloControllerGeneratorSchema {
-    name: string;
+export interface SloControllerGeneratorSchema extends ProjectGeneratorSchema {
     sloMappingTypePkg: string;
     sloMappingType: string;
-    tags?: string;
-    directory?: string;
 }
 
-interface SloControllerGeneratorNormalizedSchema extends NormalizedProjectGeneratorSchema, SloControllerGeneratorSchema {
-    projectDirectory: string;
-    parsedTags: string[];
-}
+interface SloControllerGeneratorNormalizedSchema extends NormalizedProjectGeneratorSchema, SloControllerGeneratorSchema {}

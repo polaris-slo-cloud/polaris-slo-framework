@@ -1,0 +1,45 @@
+import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ComposedMetricType, POLARIS_API } from '@polaris-sloc/core';
+
+// ToDo after code generation:
+// - Add properties to the <%= compMetricValueType %> interface to store the value of a single metric instance.
+// - Add configuration parameters to the <%= compMetricParams %> interface, if needed.
+// - (optional) Replace `POLARIS_API.METRICS_GROUP` in <%= compMetricType %>.metricTypeName with a custom group name.
+
+/**
+ * Represents the value of a <%= compMetricValueType %> metric.
+ */
+export interface <%= compMetricValueType %> {
+
+}
+
+/**
+ * The parameters for retrieving the <%= compMetricValueType %> metric.
+ */
+export interface <%= compMetricParams %> extends ComposedMetricParams {
+
+}
+
+/**
+ * Represents the type of a generic cost efficiency metric.
+ */
+export class <%= compMetricType %> extends ComposedMetricType<<%= compMetricValueType %>, <%= compMetricParams %>> {
+
+    /** The singleton instance of this type. */
+    static readonly instance = new <%= compMetricType %>();
+
+    readonly metricTypeName = POLARIS_API.METRICS_GROUP + '/v1/<%= compMetricUniqueTypeName %>';
+
+}
+
+/**
+ * Used to configure a <%= compMetricValueType %> composed metric controller to compute
+ * its metric for a specific target.
+ */
+export class <%= compMetricMapping %> extends ComposedMetricMapping<ComposedMetricMappingSpec<<%= compMetricParams %>>> {
+
+    constructor(initData?: Partial<<%= compMetricMapping %>>) {
+        super(initData);
+        this.objectKind = <%= compMetricMapping %>.getMappingObjectKind(<%= compMetricType %>.instance);
+    }
+
+}

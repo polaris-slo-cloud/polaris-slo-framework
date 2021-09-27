@@ -8,6 +8,7 @@ export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
 
 const SLO_MAPPING_TYPE_SUFFIX = 'SloMapping';
 const ELASTICITY_STRATEGY_TYPE_SUFFIX = 'ElasticityStrategy';
+const COMPOSED_METRIC_TYPE_SUFFIX = 'Metric';
 
 /**
  * Represents a set of commonly used forms of the same name, as returned by the `name()` function of `@nrwl/devkit`.
@@ -73,7 +74,7 @@ export interface SloNames {
     /**
      * @example 'CpuUsageSloMappingSpec'
      */
-     sloMappingSpecType: string;
+    sloMappingSpecType: string;
 
     /**
      * @example costefficiencyslomappings
@@ -124,6 +125,55 @@ export interface ElasticityStrategyNames {
 
 }
 
+/**
+ * Represents a set of commonly used forms of a ComposedMetricType name.
+ */
+ export interface ComposedMetricTypeNames {
+
+    /**
+     * @example 'CostEfficiency'
+     */
+    compMetricValueType: string;
+
+    /**
+     * @example 'CostEfficiencyController'
+     */
+    compMetricControllerName: string;
+
+    /**
+     * @example 'cost-efficiency'
+     */
+    compMetricFileName: string;
+
+    /**
+     * @example 'CostEfficiencyParams'
+     */
+    compMetricParams: string;
+
+    /**
+     * @example 'CostEfficiencyMetric'
+     */
+    compMetricType: string;
+
+    /**
+     * Used for generating the `metricTypeName` property of the composed metric type.
+     *
+     * @example 'cost-efficiency'
+     */
+    compMetricUniqueTypeName: string;
+
+    /**
+     * @example 'CostEfficiencyMetricMapping'
+     */
+    compMetricMapping: string;
+
+    /**
+     * @example 'costefficiencymetricmappings'
+     */
+    compMetricK8sResources: string;
+
+}
+
 
 /**
  * Generates various SLO-related names, based on the name of an SLO mapping class.
@@ -171,6 +221,33 @@ export function getElasticityStrategyNames(eStratTypeName: string): ElasticitySt
         eStratType: eStratTypeName,
         eStratKind: `${eStratTypeName}Kind`,
         eStratK8sResources: getPlural(eStratTypeName.toLowerCase()),
+    };
+}
+
+/**
+ * Generates various ComposedMetricType-related names, based on the name of a ComposedMetric's value interface.
+ *
+ * @param compMetricValueType The name of the ComposedMetric's value interface.
+ */
+export function getComposedMetricTypeNames(compMetricValueType: string): ComposedMetricTypeNames {
+    let compMetricBase: string;
+    if (compMetricValueType.endsWith(COMPOSED_METRIC_TYPE_SUFFIX)) {
+        compMetricBase = compMetricValueType.substring(0, compMetricValueType.length - COMPOSED_METRIC_TYPE_SUFFIX.length);
+    } else {
+        compMetricBase = compMetricValueType;
+    }
+    const compMetricMapping = `${compMetricBase}${COMPOSED_METRIC_TYPE_SUFFIX}Mapping`;
+    const compMetricNames = names(compMetricBase);
+
+    return {
+        compMetricValueType: compMetricBase,
+        compMetricControllerName: `${compMetricBase}Controller`,
+        compMetricFileName: compMetricNames.fileName,
+        compMetricParams: `${compMetricBase}Params`,
+        compMetricType: `${compMetricBase}${COMPOSED_METRIC_TYPE_SUFFIX}`,
+        compMetricMapping,
+        compMetricK8sResources: getPlural(compMetricMapping.toLowerCase()),
+        compMetricUniqueTypeName: compMetricNames.fileName,
     };
 }
 

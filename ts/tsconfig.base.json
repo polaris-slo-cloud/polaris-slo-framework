@@ -24,26 +24,26 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "lodash": [
-                "node_modules/lodash-es"
+            "@polaris-sloc/common-mappings": [
+                "libs/mappings/common-mappings/src/index.ts"
             ],
             "@polaris-sloc/core": [
                 "libs/core/src/index.ts"
             ],
+            "@polaris-sloc/cost-efficiency": [
+                "libs/metrics/cost-efficiency/src/index.ts"
+            ],
             "@polaris-sloc/kubernetes": [
                 "libs/orchestrators/kubernetes/src/index.ts"
             ],
-            "@polaris-sloc/common-mappings": [
-                "libs/mappings/common-mappings/src/index.ts"
+            "@polaris-sloc/polaris-nx": [
+                "libs/polaris-nx/src/index.ts"
             ],
             "@polaris-sloc/prometheus": [
                 "libs/query-backends/prometheus/src/index.ts"
             ],
-            "@polaris-sloc/cost-efficiency": [
-                "libs/metrics/cost-efficiency/src/index.ts"
-            ],
-            "@polaris-sloc/polaris-nx": [
-                "libs/polaris-nx/src/index.ts"
+            "lodash": [
+                "node_modules/lodash-es"
             ]
         }
     },

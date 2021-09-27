@@ -48,6 +48,7 @@ spec:
         securityContext:
           privileged: false
         env:
+          # The hostname and port of the Prometheus service:
           - name: PROMETHEUS_HOST
             value: prometheus-release-1-prome-prometheus.default.svc
           - name: PROMETHEUS_PORT

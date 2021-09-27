@@ -23,6 +23,8 @@ export function createGenerateCommand(cli: PolarisCli): CommandModule<any, any> 
                     'metrics-dashboard',
                     'elasticity-strategy',
                     'elasticity-strategy-controller',
+                    'composed-metric-type',
+                    'composed-metric-controller',
                     'metrics-alert',
                 ],
             })

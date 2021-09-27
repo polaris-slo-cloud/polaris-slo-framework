@@ -8,7 +8,7 @@ To debug the Polaris CLI, follow these steps:
 
 1. Build the CLI:
     ```sh
-    nx build cli-polaris-cli --with-deps=true --skip-nx-cache=true --sourceMap=true
+    nx build cli-polaris-cli --skip-nx-cache=true --sourceMap=true
     ```
 
 2. Run the polaris-nx E2E tests:

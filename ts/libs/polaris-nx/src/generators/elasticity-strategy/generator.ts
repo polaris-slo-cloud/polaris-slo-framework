@@ -7,7 +7,7 @@ import { ElasticityStrategyGeneratorNormalizedSchema, ElasticityStrategyGenerato
 /**
  * Generates a new Polaris ElasticityStrategy type.
  */
-const generateSloMappingType: Generator<ElasticityStrategyGeneratorSchema> = async (host: Tree, options: ElasticityStrategyGeneratorSchema) => {
+const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchema> = async (host: Tree, options: ElasticityStrategyGeneratorSchema) => {
     const callbacks: GeneratorCallback[] = [];
 
     if (options.createLibProject) {
@@ -22,7 +22,7 @@ const generateSloMappingType: Generator<ElasticityStrategyGeneratorSchema> = asy
     // Adapt tsconfig to allow decorators.
     adaptTsConfigForPolaris(host);
 
-    // Generate the SLO mapping and the init-polaris-lib files.
+    // Generate the ElasticityStrategy type and the init-polaris-lib files.
     addElasticityStrategyFile(host, normalizedOptions);
     const initFnFileAdded = addOrExtendInitFn(host, normalizedOptions);
 
@@ -35,7 +35,7 @@ const generateSloMappingType: Generator<ElasticityStrategyGeneratorSchema> = asy
 }
 
 // Export the generator function as the default export to enable integration with Nx.
-export default generateSloMappingType;
+export default generateElasticityStrategyType;
 
 function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema): ElasticityStrategyGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);

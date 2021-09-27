@@ -60,7 +60,10 @@
             "lintFilePatterns": [
               "apps/cli/polaris-cli/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -124,7 +127,10 @@
               "apps/cli/polaris-k8s-serializer/**/*.spec.ts",
               "apps/cli/polaris-k8s-serializer/**/*.d.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -155,7 +161,10 @@
               "libs/core/**/*.spec.jsx",
               "libs/core/**/*.d.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -229,7 +238,10 @@
             "lintFilePatterns": [
               "apps/elasticity/horizontal-elasticity-strategy-controller/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -288,7 +300,10 @@
             "lintFilePatterns": [
               "apps/elasticity/vertical-elasticity-strategy-controller/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -314,7 +329,10 @@
             "lintFilePatterns": [
               "libs/mappings/common-mappings/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -354,7 +372,10 @@
             "lintFilePatterns": [
               "libs/metrics/cost-efficiency/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -428,7 +449,10 @@
             "lintFilePatterns": [
               "apps/metrics/rest-api-cost-efficiency-controller/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -459,7 +483,10 @@
               "libs/orchestrators/kubernetes/**/*.spec.jsx",
               "libs/orchestrators/kubernetes/**/*.d.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -499,7 +526,10 @@
             "lintFilePatterns": [
               "libs/polaris-nx/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -579,7 +609,10 @@
             "lintFilePatterns": [
               "libs/query-backends/prometheus/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -655,7 +688,10 @@
             "lintFilePatterns": [
               "apps/slo/cost-efficiency-slo-controller/**/*.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -718,7 +754,10 @@
               "apps/slo/cpu-usage-slo-controller/**/*.spec.ts",
               "apps/slo/cpu-usage-slo-controller/**/*.d.ts"
             ]
-          }
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
         },
         "test": {
           "builder": "@nrwl/jest:jest",

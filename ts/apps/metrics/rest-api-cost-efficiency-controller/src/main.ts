@@ -32,7 +32,7 @@ const metricsEndpointPort = getEnvironmentVariable('PROMETHEUS_METRICS_ENDPOINT_
 const promMetricsCollectorManager = new PrometheusComposedMetricsCollectorManager();
 promMetricsCollectorManager.start({ path: metricsEndpointPath, port: metricsEndpointPort });
 
-// Create a ComposedMetricsManager and watch the supported elasticity strategy kinds.
+// Create a ComposedMetricsManager and watch the supported composed metric type kinds.
 const manager = polarisRuntime.createComposedMetricsManager();
 manager.startWatching({
     collectorFactories: [ promMetricsCollectorManager ],

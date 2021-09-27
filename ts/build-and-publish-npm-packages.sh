@@ -21,7 +21,7 @@ PROJECTS=(
 )
 
 for proj in ${PROJECTS[@]}; do
-    npx nx build $proj --with-deps=true
+    npx nx build $proj
 done
 
 
