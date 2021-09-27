@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/core",
-  "version": "0.2.0-beta.13",
+  "version": "0.2.0-beta.14",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
@@ -10,6 +10,6 @@
     "reflect-metadata": "~0.1.13"
   },
   "peerDependencies": {
-    "rxjs": "^6.5.5"
+    "rxjs": "^6.6.7"
   }
 }
