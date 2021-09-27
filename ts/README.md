@@ -52,6 +52,19 @@ npm run build -- cli-polaris-k8s-serializer
 The output can then be found in the `dist` folder.
 
 
+### Updating the Polaris Package Versions
+
+To update all @polaris-sloc package versions at once, run the [`set-polaris-pkg-version.sh`](./set-polaris-pkg-version.sh) script.
+For example:
+```sh
+./set-polaris-pkg-version.sh 0.2.0
+```
+
+### Publishing npm Packages
+
+To build and publish all npm packages with their currently configured versions, use the [`build-and-publish-npm-packages.sh`](./build-and-publish-npm-packages.sh) script.
+
+
 ## Debugging in VS Code
 
 For some applications, there are debug configurations in `.vscode/launch.json`.
