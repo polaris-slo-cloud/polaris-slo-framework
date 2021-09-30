@@ -1,12 +1,14 @@
-import {Tree, names} from '@nrwl/devkit';
-import {Dashboard, Panels, Row, Target} from 'grafana-dash-gen';
+import { Tree, names } from '@nrwl/devkit';
+import { SloMappingBase } from '@polaris-sloc/core';
+import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
 import {
     getPanels,
     readGrafanaBearerTokenFromKubernetes,
     readGrafanaUrlFromEnv,
     saveDashboard,
 } from '../../util/grafana';
-import {GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema} from './schema';
+import { PrometheusComposedMetric, createKubeConfig, listAllComposedMetrics } from '../../util/kubernetes';
+import { GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema } from './schema';
 
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
@@ -64,12 +66,12 @@ function sanitizeForPrometheus(dashboard: typeof Dashboard, datasource: string):
     /* eslint-disable @typescript-eslint/no-unsafe-member-access */
     /* eslint-disable @typescript-eslint/prefer-for-of */
     // During development the use of a for-of loop did not work (i.e., the variable always got the index assigned)
-    const panels = getPanels(dashboard)
+    const panels = getPanels(dashboard);
     for (const panel of panels) {
         panel.datasource = datasource;
         for (let k = 0; k < panel.targets.length; k++) {
             const target = panel.targets[k];
-            delete Object.assign(target, {['expr']: target['target']})['target'];
+            delete Object.assign(target, { ['expr']: target['target'] })['target'];
         }
     }
     return dashboard;
@@ -134,36 +136,53 @@ function createPanel(metric: string, type: string, asRate: boolean, title?: stri
 
 }
 
-function generateDashboard(options: GrafanaDashboardGeneratorNormalizedSchema): string {
 
+function generateDashboardForSlo(slo: SloMappingBase<any>, composedMetrics: PrometheusComposedMetric[],
+                                 options: GrafanaDashboardGeneratorNormalizedSchema): string {
+    const rows = [];
     /* eslint-disable @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call */
-    const row = new Row({
-        title: 'Basic Metrics',
-    });
+    for (const composedMetric of composedMetrics) {
+        for (const metricPropKey of composedMetric.metricPropKeys) {
+            const row = new Row({
+                title: metricPropKey,
+            });
+            const promQuery = `${composedMetric.timeSeriesName}{target_name="${composedMetric.targetName}", \
+            metric_prop_key="${metricPropKey}", target_gvk="${composedMetric.targetGvk}", target_namespace="${composedMetric.targetNamespace}"}`;
+            const panel = createPanel(promQuery, options.panelType, options.asRate, metricPropKey);
+            row.addPanel(panel);
+            rows.push(row);
+        }
+    }
 
-    const panel = createPanel('instance:node_load1_per_cpu:ratio', options.panelType, options.asRate, 'Process CPU seconds total');
 
     const dashboard = new Dashboard({
-        title: `${options.name} Dashboard`,
+        title: `${slo.metadata.name} Dashboard`,
         tags: options.parsedTags,
         refresh: options.refresh,
     });
 
-    row.addPanel(panel);
-    dashboard.addRow(row);
+    for (const row of rows) {
+        dashboard.addRow(row);
+    }
 
     return sanitizeForPrometheus(dashboard.generate(), options.datasource);
 }
 
-
-export default async function (host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
+export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
     try {
         const normalizedOptions = await normalizeOptions(host, options);
-        const dashboard = generateDashboard(normalizedOptions);
 
-        return saveDashboard(host, dashboard, normalizedOptions).catch(e => {
-            console.error('Failed dashboard generation', e);
-        });
+        const slosWithComposedMetrics: [SloMappingBase<any>, PrometheusComposedMetric[]][] = await listAllComposedMetrics(createKubeConfig());
+        for (const t of slosWithComposedMetrics) {
+            const slo = t[0];
+            const composedMetric = t[1];
+            const dashboard = generateDashboardForSlo(slo, composedMetric, normalizedOptions);
+
+            return saveDashboard(host, dashboard, normalizedOptions).catch(e => {
+                console.error('Failed dashboard generation', e);
+            });
+        }
+
     } catch (e) {
         console.error(e);
         return Promise.resolve();
