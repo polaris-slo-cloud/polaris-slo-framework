@@ -4,7 +4,9 @@ import { NormalizedLibraryClassGeneratorSchema, POLARIS_INIT_FN_FILE_NAME, POLAR
 
 /**
  * Generates an `initPolarisLib()` function, if it doesn't exist yet, or extends an existing one
- * to register the new SLO mapping type.
+ * to register the new type.
+ *
+ * The type that is registered with the `PolarisTransformationService` is identified by `options.className`.
  *
  * @returns `true` if a new file was generated, otherwise `false`.
  */

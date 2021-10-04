@@ -31,7 +31,14 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
 
     // Generate the ComposedMetricType and the init-polaris-lib files.
     addComposedMetricTypeFile(host, normalizedOptions);
-    const initFnFileAdded = addOrExtendInitFn(host, normalizedOptions);
+    const compMetricNames = getComposedMetricTypeNames(normalizedOptions.className);
+    const initFnFileAdded = addOrExtendInitFn(
+        host,
+        {
+            ...normalizedOptions,
+            className: compMetricNames.compMetricMapping,
+        },
+    );
 
     // Add exports to .ts files.
     addExports(host, normalizedOptions, initFnFileAdded);
