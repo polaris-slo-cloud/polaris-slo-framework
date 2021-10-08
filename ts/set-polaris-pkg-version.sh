@@ -27,10 +27,10 @@ PACKAGE_DIRS=(
 POLARIS_PKGS=(
     "@polaris-sloc\/core"
     "@polaris-sloc\/common-mappings"
-    "@polaris-sloc\/cost-efficiency"
     "@polaris-sloc\/kubernetes"
-    "@polaris-sloc\/polaris-nx"
     "@polaris-sloc\/prometheus"
+    "@polaris-sloc\/cost-efficiency"
+    "@polaris-sloc\/polaris-nx"
     "@polaris-sloc\/cli"
 )
 
