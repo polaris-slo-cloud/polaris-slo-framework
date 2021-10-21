@@ -91,7 +91,7 @@ export async function getDashboard(dashboardId: string, grafanaUrl: string, bear
         throw new Error(`Can't find dashboard with id ${dashboardId}`);
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    return response.data.dashboard;
+    return (response.data as any).dashboard;
 }
 
 /**
