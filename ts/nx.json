@@ -26,103 +26,6 @@
       }
     }
   },
-  "projects": {
-    "cli-polaris-cli": {
-      "tags": [
-        "cli"
-      ]
-    },
-    "cli-polaris-k8s-serializer": {
-      "tags": [
-        "scope:cli",
-        "orchestrator:kubernetes",
-        "query:prometheus"
-      ]
-    },
-    "core": {
-      "tags": [
-        "scope:core"
-      ]
-    },
-    "elasticity-horizontal-elasticity-strategy-controller": {
-      "tags": [
-        "scope:elasticity",
-        "orchestrator:kubernetes"
-      ]
-    },
-    "elasticity-vertical-elasticity-strategy-controller": {
-      "tags": [
-        "scope:elasticity",
-        "orchestrator:kubernetes"
-      ]
-    },
-    "mappings-common-mappings": {
-      "tags": [
-        "scope:core"
-      ]
-    },
-    "metrics-cost-efficiency": {
-      "tags": [
-        "scope:core",
-        "scope:metric"
-      ]
-    },
-    "metrics-rest-api-cost-efficiency-controller": {
-      "tags": [
-        "scope:metrics-controller"
-      ]
-    },
-    "orchestrators-kubernetes": {
-      "tags": [
-        "orchestrator:kubernetes"
-      ]
-    },
-    "polaris-nx": {
-      "tags": [
-        "scope:cli"
-      ]
-    },
-    "polaris-nx-e2e": {
-      "tags": [
-        "scope:cli"
-      ],
-      "implicitDependencies": [
-        "polaris-nx"
-      ]
-    },
-    "query-backends-prometheus": {
-      "tags": [
-        "scope:core",
-        "query:prometheus"
-      ]
-    },
-    "slo-cost-efficiency-slo-controller": {
-      "tags": [
-        "scope:cli",
-        "orchestrator:kubernetes",
-        "query:prometheus"
-      ]
-    },
-    "slo-cpu-usage-slo-controller": {
-      "tags": [
-        "scope:slo",
-        "orchestrator:kubernetes"
-      ]
-    },
-    "ui-polaris-ui": {
-      "tags": [
-        "scope:ui"
-      ]
-    },
-    "ui-polaris-ui-e2e": {
-      "tags": [
-        "scope:ui"
-      ],
-      "implicitDependencies": [
-        "ui-polaris-ui"
-      ]
-    }
-  },
   "targetDependencies": {
     "build": [
       {
@@ -130,5 +33,18 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "ui-polaris-ui",
+  "generators": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
   }
 }
