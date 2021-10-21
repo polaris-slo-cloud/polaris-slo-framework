@@ -1,18 +1,5 @@
 {
   "version": 1,
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "ui-polaris-ui",
-  "schematics": {
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
   "projects": {
     "cli-polaris-cli": {
       "root": "apps/cli/polaris-cli",
@@ -75,7 +62,10 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": [
+        "cli"
+      ]
     },
     "cli-polaris-k8s-serializer": {
       "root": "apps/cli/polaris-k8s-serializer",
@@ -142,7 +132,12 @@
             "coverage/apps/cli/polaris-k8s-serializer"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:cli",
+        "orchestrator:kubernetes",
+        "query:prometheus"
+      ]
     },
     "core": {
       "root": "libs/core",
@@ -191,7 +186,10 @@
             "{options.outputPath}"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:core"
+      ]
     },
     "elasticity-horizontal-elasticity-strategy-controller": {
       "root": "apps/elasticity/horizontal-elasticity-strategy-controller",
@@ -253,7 +251,11 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": [
+        "scope:elasticity",
+        "orchestrator:kubernetes"
+      ]
     },
     "elasticity-vertical-elasticity-strategy-controller": {
       "root": "apps/elasticity/vertical-elasticity-strategy-controller",
@@ -315,7 +317,11 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": [
+        "scope:elasticity",
+        "orchestrator:kubernetes"
+      ]
     },
     "mappings-common-mappings": {
       "root": "libs/mappings/common-mappings",
@@ -359,7 +365,10 @@
             "{options.outputPath}"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:core"
+      ]
     },
     "metrics-cost-efficiency": {
       "root": "libs/metrics/cost-efficiency",
@@ -402,7 +411,11 @@
             ]
           }
         }
-      }
+      },
+      "tags": [
+        "scope:core",
+        "scope:metric"
+      ]
     },
     "metrics-rest-api-cost-efficiency-controller": {
       "root": "apps/metrics/rest-api-cost-efficiency-controller",
@@ -464,7 +477,10 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": [
+        "scope:metrics-controller"
+      ]
     },
     "orchestrators-kubernetes": {
       "root": "libs/orchestrators/kubernetes",
@@ -513,7 +529,10 @@
             "{options.outputPath}"
           ]
         }
-      }
+      },
+      "tags": [
+        "orchestrator:kubernetes"
+      ]
     },
     "polaris-nx": {
       "root": "libs/polaris-nx",
@@ -581,7 +600,10 @@
             ]
           }
         }
-      }
+      },
+      "tags": [
+        "scope:cli"
+      ]
     },
     "polaris-nx-e2e": {
       "projectType": "application",
@@ -595,7 +617,13 @@
             "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
           }
         }
-      }
+      },
+      "tags": [
+        "scope:cli"
+      ],
+      "implicitDependencies": [
+        "polaris-nx"
+      ]
     },
     "query-backends-prometheus": {
       "root": "libs/query-backends/prometheus",
@@ -639,7 +667,11 @@
             "{options.outputPath}"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:core",
+        "query:prometheus"
+      ]
     },
     "slo-cost-efficiency-slo-controller": {
       "root": "apps/slo/cost-efficiency-slo-controller",
@@ -703,7 +735,12 @@
             "coverage/apps/slo/cost-efficiency-slo-controller"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:cli",
+        "orchestrator:kubernetes",
+        "query:prometheus"
+      ]
     },
     "slo-cpu-usage-slo-controller": {
       "root": "apps/slo/cpu-usage-slo-controller",
@@ -769,7 +806,11 @@
             "coverage/apps/slo/cpu-usage-slo-controller"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:slo",
+        "orchestrator:kubernetes"
+      ]
     },
     "ui-polaris-ui": {
       "projectType": "application",
@@ -885,7 +926,10 @@
             "coverage/apps/ui/polaris-ui"
           ]
         }
-      }
+      },
+      "tags": [
+        "scope:ui"
+      ]
     },
     "ui-polaris-ui-e2e": {
       "root": "apps/ui/polaris-ui-e2e",
@@ -917,7 +961,13 @@
             ]
           }
         }
-      }
+      },
+      "tags": [
+        "scope:ui"
+      ],
+      "implicitDependencies": [
+        "ui-polaris-ui"
+      ]
     }
   }
 }
