@@ -1,8 +1,6 @@
 #!/bin/bash
-set -x
+# set -x
 set -o errexit
-
-#### ToDo: Allow specifying a version that will be written to the package.json files first.
 
 # Delete old builds.
 rm -rf ./dist
@@ -16,6 +14,7 @@ PROJECTS=(
     "orchestrators-kubernetes"
     "query-backends-prometheus"
     "metrics-cost-efficiency"
+    "openapi-gen"
     "polaris-nx"
     "cli-polaris-cli"
 )
@@ -32,6 +31,7 @@ NPM_PKGS=(
     "./libs/orchestrators/kubernetes"
     "./libs/query-backends/prometheus"
     "./libs/metrics/cost-efficiency"
+    "./libs/openapi-gen"
     "./libs/polaris-nx"
     "./apps/cli/polaris-cli"
 )

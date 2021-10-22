@@ -20,6 +20,7 @@ PACKAGE_DIRS=(
     "./libs/orchestrators/kubernetes"
     "./libs/query-backends/prometheus"
     "./libs/metrics/cost-efficiency"
+    "./libs/openapi-gen"
     "./libs/polaris-nx"
     "./apps/cli/polaris-cli"
 )
@@ -30,6 +31,7 @@ POLARIS_PKGS=(
     "@polaris-sloc\/kubernetes"
     "@polaris-sloc\/prometheus"
     "@polaris-sloc\/cost-efficiency"
+    "@polaris-sloc\/openapi-gen"
     "@polaris-sloc\/polaris-nx"
     "@polaris-sloc\/cli"
 )

@@ -482,6 +482,52 @@
         "scope:metrics-controller"
       ]
     },
+    "openapi-gen": {
+      "root": "libs/openapi-gen",
+      "sourceRoot": "libs/openapi-gen/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/libs/openapi-gen",
+            "tsConfig": "libs/openapi-gen/tsconfig.lib.json",
+            "packageJson": "libs/openapi-gen/package.json",
+            "main": "libs/openapi-gen/src/index.ts",
+            "assets": [
+              "libs/openapi-gen/*.md"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/openapi-gen/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/openapi-gen"
+          ],
+          "options": {
+            "jestConfig": "libs/openapi-gen/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": [
+        "scope:cli"
+      ]
+    },
     "orchestrators-kubernetes": {
       "root": "libs/orchestrators/kubernetes",
       "sourceRoot": "libs/orchestrators/kubernetes/src",
