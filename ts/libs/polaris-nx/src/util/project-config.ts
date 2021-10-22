@@ -13,11 +13,50 @@ export interface LibProjectOptions {
 }
 
 /**
+ * TypeScript transformer plugin interface adapted from `@nrwl/node`.
+ * A plugin may contain one or more transformers.
+ */
+interface TsTransformerPlugin {
+    name: string;
+    options: Record<string, unknown>;
+}
+type TsTransformerPluginEntry = string | TsTransformerPlugin;
+
+/**
  * Changes the build configuration to bundle all external dependencies into the output js file.
  */
 export function changeBuildDependencyBundling(projectConfig: ProjectConfig): void {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     projectConfig.targets['build'].options['externalDependencies'] = 'none';
+}
+
+/**
+ * Adds the @nestjs/swagger TypeScript transformer to the build configuration.
+ */
+export function registerMetadataGenTransformer(projectConfig: ProjectConfig): void {
+    const options = projectConfig.targets['build'].options as Record<string, any>;
+    let tsPlugins: TsTransformerPluginEntry[] = options['tsPlugins'];
+    if (tsPlugins) {
+        // If the plugin has already been registered, we don't need to do anything.
+        const existingPlugin = tsPlugins.find(plugin => {
+            const name = typeof plugin === 'string' ? plugin : plugin.name;
+            return name === '@nestjs/swagger/plugin';
+        });
+        if (existingPlugin) {
+            return;
+        }
+    } else {
+        tsPlugins = [];
+        options['tsPlugins'] = tsPlugins;
+    }
+
+    tsPlugins.push({
+        name: '@nestjs/swagger/plugin',
+        options: {
+            introspectComments: true,
+            dtoFileNameSuffix: [ '.ts' ],
+        },
+    });
 }
 
 /**

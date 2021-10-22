@@ -3,12 +3,15 @@ import {
     GeneratorCallback,
     Tree,
     formatFiles,
+    readProjectConfiguration,
+    updateProjectConfiguration,
 } from '@nrwl/devkit';
 import {
     adaptTsConfigForPolaris,
     addExports,
     addPolarisDependenciesToPackageJson,
     createLibProject,
+    registerMetadataGenTransformer,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -33,6 +36,11 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
 
     // Adapt tsconfig to allow decorators.
     adaptTsConfigForPolaris(host);
+
+    // Add the metadata generation transformer plugin to the build options.
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    registerMetadataGenTransformer(projectConfig);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     // Generate the SLO mapping and the init-polaris-lib files.
     addSloMappingTypeFile(host, normalizedOptions);

@@ -1,11 +1,22 @@
 import * as path from 'path';
-import { Generator, GeneratorCallback, Tree, formatFiles, generateFiles, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
+import {
+    Generator,
+    GeneratorCallback,
+    Tree,
+    formatFiles,
+    generateFiles,
+    joinPathFragments,
+    names,
+    readProjectConfiguration,
+    updateProjectConfiguration,
+} from '@nrwl/devkit';
 import {
     adaptTsConfigForPolaris,
     addExports,
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getComposedMetricTypeNames,
+    registerMetadataGenTransformer,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -28,6 +39,11 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
 
     // Adapt tsconfig to allow decorators.
     adaptTsConfigForPolaris(host);
+
+    // Add the metadata generation transformer plugin to the build options.
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    registerMetadataGenTransformer(projectConfig);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     // Generate the ComposedMetricType and the init-polaris-lib files.
     addComposedMetricTypeFile(host, normalizedOptions);
