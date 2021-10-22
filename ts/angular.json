@@ -178,6 +178,15 @@
             "tsConfig": "libs/core/tsconfig.lib.json",
             "packageJson": "libs/core/package.json",
             "main": "libs/core/src/index.ts",
+            "tsPlugins": [
+              {
+                "name": "@nestjs/swagger/plugin",
+                "options": {
+                  "introspectComments": true,
+                  "dtoFileNameSuffix": [ ".ts" ]
+                }
+              }
+            ],
             "assets": [
               "libs/core/*.md"
             ]
@@ -357,6 +366,15 @@
             "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
             "packageJson": "libs/mappings/common-mappings/package.json",
             "main": "libs/mappings/common-mappings/src/index.ts",
+            "tsPlugins": [
+              {
+                "name": "@nestjs/swagger/plugin",
+                "options": {
+                  "introspectComments": true,
+                  "dtoFileNameSuffix": [ ".ts" ]
+                }
+              }
+            ],
             "assets": [
               "libs/mappings/common-mappings/*.md"
             ]
