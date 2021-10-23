@@ -60,6 +60,14 @@ export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): v
             updateJson(host, tsConfig, updateFn);
         }
     });
+
+    const packageJson = joinPathFragments(project.root, 'package.json');
+    if (host.exists(packageJson)) {
+        updateJson(host, packageJson, json => {
+            json.type = 'module';
+            return json;
+        });
+    }
 }
 
 /**
