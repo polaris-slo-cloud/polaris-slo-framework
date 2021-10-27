@@ -1,8 +1,8 @@
 import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
-import { ApiObject } from './api-object';
-import { SloTarget } from './slo-target';
-import { StabilizationWindow } from './stabilization-window';
+import { ApiObject } from './api-object.prm';
+import { SloTarget } from './slo-target.prm';
+import { StabilizationWindow } from './stabilization-window.prm';
 
 /**
  * A generic class that is used to set up specs for an elasticity strategy.

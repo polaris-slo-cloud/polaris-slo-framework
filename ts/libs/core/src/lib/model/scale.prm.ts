@@ -1,7 +1,7 @@
 import { PolarisType } from '../transformation';
 import { initSelf } from '../util';
-import { ApiObject } from './api-object';
-import { ObjectKind } from './object-kind';
+import { ApiObject } from './api-object.prm';
+import { ObjectKind } from './object-kind.prm';
 
 /**
  * Spec of a `Scale` API object.

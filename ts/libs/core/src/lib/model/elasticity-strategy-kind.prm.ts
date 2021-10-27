@@ -1,6 +1,6 @@
 import { IndexByKey, TypeFn } from '../util';
-import { ObjectKind } from './object-kind';
-import { SloTarget } from './slo-target';
+import { ObjectKind } from './object-kind.prm';
+import { SloTarget } from './slo-target.prm';
 
 /**
  * Identifies an elasticity strategy kind/type.

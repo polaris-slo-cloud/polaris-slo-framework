@@ -1,5 +1,4 @@
-
-module.exports = {
+{
     "extends": "../../.eslintrc.js",
     "overrides": [
         {
@@ -8,4 +7,4 @@ module.exports = {
             }
         }
     ]
-};
+}

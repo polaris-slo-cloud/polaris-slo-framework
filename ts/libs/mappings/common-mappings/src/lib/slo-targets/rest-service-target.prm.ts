@@ -1,5 +1,4 @@
-import { SloTarget } from '@polaris-sloc/core';
-import { ReplicableTarget } from './replicable-target';
+import { ReplicableTarget } from './replicable-target.prm';
 
 export class RestServiceTarget extends ReplicableTarget {
 

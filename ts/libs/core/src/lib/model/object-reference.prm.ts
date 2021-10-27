@@ -1,5 +1,5 @@
 import { initSelf } from '../util';
-import { ObjectKind } from './object-kind';
+import { ObjectKind } from './object-kind.prm';
 
 /**
  * Identifies a particular object instance in the orchestrator.

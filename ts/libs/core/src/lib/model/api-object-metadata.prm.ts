@@ -1,6 +1,6 @@
 import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
-import { OwnerReference } from './owner-reference';
+import { OwnerReference } from './owner-reference.prm';
 
 /**
  * Provides metadata about an `ApiObject`.

@@ -183,7 +183,7 @@
                 "name": "@nestjs/swagger/plugin",
                 "options": {
                   "introspectComments": true,
-                  "dtoFileNameSuffix": [ ".ts" ]
+                  "dtoFileNameSuffix": [ ".prm.ts" ]
                 }
               }
             ],
@@ -371,7 +371,7 @@
                 "name": "@nestjs/swagger/plugin",
                 "options": {
                   "introspectComments": true,
-                  "dtoFileNameSuffix": [ ".ts" ]
+                  "dtoFileNameSuffix": [ ".prm.ts" ]
                 }
               }
             ],

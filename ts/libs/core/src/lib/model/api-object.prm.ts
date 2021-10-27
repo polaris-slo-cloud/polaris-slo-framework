@@ -1,7 +1,7 @@
 import { PolarisType } from '../transformation';
 import { initSelf } from '../util';
-import { ApiObjectMetadata } from './api-object-metadata';
-import { ObjectKind } from './object-kind';
+import { ApiObjectMetadata } from './api-object-metadata.prm';
+import { ObjectKind } from './object-kind.prm';
 
 /**
  * Common superclass for an object that can be added/read/changed/deleted using the orchestrator's API.

@@ -1,9 +1,9 @@
 import { PolarisType } from '../transformation';
 import { IndexByKey, initSelf } from '../util';
-import { ApiObject } from './api-object';
-import { ElasticityStrategyKind } from './elasticity-strategy-kind';
-import { SloTarget } from './slo-target';
-import { StabilizationWindow } from './stabilization-window';
+import { ApiObject } from './api-object.prm';
+import { ElasticityStrategyKind } from './elasticity-strategy-kind.prm';
+import { SloTarget } from './slo-target.prm';
+import { StabilizationWindow } from './stabilization-window.prm';
 
 /**
  * Defines the minimum configuration data that is needed for an SLO mapping.

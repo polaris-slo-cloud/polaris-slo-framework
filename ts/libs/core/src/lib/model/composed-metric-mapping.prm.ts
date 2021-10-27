@@ -1,10 +1,10 @@
 import { pascalCase } from 'change-case';
 import { ComposedMetricError, ComposedMetricParams, ComposedMetricType } from '../composed-metrics';
 import { PolarisType } from '../transformation';
-import { ApiObject } from './api-object';
-import { ObjectKind } from './object-kind';
-import { OwnerReference } from './owner-reference';
-import { SloTarget } from './slo-target';
+import { ApiObject } from './api-object.prm';
+import { ObjectKind } from './object-kind.prm';
+import { OwnerReference } from './owner-reference.prm';
+import { SloTarget } from './slo-target.prm';
 
 /**
  * Defines the configuration data for a composed metric mapping that is used for configuring

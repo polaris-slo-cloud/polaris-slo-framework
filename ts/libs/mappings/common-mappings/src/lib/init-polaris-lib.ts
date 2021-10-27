@@ -1,6 +1,5 @@
 import { PolarisRuntime } from '@polaris-sloc/core';
-import { VerticalElasticityStrategy, VerticalElasticityStrategyKind } from './elasticity';
-import { HorizontalElasticityStrategy, HorizontalElasticityStrategyKind } from './elasticity/horizontal-elasticity-strategy';
+import { HorizontalElasticityStrategy, HorizontalElasticityStrategyKind, VerticalElasticityStrategy, VerticalElasticityStrategyKind } from './elasticity';
 import { CostEfficiencyMetricMapping } from './metrics';
 import { CostEfficiencySloMapping, CpuUsageSloMapping } from './slo';
 import { RestServiceTarget } from './slo-targets';

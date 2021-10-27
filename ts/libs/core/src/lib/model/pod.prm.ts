@@ -1,8 +1,8 @@
 import { PolarisType } from '../transformation';
 import { initSelf } from '../util';
-import { ApiObject } from './api-object';
-import { ApiObjectMetadata } from './api-object-metadata';
-import { Container } from './container';
+import { ApiObjectMetadata } from './api-object-metadata.prm';
+import { ApiObject } from './api-object.prm';
+import { Container } from './container.prm';
 
 /**
  * Specifies the properties of a pod.

@@ -1,5 +1,5 @@
 import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ComposedMetricType, ObjectKind, POLARIS_API } from '@polaris-sloc/core';
-import { TotalCost } from './total-cost';
+import { TotalCost } from './total-cost.prm';
 
 /**
  * Represents a generic cost efficiency metric.

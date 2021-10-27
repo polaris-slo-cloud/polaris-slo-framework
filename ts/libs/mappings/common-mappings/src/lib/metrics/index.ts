@@ -1,2 +1,2 @@
-export * from './cost-efficiency';
-export * from './total-cost';
+export * from './cost-efficiency.prm';
+export * from './total-cost.prm';

@@ -1,5 +1,5 @@
 import { initSelf } from '../util';
-import { ObjectReference } from './object-reference';
+import { ObjectReference } from './object-reference.prm';
 
 /**
  * Identifies the owner of an `ApiObject`.

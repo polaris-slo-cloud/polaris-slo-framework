@@ -1,5 +1,5 @@
 import { initSelf } from '../util';
-import { ObjectReference } from './object-reference';
+import { ObjectReference } from './object-reference.prm';
 
 /**
  * Identifies that target workload for an SLO mapping.
