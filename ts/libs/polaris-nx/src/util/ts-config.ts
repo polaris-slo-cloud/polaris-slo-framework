@@ -36,7 +36,16 @@ export function adaptTsConfigForPolaris(host: Tree): void {
 }
 
 /**
- * Changes the module code generation type for the specified library project to 'es2015'.
+ * Changes the module code generation type for the specified library project to 'commonjs'.
+ *
+ * @note We use the CommonJS module format, because TypeScript does not modify the import statements
+ * when generating ES2015/ES2020 modules. This results in invalid import paths, because
+ * ECMAScript module path imports always need to include the file extension. For now,
+ * the easiest way around this, is to use CommonJS.
+ * See:
+ * - https://nodejs.org/api/esm.html#import-specifiers
+ * - https://github.com/microsoft/TypeScript/issues/40878
+ * - https://github.com/microsoft/TypeScript/issues/42151
  */
 export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): void {
     const project = readProjectConfiguration(host, projectName);
@@ -48,9 +57,9 @@ export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): v
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const updateFn = (json: any) => {
         if (json.compilerOptions) {
-            json.compilerOptions.module = 'es2015';
+            json.compilerOptions.module = 'commonjs';
         } else {
-            json.compilerOptions = { module: 'es2015' };
+            json.compilerOptions = { module: 'commonjs' };
         }
         return json;
     }
@@ -64,7 +73,7 @@ export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): v
     const packageJson = joinPathFragments(project.root, 'package.json');
     if (host.exists(packageJson)) {
         updateJson(host, packageJson, json => {
-            json.type = 'module';
+            json.type = 'commonjs';
             return json;
         });
     }

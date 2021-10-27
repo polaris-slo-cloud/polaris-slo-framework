@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "express": "^4.17.1",
     "prometheus-query": "^3.0.1",

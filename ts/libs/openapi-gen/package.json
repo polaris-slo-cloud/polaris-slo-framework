@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "class-transformer": "~0.4.0",
     "lodash-es": "^4.17.21",

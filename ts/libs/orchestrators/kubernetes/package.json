@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@kubernetes/client-node": "^0.15.1"
   },
