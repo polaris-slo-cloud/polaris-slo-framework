@@ -6,6 +6,19 @@ export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
 /** The name of the file that contains the function to initialize a Polaris library (.ts needs to be appended). */
  export const POLARIS_INIT_FN_FILE_NAME = 'init-polaris-lib'
 
+/**
+ * The suffix of files containing a Polaris Resource Model type (.ts needs to be appended).
+ *
+ * A distinct suffix is needed to tell the metadata generation compiler plugin which files to process.
+ */
+export const MODEL_FILE_SUFFIX = '.prm';
+
+const SLO_MAPPING_TYPE_FILE_SUFFIX = '.slo-mapping'
+const SLO_CONTROLLER_FILE_SUFFIX = '.controller';
+const ELASTICITY_STRATEGY_CONTROLLER_FILE_SUFFIX = '.controller';
+const COMPOSED_METRIC_SOURCE_FILE_SUFFIX = '.metric-source';
+const COMPOSED_METRIC_SOURCE_FACTORY_FILE_SUFFIX = COMPOSED_METRIC_SOURCE_FILE_SUFFIX + '.factory';
+
 const SLO_MAPPING_TYPE_SUFFIX = 'SloMapping';
 const ELASTICITY_STRATEGY_TYPE_SUFFIX = 'ElasticityStrategy';
 const COMPOSED_METRIC_TYPE_SUFFIX = 'Metric';
@@ -57,9 +70,14 @@ export interface SloNames {
     sloMicrocontrollerName: string;
 
     /**
-     * @example 'cpu-usage'
+     * @example 'cpu-usage.slo-mapping'
      */
-    sloFileName: string;
+    sloMappingFileName: string;
+
+    /**
+     * @example 'cpu-usage.slo'
+     */
+    sloMicrocontrollerFileName: string;
 
     /**
      * @example 'CpuUsageSloConfig'
@@ -99,9 +117,14 @@ export interface ElasticityStrategyNames {
     eStratControllerName: string;
 
     /**
-     * @example 'horizontal-elasticity-strategy'
+     * @example 'horizontal-elasticity-strategy.prm'
      */
     eStratFileName: string;
+
+    /**
+     * @example 'horizontal-elasticity-strategy.controller'
+     */
+    eStratControllerFileName: string;
 
     /**
      * @example 'HorizontalElasticityStrategyConfig'
@@ -136,14 +159,24 @@ export interface ElasticityStrategyNames {
     compMetricValueType: string;
 
     /**
-     * @example 'CostEfficiencyController'
-     */
-    compMetricControllerName: string;
-
-    /**
      * @example 'cost-efficiency'
      */
+    compMetricDirName: string;
+
+    /**
+     * @example 'cost-efficiency.prm'
+     */
     compMetricFileName: string;
+
+    /**
+     * @example 'cost-efficiency.metric-source'
+     */
+    compMetricSourceFileName: string;
+
+    /**
+     * @example 'cost-efficiency.metric-source.factory'
+     */
+    compMetricSourceFactoryFileName: string;
 
     /**
      * @example 'CostEfficiencyParams'
@@ -154,6 +187,16 @@ export interface ElasticityStrategyNames {
      * @example 'CostEfficiencyMetric'
      */
     compMetricType: string;
+
+    /**
+     * @example 'CostEfficiencyMetricSource'
+     */
+    compMetricSource: string;
+
+    /**
+     * @example 'CostEfficiencyMetricSourceFactory'
+     */
+    compMetricSourceFactory: string;
 
     /**
      * Used for generating the `metricTypeName` property of the composed metric type.
@@ -185,13 +228,16 @@ export function getSloNames(sloMappingTypeName: string): SloNames {
     if (sloMappingTypeName.endsWith(SLO_MAPPING_TYPE_SUFFIX)) {
         sloName = sloMappingTypeName.substring(0, sloMappingTypeName.length - SLO_MAPPING_TYPE_SUFFIX.length);
     } else {
+        sloName = sloMappingTypeName;
         sloMappingTypeName += SLO_MAPPING_TYPE_SUFFIX;
     }
+    const normalizedNames = names(sloName);
 
     return {
         sloName,
         sloMicrocontrollerName: `${sloName}Slo`,
-        sloFileName: names(sloName).fileName,
+        sloMappingFileName: normalizedNames.fileName + SLO_MAPPING_TYPE_FILE_SUFFIX + MODEL_FILE_SUFFIX,
+        sloMicrocontrollerFileName: normalizedNames.fileName + SLO_CONTROLLER_FILE_SUFFIX,
         sloConfigType: `${sloName}SloConfig`,
         sloMappingType: sloMappingTypeName,
         sloMappingSpecType: `${sloMappingTypeName}Spec`,
@@ -210,13 +256,16 @@ export function getElasticityStrategyNames(eStratTypeName: string): ElasticitySt
     if (eStratTypeName.endsWith(ELASTICITY_STRATEGY_TYPE_SUFFIX)) {
         eStratName = eStratTypeName.substring(0, eStratTypeName.length - ELASTICITY_STRATEGY_TYPE_SUFFIX.length);
     } else {
+        eStratName = eStratTypeName;
         eStratTypeName += ELASTICITY_STRATEGY_TYPE_SUFFIX;
     }
+    const normalizedNames = names(eStratTypeName);
 
     return {
         eStratName,
         eStratControllerName: `${eStratTypeName}Controller`,
-        eStratFileName: names(eStratTypeName).fileName,
+        eStratFileName: normalizedNames.fileName + MODEL_FILE_SUFFIX,
+        eStratControllerFileName: normalizedNames.fileName + ELASTICITY_STRATEGY_CONTROLLER_FILE_SUFFIX,
         eStratConfigType: `${eStratTypeName}Config`,
         eStratType: eStratTypeName,
         eStratKind: `${eStratTypeName}Kind`,
@@ -236,18 +285,24 @@ export function getComposedMetricTypeNames(compMetricValueType: string): Compose
     } else {
         compMetricBase = compMetricValueType;
     }
-    const compMetricMapping = `${compMetricBase}${COMPOSED_METRIC_TYPE_SUFFIX}Mapping`;
-    const compMetricNames = names(compMetricBase);
+    const compMetricType = `${compMetricBase}${COMPOSED_METRIC_TYPE_SUFFIX}`;
+    const compMetricMapping = `${compMetricType}Mapping`;
+    const normalizedNames = names(compMetricBase);
+    const fileNameBase = normalizedNames.fileName;
 
     return {
         compMetricValueType: compMetricBase,
-        compMetricControllerName: `${compMetricBase}Controller`,
-        compMetricFileName: compMetricNames.fileName,
+        compMetricDirName: fileNameBase,
+        compMetricFileName: names(compMetricType).fileName + MODEL_FILE_SUFFIX,
+        compMetricSourceFileName: fileNameBase + COMPOSED_METRIC_SOURCE_FILE_SUFFIX,
+        compMetricSourceFactoryFileName: fileNameBase + COMPOSED_METRIC_SOURCE_FACTORY_FILE_SUFFIX,
         compMetricParams: `${compMetricBase}Params`,
-        compMetricType: `${compMetricBase}${COMPOSED_METRIC_TYPE_SUFFIX}`,
+        compMetricType,
         compMetricMapping,
+        compMetricSource: `${compMetricType}Source`,
+        compMetricSourceFactory: `${compMetricType}SourceFactory`,
         compMetricK8sResources: getPlural(compMetricMapping.toLowerCase()),
-        compMetricUniqueTypeName: compMetricNames.fileName,
+        compMetricUniqueTypeName: fileNameBase,
     };
 }
 

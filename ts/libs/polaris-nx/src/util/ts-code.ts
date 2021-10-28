@@ -23,8 +23,8 @@ export function addExports(host: Tree, options: NormalizedLibraryClassGeneratorS
         addExportToIndex(host, indexFile, initFnFile);
     }
 
-    const sloMappingFile = './' + joinPathFragments(options.destDir, options.fileName);
-    addExportToIndex(host, indexFile, sloMappingFile);
+    const srcFile = './' + joinPathFragments(options.destDir, options.fileName);
+    addExportToIndex(host, indexFile, srcFile);
 }
 
 /**

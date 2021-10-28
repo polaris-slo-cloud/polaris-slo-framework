@@ -1,11 +1,11 @@
 import { ComposedMetricSource, ComposedMetricSourceFactory, ObjectKind, PolarisRuntime } from '@polaris-sloc/core';
 import { <%= compMetricValueType %>, <%= compMetricType %>, <%= compMetricParams %> } from '<%= compMetricTypePkg %>';
-import { <%= compMetricType %>Source } from './<%= compMetricFileName%>-metric-source';
+import { <%= compMetricSource %> } from './<%= compMetricSourceFileName %>';
 
 /**
- * Factory for creating `<%= compMetricType %>Source` instances that supply metrics of type `<%= compMetricType %>`.
+ * Factory for creating `<%= compMetricSource %>` instances that supply metrics of type `<%= compMetricType %>`.
  */
-export class <%= compMetricType %>SourceFactory implements ComposedMetricSourceFactory<<%= compMetricType %>, <%= compMetricValueType %>, <%= compMetricParams %>> {
+export class <%= compMetricSourceFactory %> implements ComposedMetricSourceFactory<<%= compMetricType %>, <%= compMetricValueType %>, <%= compMetricParams %>> {
 
     // ToDo:
     // - Adapt this list, if necessary.
@@ -13,8 +13,8 @@ export class <%= compMetricType %>SourceFactory implements ComposedMetricSourceF
     //   and be available through `MetricSource.getComposedMetricSource()`, add the following code to your `initPolarisLib()` function
     //   or to your `main.ts`:
     //   ```
-    //   <%= compMetricType %>SourceFactory.supportedSloTargetTypes.forEach(
-    //       sloTargetType => runtime.metricsSourcesManager.addComposedMetricSourceFactory(new <%= compMetricType %>SourceFactory(), sloTargetType),
+    //   <%= compMetricSourceFactory %>.supportedSloTargetTypes.forEach(
+    //       sloTargetType => runtime.metricsSourcesManager.addComposedMetricSourceFactory(new <%= compMetricSourceFactory %>(), sloTargetType),
     //   );
     //   ```
     //
@@ -57,7 +57,7 @@ export class <%= compMetricType %>SourceFactory implements ComposedMetricSourceF
     readonly metricSourceName = `${<%= compMetricType %>.instance.metricTypeName}/generic-<%= compMetricUniqueTypeName %>`;
 
     createSource(params: <%= compMetricParams %>, polarisRuntime: PolarisRuntime): ComposedMetricSource<<%= compMetricValueType %>> {
-        return new <%= compMetricType %>Source(params, polarisRuntime);
+        return new <%= compMetricSource %>(params, polarisRuntime);
     }
 
 }

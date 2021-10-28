@@ -1,5 +1,6 @@
 import { GeneratorCallback, NxJsonProjectConfiguration, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/node';
+import { MODEL_FILE_SUFFIX } from './naming';
 import { NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 
@@ -54,7 +55,7 @@ export function registerMetadataGenTransformer(projectConfig: ProjectConfig): vo
         name: '@nestjs/swagger/plugin',
         options: {
             introspectComments: true,
-            dtoFileNameSuffix: [ '.ts' ],
+            dtoFileNameSuffix: [ `${MODEL_FILE_SUFFIX}.ts` ],
         },
     });
 }

@@ -70,6 +70,7 @@ export default generateComposedMetricType;
 function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema): ComposedMetricTypeGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);
     const normalizedNames = names(options.name);
+    const compMetricNames = getComposedMetricTypeNames(normalizedNames.className);
 
     return {
         names: normalizedNames,
@@ -78,7 +79,7 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
-        fileName: normalizedNames.fileName,
+        fileName: compMetricNames.compMetricFileName,
     };
 }
 

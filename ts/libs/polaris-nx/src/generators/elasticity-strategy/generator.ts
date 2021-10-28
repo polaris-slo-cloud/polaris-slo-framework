@@ -63,6 +63,7 @@ export default generateElasticityStrategyType;
 function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema): ElasticityStrategyGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);
     const normalizedNames = names(options.name);
+    const eStratNames = getElasticityStrategyNames(normalizedNames.className);
 
     return {
         names: normalizedNames,
@@ -71,7 +72,7 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
-        fileName: normalizedNames.fileName,
+        fileName: eStratNames.eStratFileName,
     };
 }
 
@@ -83,7 +84,6 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
 
     const templateOptions = {
         ...eStratNames,
-        fileName: options.fileName,
         template: '', // Used to replace '__template__' with an empty string in file names.
     };
 

@@ -1,11 +1,11 @@
 import { Tree, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
+import { getSloNames } from '../../../util';
 import { SloMappingTypeGeneratorNormalizedSchema, SloMappingTypeGeneratorSchema } from '../schema';
-
-const SLO_MAPPING_TYPE_FILE_SUFFIX = '.slo-mapping'
 
 export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSchema): SloMappingTypeGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);
     const normalizedNames = names(options.name);
+    const sloNames = getSloNames(normalizedNames.className);
 
     return {
         names: normalizedNames,
@@ -14,6 +14,6 @@ export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSch
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
-        fileName: normalizedNames.fileName + SLO_MAPPING_TYPE_FILE_SUFFIX,
+        fileName: sloNames.sloMappingFileName,
     };
 }
