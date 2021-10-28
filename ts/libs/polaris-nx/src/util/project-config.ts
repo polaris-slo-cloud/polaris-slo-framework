@@ -24,11 +24,19 @@ interface TsTransformerPlugin {
 type TsTransformerPluginEntry = string | TsTransformerPlugin;
 
 /**
- * Changes the build configuration to bundle all external dependencies into the output js file.
+ * Changes the build configuration to bundle all external dependencies into the output js file,
+ * except for `@nestjs/swagger`.
+ *
+ * `@nestjs/swagger` is not needed by controller applications. However, the its metadata generator compiler plugin
+ * accidentally imports it using `require()` in the output JS. Declaring it as an external dependency,
+ * allows us to ignore it during the build process.
  */
 export function changeBuildDependencyBundling(projectConfig: ProjectConfig): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    projectConfig.targets['build'].options['externalDependencies'] = 'none';
+    const options = projectConfig.targets['build'].options as { externalDependencies: 'none' | 'all' | string[] };
+    if (!Array.isArray(options.externalDependencies)) {
+        options.externalDependencies = [];
+    }
+    options.externalDependencies.push('@nestjs/swagger');
 }
 
 /**

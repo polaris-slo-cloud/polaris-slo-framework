@@ -214,7 +214,9 @@
             "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
             "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
             "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
-            "externalDependencies": "none",
+            "externalDependencies": [
+              "@nestjs/swagger"
+            ],
             "assets": [
               "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
             ]
@@ -280,7 +282,9 @@
             "outputPath": "dist/apps/elasticity/vertical-elasticity-strategy-controller",
             "main": "apps/elasticity/vertical-elasticity-strategy-controller/src/main.ts",
             "tsConfig": "apps/elasticity/vertical-elasticity-strategy-controller/tsconfig.app.json",
-            "externalDependencies": "none",
+            "externalDependencies": [
+              "@nestjs/swagger"
+            ],
             "assets": [
               "apps/elasticity/vertical-elasticity-strategy-controller/src/assets"
             ]
@@ -449,7 +453,9 @@
             "outputPath": "dist/apps/metrics/rest-api-cost-efficiency-controller",
             "main": "apps/metrics/rest-api-cost-efficiency-controller/src/main.ts",
             "tsConfig": "apps/metrics/rest-api-cost-efficiency-controller/tsconfig.app.json",
-            "externalDependencies": "none",
+            "externalDependencies": [
+              "@nestjs/swagger"
+            ],
             "assets": [
               "apps/metrics/rest-api-cost-efficiency-controller/src/assets"
             ]
@@ -750,7 +756,9 @@
             "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
             "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
-            "externalDependencies": "none",
+            "externalDependencies": [
+              "@nestjs/swagger"
+            ],
             "assets": [
               "apps/slo/cost-efficiency-slo-controller/src/assets"
             ]
@@ -819,7 +827,9 @@
             "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
             "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
-            "externalDependencies": "none",
+            "externalDependencies": [
+              "@nestjs/swagger"
+            ],
             "assets": [
               "apps/slo/cpu-usage-slo-controller/src/assets"
             ]
