@@ -1,1 +1,1 @@
-export * from './lib/openapi-gen';
+export * from './lib/generator';

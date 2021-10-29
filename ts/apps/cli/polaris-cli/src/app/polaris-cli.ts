@@ -6,6 +6,7 @@ import {
     createDeployCommand,
     createDockerBuildCommand,
     createGenerateCommand,
+    createGenerateCrdCommand,
     createInitCommand,
 } from './yargs-commands';
 
@@ -41,9 +42,10 @@ export class PolarisCli {
             .command(createBuildCommand(this))
             .command(createDockerBuildCommand(this))
             .command(createDeployCommand(this))
+            .command(createGenerateCrdCommand(this))
             .help()
             .recommendCommands()
-            .parse();
+            .parseSync();
     }
 
 }
