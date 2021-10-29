@@ -1,6 +1,6 @@
 // This file provides common static configuration interfaces for elasticity strategies.
 
-import { Resources } from '../../../model';
+import { Resources } from './container.prm';
 
 /**
  * Commonly used, optional, static configuration for an elasticity strategy that employs horizontal scaling.

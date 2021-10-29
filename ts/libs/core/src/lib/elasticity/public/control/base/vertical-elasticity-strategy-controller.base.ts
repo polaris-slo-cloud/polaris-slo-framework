@@ -9,10 +9,11 @@ import {
     Resources,
     SloCompliance,
     SloTarget,
+    VerticalElasticityStrategyConfig,
 } from '../../../../model';
 import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
 import { Logger } from '../../../../util';
-import { ElasticityStrategyExecutionError, StabilizationWindowTracker, VerticalElasticityStrategyConfig } from '../../common';
+import { ElasticityStrategyExecutionError, StabilizationWindowTracker } from '../../common';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
 /** Tracked executions eviction interval of 20 minutes. */

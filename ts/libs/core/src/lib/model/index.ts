@@ -1,5 +1,6 @@
 export * from './api-object.prm';
 export * from './api-object-metadata.prm';
+export * from './common-elasticity-configs.prm';
 export * from './composed-metric-mapping.prm';
 export * from './container.prm';
 export * from './elasticity-strategy.prm';
