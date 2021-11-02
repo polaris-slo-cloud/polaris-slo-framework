@@ -1,13 +1,11 @@
 import * as fs from 'fs';
 import * as jsonSchemaToOpenApi from '@openapi-contrib/json-schema-to-openapi-schema';
+import { OpenApiSchema } from '@polaris-sloc/core';
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { cloneDeep } from 'lodash';
-import { OpenAPIV3 } from 'openapi-types';
 import { Schema as JsonSchema, DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG, createGenerator } from 'ts-json-schema-generator';
 import { SchemaGeneratorConfig } from './config';
 import { OpenApiGeneratorError } from './errors';
-
-export type OpenApiSchema = OpenAPIV3.BaseSchemaObject;
 
 /**
  * Generates an OpenAPI v3 Schema for a Polaris type.

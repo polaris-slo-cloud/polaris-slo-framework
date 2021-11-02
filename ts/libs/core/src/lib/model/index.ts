@@ -3,6 +3,7 @@ export * from './api-object-metadata.prm';
 export * from './common-elasticity-configs.prm';
 export * from './composed-metric-mapping.prm';
 export * from './container.prm';
+export * from './custom-resource-definition.prm';
 export * from './elasticity-strategy.prm';
 export * from './elasticity-strategy-kind.prm';
 export * from './object-kind.prm';
