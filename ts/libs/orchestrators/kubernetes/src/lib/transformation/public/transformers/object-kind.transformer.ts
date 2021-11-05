@@ -85,6 +85,7 @@ export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectK
         transformationService: PolarisTransformationService,
     ): JsonSchema<ApiVersionKind> {
         return {
+            type: 'object',
             properties: {
                 apiVersion: {
                     type: 'string',

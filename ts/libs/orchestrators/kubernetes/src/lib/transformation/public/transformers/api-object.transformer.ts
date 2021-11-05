@@ -92,7 +92,28 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
         // Generate the same metadata schema as Kubebuilder.
         transformedSchema.properties.metadata = { type: 'object' };
 
+        // additionalProperties and properties are mutually exclusive in Kubernetes.
+        this.fixAdditionalProperties(transformedSchema);
+
         return transformedSchema;
+    }
+
+    /**
+     * Recursively removes the `additionalProperties` field if `properties` is set,
+     * because these two fields are mutually exclusive in Kubernetes.
+     */
+    private fixAdditionalProperties(k8sSchema: JsonSchema<any>): void {
+        if (k8sSchema.properties) {
+            delete k8sSchema.additionalProperties;
+
+            const propKeys = Object.keys(k8sSchema.properties);
+            propKeys.forEach(propKey => {
+                const nestedSchema = k8sSchema.properties[propKey];
+                if (typeof nestedSchema === 'object') {
+                    this.fixAdditionalProperties(nestedSchema);
+                }
+            });
+        }
     }
 
 }
