@@ -24,7 +24,7 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         this._defaultTransformer = newDefaultTransformer;
     }
 
-    registerTransformer<T>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config: PolarisTransformationConfig = {}): void {
+    registerTransformer<T, P>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, P>, config: PolarisTransformationConfig = {}): void {
         const transformMeta: PolarisTransformationMetadata<T> = {
             ...config,
             transformer,

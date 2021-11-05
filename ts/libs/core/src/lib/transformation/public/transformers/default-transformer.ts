@@ -4,6 +4,7 @@ import { JsonSchema } from '../../../model';
 import { Constructor, InterfaceOf } from '../../../util';
 import { PolarisTransformer } from '../common';
 import { PolarisTransformationService } from '../service';
+import { transformObjectOrArraySchema } from './schema-transformation-utils';
 
 /**
  * This transformer does not alter the structure of the objects, it just performs a simple
@@ -30,12 +31,25 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
         polarisSchema: JsonSchema<T>,
         polarisType: Constructor<T>,
         transformationService: PolarisTransformationService,
-    ): JsonSchema<InterfaceOf<T>> {
+    ): JsonSchema<T> {
+        return transformObjectOrArraySchema(
+            polarisSchema,
+            polarisType,
+            transformationService,
+            (schema, type, transformationSvc) => this.transformObjectToOrchestratorSchema(schema, type, transformationSvc),
+        );
+    }
+
+    private transformObjectToOrchestratorSchema(
+        polarisSchema: JsonSchema<T>,
+        polarisType: Constructor<T>,
+        transformationService: PolarisTransformationService,
+    ): JsonSchema<T> {
         if (!polarisSchema || !polarisSchema.properties) {
             return polarisSchema;
         }
         const transformedSchema = this.cloneSchemaWithoutProperties(polarisSchema);
-        const propKeys = Object.keys(polarisSchema.properties);
+        const propKeys = Object.keys(polarisSchema.properties) as (keyof T)[];
 
         propKeys.forEach(propKey => {
             const propType = transformationService.getPropertyType(polarisType, propKey as any);
@@ -50,7 +64,7 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
         return transformedSchema;
     }
 
-    private cloneSchemaWithoutProperties(polarisSchema: JsonSchema): JsonSchema {
+    private cloneSchemaWithoutProperties(polarisSchema: JsonSchema<T>): JsonSchema<T> {
         const { properties, ...srcSchema } = polarisSchema;
         const ret: JsonSchema = cloneDeep(srcSchema);
         ret.properties = properties ? {} : undefined;

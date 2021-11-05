@@ -46,7 +46,7 @@ export interface PolarisTransformationService {
      * @param transformer The `PolarisTransformer` for the type.
      * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
      */
-    registerTransformer<T>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config?: PolarisTransformationConfig): void;
+    registerTransformer<T, P>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, P>, config?: PolarisTransformationConfig): void;
 
     /**
      * Associates the specified object kind with a Polaris type and optionally also with a transformer.

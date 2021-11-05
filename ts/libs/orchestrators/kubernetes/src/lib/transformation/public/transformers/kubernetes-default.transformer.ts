@@ -14,14 +14,14 @@ export class KubernetesDefaultTransformer<T> extends DefaultTransformer<T> {
         polarisSchema: JsonSchema<T>,
         polarisType: Constructor<T>,
         transformationService: PolarisTransformationService,
-    ): JsonSchema<any> {
+    ): JsonSchema<T> {
         const transformed = super.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService);
         if (!transformed.properties) {
             return transformed;
         }
 
         // Convert all `type: number` to int64 by default.
-        const propKeys = Object.keys(transformed.properties);
+        const propKeys = Object.keys(transformed.properties) as (keyof T)[];
         propKeys.forEach(propKey => {
             const propSchema = transformed.properties[propKey];
             if (typeof propSchema !== 'object') {

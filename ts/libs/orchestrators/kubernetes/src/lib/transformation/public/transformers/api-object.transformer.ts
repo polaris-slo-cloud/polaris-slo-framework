@@ -8,6 +8,7 @@ import {
     ObjectKind,
     PolarisTransformationService,
     ReusablePolarisTransformer,
+    transformObjectOrArraySchema,
 } from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
@@ -28,7 +29,7 @@ import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
  */
 export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {
 
-    private defaultTransformer = new KubernetesDefaultTransformer<any>();
+    private defaultTransformer = new KubernetesDefaultTransformer<ApiObject<T>>();
 
     extractPolarisObjectInitData(
         polarisType: Constructor<ApiObject<T>>,
@@ -78,8 +79,21 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
         polarisType: Constructor<ApiObject<T>>,
         transformationService: PolarisTransformationService,
     ): JsonSchema<KubernetesObjectWithSpec<P>> {
+        return transformObjectOrArraySchema(
+            polarisSchema,
+            polarisType,
+            transformationService,
+            (schema, type, transformationSvc) => this.transformObjectToOrchestratorSchema(schema, type, transformationSvc),
+        );
+    }
+
+    private transformObjectToOrchestratorSchema(
+        polarisSchema: JsonSchema<ApiObject<T>>,
+        polarisType: Constructor<ApiObject<T>>,
+        transformationService: PolarisTransformationService,
+    ): JsonSchema<KubernetesObjectWithSpec<P>> {
         const transformedSchema: JsonSchema<KubernetesObjectWithSpec<P>> =
-            this.defaultTransformer.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService);
+            this.defaultTransformer.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService) as any;
 
         // Move the `ApiObject.objectKind` property's contents to the root level.
         const transformedObjKindSchema: JsonSchema<ApiVersionKind> = (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind as any;
@@ -102,11 +116,11 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
      * Recursively removes the `additionalProperties` field if `properties` is set,
      * because these two fields are mutually exclusive in Kubernetes.
      */
-    private fixAdditionalProperties(k8sSchema: JsonSchema<any>): void {
+    private fixAdditionalProperties<U>(k8sSchema: JsonSchema<U>): void {
         if (k8sSchema.properties) {
             delete k8sSchema.additionalProperties;
 
-            const propKeys = Object.keys(k8sSchema.properties);
+            const propKeys = Object.keys(k8sSchema.properties) as (keyof U)[];
             propKeys.forEach(propKey => {
                 const nestedSchema = k8sSchema.properties[propKey];
                 if (typeof nestedSchema === 'object') {

@@ -7,8 +7,10 @@ import {
     OrchestratorToPolarisTransformationError,
     PolarisTransformationService,
     ReusablePolarisTransformer,
+    transformObjectOrArraySchema,
 } from '@polaris-sloc/core';
 import { ApiVersionKind } from '../../../model';
+import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
 
 /**
  * Transforms an `ObjectKind` between the Polaris format and a Kubernetes object of the form:
@@ -28,6 +30,8 @@ import { ApiVersionKind } from '../../../model';
  * - **Unknown property handling**: Copies unknown properties, because for Kubernetes the properties of most subclasses do not require transformation.
  */
 export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectKind, ApiVersionKind> {
+
+    private defaultTransformer = new KubernetesDefaultTransformer<ObjectKind>();
 
     transformToPolarisObject(
         polarisType: Constructor<ObjectKind>,
@@ -77,37 +81,54 @@ export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectK
     }
 
     /**
-     * @returns The JSON schema of Kubernetes `TypeMeta`, based on https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#TypeMeta
+     * @returns A JSON schema, based on that of Kubernetes `TypeMeta` (https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#TypeMeta )
      */
-    transformToOrchestratorSchema(
+     transformToOrchestratorSchema(
         polarisSchema: JsonSchema<ObjectKind>,
         polarisType: Constructor<ObjectKind>,
         transformationService: PolarisTransformationService,
     ): JsonSchema<ApiVersionKind> {
-        return {
-            type: 'object',
-            properties: {
-                apiVersion: {
-                    type: 'string',
-                    description: 'APIVersion defines the versioned schema of this representation of an object. ' +
-                        'Servers should convert recognized schemas to the latest internal value, and ' +
-                        'may reject unrecognized values. ' +
-                        'More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources',
-                },
-                kind: {
-                    type: 'string',
-                    description: 'Kind is a string value representing the REST resource this object represents. '+
-                        'Servers may infer this from the endpoint the client submits requests to. ' +
-                        'Cannot be updated. ' +
-                        'In CamelCase. ' +
-                        'More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds',
-                },
-            },
-            required: [
-                'apiVersion',
-                'kind',
-            ],
+        return transformObjectOrArraySchema(
+            polarisSchema,
+            polarisType,
+            transformationService,
+            (schema, type, transformationSvc) => this.transformObjectToOrchestratorSchema(schema, type, transformationSvc),
+        );
+    }
+
+    private transformObjectToOrchestratorSchema(
+        polarisSchema: JsonSchema<ObjectKind>,
+        polarisType: Constructor<ObjectKind>,
+        transformationService: PolarisTransformationService,
+    ): JsonSchema<ApiVersionKind> {
+        // Transform the schema to ensure that we cover any properties of subclasses of ObjectKind.
+        const transformedSchema: JsonSchema<ApiVersionKind> =
+            this.defaultTransformer.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService);
+
+        delete (transformedSchema as JsonSchema<ObjectKind>).properties.group;
+        delete (transformedSchema as JsonSchema<ObjectKind>).properties.version;
+        transformedSchema.required = transformedSchema.required ?
+            transformedSchema.required.filter(propKey => propKey !== 'group' && propKey !== 'version') : [ 'kind' ];
+
+        transformedSchema.properties.apiVersion = {
+            type: 'string',
+            description: 'APIVersion defines the versioned schema of this representation of an object. ' +
+                'Servers should convert recognized schemas to the latest internal value, and ' +
+                'may reject unrecognized values. ' +
+                'More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources',
         };
+        transformedSchema.required.push('apiVersion');
+
+        transformedSchema.properties.kind = {
+            type: 'string',
+            description: 'Kind is a string value representing the REST resource this object represents. '+
+                'Servers may infer this from the endpoint the client submits requests to. ' +
+                'Cannot be updated. ' +
+                'In CamelCase. ' +
+                'More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds',
+        };
+
+        return transformedSchema;
     }
 
 }
