@@ -1,4 +1,5 @@
 import { names } from '@nrwl/devkit';
+import { getPlural as getPluralCore } from '@polaris-sloc/core';
 
 /** The name of the function used to initialize a Polaris library. */
 export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
@@ -310,8 +311,5 @@ export function getComposedMetricTypeNames(compMetricValueType: string): Compose
  * @returns The plural form of the specified `singular`.
  */
 export function getPlural(singular: string): string {
-    if (singular.endsWith('y')) {
-        return singular.substring(0, singular.length - 1) + 'ies';
-    }
-    return singular + 's';
+    return getPluralCore(singular);
 }

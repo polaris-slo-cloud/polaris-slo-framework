@@ -4,7 +4,7 @@ import { Resolver } from '@stoplight/json-ref-resolver';
 import { cloneDeep } from 'lodash';
 import { DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG, createGenerator } from 'ts-json-schema-generator';
 import { SchemaGeneratorConfig } from './config';
-import { OpenApiGeneratorError } from './errors';
+import { SchemaGeneratorError } from './errors';
 
 /**
  * Generates schemas for Polaris types.
@@ -34,10 +34,10 @@ export class SchemaGenerator {
         try {
             return await this.generateJsonSchemaInternal(config);
         } catch (err) {
-            if (err instanceof OpenApiGeneratorError) {
+            if (err instanceof SchemaGeneratorError) {
                 throw err;
             }
-            throw new OpenApiGeneratorError('Error while generating JSON Schema', config, this.polarisRuntime, err);
+            throw new SchemaGeneratorError('Error while generating JSON Schema', config, this.polarisRuntime, err);
         }
     }
 
@@ -55,10 +55,10 @@ export class SchemaGenerator {
         try {
             return await this.generateOpenApiSchemaInternal(config);
         } catch (err) {
-            if (err instanceof OpenApiGeneratorError) {
+            if (err instanceof SchemaGeneratorError) {
                 throw err;
             }
-            throw new OpenApiGeneratorError('Error while generating OpenAPI Schema', config, this.polarisRuntime, err);
+            throw new SchemaGeneratorError('Error while generating OpenAPI Schema', config, this.polarisRuntime, err);
         }
     }
 
