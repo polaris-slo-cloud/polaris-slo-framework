@@ -24,6 +24,24 @@ export class SchemaGenerator {
     constructor(private polarisRuntime: PolarisRuntime) {}
 
     /**
+     * Generates an orchestrator-specific JSON Schema for a Polaris type.
+     *
+     * @param config Specifies which TypeScript project to inspect and which type to generate the schema for.
+     * @returns A JSON Schema for the specified type that has been transformed for the current orchestrator
+     * or throws an error if the type cannot be found or in case of other problems.
+     */
+    async generateJsonSchema(config: SchemaGeneratorConfig): Promise<JsonSchema> {
+        try {
+            return await this.generateJsonSchemaInternal(config);
+        } catch (err) {
+            if (err instanceof OpenApiGeneratorError) {
+                throw err;
+            }
+            throw new OpenApiGeneratorError('Error while generating JSON Schema', config, this.polarisRuntime, err);
+        }
+    }
+
+    /**
      * Generates an OpenAPI v3 Schema for a Polaris type.
      *
      * @note This does not generate a complete OpenAPI spec, which would describe an entire API.
@@ -42,21 +60,18 @@ export class SchemaGenerator {
             }
             throw new OpenApiGeneratorError('Error while generating OpenAPI Schema', config, this.polarisRuntime, err);
         }
-
     }
 
     private async generateOpenApiSchemaInternal(config: SchemaGeneratorConfig): Promise<OpenApiSchema> {
-        const jsonSchema = await this.generateJsonSchema(config);
-        const orchestratorJsonSchema = this.polarisRuntime.transformer.transformToOrchestratorSchema(jsonSchema, config.polarisType);
-
-        const openApiSchema = await this.convertJsonSchemaToOpenApi(orchestratorJsonSchema);
+        const jsonSchema = await this.generateJsonSchemaInternal(config);
+        const openApiSchema = await this.convertJsonSchemaToOpenApi(jsonSchema);
         return openApiSchema;
     }
 
     /**
-     * Generates a JSON schema without any references, i.e., all properties contain nested schemas.
+     * Generates an orchestrator-specific JSON schema without any references, i.e., all properties contain nested schemas.
      */
-    private async generateJsonSchema(config: SchemaGeneratorConfig): Promise<JsonSchema> {
+    private async generateJsonSchemaInternal(config: SchemaGeneratorConfig): Promise<JsonSchema> {
         const typeName = config.polarisType.name;
         const origJsonSchema = createGenerator({
             ...TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG,
@@ -73,7 +88,8 @@ export class SchemaGenerator {
         delete jsonSchemaResolved.$ref;
         delete jsonSchemaResolved.definitions;
 
-        return jsonSchemaResolved;
+        const orchestratorJsonSchema = this.polarisRuntime.transformer.transformToOrchestratorSchema(jsonSchemaResolved, config.polarisType);
+        return orchestratorJsonSchema;
     }
 
     /**
