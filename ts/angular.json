@@ -506,9 +506,9 @@
         "scope:metrics-controller"
       ]
     },
-    "openapi-gen": {
-      "root": "libs/openapi-gen",
-      "sourceRoot": "libs/openapi-gen/src",
+    "schema-gen": {
+      "root": "libs/schema-gen",
+      "sourceRoot": "libs/schema-gen/src",
       "projectType": "library",
       "architect": {
         "build": {
@@ -517,12 +517,12 @@
             "{options.outputPath}"
           ],
           "options": {
-            "outputPath": "dist/libs/openapi-gen",
-            "tsConfig": "libs/openapi-gen/tsconfig.lib.json",
-            "packageJson": "libs/openapi-gen/package.json",
-            "main": "libs/openapi-gen/src/index.ts",
+            "outputPath": "dist/libs/schema-gen",
+            "tsConfig": "libs/schema-gen/tsconfig.lib.json",
+            "packageJson": "libs/schema-gen/package.json",
+            "main": "libs/schema-gen/src/index.ts",
             "assets": [
-              "libs/openapi-gen/*.md"
+              "libs/schema-gen/*.md"
             ]
           }
         },
@@ -533,17 +533,17 @@
           ],
           "options": {
             "lintFilePatterns": [
-              "libs/openapi-gen/**/*.ts"
+              "libs/schema-gen/**/*.ts"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/openapi-gen"
+            "coverage/libs/schema-gen"
           ],
           "options": {
-            "jestConfig": "libs/openapi-gen/jest.config.js",
+            "jestConfig": "libs/schema-gen/jest.config.js",
             "passWithNoTests": true
           }
         }

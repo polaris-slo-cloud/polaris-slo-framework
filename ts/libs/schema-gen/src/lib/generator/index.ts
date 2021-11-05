@@ -1,3 +1,3 @@
 export * from './config';
 export * from './errors';
-export * from './openapi-generator';
+export * from './schema-generator';

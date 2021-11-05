@@ -6,7 +6,15 @@ import { Schema as JsonSchema, DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONF
 import { SchemaGeneratorConfig } from './config';
 import { OpenApiGeneratorError } from './errors';
 
-export class OpenApiSchemaGenerator {
+/**
+ * Generates schemas for Polaris types.
+ *
+ * **Important:** Does not work in a webpack bundled application with no external dependencies,
+ * because the ECMAScript .d.ts files included with TypeScript would not be bundled by default.
+ * Thus, `ts-json-schema-generator` and `typescript` **must** be external dependencies (i.e.,
+ * installed in node_modules).
+ */
+export class SchemaGenerator {
 
     private resolver = new Resolver();
 
@@ -17,11 +25,6 @@ export class OpenApiSchemaGenerator {
 
     /**
      * Generates an OpenAPI v3 Schema for a Polaris type.
-     *
-     * **Important:** Does not work in a webpack bundled application with no external dependencies,
-     * because the ECMAScript .d.ts files included with TypeScript would not be bundled by default.
-     * Thus, `ts-json-schema-generator` and `typescript` **must** be external dependencies (i.e.,
-     * installed in node_modules).
      *
      * @note This does not generate a complete OpenAPI spec, which would describe an entire API.
      * Instead only a schema that describes a single type is generated.

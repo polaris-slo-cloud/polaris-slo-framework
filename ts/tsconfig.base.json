@@ -36,8 +36,8 @@
             "@polaris-sloc/kubernetes": [
                 "libs/orchestrators/kubernetes/src/index.ts"
             ],
-            "@polaris-sloc/openapi-gen": [
-                "libs/openapi-gen/src/index.ts"
+            "@polaris-sloc/schema-gen": [
+                "libs/schema-gen/src/index.ts"
             ],
             "@polaris-sloc/polaris-nx": [
                 "libs/polaris-nx/src/index.ts"
