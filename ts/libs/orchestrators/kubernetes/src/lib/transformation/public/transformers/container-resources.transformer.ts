@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Constructor, ContainerResources, PolarisTransformationService, ReusablePolarisTransformer } from '@polaris-sloc/core';
+import { Constructor, ContainerResources, JsonSchema, PolarisTransformationService, ReusablePolarisTransformer } from '@polaris-sloc/core';
 import { KubernetesQuantity, KubernetesResourceRequirements, KubernetesResourcesList } from '../../../model';
 
 /**
@@ -56,6 +56,49 @@ export class ContainerResourcesTransformer implements ReusablePolarisTransformer
         return {
             limits: k8sResources,
             requests: { ...k8sResources },
+        };
+    }
+
+    /**
+     * @returns A schema that is essentially a copy of the one for Kubernetes `ResourceRequirements`
+     * (https://pkg.go.dev/k8s.io/api/core/v1#ResourceRequirements ).
+     */
+    transformToOrchestratorSchema(
+        polarisSchema: JsonSchema<ContainerResources>,
+        polarisType: Constructor<ContainerResources>,
+        transformationService: PolarisTransformationService,
+    ): JsonSchema<KubernetesResourceRequirements> {
+        const resourcesListSchema: JsonSchema = {
+            type: 'object',
+            additionalProperties: {
+                anyOf: [
+                    { type: 'integer' },
+                    { type: 'string' },
+                ],
+                pattern: '^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$',
+            },
+        };
+        (resourcesListSchema.additionalProperties as any)['x-kubernetes-int-or-string'] = true;
+
+        return {
+            type: 'object',
+            description: 'Compute Resources required by this container. ' +
+                'Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
+            properties: {
+                limits: {
+                    ...resourcesListSchema,
+                    description: 'Limits describes the maximum amount of compute resources allowed. ' +
+                        'More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
+                },
+                requests: {
+                    ...resourcesListSchema,
+                    description: 'Requests describes the minimum amount ' +
+                        'of compute resources required. If Requests is omitted ' +
+                        'for a container, it defaults to Limits if that is ' +
+                        'explicitly specified, otherwise to an implementation-defined ' +
+                        'value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/',
+                },
+            },
         };
     }
 

@@ -4,11 +4,13 @@ import {
     ApiObjectMetadata,
     Constructor,
     InterfaceOf,
+    JsonSchema,
     ObjectKind,
     PolarisTransformationService,
     ReusablePolarisTransformer,
 } from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
+import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
 
 /**
  * Transforms plain orchestrator API objects to Polaris to instances of `ApiObject` or a subclass thereof,
@@ -25,6 +27,8 @@ import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
  * - **Unknown property handling**: Ignores unknown properties of the root `ApiObject`.
  */
 export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {
+
+    private defaultTransformer = new KubernetesDefaultTransformer<any>();
 
     extractPolarisObjectInitData(
         polarisType: Constructor<ApiObject<T>>,
@@ -67,6 +71,28 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
             spec,
         };
         return plain;
+    }
+
+    transformToOrchestratorSchema(
+        polarisSchema: JsonSchema<ApiObject<T>>,
+        polarisType: Constructor<ApiObject<T>>,
+        transformationService: PolarisTransformationService,
+    ): JsonSchema<KubernetesObjectWithSpec<P>> {
+        const transformedSchema: JsonSchema<KubernetesObjectWithSpec<P>> =
+            this.defaultTransformer.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService);
+
+        // Move the `ApiObject.objectKind` property's contents to the root level.
+        const transformedObjKindSchema: JsonSchema<ApiVersionKind> = (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind as any;
+        delete (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind;
+        transformedSchema.required = transformedSchema.required.filter(propKey => propKey !== 'objectKind');
+        transformedSchema.properties.apiVersion = transformedObjKindSchema.properties.apiVersion;
+        transformedSchema.properties.kind = transformedObjKindSchema.properties.kind;
+        transformedSchema.required.push('apiVersion', 'kind');
+
+        // Generate the same metadata schema as Kubebuilder.
+        transformedSchema.properties.metadata = { type: 'object' };
+
+        return transformedSchema;
     }
 
 }

@@ -1,3 +1,4 @@
+import { PolarisConstructor } from '@polaris-sloc/core';
 
 /**
  * Configuration options for generating a schema for a particular type.
@@ -16,8 +17,8 @@
     tsIndexFile: string;
 
     /**
-     * The name of the type, for which to generate the spec.
+     * The PolarisType, for which to generate the spec.
      */
-    typeName: string;
+    polarisType: PolarisConstructor<any>;
 
 }

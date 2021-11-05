@@ -1,3 +1,4 @@
+import { PolarisRuntime } from '@polaris-sloc/core';
 import { SchemaGeneratorConfig } from './config';
 
 /**
@@ -8,6 +9,7 @@ export class OpenApiGeneratorError extends Error {
     constructor(
         message: string,
         public generatorConfig: SchemaGeneratorConfig,
+        public polarisRuntime: PolarisRuntime,
         public reason?: any,
     ) {
         super(message);

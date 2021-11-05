@@ -1,10 +1,17 @@
+import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import { OpenAPIV3 } from 'openapi-types';
 import { PolarisType } from '../transformation';
 import { initSelf } from '../util';
 import { ApiObject } from './api-object.prm';
 import { ObjectKind } from './object-kind.prm';
 
-export type OpenApiSchema = OpenAPIV3.BaseSchemaObject
+/** Describes a type using an OpenAPI v3 schema. */
+export type OpenApiSchema = OpenAPIV3.BaseSchemaObject;
+
+export type JsonSchemaDefinition = JSONSchema7Definition;
+
+/** Describes a type using JSON Schema. */
+export type JsonSchema<T = any> = JSONSchema7 & { properties?: Record<keyof T, JsonSchemaDefinition> };
 
 /**
  * Describes a custom {@link ApiObject} type.

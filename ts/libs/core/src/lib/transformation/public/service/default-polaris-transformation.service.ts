@@ -1,4 +1,4 @@
-import { ObjectKind } from '../../../model';
+import { JsonSchema, ObjectKind } from '../../../model';
 import { IndexByKey, PolarisConstructor, PolarisMetadataUtils } from '../../../util';
 import { PolarisTransformationMetadata } from '../../internal';
 import { PolarisTransformationConfig, PolarisTransformer, UnknownObjectKindError } from '../common';
@@ -82,6 +82,15 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
             return polarisObj.map(obj => this.transformSingleObjToOrchestratorPlainObj(obj));
         }
         return this.transformSingleObjToOrchestratorPlainObj(polarisObj);
+    }
+
+    transformToOrchestratorSchema<T>(polarisSchema: JsonSchema<T>, polarisType: PolarisConstructor<T>): JsonSchema<any> {
+        if (polarisSchema === null || polarisSchema === undefined) {
+            return null;
+        }
+
+        const transformer = this.getTransformer(polarisType);
+        return transformer.transformToOrchestratorSchema(polarisSchema, polarisType, this);
     }
 
     getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {

@@ -14,6 +14,8 @@ export interface CostEfficiencySloConfig {
 
     /**
      * The desired cost efficiency value.
+     *
+     * @minimum 0
      */
     targetCostEfficiency: number;
 
@@ -31,7 +33,7 @@ export interface CostEfficiencySloConfig {
      * Whereas, if the number of requests faster than the threshold is above this percentile, we know that
      * we are dealing with case b), i.e., the SLO compliance percentage will be below 100% (e.g., resources can be reduced).
      *
-     * Default: `0.9`
+     * @default 90
      */
     minRequestsPercentile?: number;
 

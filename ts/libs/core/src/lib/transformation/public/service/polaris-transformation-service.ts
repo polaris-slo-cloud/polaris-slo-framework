@@ -1,4 +1,4 @@
-import { ObjectKind } from '../../../model';
+import { JsonSchema, ObjectKind } from '../../../model';
 import { PolarisConstructor } from '../../../util';
 import { PolarisTransformationConfig, PolarisTransformer } from '../common';
 
@@ -120,6 +120,17 @@ export interface PolarisTransformationService {
      * or `null` if `polarisArray` was `null` or `undefined.
      */
     transformToOrchestratorPlainObject(polarisArray: any[]): any[];
+
+    /**
+     * Transforms the orchestrator-independent schema of the Polaris type into an orchestrator-specific schema for creating `CustomResourceDefinitions`
+     *
+     * @param polarisSchema The Polaris schema of the type.
+     * @param polarisType The Polaris type, whose schema should be transformed.
+     * The type's schema is contained in `polarisSchema.definitions[polarisType.name]`.
+     * @param transformationService The `PolarisTransformationService`.
+     * @returns A new `JsonSchema` object that is specific to the used orchestrator or `null` if `polarisSchema` was `null` or `undefined`.
+     */
+    transformToOrchestratorSchema<T>(polarisSchema: JsonSchema<T>, polarisType: PolarisConstructor<T>): JsonSchema<any>;
 
     /**
      * Gets the type that has been defined for the property `propertyKey` of the class `polarisType` using

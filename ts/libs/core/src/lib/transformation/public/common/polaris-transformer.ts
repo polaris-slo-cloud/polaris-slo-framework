@@ -1,3 +1,4 @@
+import { JsonSchema } from '../../../model';
 import { Constructor } from '../../../util';
 import { PolarisTransformationService } from './../service';
 
@@ -42,6 +43,20 @@ export interface PolarisTransformer<T, P = any> {
      * @returns A new orchestrator-specific plain object that may be serialized without any further changes.
      */
     transformToOrchestratorPlainObject(polarisObj: T, transformationService: PolarisTransformationService): P;
+
+    /**
+     * Transforms the orchestrator-independent schema of the Polaris type into an orchestrator-specific schema for creating `CustomResourceDefinitions`.
+     *
+     * @param polarisSchema The JSON schema (without references) of the Polaris type.
+     * @param polarisType The Polaris type, whose schema should be transformed.
+     * @param transformationService The `PolarisTransformationService`.
+     * @returns A new `JsonSchema` object that is specific to the used orchestrator.
+     */
+    transformToOrchestratorSchema(
+        polarisSchema: JsonSchema<T>,
+        polarisType: Constructor<T>,
+        transformationService: PolarisTransformationService
+    ): JsonSchema<P>;
 
 }
 

@@ -22,6 +22,9 @@ export class StabilizationWindow {
      * The number of seconds after the previous scaling operation to wait before
      * an elasticity action that increases resources (e.g., scale up/out) or an equivalent configuration change
      * can be issued due to an SLO violation.
+     *
+     * @minimum 0
+     * @default 60
      */
     scaleUpSeconds?: number;
 
@@ -29,6 +32,9 @@ export class StabilizationWindow {
      * The number of seconds after the previous scaling operation to wait before
      * an elasticity action that decreases resources (e.g., scale down/in) or an equivalent configuration change
      * can be issued due to an SLO violation.
+     *
+     * @minimum 0
+     * @default 300
      */
     scaleDownSeconds?: number;
 
