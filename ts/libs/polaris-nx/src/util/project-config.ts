@@ -1,6 +1,5 @@
 import { GeneratorCallback, NxJsonProjectConfiguration, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/node';
-import { MODEL_FILE_SUFFIX } from './naming';
 import { NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 
@@ -14,58 +13,11 @@ export interface LibProjectOptions {
 }
 
 /**
- * TypeScript transformer plugin interface adapted from `@nrwl/node`.
- * A plugin may contain one or more transformers.
- */
-interface TsTransformerPlugin {
-    name: string;
-    options: Record<string, unknown>;
-}
-type TsTransformerPluginEntry = string | TsTransformerPlugin;
-
-/**
- * Changes the build configuration to bundle all external dependencies into the output js file,
- * except for `@nestjs/swagger`.
- *
- * `@nestjs/swagger` is not needed by controller applications. However, the its metadata generator compiler plugin
- * accidentally imports it using `require()` in the output JS. Declaring it as an external dependency,
- * allows us to ignore it during the build process.
+ * Changes the build configuration to bundle all external dependencies into the output js file.
  */
 export function changeBuildDependencyBundling(projectConfig: ProjectConfig): void {
     const options = projectConfig.targets['build'].options as { externalDependencies: 'none' | 'all' | string[] };
-    if (!Array.isArray(options.externalDependencies)) {
-        options.externalDependencies = [];
-    }
-    options.externalDependencies.push('@nestjs/swagger');
-}
-
-/**
- * Adds the @nestjs/swagger TypeScript transformer to the build configuration.
- */
-export function registerMetadataGenTransformer(projectConfig: ProjectConfig): void {
-    const options = projectConfig.targets['build'].options as Record<string, any>;
-    let tsPlugins: TsTransformerPluginEntry[] = options['tsPlugins'];
-    if (tsPlugins) {
-        // If the plugin has already been registered, we don't need to do anything.
-        const existingPlugin = tsPlugins.find(plugin => {
-            const name = typeof plugin === 'string' ? plugin : plugin.name;
-            return name === '@nestjs/swagger/plugin';
-        });
-        if (existingPlugin) {
-            return;
-        }
-    } else {
-        tsPlugins = [];
-        options['tsPlugins'] = tsPlugins;
-    }
-
-    tsPlugins.push({
-        name: '@nestjs/swagger/plugin',
-        options: {
-            introspectComments: true,
-            dtoFileNameSuffix: [ `${MODEL_FILE_SUFFIX}.ts` ],
-        },
-    });
+    options.externalDependencies = 'none';
 }
 
 /**

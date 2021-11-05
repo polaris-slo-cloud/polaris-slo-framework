@@ -178,15 +178,6 @@
             "tsConfig": "libs/core/tsconfig.lib.json",
             "packageJson": "libs/core/package.json",
             "main": "libs/core/src/index.ts",
-            "tsPlugins": [
-              {
-                "name": "@nestjs/swagger/plugin",
-                "options": {
-                  "introspectComments": true,
-                  "dtoFileNameSuffix": [ ".prm.ts" ]
-                }
-              }
-            ],
             "assets": [
               "libs/core/*.md"
             ]
@@ -214,9 +205,7 @@
             "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
             "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
             "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
-            "externalDependencies": [
-              "@nestjs/swagger"
-            ],
+            "externalDependencies": "none",
             "assets": [
               "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
             ]
@@ -282,9 +271,7 @@
             "outputPath": "dist/apps/elasticity/vertical-elasticity-strategy-controller",
             "main": "apps/elasticity/vertical-elasticity-strategy-controller/src/main.ts",
             "tsConfig": "apps/elasticity/vertical-elasticity-strategy-controller/tsconfig.app.json",
-            "externalDependencies": [
-              "@nestjs/swagger"
-            ],
+            "externalDependencies": "none",
             "assets": [
               "apps/elasticity/vertical-elasticity-strategy-controller/src/assets"
             ]
@@ -370,15 +357,6 @@
             "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
             "packageJson": "libs/mappings/common-mappings/package.json",
             "main": "libs/mappings/common-mappings/src/index.ts",
-            "tsPlugins": [
-              {
-                "name": "@nestjs/swagger/plugin",
-                "options": {
-                  "introspectComments": true,
-                  "dtoFileNameSuffix": [ ".prm.ts" ]
-                }
-              }
-            ],
             "assets": [
               "libs/mappings/common-mappings/*.md"
             ]
@@ -453,9 +431,7 @@
             "outputPath": "dist/apps/metrics/rest-api-cost-efficiency-controller",
             "main": "apps/metrics/rest-api-cost-efficiency-controller/src/main.ts",
             "tsConfig": "apps/metrics/rest-api-cost-efficiency-controller/tsconfig.app.json",
-            "externalDependencies": [
-              "@nestjs/swagger"
-            ],
+            "externalDependencies": "none",
             "assets": [
               "apps/metrics/rest-api-cost-efficiency-controller/src/assets"
             ]
@@ -756,9 +732,7 @@
             "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
             "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
-            "externalDependencies": [
-              "@nestjs/swagger"
-            ],
+            "externalDependencies": "none",
             "assets": [
               "apps/slo/cost-efficiency-slo-controller/src/assets"
             ]
@@ -827,9 +801,7 @@
             "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
             "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
             "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
-            "externalDependencies": [
-              "@nestjs/swagger"
-            ],
+            "externalDependencies": "none",
             "assets": [
               "apps/slo/cpu-usage-slo-controller/src/assets"
             ]

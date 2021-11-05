@@ -8,7 +8,6 @@ import {
     joinPathFragments,
     names,
     readProjectConfiguration,
-    updateProjectConfiguration,
 } from '@nrwl/devkit';
 import {
     adaptTsConfigForPolaris,
@@ -16,7 +15,6 @@ import {
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getElasticityStrategyNames,
-    registerMetadataGenTransformer,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -39,11 +37,6 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
 
     // Adapt tsconfig to allow decorators.
     adaptTsConfigForPolaris(host);
-
-    // Add the metadata generation transformer plugin to the build options.
-    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
-    registerMetadataGenTransformer(projectConfig);
-    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     // Generate the ElasticityStrategy type and the init-polaris-lib files.
     addElasticityStrategyFile(host, normalizedOptions);
