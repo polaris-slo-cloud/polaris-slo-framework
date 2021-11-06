@@ -1,11 +1,11 @@
 {
   "name": "@polaris-sloc/common-mappings",
-  "version": "0.2.0-beta.18",
+  "version": "0.2.0-beta.19",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
   "type": "commonjs",
   "peerDependencies": {
-    "@polaris-sloc/core": "~0.2.0-beta.18"
+    "@polaris-sloc/core": "~0.2.0-beta.19"
   }
 }
