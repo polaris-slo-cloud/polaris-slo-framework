@@ -15,6 +15,7 @@ import {
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getComposedMetricTypeNames,
+    registerPolarisTypeAsCrd,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -51,6 +52,9 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
 
     // Add exports to .ts files.
     addExports(host, normalizedOptions, initFnFileAdded);
+
+    // Register the new type for CRD generation.
+    registerPolarisTypeAsCrd(host, normalizedOptions);
 
     await formatFiles(host);
 

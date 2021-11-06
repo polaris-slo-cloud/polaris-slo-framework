@@ -15,6 +15,7 @@ import {
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getElasticityStrategyNames,
+    registerPolarisTypeAsCrd,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -44,6 +45,9 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
 
     // Add exports to .ts files.
     addExports(host, normalizedOptions, initFnFileAdded);
+
+    // Register the new type for CRD generation.
+    registerPolarisTypeAsCrd(host, normalizedOptions);
 
     await formatFiles(host);
 

@@ -101,6 +101,6 @@ export function checkIfPackageIsInPaths(host: Tree, npmPackage: string): boolean
 /**
  * @returns The path of the workspace's global tsconfig file or `undefined` if it cannot be found.
  */
-function getWorkspaceTsConfigPath(host: Tree): string {
+export function getWorkspaceTsConfigPath(host: Tree): string {
     return TS_CONFIG_FILES.find(path => host.exists(path));
 }

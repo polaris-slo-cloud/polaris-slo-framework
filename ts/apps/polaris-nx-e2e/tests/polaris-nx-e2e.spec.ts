@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { names } from '@nrwl/devkit';
 import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
-import { WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
+import { POLARIS_CRDS_FILE, WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
 
 
 describe('polaris-nx e2e', () => {
@@ -22,6 +22,7 @@ describe('polaris-nx e2e', () => {
         expect(() => checkFilesExist(
             `libs/${libProj}/src/lib/slo-mappings/${sloMappingNames.fileName}.slo-mapping.prm.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+            POLARIS_CRDS_FILE,
         )).not.toThrow();
 
     //     const result = await runNxCommandAsync(`build ${plugin}`);
@@ -69,6 +70,7 @@ describe('polaris-nx e2e', () => {
         expect(() => checkFilesExist(
             `libs/${libProj}/src/lib/elasticity/${elasticityStrategyNames.fileName}.prm.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+            POLARIS_CRDS_FILE,
         )).not.toThrow();
     });
 
@@ -112,6 +114,7 @@ describe('polaris-nx e2e', () => {
         expect(() => checkFilesExist(
             `libs/${libProj}/src/lib/metrics/${compMetricNames.fileName}.prm.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+            POLARIS_CRDS_FILE,
         )).not.toThrow();
     });
 
