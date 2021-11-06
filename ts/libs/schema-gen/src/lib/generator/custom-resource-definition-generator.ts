@@ -9,7 +9,6 @@ import {
     PolarisRuntime,
     getPlural,
 } from '@polaris-sloc/core';
-import {} from 'change-case';
 import { version as polarisVersion } from '../../../package.json';
 import { SchemaGeneratorConfig } from './config';
 import { SchemaGeneratorError } from './errors';
@@ -29,6 +28,14 @@ export class CustomResourceDefinitionGenerator {
         this.schemaGen = new SchemaGenerator(polarisRuntime);
     }
 
+    /**
+     * Generates a {@link CustomResourceDefinition} for a Polaris type, with a type schema
+     * that has been transformed for the currently configured orchestrator.
+     *
+     * @param config Specifies which TypeScript project to inspect and which type to generate the CRD for.
+     * @returns A {@link CustomResourceDefinition} for the specified type, whose schema has been transformed for the current orchestrator
+     * or throws an error if the type cannot be found or in case of other problems.
+     */
     async generateCrd(config: SchemaGeneratorConfig): Promise<CustomResourceDefinition> {
         const prototype: ApiObject<any> = new config.polarisType();
         if (!prototype.objectKind?.kind || !prototype.objectKind.group || !prototype.objectKind.version) {

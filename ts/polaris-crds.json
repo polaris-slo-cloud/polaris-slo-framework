@@ -1,0 +1,17 @@
+{
+    "libraries": [
+        {
+            "tsConfig": "tsconfig.base.json",
+            "outDir": "crds",
+            "tsIndexFile": "libs/mappings/common-mappings/src/index.ts",
+            "importPath": "@polaris-sloc/common-mappings",
+            "polarisTypes": [
+                "HorizontalElasticityStrategy",
+                "VerticalElasticityStrategy",
+                "CostEfficiencyMetricMapping",
+                "CostEfficiencySloMapping",
+                "CpuUsageSloMapping"
+            ]
+        }
+    ]
+}
