@@ -44,9 +44,6 @@
             ],
             "@polaris-sloc/prometheus": [
                 "libs/query-backends/prometheus/src/index.ts"
-            ],
-            "lodash": [
-                "node_modules/lodash-es"
             ]
         }
     },

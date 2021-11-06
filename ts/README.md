@@ -1,6 +1,6 @@
-# SLO Script
+# Polaris SLO Script
 
-This folder contains all SLO Script components, i.e., the Polaris components written in TypeScript.
+This folder contains all Polaris SLO Script components, i.e., the Polaris components written in TypeScript.
 
 The TypeScript subprojects are managed using the [Nx](https://nx.dev) monorepo tools.
 
@@ -63,6 +63,26 @@ For example:
 ### Publishing npm Packages
 
 To build and publish all npm packages with their currently configured versions, use the [`build-and-publish-npm-packages.sh`](./build-and-publish-npm-packages.sh) script.
+
+
+#### Module Code Generation
+
+All @polaris-sloc packages are currently built as CommonJS modules.
+We do not use ECMA Script modules (yet), because the TypeScript compiler does not alter `import { Type } from 'module-specifier'` statements in that mode, because they are valid ECMA Script (see, e.g., TS issues [#40878](https://github.com/microsoft/TypeScript/issues/40878) and [#42151](https://github.com/microsoft/TypeScript/issues/42151)).
+However, bundlers may decide themselves if they require a file extension to be used if the `module-specifier` is a path (see [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)).
+[Node.JS requires](https://nodejs.org/api/esm.html#mandatory-file-extensions) paths to use a file extension, thus the unchanged local imports from TypeScript are invalid in Node.JS.
+Webpack is somehow able to bundle the files correctly into an executable `.js` file for Node.JS.
+Since we want our npm packages to be usable without workarounds, we have decided to ship everything in the CommonJS module format for now.
+
+*Note for changing to ES modules:* When changing back to ES modules at some point in the future, the `lodash` and `@types/lodash` dependencies should be replaced with `lodash-es` and `@types/lodash-es` and the following path be added to `tsconfig.base.json`:
+
+```JSON
+"paths": {
+    // ...
+    "lodash": [ "node_modules/lodash-es" ]
+}
+```
+
 
 
 ## Debugging in VS Code
