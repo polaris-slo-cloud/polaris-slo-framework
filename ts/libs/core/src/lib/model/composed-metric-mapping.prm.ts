@@ -7,6 +7,21 @@ import { OwnerReference } from './owner-reference.prm';
 import { SloTarget } from './slo-target.prm';
 
 /**
+ * Limited alternative for `Omit<T, K>` that provides a workaround for an issue with ts-json-schema-generator.
+ *
+ * While ts-json-schema-generator can handle `Omit<SomeType, K>`, it throws the following error when `SomeType` is itself
+ * a generic parameter:
+ * ```
+ * LogicError: Unexpected key type "undefined" for type "{
+ *     [P in K]: T[P];
+ * }" (expected "UnionType" or "StringType")
+ * ```
+ *
+ * `CrdOmit` does not remove the properties from `T` like `Omit` would, but it's workaround that works with ts-json-schema-generator.
+ */
+export type CrdOmit<T, K extends keyof any> = { [P in keyof T]: P extends K ? never : T[P] };
+
+/**
  * Defines the configuration data for a composed metric mapping that is used for configuring
  * a composed metric controller.
  *
@@ -28,7 +43,7 @@ export class ComposedMetricMappingSpec<C extends ComposedMetricParams, T extends
      *
      * @note If `C` is a class, the `@PolarisType` decorator needs to be applied in a subclass of `ComposedMetricMappingSpec`.
      */
-    metricConfig: Omit<C, keyof ComposedMetricParams>;
+    metricConfig: CrdOmit<C, keyof ComposedMetricParams>; // Replace with Omit once ts-json-schema-generator supports it in generic mode.
 }
 
 /**
