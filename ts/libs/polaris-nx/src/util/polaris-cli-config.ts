@@ -1,113 +1,147 @@
 
 import * as path from 'path';
+import { Tree, joinPathFragments, readJson, readProjectConfiguration, writeJson } from '@nrwl/devkit';
+import { PolarisCliError } from './errors';
 import {
-    Tree,
-    joinPathFragments,
-    readJson,
-    readProjectConfiguration,
-    writeJson,
-} from '@nrwl/devkit';
-import { NormalizedLibraryClassGeneratorSchema } from './schema';
+    PolarisCliConfigData,
+    PolarisCliProject,
+    PolarisCliProjectType,
+    PolarisControllerProject,
+    PolarisControllerProjectType,
+    PolarisLibraryProject,
+} from './polaris-cli-config-data';
+import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { getWorkspaceTsConfigPath } from './ts-config';
 
 const POLARIS_CLI_CONFIG_FILE = './polaris.json';
 
-/** Describes a Polaris library, for which CRDs should be generated. */
-export interface PolarisCrdLibrary {
-
-    /** The path of the TS Config file relative to the root of the workspace. */
-    tsConfig: string;
-
-    /** Output directory for the CRDs relative to the root of the workspace. */
-    outDir: string;
-
-    /** TS entry point file for the library relative to the root of the workspace. */
-    tsIndexFile: string;
-
-    /** Import path (package name) of the library. */
-    importPath: string;
-
-    /** Class names of the Polaris types, for which CRDs should be generated. */
-    polarisTypes: string[];
-
-}
-
-/** Describes all Polaris libraries, for which CRDs should be generated. */
-export interface PolarisCrdLibraries {
-
-    /** The libraries, for which CRDs should be generated. */
-    libraries: PolarisCrdLibrary[];
-
-}
-
 /**
- * Registers the generated Polaris type for CRD generation.
+ * Provides access to and manages the Polaris CLI configuration file.
  */
-export function registerPolarisTypeAsCrd(host: Tree, options: NormalizedLibraryClassGeneratorSchema): void {
-    const projectConfig = readProjectConfiguration(host, options.projectName);
-    const packageJson: { name: string } = readJson(host, 'package.json');
+export class PolarisCliConfig {
 
-    const crdLibs = readPolarisCrdLibrariesFile(host);
-    addPolarisTypeToCrdLibrary(
-        crdLibs,
-        {
-            tsConfig: path.posix.normalize(getWorkspaceTsConfigPath(host)),
-            importPath: packageJson.name,
-            outDir: path.posix.normalize(joinPathFragments(projectConfig.root, 'crds')),
-            tsIndexFile: path.posix.normalize(joinPathFragments(projectConfig.sourceRoot, 'index.ts')),
-        },
-        options.className,
-    );
-    writePolarisCrdLibrariesFile(host, crdLibs);
-}
+    /**
+     * The config data of this project.
+     *
+     * While this can be modified directly, it is recommended to use the methods provided by this class.
+     */
+    data: PolarisCliConfigData;
 
-/**
- * Reads the `PolarisCrdLibraries` from file or initializes an empty `PolarisCrdLibraries` object.
- */
-export function readPolarisCrdLibrariesFile(host: Tree): PolarisCrdLibraries {
-    let crdLibs: PolarisCrdLibraries;
-
-    if (host.exists(POLARIS_CLI_CONFIG_FILE)) {
-        crdLibs = readJson(host, POLARIS_CLI_CONFIG_FILE);
-    } else {
-        crdLibs = { libraries: [] };
+    protected constructor(data: PolarisCliConfigData, protected host: Tree) {
+        this.data = data;
     }
 
-    return crdLibs;
-}
+    /**
+     * Reads the `PolarisCliConfig` from file or initializes an empty `PolarisCliConfig` object.
+     */
+    static readFromFile(host: Tree): PolarisCliConfig {
+        let data: PolarisCliConfigData;
 
-/**
- * Writes the specified `PolarisCrdLibraries` to the respective file.
- */
-export function writePolarisCrdLibrariesFile(host: Tree, crdLibs: PolarisCrdLibraries): void {
-    writeJson(host, POLARIS_CLI_CONFIG_FILE, crdLibs);
-}
+        if (host.exists(POLARIS_CLI_CONFIG_FILE)) {
+            data = readJson(host, POLARIS_CLI_CONFIG_FILE);
+        } else {
+            data = {
+                version: 1,
+                projects: {},
+            };
+        }
 
-/**
- * Adds the specified `polarisType` to the specified `library` in `crdLibs`.
- *
- * If the library does not exist yet, it will be created.
- */
-export function addPolarisTypeToCrdLibrary(crdLibs: PolarisCrdLibraries, library: Omit<PolarisCrdLibrary, 'polarisTypes'>, polarisType: string): void {
-    const destLib = findOrCreateLibrary(crdLibs, library);
-    if (!destLib.polarisTypes.find(item => item === polarisType)) {
-        destLib.polarisTypes.push(polarisType);
-    }
-}
-
-function findOrCreateLibrary(crdLibs: PolarisCrdLibraries, library: Omit<PolarisCrdLibrary, 'polarisTypes'>): PolarisCrdLibrary {
-    if (!Array.isArray(crdLibs.libraries)) {
-        crdLibs.libraries = [];
+        return new PolarisCliConfig(data, host);
     }
 
-    let destLib = crdLibs.libraries.find(item => item.importPath === library.importPath && item.tsIndexFile === library.tsIndexFile);
-    if (!destLib) {
-        destLib = {
-            ...library,
-            polarisTypes: [],
-        };
-        crdLibs.libraries.push(destLib);
+    /** Writes the current state of the config to the respective config file. */
+    writeToFile(): void {
+        writeJson(this.host, POLARIS_CLI_CONFIG_FILE, this.data);
     }
 
-    return destLib;
+    /**
+     * Adds a new project to the config.
+     */
+    addProject(name: string, config: PolarisCliProject): PolarisCliProject {
+        if (this.data.projects[name]) {
+            throw new PolarisCliError(`The project ${name} already exists.`);
+        }
+        this.data.projects[name] = config;
+        return config;
+    }
+
+    /**
+     * @returns The {@link PolarisCliProject} with the specified `name`.
+     */
+    getProject(name: string): PolarisCliProject {
+        return this.data.projects[name];
+    }
+
+    /**
+     * Gets the library project with the name `options.projectName` or creates it, if it does not exist.
+     */
+    getOrCreateLibraryProject(options: NormalizedLibraryClassGeneratorSchema): PolarisLibraryProject {
+        let lib = this.getProject(options.projectName) as PolarisLibraryProject;
+
+        if (lib) {
+            if (lib.projectType !== PolarisCliProjectType.Library) {
+                throw new PolarisCliError(`The project ${options.projectName} is not a library.`, lib);
+            }
+        } else {
+            const projectConfig = readProjectConfiguration(this.host, options.projectName);
+            const packageJson: { name: string } = readJson(this.host, joinPathFragments(projectConfig.root, 'package.json'));
+            lib = {
+                projectType: PolarisCliProjectType.Library,
+                tsEntryPoint: joinPathFragmentsAndNormalize(projectConfig.sourceRoot, 'index.ts'),
+                importPath: packageJson.name,
+            };
+            this.data.projects[options.projectName] = lib;
+        }
+
+        return lib;
+    }
+
+    /**
+     * Registers the generated Polaris type for CRD generation and adds a library project,
+     * if it does not exist yet.
+     */
+    registerPolarisTypeAsCrd(options: NormalizedLibraryClassGeneratorSchema): void {
+        const lib = this.getOrCreateLibraryProject(options);
+        const polarisType = options.className;
+
+        if (!lib.crds) {
+            const projectConfig = readProjectConfiguration(this.host, options.projectName);
+            lib.crds = {
+                tsConfig: joinPathFragmentsAndNormalize(getWorkspaceTsConfigPath(this.host)),
+                outDir: joinPathFragmentsAndNormalize(projectConfig.sourceRoot, 'crds'),
+                polarisTypes: [],
+            };
+        }
+
+        if (!lib.crds.polarisTypes.find(item => item === polarisType)) {
+            lib.crds.polarisTypes.push(polarisType);
+        }
+    }
+
+    /**
+     * Gets the controller project with the name `options.projectName` or creates it, if it does not exist.
+     */
+    getOrCreateControllerProject(options: NormalizedProjectGeneratorSchema, type: PolarisControllerProjectType): PolarisControllerProject {
+        let controller = this.getProject(options.projectName) as PolarisControllerProject;
+
+        if (controller) {
+            if ((controller.projectType as any) === PolarisCliProjectType.Library) {
+                throw new PolarisCliError(`The project ${options.projectName} is not a controller.`, controller);
+            }
+        } else {
+            const projectConfig = readProjectConfiguration(this.host, options.projectName);
+            controller = {
+                projectType: type,
+                tsEntryPoint: joinPathFragmentsAndNormalize(projectConfig.sourceRoot, 'main.ts'),
+            };
+            this.data.projects[options.projectName] = controller;
+        }
+
+        return controller;
+    }
+
+}
+
+function joinPathFragmentsAndNormalize(...fragments: string[]): string {
+    return path.posix.normalize(joinPathFragments(...fragments));
 }

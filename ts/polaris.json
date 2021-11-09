@@ -1,17 +1,21 @@
 {
-    "libraries": [
-        {
-            "tsConfig": "tsconfig.base.json",
-            "outDir": "crds",
-            "tsIndexFile": "libs/mappings/common-mappings/src/index.ts",
+    "version": 1,
+    "projects": {
+        "mappings-common-mappings": {
+            "projectType": "library",
+            "tsEntryPoint": "libs/mappings/common-mappings/src/index.ts",
             "importPath": "@polaris-sloc/common-mappings",
-            "polarisTypes": [
-                "HorizontalElasticityStrategy",
-                "VerticalElasticityStrategy",
-                "CostEfficiencyMetricMapping",
-                "CostEfficiencySloMapping",
-                "CpuUsageSloMapping"
-            ]
+            "crds": {
+                "tsConfig": "tsconfig.base.json",
+                "outDir": "crds",
+                "polarisTypes": [
+                    "HorizontalElasticityStrategy",
+                    "VerticalElasticityStrategy",
+                    "CostEfficiencyMetricMapping",
+                    "CostEfficiencySloMapping",
+                    "CpuUsageSloMapping"
+                ]
+            }
         }
-    ]
+    }
 }

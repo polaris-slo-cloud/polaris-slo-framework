@@ -51,6 +51,7 @@ describe('polaris-nx e2e', () => {
             `apps/${controllerName}/manifests/kubernetes/2-slo-controller.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 
@@ -95,6 +96,7 @@ describe('polaris-nx e2e', () => {
             `apps/${controllerName}/manifests/kubernetes/2-elasticity-strategy-controller.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 
@@ -143,6 +145,7 @@ describe('polaris-nx e2e', () => {
             `apps/${controllerName}/manifests/kubernetes/3-service-monitor.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 

@@ -10,12 +10,12 @@ import {
     readProjectConfiguration,
 } from '@nrwl/devkit';
 import {
+    PolarisCliConfig,
     adaptTsConfigForPolaris,
     addExports,
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getElasticityStrategyNames,
-    registerPolarisTypeAsCrd,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -47,7 +47,9 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
     addExports(host, normalizedOptions, initFnFileAdded);
 
     // Register the new type for CRD generation.
-    registerPolarisTypeAsCrd(host, normalizedOptions);
+    const polarisCliConfig = PolarisCliConfig.readFromFile(host);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
+    polarisCliConfig.writeToFile();
 
     await formatFiles(host);
 

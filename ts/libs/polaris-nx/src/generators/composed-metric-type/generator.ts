@@ -10,12 +10,12 @@ import {
     readProjectConfiguration,
 } from '@nrwl/devkit';
 import {
+    PolarisCliConfig,
     adaptTsConfigForPolaris,
     addExports,
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getComposedMetricTypeNames,
-    registerPolarisTypeAsCrd,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -54,7 +54,9 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
     addExports(host, normalizedOptions, initFnFileAdded);
 
     // Register the new type for CRD generation.
-    registerPolarisTypeAsCrd(host, normalizedOptions);
+    const polarisCliConfig = PolarisCliConfig.readFromFile(host);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
+    polarisCliConfig.writeToFile();
 
     await formatFiles(host);
 

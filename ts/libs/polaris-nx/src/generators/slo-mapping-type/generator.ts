@@ -5,11 +5,11 @@ import {
     formatFiles,
 } from '@nrwl/devkit';
 import {
+    PolarisCliConfig,
     adaptTsConfigForPolaris,
     addExports,
     addPolarisDependenciesToPackageJson,
     createLibProject,
-    registerPolarisTypeAsCrd,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -43,7 +43,9 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
     addExports(host, normalizedOptions, initFnFileAdded);
 
     // Register the new type for CRD generation.
-    registerPolarisTypeAsCrd(host, normalizedOptions);
+    const polarisCliConfig = PolarisCliConfig.readFromFile(host);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
+    polarisCliConfig.writeToFile();
 
     await formatFiles(host);
 
