@@ -8,11 +8,13 @@ import {
     joinPathFragments,
     names,
     readProjectConfiguration,
+    updateProjectConfiguration,
 } from '@nrwl/devkit';
 import {
     PolarisCliConfig,
     adaptTsConfigForPolaris,
     addExports,
+    addGenCrdsTarget,
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getElasticityStrategyNames,
@@ -50,6 +52,11 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
     polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
     polarisCliConfig.writeToFile();
+
+    // Add the gen-crds target if it doesn't exist.
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    addGenCrdsTarget(projectConfig, normalizedOptions);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     await formatFiles(host);
 

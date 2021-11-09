@@ -1,7 +1,7 @@
 
-import * as path from 'path';
 import { Tree, joinPathFragments, readJson, readProjectConfiguration, writeJson } from '@nrwl/devkit';
 import { PolarisCliError } from './errors';
+import { joinPathFragmentsAndNormalize } from './fs';
 import {
     PolarisCliConfigData,
     PolarisCliProject,
@@ -73,6 +73,23 @@ export class PolarisCliConfig {
     }
 
     /**
+     * Ensures that the project with the specified `name` exists and that it is of the expected `type`
+     * and then returns it.
+     */
+    getAndValidateProject(name: string, type: PolarisCliProjectType.Library): PolarisLibraryProject;
+    getAndValidateProject(name: string, type: PolarisControllerProjectType): PolarisControllerProject;
+    getAndValidateProject(name: string, type: PolarisCliProjectType): PolarisCliProject {
+        const project = this.getProject(name);
+        if (!project) {
+            throw new PolarisCliError(`Project ${name} does not exist in ${POLARIS_CLI_CONFIG_FILE}`)
+        }
+        if (project.projectType !== type) {
+            throw new PolarisCliError(`Project ${name} is not of type ${type}, but is a ${project.projectType} instead.`, project);
+        }
+        return project;
+    }
+
+    /**
      * Gets the library project with the name `options.projectName` or creates it, if it does not exist.
      */
     getOrCreateLibraryProject(options: NormalizedLibraryClassGeneratorSchema): PolarisLibraryProject {
@@ -108,7 +125,7 @@ export class PolarisCliConfig {
             const projectConfig = readProjectConfiguration(this.host, options.projectName);
             lib.crds = {
                 tsConfig: joinPathFragmentsAndNormalize(getWorkspaceTsConfigPath(this.host)),
-                outDir: joinPathFragmentsAndNormalize(projectConfig.sourceRoot, 'crds'),
+                outDir: joinPathFragmentsAndNormalize(projectConfig.root, 'crds'),
                 polarisTypes: [],
             };
         }
@@ -140,8 +157,4 @@ export class PolarisCliConfig {
         return controller;
     }
 
-}
-
-function joinPathFragmentsAndNormalize(...fragments: string[]): string {
-    return path.posix.normalize(joinPathFragments(...fragments));
 }

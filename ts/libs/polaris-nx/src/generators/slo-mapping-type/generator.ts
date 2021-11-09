@@ -3,11 +3,14 @@ import {
     GeneratorCallback,
     Tree,
     formatFiles,
+    readProjectConfiguration,
+    updateProjectConfiguration,
 } from '@nrwl/devkit';
 import {
     PolarisCliConfig,
     adaptTsConfigForPolaris,
     addExports,
+    addGenCrdsTarget,
     addPolarisDependenciesToPackageJson,
     createLibProject,
     runCallbacksSequentially,
@@ -46,6 +49,11 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
     polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
     polarisCliConfig.writeToFile();
+
+    // Add the gen-crds target if it doesn't exist.
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    addGenCrdsTarget(projectConfig, normalizedOptions);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     await formatFiles(host);
 

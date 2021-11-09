@@ -1,6 +1,7 @@
 export * from './callbacks';
 export * from './docker';
 export * from './errors';
+export * from './fs';
 export * from './naming';
 export * from './packages';
 export * from './polaris-cli-config-data';
