@@ -10,7 +10,7 @@ import {
 import { NormalizedLibraryClassGeneratorSchema } from './schema';
 import { getWorkspaceTsConfigPath } from './ts-config';
 
-const POLARIS_CRDS_FILE = './polaris-crds.json';
+const POLARIS_CLI_CONFIG_FILE = './polaris.json';
 
 /** Describes a Polaris library, for which CRDs should be generated. */
 export interface PolarisCrdLibrary {
@@ -67,8 +67,8 @@ export function registerPolarisTypeAsCrd(host: Tree, options: NormalizedLibraryC
 export function readPolarisCrdLibrariesFile(host: Tree): PolarisCrdLibraries {
     let crdLibs: PolarisCrdLibraries;
 
-    if (host.exists(POLARIS_CRDS_FILE)) {
-        crdLibs = readJson(host, POLARIS_CRDS_FILE);
+    if (host.exists(POLARIS_CLI_CONFIG_FILE)) {
+        crdLibs = readJson(host, POLARIS_CLI_CONFIG_FILE);
     } else {
         crdLibs = { libraries: [] };
     }
@@ -80,7 +80,7 @@ export function readPolarisCrdLibrariesFile(host: Tree): PolarisCrdLibraries {
  * Writes the specified `PolarisCrdLibraries` to the respective file.
  */
 export function writePolarisCrdLibrariesFile(host: Tree, crdLibs: PolarisCrdLibraries): void {
-    writeJson(host, POLARIS_CRDS_FILE, crdLibs);
+    writeJson(host, POLARIS_CLI_CONFIG_FILE, crdLibs);
 }
 
 /**
