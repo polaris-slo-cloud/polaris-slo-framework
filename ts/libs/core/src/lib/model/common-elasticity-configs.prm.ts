@@ -17,7 +17,7 @@ export interface HorizontalElasticityStrategyConfig {
     /**
      * The maximum number of replicas that the target workload may have.
      *
-     * @default unlimited
+     * Default: unlimited
      */
     maxReplicas?: number;
 

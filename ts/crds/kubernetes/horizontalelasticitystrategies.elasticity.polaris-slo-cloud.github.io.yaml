@@ -176,7 +176,9 @@ spec:
                       description: >-
                         The maximum number of replicas that the target workload
                         may have.
-                      default: unlimited
+
+
+                        Default: unlimited
                       format: int64
                   description: >-
                     Commonly used, optional, static configuration for an
