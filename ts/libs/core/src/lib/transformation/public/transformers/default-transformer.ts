@@ -23,9 +23,10 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
     }
 
     /**
-     * Performs the transformation by iterating through all `properties` of `polarisSchema` and
-     * - transforming the property's schema, if a PolarisType is registered for this property, or
-     * - deep copying the property's schema otherwise.
+     * Performs the transformation by i) deep cloning `polarisSchema` without its properties and then,
+     * ii) iterating over all `properties` of `polarisSchema` and
+     * - invoking the {@link PolarisTransformationService} on the property if it has subproperties (i.e., it is an object) or
+     * - deep copying the property's schema (i.e., a basic property of type string, number, etc.) otherwise.
      */
     transformToOrchestratorSchema(
         polarisSchema: JsonSchema<T>,
@@ -46,7 +47,7 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
         transformationService: PolarisTransformationService,
     ): JsonSchema<T> {
         if (!polarisSchema || !polarisSchema.properties) {
-            return polarisSchema;
+            return cloneDeep(polarisSchema);
         }
         const transformedSchema = this.cloneSchemaWithoutProperties(polarisSchema);
         const propKeys = Object.keys(polarisSchema.properties) as (keyof T)[];

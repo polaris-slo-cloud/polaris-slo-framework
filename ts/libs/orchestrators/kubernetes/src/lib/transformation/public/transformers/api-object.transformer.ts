@@ -13,6 +13,8 @@ import {
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
 
+const DEFAULT_INT_FORMAT = 'int64';
+
 /**
  * Transforms plain orchestrator API objects to Polaris to instances of `ApiObject` or a subclass thereof,
  * based on their object kinds.
@@ -106,26 +108,34 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
         // Generate the same metadata schema as Kubebuilder.
         transformedSchema.properties.metadata = { type: 'object' };
 
-        // additionalProperties and properties are mutually exclusive in Kubernetes.
-        this.fixAdditionalProperties(transformedSchema);
+        // Recursively fix issues that would arise with this schema in Kubernetes.
+        this.applyKubernetesFixes(transformedSchema);
 
         return transformedSchema;
     }
 
     /**
-     * Recursively removes the `additionalProperties` field if `properties` is set,
-     * because these two fields are mutually exclusive in Kubernetes.
+     * Recursively fixes the following issues that would arise with our schemas in Kubernetes:
+     *
+     * - Converts all properties of `type: number` to `type: integer`.
+     * - Removes the `additionalProperties` field if `properties` is set, because these two fields are mutually exclusive in Kubernetes.
      */
-    private fixAdditionalProperties<U>(k8sSchema: JsonSchema<U>): void {
+    private applyKubernetesFixes<U>(k8sSchema: JsonSchema<U>): void {
+        // Convert `type: number` to `type: integer`.
+        if (k8sSchema.type === 'number') {
+            k8sSchema.type = 'integer';
+            k8sSchema.format = DEFAULT_INT_FORMAT;
+        }
+
         if (k8sSchema.properties) {
+            // `additionalProperties` and `properties` are mutually exclusive in Kubernetes.
             delete k8sSchema.additionalProperties;
 
+            // Recursion
             const propKeys = Object.keys(k8sSchema.properties) as (keyof U)[];
             propKeys.forEach(propKey => {
                 const nestedSchema = k8sSchema.properties[propKey];
-                if (typeof nestedSchema === 'object') {
-                    this.fixAdditionalProperties(nestedSchema);
-                }
+                this.applyKubernetesFixes(nestedSchema);
             });
         }
     }
