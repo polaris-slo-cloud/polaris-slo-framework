@@ -27,7 +27,7 @@ export function createBuildCommand(cli: PolarisCli): CommandModule<any, any> {
         args => {
             const skipCache = args.skipBuildCache ? '--skip-nx-cache' : '';
             return cli.taskExecutor.runTask(new RunNpmBinaryTask({
-                command: `${NX_CLI} build ${args.name} --with-deps ${skipCache}`,
+                command: `${NX_CLI} build ${args.name} ${skipCache}`,
             }));
         },
     );

@@ -52,7 +52,7 @@ To build and run the cost efficiency SLO controller, which is demonstrated in [t
 ```npm install```
 1. Configure the connection to your Prometheus instance in [this file](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/slo/cost-efficiency-slo-controller/src/main.ts).
 1. Build the controller:
-```npm run build slo-cost-efficiency-slo-controller --with-deps=true```
+```npm run build slo-cost-efficiency-slo-controller```
 1. Make sure that you have the CRDs from the [elasticity strategies](#elasticity-strategies) installed.
 1. Run the controller:
 ```node ./dist/apps/slo/cost-efficiency-slo-controller/main.js```
@@ -68,7 +68,7 @@ To manually add an SLO mapping:
 1. Configure the SLO mapping.
 1. Import and serialize it in the [`main.ts`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/main.ts) file of the polaris-k8s-serializer.
 1. Build the polaris-k8s-serializer:
-```npm run build cli-sloc-k8s-serializer --with-deps=true```
+```npm run build cli-sloc-k8s-serializer```
 1. Run the serializer and apply its YAML output to the cluster:
 ```node ./dist/apps/cli/sloc-k8s-serializer/main.js```
 If the respective SLO's controller is running, it will pick up and enforce the SLO configured by the mapping.
