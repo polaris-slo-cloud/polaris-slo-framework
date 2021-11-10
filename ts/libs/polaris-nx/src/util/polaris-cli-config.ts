@@ -117,9 +117,8 @@ export class PolarisCliConfig {
      * Registers the generated Polaris type for CRD generation and adds a library project,
      * if it does not exist yet.
      */
-    registerPolarisTypeAsCrd(options: NormalizedLibraryClassGeneratorSchema): void {
+    registerPolarisTypeAsCrd(options: NormalizedLibraryClassGeneratorSchema, polarisTypeName: string): void {
         const lib = this.getOrCreateLibraryProject(options);
-        const polarisType = options.className;
 
         if (!lib.crds) {
             const projectConfig = readProjectConfiguration(this.host, options.projectName);
@@ -130,8 +129,8 @@ export class PolarisCliConfig {
             };
         }
 
-        if (!lib.crds.polarisTypes.find(item => item === polarisType)) {
-            lib.crds.polarisTypes.push(polarisType);
+        if (!lib.crds.polarisTypes.find(item => item === polarisTypeName)) {
+            lib.crds.polarisTypes.push(polarisTypeName);
         }
     }
 

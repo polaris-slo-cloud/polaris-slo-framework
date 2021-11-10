@@ -43,12 +43,11 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
 
     // Generate the ComposedMetricType and the init-polaris-lib files.
     addComposedMetricTypeFile(host, normalizedOptions);
-    const compMetricNames = getComposedMetricTypeNames(normalizedOptions.className);
     const initFnFileAdded = addOrExtendInitFn(
         host,
         {
             ...normalizedOptions,
-            className: compMetricNames.compMetricMapping,
+            className: normalizedOptions.compMetricNames.compMetricMapping,
         },
     );
 
@@ -57,7 +56,7 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
 
     // Register the new type for CRD generation.
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
-    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions, normalizedOptions.compMetricNames.compMetricMapping);
     polarisCliConfig.writeToFile();
 
     // Add the gen-crds target if it doesn't exist.
@@ -86,6 +85,7 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
         fileName: compMetricNames.compMetricFileName,
+        compMetricNames,
     };
 }
 
@@ -93,10 +93,8 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
  * Generates the ComposedMetricType.
  */
  export function addComposedMetricTypeFile(host: Tree, options: ComposedMetricTypeGeneratorNormalizedSchema): void {
-    const compMetricNames = getComposedMetricTypeNames(options.className);
-
     const templateOptions = {
-        ...compMetricNames,
+        ...options.compMetricNames,
         fileName: options.fileName,
         template: '', // Used to replace '__template__' with an empty string in file names.
     };

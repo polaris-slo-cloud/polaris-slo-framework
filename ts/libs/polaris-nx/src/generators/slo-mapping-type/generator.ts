@@ -47,7 +47,7 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
 
     // Register the new type for CRD generation.
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
-    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions, normalizedOptions.sloNames.sloMappingType);
     polarisCliConfig.writeToFile();
 
     // Add the gen-crds target if it doesn't exist.

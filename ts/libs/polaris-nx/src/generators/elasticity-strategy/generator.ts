@@ -50,7 +50,7 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
 
     // Register the new type for CRD generation.
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
-    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions, normalizedOptions.eStratNames.eStratType);
     polarisCliConfig.writeToFile();
 
     // Add the gen-crds target if it doesn't exist.
@@ -79,6 +79,7 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
         fileName: eStratNames.eStratFileName,
+        eStratNames,
     };
 }
 
@@ -86,10 +87,8 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
  * Generates the ElasticityStrategy type.
  */
  export function addElasticityStrategyFile(host: Tree, options: ElasticityStrategyGeneratorNormalizedSchema): void {
-    const eStratNames = getElasticityStrategyNames(options.className);
-
     const templateOptions = {
-        ...eStratNames,
+        ...options.eStratNames,
         template: '', // Used to replace '__template__' with an empty string in file names.
     };
 
