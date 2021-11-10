@@ -1,10 +1,9 @@
 import { classToPlain, plainToClass } from 'class-transformer';
 import { cloneDeep } from 'lodash';
 import { JsonSchema } from '../../../model';
-import { Constructor, InterfaceOf } from '../../../util';
+import { Constructor, InterfaceOf, cloneDeepWithoutExcluded } from '../../../util';
 import { PolarisTransformer } from '../common';
 import { PolarisTransformationService } from '../service';
-import { transformObjectOrArraySchema } from './schema-transformation-utils';
 
 /**
  * This transformer does not alter the structure of the objects, it just performs a simple
@@ -33,19 +32,6 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
         polarisType: Constructor<T>,
         transformationService: PolarisTransformationService,
     ): JsonSchema<T> {
-        return transformObjectOrArraySchema(
-            polarisSchema,
-            polarisType,
-            transformationService,
-            (schema, type, transformationSvc) => this.transformObjectToOrchestratorSchema(schema, type, transformationSvc),
-        );
-    }
-
-    private transformObjectToOrchestratorSchema(
-        polarisSchema: JsonSchema<T>,
-        polarisType: Constructor<T>,
-        transformationService: PolarisTransformationService,
-    ): JsonSchema<T> {
         if (!polarisSchema || !polarisSchema.properties) {
             return cloneDeep(polarisSchema);
         }
@@ -66,9 +52,8 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
     }
 
     private cloneSchemaWithoutProperties(polarisSchema: JsonSchema<T>): JsonSchema<T> {
-        const { properties, ...srcSchema } = polarisSchema;
-        const ret: JsonSchema = cloneDeep(srcSchema);
-        ret.properties = properties ? {} : undefined;
+        const ret: JsonSchema = cloneDeepWithoutExcluded(polarisSchema, 'properties');
+        ret.properties = polarisSchema.properties ? {} : undefined;
         return ret;
     }
 

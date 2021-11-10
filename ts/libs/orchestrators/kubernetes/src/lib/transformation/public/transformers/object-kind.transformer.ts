@@ -7,7 +7,6 @@ import {
     OrchestratorToPolarisTransformationError,
     PolarisTransformationService,
     ReusablePolarisTransformer,
-    transformObjectOrArraySchema,
 } from '@polaris-sloc/core';
 import { ApiVersionKind } from '../../../model';
 import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
@@ -84,19 +83,6 @@ export class ObjectKindTransformer implements ReusablePolarisTransformer<ObjectK
      * @returns A JSON schema, based on that of Kubernetes `TypeMeta` (https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#TypeMeta )
      */
      transformToOrchestratorSchema(
-        polarisSchema: JsonSchema<ObjectKind>,
-        polarisType: Constructor<ObjectKind>,
-        transformationService: PolarisTransformationService,
-    ): JsonSchema<ApiVersionKind> {
-        return transformObjectOrArraySchema(
-            polarisSchema,
-            polarisType,
-            transformationService,
-            (schema, type, transformationSvc) => this.transformObjectToOrchestratorSchema(schema, type, transformationSvc),
-        );
-    }
-
-    private transformObjectToOrchestratorSchema(
         polarisSchema: JsonSchema<ObjectKind>,
         polarisType: Constructor<ObjectKind>,
         transformationService: PolarisTransformationService,

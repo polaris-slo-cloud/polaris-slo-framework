@@ -8,7 +8,6 @@ import {
     ObjectKind,
     PolarisTransformationService,
     ReusablePolarisTransformer,
-    transformObjectOrArraySchema,
 } from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
@@ -77,19 +76,6 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
     }
 
     transformToOrchestratorSchema(
-        polarisSchema: JsonSchema<ApiObject<T>>,
-        polarisType: Constructor<ApiObject<T>>,
-        transformationService: PolarisTransformationService,
-    ): JsonSchema<KubernetesObjectWithSpec<P>> {
-        return transformObjectOrArraySchema(
-            polarisSchema,
-            polarisType,
-            transformationService,
-            (schema, type, transformationSvc) => this.transformObjectToOrchestratorSchema(schema, type, transformationSvc),
-        );
-    }
-
-    private transformObjectToOrchestratorSchema(
         polarisSchema: JsonSchema<ApiObject<T>>,
         polarisType: Constructor<ApiObject<T>>,
         transformationService: PolarisTransformationService,

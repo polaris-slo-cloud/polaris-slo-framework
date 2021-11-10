@@ -1,5 +1,5 @@
 import { JsonSchema, ObjectKind } from '../../../model';
-import { IndexByKey, PolarisConstructor, PolarisMetadataUtils } from '../../../util';
+import { IndexByKey, PolarisConstructor, PolarisMetadataUtils, cloneDeepWithoutExcluded } from '../../../util';
 import { PolarisTransformationMetadata } from '../../internal';
 import { PolarisTransformationConfig, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
@@ -90,7 +90,11 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         }
 
         const transformer = this.getTransformer(polarisType);
-        return transformer.transformToOrchestratorSchema(polarisSchema, polarisType, this);
+        if (polarisSchema.type === 'array') {
+            return this.transformArrayToOrchestratorSchema(polarisSchema, polarisType, transformer);
+        } else {
+            return transformer.transformToOrchestratorSchema(polarisSchema, polarisType, this);
+        }
     }
 
     getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {
@@ -114,6 +118,24 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
 
         const transformer = this.getTransformer(polarisObj);
         return transformer.transformToOrchestratorPlainObject(polarisObj, this);
+    }
+
+    private transformArrayToOrchestratorSchema<T, R>(
+        polarisSchema: JsonSchema<T>,
+        polarisType: PolarisConstructor<T>,
+        transformer: PolarisTransformer<T, R>,
+    ): JsonSchema<R> {
+        const transformedSchema: JsonSchema<R> = cloneDeepWithoutExcluded(polarisSchema, 'items') as any;
+
+        if (Array.isArray(polarisSchema.items)) {
+            transformedSchema.items = polarisSchema.items.map(
+                objSchema => transformer.transformToOrchestratorSchema(objSchema, polarisType, this),
+            );
+        } else {
+            transformedSchema.items = transformer.transformToOrchestratorSchema(polarisSchema.items, polarisType, this);
+        }
+
+        return transformedSchema;
     }
 
 }
