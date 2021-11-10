@@ -47,7 +47,7 @@ export class DefaultComposedMetricMappingManager implements ComposedMetricMappin
     private assembleMappingSpec<C extends ComposedMetricParams>(params: C): ComposedMetricMappingSpec<ComposedMetricParams> {
         const { sloTarget, namespace, owner, ...config } = params;
         const spec = new ComposedMetricMappingSpec();
-        spec.metricConfig = config;
+        spec.metricConfig = config as any;
         spec.targetRef = sloTarget;
         return spec;
     }

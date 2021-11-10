@@ -1,0 +1,13 @@
+{
+    "extends": "<%= tsConfigBase %>",
+    "compilerOptions": {
+        "module": "commonjs"
+    },
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.po.ts"
+    ],
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    }
+}

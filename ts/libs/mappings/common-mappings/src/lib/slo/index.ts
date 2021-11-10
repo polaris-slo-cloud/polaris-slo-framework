@@ -1,2 +1,2 @@
-export * from './cost-efficiency-slo-mapping';
-export * from './cpu-usage-slo-mapping';
+export * from './cost-efficiency-slo-mapping.prm';
+export * from './cpu-usage-slo-mapping.prm';

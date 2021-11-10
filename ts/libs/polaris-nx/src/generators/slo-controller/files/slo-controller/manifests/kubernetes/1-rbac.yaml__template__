@@ -60,7 +60,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 # Optionally, we could create a RoleBinding and to scope the permissions to a specific namespace
 metadata:
-  name: control-<%= sloFileName %>-slos
+  name: control-<%= sloMappingK8sResources %>-slos
 subjects:
   - kind: ServiceAccount
     name: <%= controllerProjectName %>

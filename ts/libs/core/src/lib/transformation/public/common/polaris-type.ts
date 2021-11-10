@@ -5,6 +5,12 @@ import { PropertyTransformer } from '../../internal/property-transformer';
 /**
  * Property decorator to define the Polaris type of a property.
  *
+ * This decorator must be applied to all properties of a model class that require a class to be instantiated
+ * upon deserialization and/or that may need to be transformed before serialization/deserialization.
+ *
+ * To retrieve the configured type at runtime, use the `PolarisTransformationService.getPropertyType()` method.
+ * Internally, `class-transformer` is used to drive the transformation.
+ *
  * @param typeFn A function that returns the constructor of the Polaris type.
  * @returns A `PropertyDecorator` factory.
  */

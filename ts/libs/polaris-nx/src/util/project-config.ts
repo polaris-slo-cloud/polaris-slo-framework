@@ -1,6 +1,6 @@
 import { GeneratorCallback, NxJsonProjectConfiguration, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/node';
-import { NormalizedProjectGeneratorSchema } from './schema';
+import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 
 /** Configuration for a project within an Nx CLI workspace. */
@@ -16,8 +16,8 @@ export interface LibProjectOptions {
  * Changes the build configuration to bundle all external dependencies into the output js file.
  */
 export function changeBuildDependencyBundling(projectConfig: ProjectConfig): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    projectConfig.targets['build'].options['externalDependencies'] = 'none';
+    const options = projectConfig.targets['build'].options as { externalDependencies: 'none' | 'all' | string[] };
+    options.externalDependencies = 'none';
 }
 
 /**
@@ -35,6 +35,18 @@ export function addDeployTarget(projectConfig: ProjectConfig, options: Normalize
             parallel: false,
         },
     };
+}
+
+/**
+ * Adds a `gen-crds` target to the library project's configuration.
+ */
+export function addGenCrdsTarget(projectConfig: ProjectConfig, options: NormalizedLibraryClassGeneratorSchema): void {
+    if (!projectConfig.targets['gen-crds']) {
+        projectConfig.targets['gen-crds'] = {
+            executor: '@polaris-sloc/polaris-nx:generate-crds',
+            options: {},
+        };
+    }
 }
 
 /**

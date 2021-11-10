@@ -4,7 +4,7 @@ import { Logger } from '@polaris-sloc/core';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { PrometheusComposedMetricsCollectorManager, initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
-import { <%= compMetricType %>SourceFactory } from './app/metrics';
+import { <%= compMetricSourceFactory %> } from './app/metrics';
 import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
@@ -33,7 +33,7 @@ manager.startWatching({
         {
             mappingKind: new <%= compMetricMapping %>().objectKind,
             metricType: <%= compMetricType %>.instance,
-            metricSourceFactory: new <%= compMetricType %>SourceFactory(),
+            metricSourceFactory: new <%= compMetricSourceFactory %>(),
         },
     ],
 }).catch(error => void Logger.error(error))

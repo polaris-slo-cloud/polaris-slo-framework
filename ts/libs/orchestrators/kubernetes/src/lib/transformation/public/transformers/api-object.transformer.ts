@@ -4,11 +4,15 @@ import {
     ApiObjectMetadata,
     Constructor,
     InterfaceOf,
+    JsonSchema,
     ObjectKind,
     PolarisTransformationService,
     ReusablePolarisTransformer,
 } from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
+import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
+
+const DEFAULT_INT_FORMAT = 'int64';
 
 /**
  * Transforms plain orchestrator API objects to Polaris to instances of `ApiObject` or a subclass thereof,
@@ -25,6 +29,8 @@ import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
  * - **Unknown property handling**: Ignores unknown properties of the root `ApiObject`.
  */
 export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransformer<ApiObject<T>, KubernetesObjectWithSpec<P>> {
+
+    private defaultTransformer = new KubernetesDefaultTransformer<ApiObject<T>>();
 
     extractPolarisObjectInitData(
         polarisType: Constructor<ApiObject<T>>,
@@ -67,6 +73,57 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
             spec,
         };
         return plain;
+    }
+
+    transformToOrchestratorSchema(
+        polarisSchema: JsonSchema<ApiObject<T>>,
+        polarisType: Constructor<ApiObject<T>>,
+        transformationService: PolarisTransformationService,
+    ): JsonSchema<KubernetesObjectWithSpec<P>> {
+        const transformedSchema: JsonSchema<KubernetesObjectWithSpec<P>> =
+            this.defaultTransformer.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService) as any;
+
+        // Move the `ApiObject.objectKind` property's contents to the root level.
+        const transformedObjKindSchema: JsonSchema<ApiVersionKind> = (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind as any;
+        delete (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind;
+        transformedSchema.required = transformedSchema.required.filter(propKey => propKey !== 'objectKind');
+        transformedSchema.properties.apiVersion = transformedObjKindSchema.properties.apiVersion;
+        transformedSchema.properties.kind = transformedObjKindSchema.properties.kind;
+        transformedSchema.required.push('apiVersion', 'kind');
+
+        // Generate the same metadata schema as Kubebuilder.
+        transformedSchema.properties.metadata = { type: 'object' };
+
+        // Recursively fix issues that would arise with this schema in Kubernetes.
+        this.applyKubernetesFixes(transformedSchema);
+
+        return transformedSchema;
+    }
+
+    /**
+     * Recursively fixes the following issues that would arise with our schemas in Kubernetes:
+     *
+     * - Converts all properties of `type: number` to `type: integer`.
+     * - Removes the `additionalProperties` field if `properties` is set, because these two fields are mutually exclusive in Kubernetes.
+     */
+    private applyKubernetesFixes<U>(k8sSchema: JsonSchema<U>): void {
+        // Convert `type: number` to `type: integer`.
+        if (k8sSchema.type === 'number') {
+            k8sSchema.type = 'integer';
+            k8sSchema.format = DEFAULT_INT_FORMAT;
+        }
+
+        if (k8sSchema.properties) {
+            // `additionalProperties` and `properties` are mutually exclusive in Kubernetes.
+            delete k8sSchema.additionalProperties;
+
+            // Recursion
+            const propKeys = Object.keys(k8sSchema.properties) as (keyof U)[];
+            propKeys.forEach(propKey => {
+                const nestedSchema = k8sSchema.properties[propKey];
+                this.applyKubernetesFixes(nestedSchema);
+            });
+        }
     }
 
 }

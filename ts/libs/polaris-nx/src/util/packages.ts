@@ -7,14 +7,18 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
  * Defines the versions of packages added by the generators.
  */
 export const VERSIONS = {
-    polaris: '0.2.0-beta.18',
+    polaris: '0.2.0-beta.19',
     rxJs: '^6.6.7',
+    tsNode: '^10.3.0',
+    tsNodeConfigPaths: '^3.11.0',
 };
 
 /** Full names of packages added by the generators. */
 export const NPM_PACKAGES = {
 
     rxJs: 'rxjs',
+    tsNode: 'ts-node',
+    tsNodeConfigPaths: 'tsconfig-paths',
 
     polaris: {
         core: `${POLARIS_NPM_ORG}/core`,
@@ -49,6 +53,8 @@ export function addPolarisDependenciesToPackageJson(
         ...extraDependencies,
     };
     const devDependencies: Record<string, string> = {
+        [NPM_PACKAGES.tsNode]: VERSIONS.tsNode,
+        [NPM_PACKAGES.tsNodeConfigPaths]: VERSIONS.tsNodeConfigPaths,
         ...extraDevDependencies,
     };
 

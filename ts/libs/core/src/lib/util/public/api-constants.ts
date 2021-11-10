@@ -27,4 +27,7 @@ export const POLARIS_API = Object.freeze({
     /** Used for storing the owner of an `ApiObject` as a queryable label. */
     LABEL_OWNER_NAME: 'polaris-slo-cloud.github.io/owner-name',
 
+    /** Used for storing the Polaris schema generator version in a CRD. */
+    ANNOTATION_CRD_GENERATOR_VERSION: 'polaris-slo-cloud.github.io/schema-gen-version',
+
 });

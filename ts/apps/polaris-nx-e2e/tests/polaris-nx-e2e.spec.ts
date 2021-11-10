@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { names } from '@nrwl/devkit';
 import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
-import { WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
+import { POLARIS_CLI_CONFIG_FILE, WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
 
 
 describe('polaris-nx e2e', () => {
@@ -20,8 +20,9 @@ describe('polaris-nx e2e', () => {
             console.log(result.stderr);
         }
         expect(() => checkFilesExist(
-            `libs/${libProj}/src/lib/slo-mappings/${sloMappingNames.fileName}.slo-mapping.ts`,
+            `libs/${libProj}/src/lib/slo-mappings/${sloMappingNames.fileName}.slo-mapping.prm.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
 
     //     const result = await runNxCommandAsync(`build ${plugin}`);
@@ -42,7 +43,7 @@ describe('polaris-nx e2e', () => {
             console.log(result.stderr);
         }
         expect(() => checkFilesExist(
-            `apps/${controllerName}/src/app/slo/cost-efficiency.slo.ts`,
+            `apps/${controllerName}/src/app/slo/cost-efficiency.controller.ts`,
             `apps/${controllerName}/src/app/slo/index.ts`,
             `apps/${controllerName}/src/app/util/environment-var-helper.ts`,
             `apps/${controllerName}/src/main.ts`,
@@ -50,6 +51,7 @@ describe('polaris-nx e2e', () => {
             `apps/${controllerName}/manifests/kubernetes/2-slo-controller.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 
@@ -67,8 +69,9 @@ describe('polaris-nx e2e', () => {
             console.log(result.stderr);
         }
         expect(() => checkFilesExist(
-            `libs/${libProj}/src/lib/elasticity/${elasticityStrategyNames.fileName}.ts`,
+            `libs/${libProj}/src/lib/elasticity/${elasticityStrategyNames.fileName}.prm.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 
@@ -86,19 +89,20 @@ describe('polaris-nx e2e', () => {
             console.log(result.stderr);
         }
         expect(() => checkFilesExist(
-            `apps/${controllerName}/src/app/elasticity/horizontal-elasticity-strategy-controller.ts`,
+            `apps/${controllerName}/src/app/elasticity/horizontal-elasticity-strategy.controller.ts`,
             `apps/${controllerName}/src/app/elasticity/index.ts`,
             `apps/${controllerName}/src/main.ts`,
             `apps/${controllerName}/manifests/kubernetes/1-rbac.yaml`,
             `apps/${controllerName}/manifests/kubernetes/2-elasticity-strategy-controller.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 
     it('should create a composed-metric-type', async () => {
         const libProj = uniq('composed-metrics-lib');
-        const compMetricName = uniq('MyTest') + 'ComposedMetric';
+        const compMetricName = uniq('MyTest') + 'Metric';
         const compMetricNames = names(compMetricName);
 
         ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
@@ -110,8 +114,9 @@ describe('polaris-nx e2e', () => {
             console.log(result.stderr);
         }
         expect(() => checkFilesExist(
-            `libs/${libProj}/src/lib/metrics/${compMetricNames.fileName}.ts`,
+            `libs/${libProj}/src/lib/metrics/${compMetricNames.fileName}.prm.ts`,
             `libs/${libProj}/src/lib/init-polaris-lib.ts`,
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 
@@ -130,8 +135,8 @@ describe('polaris-nx e2e', () => {
             console.log(result.stderr);
         }
         expect(() => checkFilesExist(
-            `apps/${controllerName}/src/app/metrics/cost-efficiency/cost-efficiency-metric-source.ts`,
-            `apps/${controllerName}/src/app/metrics/cost-efficiency/cost-efficiency-metric-source.factory.ts`,
+            `apps/${controllerName}/src/app/metrics/cost-efficiency/cost-efficiency.metric-source.ts`,
+            `apps/${controllerName}/src/app/metrics/cost-efficiency/cost-efficiency.metric-source.factory.ts`,
             `apps/${controllerName}/src/app/metrics/cost-efficiency/index.ts`,
             `apps/${controllerName}/src/app/metrics/index.ts`,
             `apps/${controllerName}/src/main.ts`,
@@ -140,6 +145,7 @@ describe('polaris-nx e2e', () => {
             `apps/${controllerName}/manifests/kubernetes/3-service-monitor.yaml`,
             `apps/${controllerName}/Dockerfile`,
             '.dockerignore',
+            POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
 

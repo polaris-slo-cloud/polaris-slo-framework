@@ -1,5 +1,4 @@
-import { ApiObjectMetadata, ElasticityStrategy, ElasticityStrategyKind, ElasticityStrategySpec } from '../../../model';
-import { OwnerReference } from '../../../model/owner-reference';
+import { ApiObjectMetadata, ElasticityStrategy, ElasticityStrategyKind, ElasticityStrategySpec, OwnerReference } from '../../../model';
 import { SloOutput } from '../../../slo';
 import { PolarisTransformationService } from '../../../transformation';
 import { PolarisConstructor } from '../../../util';

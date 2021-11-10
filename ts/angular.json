@@ -482,6 +482,52 @@
         "scope:metrics-controller"
       ]
     },
+    "schema-gen": {
+      "root": "libs/schema-gen",
+      "sourceRoot": "libs/schema-gen/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/libs/schema-gen",
+            "tsConfig": "libs/schema-gen/tsconfig.lib.json",
+            "packageJson": "libs/schema-gen/package.json",
+            "main": "libs/schema-gen/src/index.ts",
+            "assets": [
+              "libs/schema-gen/*.md"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/schema-gen/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/schema-gen"
+          ],
+          "options": {
+            "jestConfig": "libs/schema-gen/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": [
+        "scope:cli"
+      ]
+    },
     "orchestrators-kubernetes": {
       "root": "libs/orchestrators/kubernetes",
       "sourceRoot": "libs/orchestrators/kubernetes/src",

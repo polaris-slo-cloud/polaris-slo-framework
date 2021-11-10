@@ -1,8 +1,20 @@
 import * as path from 'path';
-import { Generator, GeneratorCallback, Tree, formatFiles, generateFiles, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
 import {
+    Generator,
+    GeneratorCallback,
+    Tree,
+    formatFiles,
+    generateFiles,
+    joinPathFragments,
+    names,
+    readProjectConfiguration,
+    updateProjectConfiguration,
+} from '@nrwl/devkit';
+import {
+    PolarisCliConfig,
     adaptTsConfigForPolaris,
     addExports,
+    addGenCrdsTarget,
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getComposedMetricTypeNames,
@@ -31,17 +43,26 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
 
     // Generate the ComposedMetricType and the init-polaris-lib files.
     addComposedMetricTypeFile(host, normalizedOptions);
-    const compMetricNames = getComposedMetricTypeNames(normalizedOptions.className);
     const initFnFileAdded = addOrExtendInitFn(
         host,
         {
             ...normalizedOptions,
-            className: compMetricNames.compMetricMapping,
+            className: normalizedOptions.compMetricNames.compMetricMapping,
         },
     );
 
     // Add exports to .ts files.
     addExports(host, normalizedOptions, initFnFileAdded);
+
+    // Register the new type for CRD generation.
+    const polarisCliConfig = PolarisCliConfig.readFromFile(host);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions, normalizedOptions.compMetricNames.compMetricMapping);
+    polarisCliConfig.writeToFile();
+
+    // Add the gen-crds target if it doesn't exist.
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    addGenCrdsTarget(projectConfig, normalizedOptions);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     await formatFiles(host);
 
@@ -54,6 +75,7 @@ export default generateComposedMetricType;
 function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema): ComposedMetricTypeGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);
     const normalizedNames = names(options.name);
+    const compMetricNames = getComposedMetricTypeNames(normalizedNames.className);
 
     return {
         names: normalizedNames,
@@ -62,7 +84,8 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
-        fileName: normalizedNames.fileName,
+        fileName: compMetricNames.compMetricFileName,
+        compMetricNames,
     };
 }
 
@@ -70,10 +93,8 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
  * Generates the ComposedMetricType.
  */
  export function addComposedMetricTypeFile(host: Tree, options: ComposedMetricTypeGeneratorNormalizedSchema): void {
-    const compMetricNames = getComposedMetricTypeNames(options.className);
-
     const templateOptions = {
-        ...compMetricNames,
+        ...options.compMetricNames,
         fileName: options.fileName,
         template: '', // Used to replace '__template__' with an empty string in file names.
     };

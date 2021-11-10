@@ -1,1 +1,1 @@
-export * from './<%= eStratFileName %>-controller';
+export * from './<%= eStratControllerFileName %>';

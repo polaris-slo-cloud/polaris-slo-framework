@@ -1,2 +1,2 @@
-export * from './replicable-target';
-export * from './rest-service-target';
+export * from './replicable-target.prm';
+export * from './rest-service-target.prm';

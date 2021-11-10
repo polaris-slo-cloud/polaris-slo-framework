@@ -19,7 +19,8 @@
             "libs/mappings/common-mappings/src/index.ts",
             "libs/metrics/cost-efficiency/src/lib/metrics/index.ts",
             "libs/orchestrators/kubernetes/src/index.ts",
-            "libs/query-backends/prometheus/src/index.ts"
+            "libs/query-backends/prometheus/src/index.ts",
+            "libs/schema-gen/src/index.ts"
         ],
         "exclude": [
             "**/apps/**",

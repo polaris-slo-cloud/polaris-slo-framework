@@ -12,6 +12,8 @@ import { applicationGenerator } from '@nrwl/node';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,
+    PolarisCliConfig,
+    PolarisCliProjectType,
     VERSIONS,
     addDeployTarget,
     addDockerBuildConfig,
@@ -52,6 +54,11 @@ const generateComposedMetricController: Generator<ComposedMetricControllerGenera
 
     addCommonWorkspaceRootFiles(host);
     addElasticityStrategyControllerFiles(host, normalizedOptions);
+
+    const polarisCliConfig = PolarisCliConfig.readFromFile(host);
+    polarisCliConfig.getOrCreateControllerProject(normalizedOptions, PolarisCliProjectType.ComposedMetricController);
+    polarisCliConfig.writeToFile();
+
     await formatFiles(host);
 
     return runCallbacksSequentially(nodeAppResult, installPkgsFn);

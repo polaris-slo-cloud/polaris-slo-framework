@@ -1,5 +1,5 @@
-import { ObjectKind } from '../../../model';
-import { IndexByKey, PolarisConstructor, PolarisMetadataUtils } from '../../../util';
+import { JsonSchema, ObjectKind } from '../../../model';
+import { IndexByKey, PolarisConstructor, PolarisMetadataUtils, cloneDeepWithoutExcluded } from '../../../util';
 import { PolarisTransformationMetadata } from '../../internal';
 import { PolarisTransformationConfig, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
@@ -24,7 +24,7 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         this._defaultTransformer = newDefaultTransformer;
     }
 
-    registerTransformer<T>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, any>, config: PolarisTransformationConfig = {}): void {
+    registerTransformer<T, P>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, P>, config: PolarisTransformationConfig = {}): void {
         const transformMeta: PolarisTransformationMetadata<T> = {
             ...config,
             transformer,
@@ -84,6 +84,19 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         return this.transformSingleObjToOrchestratorPlainObj(polarisObj);
     }
 
+    transformToOrchestratorSchema<T>(polarisSchema: JsonSchema<T>, polarisType: PolarisConstructor<T>): JsonSchema<any> {
+        if (polarisSchema === null || polarisSchema === undefined) {
+            return null;
+        }
+
+        const transformer = this.getTransformer(polarisType);
+        if (polarisSchema.type === 'array') {
+            return this.transformArrayToOrchestratorSchema(polarisSchema, polarisType, transformer);
+        } else {
+            return transformer.transformToOrchestratorSchema(polarisSchema, polarisType, this);
+        }
+    }
+
     getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any> {
         return PolarisMetadataUtils.getPropertyPolarisType(polarisType, propertyKey);
     }
@@ -105,6 +118,24 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
 
         const transformer = this.getTransformer(polarisObj);
         return transformer.transformToOrchestratorPlainObject(polarisObj, this);
+    }
+
+    private transformArrayToOrchestratorSchema<T, R>(
+        polarisSchema: JsonSchema<T>,
+        polarisType: PolarisConstructor<T>,
+        transformer: PolarisTransformer<T, R>,
+    ): JsonSchema<R> {
+        const transformedSchema: JsonSchema<R> = cloneDeepWithoutExcluded(polarisSchema, 'items') as any;
+
+        if (Array.isArray(polarisSchema.items)) {
+            transformedSchema.items = polarisSchema.items.map(
+                objSchema => transformer.transformToOrchestratorSchema(objSchema, polarisType, this),
+            );
+        } else {
+            transformedSchema.items = transformer.transformToOrchestratorSchema(polarisSchema.items, polarisType, this);
+        }
+
+        return transformedSchema;
     }
 
 }

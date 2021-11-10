@@ -1,5 +1,7 @@
-import { LibraryClassGeneratorSchema, NormalizedLibraryClassGeneratorSchema } from '../../util';
+import { ComposedMetricTypeNames, LibraryClassGeneratorSchema, NormalizedLibraryClassGeneratorSchema } from '../../util';
 
 export interface ComposedMetricTypeGeneratorSchema extends LibraryClassGeneratorSchema {}
 
-export interface ComposedMetricTypeGeneratorNormalizedSchema extends NormalizedLibraryClassGeneratorSchema {}
+export interface ComposedMetricTypeGeneratorNormalizedSchema extends NormalizedLibraryClassGeneratorSchema {
+    compMetricNames: ComposedMetricTypeNames;
+}

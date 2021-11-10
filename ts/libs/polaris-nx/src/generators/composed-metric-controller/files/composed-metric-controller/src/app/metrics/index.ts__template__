@@ -1,1 +1,1 @@
-export * from './<%= compMetricFileName %>';
+export * from './<%= compMetricDirName %>';

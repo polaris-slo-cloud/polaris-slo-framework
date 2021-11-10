@@ -1,1 +1,1 @@
-export * from './<%= sloFileName %>.slo';
+export * from './<%= sloMicrocontrollerFileName %>';

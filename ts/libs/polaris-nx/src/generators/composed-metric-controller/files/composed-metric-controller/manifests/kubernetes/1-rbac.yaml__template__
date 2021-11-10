@@ -47,7 +47,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 # Optionally, we could create a RoleBinding and to scope the permissions to a specific namespace
 metadata:
-  name: control-<%= compMetricFileName %>
+  name: control-<%= compMetricK8sResources %>
 subjects:
   - kind: ServiceAccount
     name: <%= controllerProjectName %>

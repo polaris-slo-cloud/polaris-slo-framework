@@ -1,4 +1,10 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "executors": {}
+    "executors": {
+        "generate-crds": {
+            "implementation": "./src/executors/generate-crds/executor",
+            "schema": "./src/executors/generate-crds/schema.json",
+            "description": "Generate the Custom Resource Definition (CRDs) for the Polaris types in a project"
+        }
+    }
 }

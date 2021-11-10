@@ -1,6 +1,25 @@
 import * as path from 'path';
-import { Generator, GeneratorCallback, Tree, formatFiles, generateFiles, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
-import { adaptTsConfigForPolaris, addExports, addPolarisDependenciesToPackageJson, createLibProject, getElasticityStrategyNames, runCallbacksSequentially } from '../../util';
+import {
+    Generator,
+    GeneratorCallback,
+    Tree,
+    formatFiles,
+    generateFiles,
+    joinPathFragments,
+    names,
+    readProjectConfiguration,
+    updateProjectConfiguration,
+} from '@nrwl/devkit';
+import {
+    PolarisCliConfig,
+    adaptTsConfigForPolaris,
+    addExports,
+    addGenCrdsTarget,
+    addPolarisDependenciesToPackageJson,
+    createLibProject,
+    getElasticityStrategyNames,
+    runCallbacksSequentially,
+} from '../../util';
 import { addOrExtendInitFn } from '../common';
 import { ElasticityStrategyGeneratorNormalizedSchema, ElasticityStrategyGeneratorSchema } from './schema';
 
@@ -29,6 +48,16 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
     // Add exports to .ts files.
     addExports(host, normalizedOptions, initFnFileAdded);
 
+    // Register the new type for CRD generation.
+    const polarisCliConfig = PolarisCliConfig.readFromFile(host);
+    polarisCliConfig.registerPolarisTypeAsCrd(normalizedOptions, normalizedOptions.eStratNames.eStratType);
+    polarisCliConfig.writeToFile();
+
+    // Add the gen-crds target if it doesn't exist.
+    const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
+    addGenCrdsTarget(projectConfig, normalizedOptions);
+    updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
+
     await formatFiles(host);
 
     return runCallbacksSequentially(...callbacks);
@@ -40,6 +69,7 @@ export default generateElasticityStrategyType;
 function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema): ElasticityStrategyGeneratorNormalizedSchema {
     const projectConfig = readProjectConfiguration(host, options.project);
     const normalizedNames = names(options.name);
+    const eStratNames = getElasticityStrategyNames(normalizedNames.className);
 
     return {
         names: normalizedNames,
@@ -48,7 +78,8 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
-        fileName: normalizedNames.fileName,
+        fileName: eStratNames.eStratFileName,
+        eStratNames,
     };
 }
 
@@ -56,11 +87,8 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
  * Generates the ElasticityStrategy type.
  */
  export function addElasticityStrategyFile(host: Tree, options: ElasticityStrategyGeneratorNormalizedSchema): void {
-    const eStratNames = getElasticityStrategyNames(options.className);
-
     const templateOptions = {
-        ...eStratNames,
-        fileName: options.fileName,
+        ...options.eStratNames,
         template: '', // Used to replace '__template__' with an empty string in file names.
     };
 

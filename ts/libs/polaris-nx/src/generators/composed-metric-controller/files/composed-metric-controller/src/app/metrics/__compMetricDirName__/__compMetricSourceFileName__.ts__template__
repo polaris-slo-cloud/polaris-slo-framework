@@ -1,0 +1,25 @@
+import { ComposedMetricSourceBase, PolarisRuntime, Sample } from '@polaris-sloc/core';
+import { <%= compMetricValueType %>, <%= compMetricParams %> } from '<%= compMetricTypePkg %>';
+import { Observable } from 'rxjs';
+
+// ToDo:
+// 1. Adapt the list of `supportedSloTargetTypes` in `<%= compMetricSourceFactory %>` (see <%= compMetricSourceFactoryFileName %>.ts).
+// 2. Adapt the `<%= compMetricSourceFactory %>.metricSourceName`, if needed (e.g., if there are multiple sources for <%= compMetricType %> that differ
+//    based on the supported SloTarget types).
+// 3. Implement `<%= compMetricSource %>.getValueStream()` to compute the metric.
+// 4. Adapt the `release` label in `../../../../manifests/kubernetes/3-service-monitor.yaml` to ensure that Prometheus will scrape this controller.
+
+/**
+ * Computes the `<%= compMetricValueType %>` composed metric.
+ */
+export class <%= compMetricSource %> extends ComposedMetricSourceBase<<%= compMetricValueType %>> {
+
+    constructor(private params: <%= compMetricParams %>, polarisRuntime: PolarisRuntime) {
+        super(polarisRuntime);
+    }
+
+    getValueStream(): Observable<Sample<<%= compMetricValueType %>>> {
+        // ToDo
+    }
+
+}

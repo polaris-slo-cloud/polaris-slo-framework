@@ -7,8 +7,7 @@ import { SloMappingTypeGeneratorNormalizedSchema } from '../schema';
  */
 export function addSloMappingTypeFile(host: Tree, options: SloMappingTypeGeneratorNormalizedSchema): void {
     const templateOptions = {
-        className: options.names.className,
-        fileName: options.fileName,
+        ...options.sloNames,
         template: '', // Used to replace '__template__' with an empty string in file names.
     };
 
