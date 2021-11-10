@@ -9,6 +9,7 @@
 * Added support for writing elasticity strategies in TypeScript
 * Added VerticalElasticityStrategy
 * Added Polaris CLI
+* Added support for generating Custom Resource Definitions (CRDs) from TypeScript code
 * Rewrote HorizontalElasticityStrategy in TypeScript and added stabilization window support
 * Initial release of [@polaris-sloc](https://www.npmjs.com/settings/polaris-sloc/packages) npm packages
 
