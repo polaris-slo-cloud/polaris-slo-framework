@@ -20,7 +20,7 @@
             "importPath": "@polaris-sloc/common-mappings",
             "crds": {
                 "tsConfig": "tsconfig.base.json",
-                "outDir": "crds",
+                "outDir": "crds/kubernetes",
                 "polarisTypes": [
                     "HorizontalElasticityStrategy",
                     "VerticalElasticityStrategy",

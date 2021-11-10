@@ -38,6 +38,10 @@ The [`apps`](./apps) folder contains the following application projects:
 | [`ui-polaris-ui`](./apps/ui/polaris-ui) | Angular UI for Polaris. |
 
 
+
+Additionally, the [`crds`](./crds) subfolder contains the Kubernetes Custom Resource Definitions (CRDs) generated for the Polaris ApiObject types defined by the libraries in this repo.
+
+
 ## Building and Running
 
 To build any application/library use the following command:
@@ -59,6 +63,15 @@ For example:
 ```sh
 ./set-polaris-pkg-version.sh 0.2.0
 ```
+
+
+### Regenerating the CRDs
+
+To regenerate the CRDs, execute the following command:
+```sh
+npm run gen-crds
+```
+
 
 ### Publishing npm Packages
 
