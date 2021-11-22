@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  namespace: default
+  name: predicted-metric-container-exporter-servicemonitor
+  labels:
+    component: predicted-metric-container-exporter-servicemonitor
+    # Needed because of https://github.com/prometheus-operator/prometheus-operator/issues/1470#issuecomment-397500048
+    release: prometheus-release-1
+spec:
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app: predicted-metric-container-exporter
+  endpoints:
+    - targetPort: 9877
+      interval: 20s
+      path: /metrics
