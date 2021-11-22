@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: exporter
-          image: aicg4t1/predicted-metric-container-exporter
+          image: aicg4t1/predicted-metric-container-exporter:0.1
           imagePullPolicy: Always
           env:
             - name: RECONCILE_INTERVAL
@@ -26,6 +26,7 @@ spec:
           ports:
             - containerPort: 9877
               name: mport
+---
 apiVersion: v1
 kind: Service
 metadata:
