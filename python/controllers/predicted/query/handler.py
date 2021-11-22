@@ -1,3 +1,7 @@
-def handle(config, request_body):
+from main import Context
+from query import polaris
+
+
+def handle(context: Context):
     # TODO query data based on config and the request body
-    return {}
+    return polaris.handle(context)

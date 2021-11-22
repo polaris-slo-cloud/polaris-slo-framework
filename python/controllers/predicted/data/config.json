@@ -1,0 +1,19 @@
+{
+    "metrics": {
+        "CPU rate": "polaris_composed_cpu_rate[5m]",
+        "canonical memory usage": "polaris_composed_canonical_memory_usage[5m]",
+        "assigned memory usage": "polaris_composed_assigned_memory_usage[5m]",
+        "unmapped page cache": "polaris_composed_unmapped_page_cache[5m]",
+        "total page cache": "polaris_composed_total_page_cache[5m]",
+        "maximum memory usage": "polaris_composed_maximum_memory_usage[5m]",
+        "local disk space usage": "polaris_composed_local_disk_space_usage[5m]",
+        "disk I/O time": "polaris_composed_disk_io_time[5m]",
+        "maximum CPU rate": "polaris_composed_maximum_cpu_rate[5m]",
+        "maximum disk IO time": "polaris_composed_maximum_disk_io_time[5m]",
+        "cycles per instruction": "polaris_composed_cycles_per_instruction[5m]",
+        "CPU ratio usage": "polaris_composed_cpu_ratio_usage[5m]",
+        "memory ratio usage": "polaris_composed_memory_ratio_usage[5m]",
+        "disk ratio usage": "polaris_composed_disk_ratio_usage[5m]",
+        "memory accesses per instruction": "polaris_composed_memory_accesses_per_instruction[5m]"
+    }
+}

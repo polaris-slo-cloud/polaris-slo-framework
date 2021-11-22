@@ -8,15 +8,16 @@ from waitress import serve
 from invocation import handler as invocation_handler
 from preprocessing import handler as preprocessing_handler
 from query import handler as query_handler
+from query.prometheus import PrometheusClient
+from util.config import Config
+from util.context import Context
 
 app = Flask(__name__)
 
 log = logging.getLogger(__name__)
-# TODO how should config should look like
-config = {
-    # TODO insert prometheus query
-    'cpu': '<prometheus query>'
-}
+
+client = PrometheusClient.from_env()
+config = Config.from_env()
 
 
 @app.route('/', defaults={'path': ''}, methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
@@ -28,14 +29,24 @@ def call_ai_model(path):
         body = json.loads(body)
     log.info(f'Received request with body: {body}')
 
-    raw_input_features = query_handler.handle(config, body)
-    input_features = preprocessing_handler.handle(raw_input_features, body)
-    inference_result = invocation_handler.handle(input_features, body)
+    ctx = Context(
+        client=client,
+        config=config,
+        body=body
+    )
+
+    raw_input_features = query_handler.handle(ctx)
+    log.debug(
+        f'length of raw input features: {len(raw_input_features)}, \
+        features queried: {list(raw_input_features.columns)}'
+    )
+    input_features = preprocessing_handler.handle(raw_input_features, ctx)
+    inference_result = invocation_handler.handle(input_features, ctx)
 
     return {"result": inference_result}
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     port = 5000
     serve(app, host='0.0.0.0', port=port)
