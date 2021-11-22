@@ -61,26 +61,6 @@ def read_cpu_usage(row: List[str], index: int) -> float:
     return float(row[index])
 
 
-"""
- * polaris_composed_<metricType>{
- *
- *     // Group Version Kind string of the SLO Target resource.
- *     target_gvk="ObjectKind.stringify(sloTarget)",
- *
- *     // Namespace of the SLO Target resource (not to be confused with the `namespace` label added by Prometheus).
- *     target_namespace="sloTargetNamespace",
- *
- *     // Name of the SLO Target resource.
- *     target_name="sloTarget.name",
- *
- *     // Path of the composed value metric property that this time series represents.
- *     // Prometheus can only store single valued metrics. This is used to decompose
- *     // a multi-valued metric (i.e., an object) into multiple single values (see examples below).
- *     metric_prop_key="objPropKey"
- * }
- """
-
-
 class CsvMetrics:
     """
     Iterates over the given csv files over and over again.
