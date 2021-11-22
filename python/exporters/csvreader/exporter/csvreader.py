@@ -1,7 +1,10 @@
 import csv
+import logging
 import time
 from typing import List
-from prometheus_client import Gauge
+from prometheus_client import Gauge, Histogram
+
+logger = logging.getLogger(__name__)
 
 
 class CsvReader:
@@ -57,10 +60,6 @@ class CsvReader:
             self._csv_file.close()
 
 
-def read_cpu_usage(row: List[str], index: int) -> float:
-    return float(row[index])
-
-
 class CsvMetrics:
     """
     Iterates over the given csv files over and over again.
@@ -68,10 +67,9 @@ class CsvMetrics:
 
     def __init__(self, csv_files: List[str], reconcile_interval=5):
         self.reconcile_interval = reconcile_interval
+        self.metrics = []
         self.csv_readers = [CsvReader(csv_file) for csv_file in csv_files]
-        labelnames = ['target_namespace', 'target_gvk', 'metric_prop_key']
-
-        self.cpu_usage = Gauge("polaris_composed_cpu_usage", "CPU Usage", labelnames=labelnames)
+        self.prepare_columns()
 
     def run_metrics_loop(self):
         """Metrics fetching loop"""
@@ -87,9 +85,52 @@ class CsvMetrics:
         """
 
         for csv_reader in self.csv_readers:
-            cpu_usage_index = csv_reader.headers.index('CPU ratio usage')
             row = next(csv_reader.read())
-            cpu_usage = read_cpu_usage(row, cpu_usage_index)
-            self.cpu_usage.labels(target_gvk="sloTarget", target_namespace="sloTargetNamespace",
-                                  metric_prop_key="objPropKey") \
-                .set(cpu_usage)
+            for col, prom_obj in self.metrics:
+                index = csv_reader.headers.index(col)
+                try:
+                    value = float(row[index])
+                except ValueError as e:
+                    logger.error(e)
+                    value = 0
+
+                if type(prom_obj) is Gauge:
+                    prom_obj.labels(target_gvk="sloTarget", target_namespace="sloTargetNamespace",
+                                    metric_prop_key="objPropKey") \
+                        .set(value)
+                elif type(prom_obj) is Histogram:
+                    prom_obj.labels(target_gvk="sloTarget", target_namespace="sloTargetNamespace",
+                                    metric_prop_key="objPropKey") \
+                        .observe(value)
+                else:
+                    logging.error(f'Unknown prometheus object type: {type(prom_obj)}')
+
+    def prepare_columns(self):
+        labelnames = ['target_namespace', 'target_gvk', 'metric_prop_key']
+        prefix = 'polaris_composed'
+        self.metrics = [
+            ('CPU rate', Gauge(f'{prefix}_cpu_rate', 'CPU rate', labelnames=labelnames)),
+            ('canonical memory usage',
+             Gauge(f'{prefix}_canonical_memory_usage', 'canonical memory usage', labelnames=labelnames)),
+            ('assigned memory usage',
+             Gauge(f'{prefix}_assigned_memory_usage', 'assigned memory usage', labelnames=labelnames)),
+            ('unmapped page cache',
+             Gauge(f'{prefix}_unmapped_page_cache', 'unmapped page cache', labelnames=labelnames)),
+            ('total page cache', Gauge(f'{prefix}_total_page_cache', 'total page cache', labelnames=labelnames)),
+            ('maximum memory usage',
+             Gauge(f'{prefix}_maximum_memory_usage', 'maximum memory usage', labelnames=labelnames)),
+            ('disk I/O time', Gauge(f'{prefix}_disk_io_time', 'disk I/O time', labelnames=labelnames)),
+            ('local disk space usage',
+             Gauge(f'{prefix}_local_disk_space_usage', 'local disk space usage', labelnames=labelnames)),
+            ('maximum CPU rate', Gauge(f'{prefix}_maximum_cpu_rate', 'maximum CPU rate', labelnames=labelnames)),
+            ('maximum disk IO time',
+             Gauge(f'{prefix}_maximum_disk_io_time', 'maximum disk IO time', labelnames=labelnames)),
+            ('cycles per instruction',
+             Gauge(f'{prefix}_cycles_per_instruction', 'cycles per instruction', labelnames=labelnames)),
+            ('memory accesses per instruction',
+             Gauge(f'{prefix}_memory_accesses_per_instruction', 'memory accesses per instruction',
+                       labelnames=labelnames)),
+            ('CPU ratio usage', Gauge(f'{prefix}_cpu_ratio_usage', 'CPU ratio usage', labelnames=labelnames)),
+            ('memory ratio usage', Gauge(f'{prefix}_memory_ratio_usage', 'memory ratio usage', labelnames=labelnames)),
+            ('disk ratio usage', Gauge(f'{prefix}_disk_ratio_usage', 'disk ratio usage', labelnames=labelnames)),
+        ]
