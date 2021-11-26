@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  namespace: default
+  namespace: polaris
   name: predicted-metric-container-exporter-servicemonitor
   labels:
     component: predicted-metric-container-exporter-servicemonitor
