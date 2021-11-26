@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   # This name uniquely identifies the Deployment
   name: minio-deployment
+  namespace: polaris
 spec:
   selector:
     matchLabels:

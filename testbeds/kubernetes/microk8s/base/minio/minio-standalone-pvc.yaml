@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   # This name uniquely identifies the PVC. Will be used in deployment below.
+  namespace: polaris
   name: minio-pv-claim
   labels:
     app: minio-pv-claim
