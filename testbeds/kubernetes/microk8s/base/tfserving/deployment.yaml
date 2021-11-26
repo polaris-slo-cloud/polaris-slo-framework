@@ -4,7 +4,7 @@ metadata:
   labels:
     app: cost-efficiency-serving
   name: cost-efficiency-serving
-  namespace: default
+  namespace: polaris
 spec:
   selector:
     matchLabels:

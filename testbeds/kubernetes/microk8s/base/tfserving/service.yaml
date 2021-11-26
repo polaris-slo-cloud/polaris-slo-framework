@@ -4,7 +4,7 @@ metadata:
   labels:
     app: cost-efficiency-serving
   name: cost-efficiency-serving-service
-  namespace: default
+  namespace: polaris
 spec:
   ports:
   - name: grpc-tf-serving
