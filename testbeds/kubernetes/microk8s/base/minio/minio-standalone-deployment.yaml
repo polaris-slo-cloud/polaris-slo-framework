@@ -17,6 +17,8 @@ spec:
         # Label is used as selector in the service.
         app: minio
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: rainbow0
       # Refer to the PVC created earlier
       volumes:
       - name: storage
