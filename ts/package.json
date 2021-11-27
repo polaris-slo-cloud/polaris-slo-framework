@@ -17,6 +17,8 @@
     "docker:build:metrics-rest-api-cost-efficiency-controller": "docker build -f ./apps/metrics/rest-api-cost-efficiency-controller/Dockerfile --build-arg POLARIS_APP_TYPE=metrics --build-arg POLARIS_APP_NAME=rest-api-cost-efficiency-controller -t polarissloc/metrics-rest-api-cost-efficiency-controller:latest .",
     "docs:build": "npx typedoc --tsconfig ./tsconfig.typedoc.json && git checkout ../docs/typedoc/README.md",
     "gen-crds": "npx ts-node --project ./tools/scripts/tsconfig.json ./tools/scripts/gen-crds.ts",
+    "ts-circular-dep-check": "npx madge --circular . > circular-dependencies-report.txt",
+    "ts-circular-dep-check-svg": "npx madge --circular --image dependencies.svg .",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -47,6 +49,10 @@
       "git add"
     ]
   },
+  "madge": {
+		"tsConfig": "tsconfig.base.json",
+    "fileExtensions": [ "ts" ]
+	},
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.2.11",
@@ -117,6 +123,7 @@
     "jest": "27.3.1",
     "jest-preset-angular": "10.0.1",
     "lint-staged": "^10.5.4",
+    "madge": "^5.0.1",
     "openapi-types": "^9.3.0",
     "prettier": "2.3.2",
     "ts-jest": "27.0.7",
