@@ -1,13 +1,13 @@
-import { of as observableOf, throwError} from 'rxjs';
-import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators'
-import { SloMapping, SloMappingSpec } from '../../../model';
-import { DefaultMicrocontrollerFactory } from '../../../runtime/public/impl';
-import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
-import { getPolarisRuntime } from '../../../runtime/public/polaris-runtime';
-import { IndexByKey, Logger, ObservableStopper, executeSafely } from '../../../util';
-import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../common';
+import { of as observableOf, throwError } from 'rxjs';
+import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators';
+import { SloMapping, SloMappingSpec } from '../../../../model';
+import { DefaultMicrocontrollerFactory } from '../../../../runtime/public/impl';
+import { MicrocontrollerFactory } from '../../../../runtime/public/microcontroller-factory';
+import { getPolarisRuntime } from '../../../../runtime/public/polaris-runtime';
+import { IndexByKey, Logger, ObservableStopper, executeSafely } from '../../../../util';
+import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../../common';
+import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from '../slo-control-loop';
 import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
-import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from './slo-control-loop';
 
 interface RegisteredSlo {
 

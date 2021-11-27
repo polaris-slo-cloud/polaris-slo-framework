@@ -1,8 +1,8 @@
 import { Observable, of as observableOf } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { ObservableOrPromise } from '../../../util';
-import { ServiceLevelObjective, SloOutput } from '../common';
-import { SloEvaluator } from './slo-evaluator';
+import { ObservableOrPromise } from '../../../../util';
+import { ServiceLevelObjective, SloOutput } from '../../common';
+import { SloEvaluator } from '../slo-evaluator';
 
 /**
  * This can be used as a superclass for a concrete `SloEvaluator` implementation.
@@ -41,6 +41,7 @@ export abstract class SloEvaluatorBase<C = any> implements SloEvaluator {
      * @param sloOutput The output that `slo.evaluate()` has resolved to.
      * @returns An observable or a Promise that emits/resolves when SLO output has been applied to the orchestrator if necessary.
      */
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     abstract onAfterEvaluateSlo(key: string, currContext: C, sloOutput: SloOutput<any>): ObservableOrPromise<void>;
 
     evaluateSlo(key: string, slo: ServiceLevelObjective<any, any>): Observable<void> {

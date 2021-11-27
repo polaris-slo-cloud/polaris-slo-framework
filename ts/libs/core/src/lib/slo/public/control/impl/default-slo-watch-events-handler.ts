@@ -1,6 +1,6 @@
-import { SloMapping } from '../../../model';
-import { Logger, executeSafely } from '../../../util';
-import { SloControlLoop, SloWatchEventsHandler } from './slo-control-loop';
+import { SloMapping } from '../../../../model';
+import { Logger, executeSafely } from '../../../../util';
+import { SloControlLoop, SloWatchEventsHandler } from '../slo-control-loop';
 
 /**
  * Default `SloWatchEventsHandler` implementation for connecting an `ObjectKindWatcher` to an `SloControlLoop`.

@@ -19,5 +19,6 @@ export * from './lib/raw-metrics-query/public/time-series/execution/impl';
 export * from './lib/composed-metrics/public/control/impl';
 export * from './lib/elasticity/public/control/impl';
 export * from './lib/elasticity/public/service/impl';
+export * from './lib/slo/public/control/impl';
 export * from './lib/transformation/public/impl';
 export * from './lib/runtime/public/impl';
