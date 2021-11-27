@@ -1,8 +1,8 @@
-import { ApiObjectMetadata, ElasticityStrategy, ElasticityStrategyKind, ElasticityStrategySpec, OwnerReference } from '../../../model';
-import { SloOutput } from '../../../slo';
-import { PolarisTransformationService } from '../../../transformation';
-import { PolarisConstructor } from '../../../util';
-import { ElasticityStrategyService } from './elasticity-strategy-service';
+import { ApiObjectMetadata, ElasticityStrategy, ElasticityStrategyKind, ElasticityStrategySpec, OwnerReference } from '../../../../model';
+import { SloOutput } from '../../../../slo';
+import { PolarisTransformationService } from '../../../../transformation';
+import { PolarisConstructor } from '../../../../util';
+import { ElasticityStrategyService } from '../elasticity-strategy-service';
 
 export class DefaultElasticityStrategyService implements ElasticityStrategyService {
 

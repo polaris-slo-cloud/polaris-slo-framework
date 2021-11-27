@@ -1,4 +1,3 @@
-import { DefaultStabilizationWindowTracker } from '../';
 import {
     ApiObjectMetadata,
     Container,
@@ -10,10 +9,11 @@ import {
     SloCompliance,
     SloTarget,
     VerticalElasticityStrategyConfig,
-} from '../../../../model';
-import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
-import { Logger } from '../../../../util';
-import { ElasticityStrategyExecutionError, StabilizationWindowTracker } from '../../common';
+} from '../../../../../model';
+import { OrchestratorClient, PolarisRuntime } from '../../../../../runtime';
+import { Logger } from '../../../../../util';
+import { ElasticityStrategyExecutionError, StabilizationWindowTracker } from '../../../common';
+import { DefaultStabilizationWindowTracker } from '../default-stabilization-window-tracker';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
 /** Tracked executions eviction interval of 20 minutes. */

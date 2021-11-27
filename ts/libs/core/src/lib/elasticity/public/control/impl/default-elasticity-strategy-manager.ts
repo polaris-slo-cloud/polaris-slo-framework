@@ -1,13 +1,13 @@
-import { ObjectKind, SloTarget } from '../../../model';
-import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../runtime';
-import { IndexByKey, executeSafely } from '../../../util';
-import { DefaultElasticityStrategyWatchEventsHandler } from './default-elasticity-strategy-watch-events-handler';
+import { ObjectKind, SloTarget } from '../../../../model';
+import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../../runtime';
+import { IndexByKey, executeSafely } from '../../../../util';
 import {
     ELASTICITY_STRATEGY_DEFAULT_TIMEOUT_MS,
     ElasticityStrategyKindControllerPair,
     ElasticityStrategyManager,
     ElasticityStrategyManagerConfig,
-} from './elasticity-strategy-manager';
+} from '../elasticity-strategy-manager';
+import { DefaultElasticityStrategyWatchEventsHandler } from './default-elasticity-strategy-watch-events-handler';
 
 /**
  * The default `ElasticityStrategyManager` implementation that is usable for all orchestrators.

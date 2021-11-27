@@ -1,5 +1,5 @@
-import { ElasticityStrategy, StabilizationWindow } from '../../../model';
-import { ElasticityStrategyExecution, ElasticityStrategyExecutionTracker } from '../common';
+import { ElasticityStrategy, StabilizationWindow } from '../../../../model';
+import { ElasticityStrategyExecution, ElasticityStrategyExecutionTracker } from '../../common';
 
 /**
  * Default `ElasticityStrategyExecutionTracker` implementation for tracking.

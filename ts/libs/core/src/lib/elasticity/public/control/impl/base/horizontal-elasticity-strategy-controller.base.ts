@@ -1,7 +1,7 @@
-import { ElasticityStrategy, HorizontalElasticityStrategyConfig, NamespacedObjectReference, Scale, SloCompliance, SloTarget } from '../../../../model';
-import { OrchestratorClient, PolarisRuntime } from '../../../../runtime';
-import { Logger } from '../../../../util';
-import { StabilizationWindowTracker } from '../../common';
+import { ElasticityStrategy, HorizontalElasticityStrategyConfig, NamespacedObjectReference, Scale, SloCompliance, SloTarget } from '../../../../../model';
+import { OrchestratorClient, PolarisRuntime } from '../../../../../runtime';
+import { Logger } from '../../../../../util';
+import { StabilizationWindowTracker } from '../../../common';
 import { DefaultStabilizationWindowTracker } from '../default-stabilization-window-tracker';
 import { SloComplianceElasticityStrategyControllerBase } from './slo-compliance-elasticity-strategy-controller.base';
 
