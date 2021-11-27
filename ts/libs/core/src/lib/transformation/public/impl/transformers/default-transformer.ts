@@ -1,8 +1,8 @@
 import { classToPlain, plainToClass } from 'class-transformer';
 import { cloneDeep } from 'lodash';
-import { JsonSchema } from '../../../model';
-import { Constructor, InterfaceOf, cloneDeepWithoutExcluded } from '../../../util';
-import { PolarisTransformationService, PolarisTransformer } from '../common';
+import { JsonSchema } from '../../../../model';
+import { Constructor, InterfaceOf, cloneDeepWithoutExcluded } from '../../../../util';
+import { PolarisTransformationService, PolarisTransformer } from '../../common';
 
 /**
  * This transformer does not alter the structure of the objects, it just performs a simple

@@ -2,7 +2,7 @@ import { JsonSchema, ObjectKind } from '../../../model';
 import { IndexByKey, PolarisConstructor, cloneDeepWithoutExcluded } from '../../../util';
 import { PolarisMetadataUtils, PolarisTransformationMetadata } from '../../internal';
 import { PolarisTransformationConfig, PolarisTransformationServiceManager, PolarisTransformer, UnknownObjectKindError } from '../common';
-import { DefaultTransformer } from '../transformers';
+import { DefaultTransformer } from './transformers';
 
 /**
  * The default implementation of the {@link PolarisTransformationServiceManager}.

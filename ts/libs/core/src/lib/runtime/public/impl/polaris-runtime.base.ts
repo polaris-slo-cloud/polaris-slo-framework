@@ -5,7 +5,7 @@ import { DefaultElasticityStrategyManager } from '../../../elasticity/public/con
 import { DefaultElasticityStrategyService } from '../../../elasticity/public/service/impl/default-elasticity-strategy.service';
 import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../../slo';
 import { PolarisTransformationServiceManager } from '../../../transformation/public/common';
-import { DefaultPolarisTransformationService } from '../../../transformation/public/service';
+import { DefaultPolarisTransformationService } from '../../../transformation/public/impl';
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
 import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
