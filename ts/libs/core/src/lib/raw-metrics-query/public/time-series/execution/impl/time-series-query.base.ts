@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
-import { PolarisQueryBase, PolarisQueryResult } from '../../generic';
-import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
-import { NativeQueryBuilder, NativeQueryBuilderFactoryFn } from './native-query-builder';
-import { QueryContent, SubqueryQueryContent } from './query-content';
-import { SubqueryBuilderContainer } from './subquery-builder-content';
+import { PolarisQueryBase, PolarisQueryResult } from '../../../generic';
+import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesInstant, TimeSeriesQuery, TimeSeriesQueryResultType } from '../../query-model';
+import { NativeQueryBuilder, NativeQueryBuilderFactoryFn } from '../native-query-builder';
+import { QueryContent, SubqueryQueryContent } from '../query-content';
+import { SubqueryBuilderContainer } from '../subquery-builder-content';
 
 /**
  * Common superclass for all `TimeSeriesQuery` implementations.

@@ -1,6 +1,6 @@
-import { LabelFilterableTimeInstantQuery, LabelFilterableTimeRangeQuery, TimeRange, TimeSeriesSource } from '../query-model';
-import { NativeQueryBuilderFactoryFn } from './native-query-builder';
-import { QueryContentType, SelectQueryContent } from './query-content';
+import { LabelFilterableTimeInstantQuery, LabelFilterableTimeRangeQuery, TimeRange, TimeSeriesSource } from '../../query-model';
+import { NativeQueryBuilderFactoryFn } from '../native-query-builder';
+import { QueryContentType, SelectQueryContent } from '../query-content';
 import { LabelFilterableTimeInstantQueryImpl, LabelFilterableTimeRangeQueryImpl } from './time-series-queries.impl';
 
 /**

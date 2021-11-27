@@ -1,4 +1,4 @@
-import { QueryError } from '../../generic';
+import { QueryError } from '../../../generic';
 import {
     JoinConfig,
     LabelGroupingConfig,
@@ -7,15 +7,15 @@ import {
     TimeSeriesQueryResultType,
     ValueFilter,
     isTimeSeriesQuery,
-} from '../query-model';
-import { BinaryOperator } from './binary-operator';
+} from '../../query-model';
+import { BinaryOperator } from '../binary-operator';
 import {
     BinaryOperationQueryContent,
     BinaryOperationWithConstOperandQueryContent,
     FilterOnValueQueryContent,
     QueryContentType,
     createQueryContent,
-} from './query-content';
+} from '../query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**

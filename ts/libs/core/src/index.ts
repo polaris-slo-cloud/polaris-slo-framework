@@ -15,6 +15,7 @@ export * from './lib/runtime/public';
 
 // We want to make these implementations public, but they are not included in the respective `xyz/public/index.ts` files,
 // because they would create circular dependencies.
+export * from './lib/raw-metrics-query/public/time-series/execution/impl';
 export * from './lib/composed-metrics/public/control/impl';
 export * from './lib/elasticity/public/control/impl';
 export * from './lib/elasticity/public/service/impl';

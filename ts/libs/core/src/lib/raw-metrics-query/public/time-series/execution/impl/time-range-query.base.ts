@@ -1,5 +1,5 @@
-import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQueryResultType, ValueFilter } from '../query-model';
-import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType, createQueryContent } from './query-content';
+import { TimeInstantQuery, TimeRangeQuery, TimeSeries, TimeSeriesQueryResultType, ValueFilter } from '../../query-model';
+import { ChangeResolutionQueryContent, FilterOnValueQueryContent, QueryContentType, createQueryContent } from '../query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
 /**

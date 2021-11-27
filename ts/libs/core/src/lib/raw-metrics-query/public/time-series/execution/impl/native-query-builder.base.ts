@@ -1,7 +1,7 @@
-import { QueryError } from '../../generic';
-import { TimeSeriesQuery, TimeSeriesQueryResultType } from '../query-model';
-import { NativeQueryBuilder } from './native-query-builder';
-import { QueryContent, QueryContentType, SelectQueryContent } from './query-content';
+import { QueryError } from '../../../generic';
+import { TimeSeriesQuery, TimeSeriesQueryResultType } from '../../query-model';
+import { NativeQueryBuilder } from '../native-query-builder';
+import { QueryContent, QueryContentType, SelectQueryContent } from '../query-content';
 
 /**
  * Common superclass for a `NativeQueryBuilder` implementation.

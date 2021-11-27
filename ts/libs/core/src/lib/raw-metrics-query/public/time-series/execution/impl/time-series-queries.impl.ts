@@ -6,8 +6,8 @@ import {
     TimeRangeQuery,
     TimeSeries,
     TimeSeriesInstant,
-} from '../query-model';
-import { FilterOnLabelQueryContent, QueryContent, QueryContentType } from './query-content';
+} from '../../query-model';
+import { FilterOnLabelQueryContent, QueryContent, QueryContentType } from '../query-content';
 import { TimeInstantQueryBase } from './time-instant-query.base';
 import { TimeRangeQueryBase } from './time-range-query.base';
 import { TimeSeriesQueryBase } from './time-series-query.base';
