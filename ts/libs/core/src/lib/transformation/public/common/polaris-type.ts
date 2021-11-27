@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
-import { PolarisMetadataUtils, TypeFn } from '../../../util';
+import { TypeFn } from '../../../util';
 import { PropertyTransformer } from '../../internal/property-transformer';
+import { PolarisMetadataUtils } from '../../internal/reflect-metadata-utils';
 
 /**
  * Property decorator to define the Polaris type of a property.

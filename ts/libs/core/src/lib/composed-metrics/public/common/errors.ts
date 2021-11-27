@@ -1,5 +1,5 @@
-import { ComposedMetricParams } from '../..';
-import { ComposedMetricMapping } from '../../../model';
+
+import { ComposedMetricMapping, ComposedMetricParams } from '../../../model';
 import { ComposedMetricType } from './composed-metric-type';
 
 /**

@@ -1,16 +1,15 @@
 import { JsonSchema, ObjectKind } from '../../../model';
-import { IndexByKey, PolarisConstructor, PolarisMetadataUtils, cloneDeepWithoutExcluded } from '../../../util';
-import { PolarisTransformationMetadata } from '../../internal';
-import { PolarisTransformationConfig, PolarisTransformer, UnknownObjectKindError } from '../common';
+import { IndexByKey, PolarisConstructor, cloneDeepWithoutExcluded } from '../../../util';
+import { PolarisMetadataUtils, PolarisTransformationMetadata } from '../../internal';
+import { PolarisTransformationConfig, PolarisTransformationServiceManager, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from '../transformers';
-import { PolarisTransformationService } from './polaris-transformation-service';
 
 /**
- * The default implementation of the {@link PolarisTransformationService}.
+ * The default implementation of the {@link PolarisTransformationServiceManager}.
  *
- * @note Please extend this class if you want to create your own {@link PolarisTransformationService}.
+ * @note Please extend this class if you want to create your own `PolarisTransformationService`.
  */
-export class DefaultPolarisTransformationService implements PolarisTransformationService {
+export class DefaultPolarisTransformationService implements PolarisTransformationServiceManager {
 
     private _defaultTransformer: PolarisTransformer<any, any> = new DefaultTransformer<any>();
 

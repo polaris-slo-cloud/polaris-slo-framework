@@ -1,4 +1,5 @@
-import { OwnerReference, SloTarget } from '../../../model';
+import { OwnerReference } from './owner-reference.prm';
+import { SloTarget } from './slo-target.prm';
 
 /**
  * Base interface for the parameter object that can is used for configuring a

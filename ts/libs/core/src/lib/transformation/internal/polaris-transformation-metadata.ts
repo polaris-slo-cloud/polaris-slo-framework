@@ -1,5 +1,6 @@
 import { Constructor } from '../../util';
-import { PolarisTransformationConfig, PolarisTransformer } from '../public';
+import { PolarisTransformationConfig } from '../public/common/polaris-transformation-config';
+import { PolarisTransformer } from '../public/common/polaris-transformer';
 
 /**
  * Metadata that is used for transforming between Polaris objects and orchestrator-specific plain objects.

@@ -1,4 +1,5 @@
-import { ComposedMetricParams, ComposedMetricSource, ComposedMetricType } from '../../../composed-metrics';
+import { ComposedMetricSource, ComposedMetricType } from '../../../composed-metrics';
+import { ComposedMetricParams } from '../../../model';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
 
 /**

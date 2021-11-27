@@ -6,7 +6,8 @@ import {
     ElasticityStrategyService,
 } from '../../../elasticity';
 import { DefaultSloControlLoop, SloControlLoop, SloEvaluator } from '../../../slo';
-import { DefaultPolarisTransformationService, PolarisTransformationService } from '../../../transformation/public/service';
+import { PolarisTransformationServiceManager } from '../../../transformation/public/common';
+import { DefaultPolarisTransformationService } from '../../../transformation/public/service';
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
 import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
@@ -18,7 +19,7 @@ import { PolarisRuntime } from './polaris-runtime';
  */
 export abstract class PolarisRuntimeBase implements PolarisRuntime {
 
-    transformer: PolarisTransformationService = new DefaultPolarisTransformationService();
+    transformer: PolarisTransformationServiceManager = new DefaultPolarisTransformationService();
 
     elasticityStrategyService: ElasticityStrategyService;
 

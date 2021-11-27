@@ -1,6 +1,4 @@
-import { Constructor } from '../../../util';
-
-export type FactoryFn<I, O> = (input: I) => O;
+import { Constructor, FactoryFn } from '../../../util';
 
 /**
  * Used to instantiate a microcontroller for a particular Spec instance, e.g., a `ServiceLevelObjective`

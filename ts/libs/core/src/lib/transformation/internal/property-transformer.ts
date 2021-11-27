@@ -1,5 +1,5 @@
 import { TransformFnParams, TransformationType } from 'class-transformer';
-import { getPolarisRuntimeOrThrow } from '../../runtime/public/polaris-runtime';
+import { getPolarisRuntimeOrThrow } from '../../runtime/public/polaris-runtime/polaris-runtime';
 import { Constructor } from '../../util';
 
 /**

@@ -1,6 +1,5 @@
 import { JsonSchema, ObjectKind } from '../../../model';
 import { PolarisConstructor } from '../../../util';
-import { PolarisTransformationConfig, PolarisTransformer } from '../common';
 
 /**
  * Implementations of this service should be used for converting between orchestrator-independent Polaris objects
@@ -25,47 +24,10 @@ import { PolarisTransformationConfig, PolarisTransformer } from '../common';
  * - it can be registered for both of them or
  * - `PolarisTransformationConfig.inheritable` can be set to `true`, which will make all subclasses inherit the
  * transformer, unless they register their own.
+ *
+ * To register transformers and object kinds, please use the `PolarisTransformationServiceManager`, which can be obtained through the `PolarisRuntime`.
  */
 export interface PolarisTransformationService {
-
-    /**
-     * The default `PolarisTransformer` that is used if no specific transformer has been registered for a particular type.
-     */
-    readonly defaultTransformer: PolarisTransformer<any, any>;
-
-    /**
-     * Replaces the current default `PolarisTransformer` with the one provided.
-     */
-    changeDefaultTransformer(newDefaultTransformer: PolarisTransformer<any, any>): void;
-
-    /**
-     * Registers the specified transformer with this `PolarisTransformationService`.
-     *
-     * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
-     * @param polarisType The Polaris type for which to register the transformer.
-     * @param transformer The `PolarisTransformer` for the type.
-     * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
-     */
-    registerTransformer<T, P>(polarisType: PolarisConstructor<T>, transformer: PolarisTransformer<T, P>, config?: PolarisTransformationConfig): void;
-
-    /**
-     * Associates the specified object kind with a Polaris type and optionally also with a transformer.
-     *
-     * This allows the `PolarisTransformationService` to automatically instantiate the appropriate class for a raw orchestrator object,
-     * based on the kind information that it provides.
-     *
-     * @note A transformer registration for a class `A` applies only to direct instances of `A`, not to instances of any of its subclasses.
-     * @param kind The `ObjectKind` that should be registered.
-     * @param polarisType The Polaris type to be associated with the object kind.
-     * @param transformer The `PolarisTransformer` for the type.
-     * @param config (optional) Additional configuration for registration of the `PolarisTransformer`.
-     */
-    registerObjectKind<T>(
-        kind: ObjectKind,
-        polarisType: PolarisConstructor<T>,
-        transformer?: PolarisTransformer<T, any>,
-        config?: PolarisTransformationConfig,
-    ): void;
 
     /**
      * Transforms the specified orchestrator-specific plain object into a corresponding Polaris object.

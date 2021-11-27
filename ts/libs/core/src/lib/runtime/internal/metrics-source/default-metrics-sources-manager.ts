@@ -1,13 +1,12 @@
 import {
     ComposedMetricMappingManager,
-    ComposedMetricParams,
     ComposedMetricSource,
     ComposedMetricSourceFactory,
     ComposedMetricType,
     DefaultComposedMetricMappingManager,
     GenericComposedMetricSourceFactory,
 } from '../../../composed-metrics';
-import { ObjectKind } from '../../../model';
+import { ComposedMetricParams, ObjectKind } from '../../../model';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
 import { PolarisRuntime } from '../../public';
 import { MetricsSourcesManager } from '../../public/metrics-source';

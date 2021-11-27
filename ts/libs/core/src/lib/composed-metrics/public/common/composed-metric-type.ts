@@ -1,5 +1,5 @@
+import { ComposedMetricParams } from '../../../model';
 import { TypeFn } from '../../../util';
-import { ComposedMetricParams } from './composed-metric-params';
 
 /**
  * Describes a type of composed metric.

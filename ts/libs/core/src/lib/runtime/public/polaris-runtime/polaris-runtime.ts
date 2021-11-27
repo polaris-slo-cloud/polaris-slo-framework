@@ -1,7 +1,7 @@
 import { ComposedMetricsManager } from '../../../composed-metrics';
 import { ElasticityStrategyManager, ElasticityStrategyService } from '../../../elasticity';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
-import { PolarisTransformationService } from '../../../transformation';
+import { PolarisTransformationServiceManager } from '../../../transformation';
 import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
 import { ObjectKindWatcher, WatchManager } from '../watch';
@@ -48,7 +48,7 @@ export interface PolarisRuntime {
      * The `PolarisTransformationService` that should be used for converting between orchestrator-independent Polaris objects
      * and orchestrator-specific plain objects, which can be serialized.
      */
-    transformer: PolarisTransformationService;
+    transformer: PolarisTransformationServiceManager;
 
     /**
      * The `ElasticityStrategyService` that should be used for creating and configuring elasticity strategies.

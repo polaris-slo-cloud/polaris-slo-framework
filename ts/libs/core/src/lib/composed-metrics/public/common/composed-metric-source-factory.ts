@@ -1,5 +1,5 @@
+import { ComposedMetricParams } from '../../../model';
 import { PolarisRuntime } from '../../../runtime';
-import { ComposedMetricParams } from './composed-metric-params';
 import { ComposedMetricSource } from './composed-metric-source';
 import { ComposedMetricType } from './composed-metric-type';
 

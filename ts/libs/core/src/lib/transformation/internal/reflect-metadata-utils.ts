@@ -1,6 +1,6 @@
-import { PolarisMicrocontrollerFactoryMetadata } from '../../runtime';
-import { PolarisTransformationMetadata } from '../../transformation';
-import { Constructor } from '../public/util-types';
+import { Constructor } from '../../util';
+import { PolarisMicrocontrollerFactoryMetadata } from './polaris-microcontroller-factory-metadata';
+import { PolarisTransformationMetadata } from './polaris-transformation-metadata';
 
 /**
  * Defines the keys used store Polaris metadata using the Reflect API.

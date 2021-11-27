@@ -1,7 +1,7 @@
-import { ComposedMetricCollectorFactory } from '../..';
-import { ComposedMetricMapping, ObjectKind } from '../../../model';
+import { ComposedMetricMapping, ComposedMetricParams, ObjectKind } from '../../../model';
 import { WatchEventsHandler } from '../../../runtime';
-import { ComposedMetricParams, ComposedMetricSourceFactory, ComposedMetricType } from '../../public/common';
+import { ComposedMetricSourceFactory, ComposedMetricType } from '../../public/common';
+import { ComposedMetricCollectorFactory } from './composed-metric-collector';
 
 /** The default interval for composed metric calculations. */
 export const COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS = 20 * 1000;

@@ -1,6 +1,6 @@
 import { JsonSchema } from '../../../model';
 import { Constructor } from '../../../util';
-import { PolarisTransformationService } from './../service';
+import { PolarisTransformationService } from './polaris-transformation-service';
 
 /**
  * A PolarisTransformer is used to convert between orchestrator-independent Polaris objects

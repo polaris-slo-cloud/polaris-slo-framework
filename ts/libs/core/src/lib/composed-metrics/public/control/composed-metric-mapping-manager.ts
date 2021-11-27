@@ -1,5 +1,5 @@
-import { ComposedMetricMapping } from '../../../model';
-import { ComposedMetricParams, ComposedMetricType } from '../common';
+import { ComposedMetricMapping, ComposedMetricParams, ObjectKind  } from '../../../model';
+import { ComposedMetricType } from '../common';
 
 /**
  * Used to check for and configure `ComposedMetricMappings` in the orchestrator.
@@ -18,5 +18,14 @@ export interface ComposedMetricMappingManager {
         metricType: ComposedMetricType<V, P>,
         params: P,
     ): Promise<ComposedMetricMapping>;
+
+    /**
+     * Gets the {@link ObjectKind} for the `ComposedMetricMapping` for the specified `metricType`.
+     *
+     * @param metricType The {@link ComposedMetricType}, for which to get the `ObjectKind`.
+     * @param override (optional) Provides the possibility to override one or more `ObjectKind` properties with custom values.
+     * @returns A new {@link ObjectKind} instance.
+     */
+    getMappingObjectKind(metricType: ComposedMetricType<any>, override?: Partial<ObjectKind>): ObjectKind;
 
 }

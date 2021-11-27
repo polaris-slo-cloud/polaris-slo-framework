@@ -1,4 +1,5 @@
-import { ApiObject, OwnerReference } from '../../model';
+import { ApiObject } from './api-object.prm';
+import { OwnerReference } from './owner-reference.prm';
 
 /**
  * Creates a new {@link OwnerReference} to the specified {@link ApiObject}.
@@ -7,7 +8,7 @@ import { ApiObject, OwnerReference } from '../../model';
  *
  * @param owner The object, to which the owner reference should point.
  */
-export function createOwnerReference(owner: ApiObject<any>): OwnerReference {
+ export function createOwnerReference(owner: ApiObject<any>): OwnerReference {
     return new OwnerReference({
         group: owner.objectKind.group,
         version: owner.objectKind.version,

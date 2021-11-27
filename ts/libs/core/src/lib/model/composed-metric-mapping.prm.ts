@@ -1,8 +1,6 @@
-import { pascalCase } from 'change-case';
-import { ComposedMetricError, ComposedMetricParams, ComposedMetricType } from '../composed-metrics';
 import { PolarisType } from '../transformation';
 import { ApiObject } from './api-object.prm';
-import { ObjectKind } from './object-kind.prm';
+import { ComposedMetricParams } from './composed-metric-params.prm';
 import { OwnerReference } from './owner-reference.prm';
 import { SloTarget } from './slo-target.prm';
 
@@ -80,27 +78,6 @@ export class ComposedMetricMapping<T extends ComposedMetricMappingSpec<any, any>
 
     constructor(initData?: Partial<ComposedMetricMapping<T>>) {
         super(initData);
-    }
-
-    /**
-     * Gets the {@link ObjectKind} for the `ComposedMetricMapping` for the specified `metricType`.
-     *
-     * @param metricType The {@link ComposedMetricType}, for which to get the `ObjectKind`.
-     * @param override (optional) Provides the possibility to override one or more `ObjectKind` properties with custom values.
-     * @returns A new {@link ObjectKind} instance.
-     */
-    static getMappingObjectKind(metricType: ComposedMetricType<any>, override?: Partial<ObjectKind>): ObjectKind {
-        const gvkComponents = metricType.metricTypeName.split('/');
-        if (gvkComponents.length !== 3) {
-            throw new ComposedMetricError('Metric type does not conform to the `group/version/kind` naming standard.', metricType);
-        }
-
-        const gvk = new ObjectKind({
-            group: override?.group ?? gvkComponents[0],
-            version: override?.version ?? gvkComponents[1],
-            kind: override?.kind ?? pascalCase(gvkComponents[2]) + 'MetricMapping',
-        });
-        return gvk;
     }
 
     /**

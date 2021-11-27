@@ -27,6 +27,11 @@ export interface IndexById<V> {
 export type Constructor<T> = new(...args: any[]) => T
 
 /**
+ * A factory function that takes as input an object of type `I` and returns an object of type `O`.
+ */
+export type FactoryFn<I, O> = (input: I) => O;
+
+/**
  * A class or constructor function that creates an instance of `T` and initializes it
  * with the optional `initData`.
  */

@@ -1,4 +1,4 @@
-import { FactoryFn } from '../public/microcontroller-factory/microcontroller-factory';
+import { FactoryFn } from '../../util';
 
 /**
  * Type metadata used by the `DefaultMicrocontrollerFactory`.
