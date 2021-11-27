@@ -1,7 +1,28 @@
-import { ComposedMetricMapping, ComposedMetricMappingSpec, ObjectKind, SloTarget } from '../../../model';
-import { executeSafely } from '../../../util';
-import { ComposedMetricComputationConfig, ComposedMetricMappingWatchEventsHandler } from './composed-metrics-manager';
-import { DefaultComposedMetricsManager } from './default-composed-metrics-manager';
+import { ComposedMetricMapping, ComposedMetricMappingSpec, ObjectKind, SloTarget } from '../../../../model';
+import { executeSafely } from '../../../../util';
+import { ComposedMetricComputationConfig, ComposedMetricMappingWatchEventsHandler, ComposedMetricsManager } from '../composed-metrics-manager';
+
+/**
+ * {@link ComposedMetricsManager} extension that allows adding and removing composed metric mappings.
+ */
+export interface ModifiableComposedMetricsManager extends ComposedMetricsManager {
+
+    /**
+     * Adds the specified {@link ComposedMetricMapping} to this manager to periodically compute the metric.
+     *
+     * @param mapping The {@link ComposedMetricMapping} to be added.
+     * @param computationConfig The {@link ComposedMetricComputationConfig} for the mapping's composed metric type.
+     */
+    addComposedMetricMapping(mapping: ComposedMetricMapping, computationConfig: ComposedMetricComputationConfig): void
+
+    /**
+     * Removes the {@link ComposedMetricMapping} with the specified `key`.
+     *
+     * @param key The {@link ComposedMetricMapping} to be deleted (identified through its metadata).
+     */
+    removeComposedMetricMapping(mapping: ComposedMetricMapping): void
+
+}
 
 /**
  * Receives watch events for a {@link ComposedMetricMapping} and communicates them to the `ComposedMetricsManager`.
@@ -20,11 +41,11 @@ export class DefaultComposedMetricMappingWatchEventsHandler implements ComposedM
     /**
      * Creates a new `DefaultComposedMetricMappingWatchEventsHandler`.
      *
-     * @param manager The {@link DefaultComposedMetricsManager} that should be triggered by this watch events handler.
+     * @param manager The {@link ModifiableComposedMetricsManager} that should be triggered by this watch events handler.
      * @param computationConfig The {@link ComposedMetricComputationConfig} that should be supplied with every mapping.
      */
     constructor(
-        private manager: DefaultComposedMetricsManager,
+        private manager: ModifiableComposedMetricsManager,
         private computationConfig: ComposedMetricComputationConfig<any>,
     ) {
         if (computationConfig.supportedSloTargetKinds && computationConfig.supportedSloTargetKinds.length > 0) {

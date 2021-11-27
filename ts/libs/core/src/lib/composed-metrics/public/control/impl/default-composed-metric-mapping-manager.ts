@@ -1,9 +1,9 @@
 import { pascalCase } from 'change-case';
-import { ApiObjectMetadata, ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ObjectKind, OwnerReference } from '../../../model';
-import { OrchestratorClient } from '../../../runtime';
-import { Logger, POLARIS_API, isValueEqual } from '../../../util';
-import { ComposedMetricError, ComposedMetricType } from '../common';
-import { ComposedMetricMappingManager } from './composed-metric-mapping-manager';
+import { ApiObjectMetadata, ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ObjectKind, OwnerReference } from '../../../../model';
+import { OrchestratorClient } from '../../../../runtime';
+import { Logger, POLARIS_API, isValueEqual } from '../../../../util';
+import { ComposedMetricError, ComposedMetricType } from '../../common';
+import { ComposedMetricMappingManager } from '../composed-metric-mapping-manager';
 
 /**
  * Default implementation of the {@link ComposedMetricMappingManager}, usable on all orchestrators.

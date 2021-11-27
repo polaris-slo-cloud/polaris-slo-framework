@@ -1,8 +1,7 @@
 import { PolarisMicrocontrollerFactoryMetadata } from '../../../transformation/internal/polaris-microcontroller-factory-metadata';
 import { PolarisMetadataUtils } from '../../../transformation/internal/reflect-metadata-utils';
 import { Constructor, FactoryFn } from '../../../util';
-import { MicrocontrollerFactoryNotRegisteredError } from './errors';
-import { MicrocontrollerFactory } from './microcontroller-factory';
+import { MicrocontrollerFactory, MicrocontrollerFactoryNotRegisteredError } from '../microcontroller-factory';
 
 export class DefaultMicrocontrollerFactory<S, C> implements MicrocontrollerFactory<S, C> {
 

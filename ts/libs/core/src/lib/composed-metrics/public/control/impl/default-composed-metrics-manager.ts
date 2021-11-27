@@ -1,17 +1,17 @@
 import { interval } from 'rxjs';
 import { finalize, take, takeUntil, timeout } from 'rxjs/operators';
-import { ComposedMetricMapping, ComposedMetricParams, ObjectKind } from '../../../model';
-import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../runtime';
-import { Logger, ObservableStopper, executeSafely } from '../../../util';
-import { ComposedMetricError, ComposedMetricMappingError, ComposedMetricSource } from '../common';
-import { ComposedMetricCollector } from './composed-metric-collector';
+import { ComposedMetricMapping, ComposedMetricParams, ObjectKind } from '../../../../model';
+import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../../runtime';
+import { Logger, ObservableStopper, executeSafely } from '../../../../util';
+import { ComposedMetricError, ComposedMetricMappingError, ComposedMetricSource } from '../../common';
+import { ComposedMetricCollector } from '../composed-metric-collector';
 import {
     COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS,
     ComposedMetricComputationConfig,
     ComposedMetricsManager,
     ComposedMetricsManagerConfig,
-} from './composed-metrics-manager';
-import { DefaultComposedMetricMappingWatchEventsHandler } from './default-composed-metric-mapping-watch-handler';
+} from '../composed-metrics-manager';
+import { DefaultComposedMetricMappingWatchEventsHandler, ModifiableComposedMetricsManager } from './default-composed-metric-mapping-watch-handler';
 
 interface ActiveComposedMetric {
 
@@ -32,7 +32,7 @@ interface ActiveComposedMetric {
  * The default implementation of {@link ComposedMetricsManager} that is usable with all orchestrators
  * and `ComposedMetricCollectors`.
  */
-export class DefaultComposedMetricsManager implements ComposedMetricsManager {
+export class DefaultComposedMetricsManager implements ComposedMetricsManager, ModifiableComposedMetricsManager {
 
     private config: ComposedMetricsManagerConfig;
 

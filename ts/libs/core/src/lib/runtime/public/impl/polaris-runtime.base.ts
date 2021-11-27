@@ -1,4 +1,5 @@
-import { ComposedMetricsManager, DefaultComposedMetricsManager } from '../../../composed-metrics';
+import { ComposedMetricsManager } from '../../../composed-metrics';
+import { DefaultComposedMetricsManager } from '../../../composed-metrics/public/control/impl';
 import {
     DefaultElasticityStrategyManager,
     DefaultElasticityStrategyService,
@@ -11,8 +12,9 @@ import { DefaultPolarisTransformationService } from '../../../transformation/pub
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
 import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
-import { DefaultWatchManager, ObjectKindWatcher, WatchManager } from '../watch';
-import { PolarisRuntime } from './polaris-runtime';
+import { PolarisRuntime } from '../polaris-runtime';
+import { ObjectKindWatcher, WatchManager } from '../watch';
+import { DefaultWatchManager } from './default-watch-manager';
 
 /**
  * `PolarisRuntimeBase` can be used as a superclass for orchestrator-specific {@link PolarisRuntime} implementations.
