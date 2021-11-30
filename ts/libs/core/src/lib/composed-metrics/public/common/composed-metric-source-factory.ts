@@ -1,7 +1,6 @@
-import { ComposedMetricParams } from '../../../model';
+import { ComposedMetricParams, ComposedMetricType } from '../../../model';
 import { PolarisRuntime } from '../../../runtime';
 import { ComposedMetricSource } from './composed-metric-source';
-import { ComposedMetricType } from './composed-metric-type';
 
 /**
  * A `ComposedMetricSourceFactory` is used to create a {@link ComposedMetricSource} instance that is scoped

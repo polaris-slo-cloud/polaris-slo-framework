@@ -1,5 +1,5 @@
-import { ComposedMetricParams, ObjectKind } from '../../../model';
-import { ComposedMetricSourceFactory, ComposedMetricType } from '../../public/common';
+import { ComposedMetricParams, ComposedMetricType, ObjectKind } from '../../../model';
+import { ComposedMetricSourceFactory } from '../../public/common';
 import { ComposedMetricCollectorFactory } from './composed-metric-collector';
 
 /** The default interval for composed metric calculations. */

@@ -1,6 +1,4 @@
-
-import { ComposedMetricMapping, ComposedMetricParams } from '../../../model';
-import { ComposedMetricType } from './composed-metric-type';
+import { ComposedMetricMapping, ComposedMetricParams, ComposedMetricType } from '../../../model';
 
 /**
  * Error thrown by composed metric implementations.

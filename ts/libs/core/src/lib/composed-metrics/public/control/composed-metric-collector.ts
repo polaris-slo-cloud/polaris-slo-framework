@@ -1,6 +1,5 @@
-import { ComposedMetricParams } from '../../../model';
+import { ComposedMetricParams, ComposedMetricType } from '../../../model';
 import { Sample } from '../../../raw-metrics-query';
-import { ComposedMetricType } from '../common';
 
 /**
  * Used to collect samples of a composed metric, which are then sent to a DB or cached for

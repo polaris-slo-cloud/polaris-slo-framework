@@ -1,8 +1,14 @@
-import { pascalCase } from 'change-case';
-import { ApiObjectMetadata, ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams, ObjectKind, OwnerReference } from '../../../../model';
+import {
+    ApiObjectMetadata,
+    ComposedMetricMapping,
+    ComposedMetricMappingSpec,
+    ComposedMetricParams,
+    ComposedMetricType,
+    ObjectKind,
+    OwnerReference,
+} from '../../../../model';
 import { OrchestratorClient } from '../../../../runtime';
 import { Logger, POLARIS_API, isValueEqual } from '../../../../util';
-import { ComposedMetricError, ComposedMetricType } from '../../common';
 import { ComposedMetricMappingManager } from '../composed-metric-mapping-manager';
 
 /**
@@ -16,7 +22,7 @@ export class DefaultComposedMetricMappingManager implements ComposedMetricMappin
         metricType: ComposedMetricType<V, P>,
         params: P,
     ): Promise<ComposedMetricMapping> {
-        const kind = this.getMappingObjectKind(metricType);
+        const kind = ComposedMetricMapping.getMappingObjectKind(metricType);
 
         let mapping = await this.fetchMetricMapping(kind, params);
         if (!mapping) {
@@ -30,20 +36,6 @@ export class DefaultComposedMetricMappingManager implements ComposedMetricMappin
         }
 
         return mapping;
-    }
-
-    getMappingObjectKind(metricType: ComposedMetricType<any>, override?: Partial<ObjectKind>): ObjectKind {
-        const gvkComponents = metricType.metricTypeName.split('/');
-        if (gvkComponents.length !== 3) {
-            throw new ComposedMetricError('Metric type does not conform to the `group/version/kind` naming standard.', metricType);
-        }
-
-        const gvk = new ObjectKind({
-            group: override?.group ?? gvkComponents[0],
-            version: override?.version ?? gvkComponents[1],
-            kind: override?.kind ?? pascalCase(gvkComponents[2]) + 'MetricMapping',
-        });
-        return gvk;
     }
 
     private async fetchMetricMapping(kind: ObjectKind, params: ComposedMetricParams): Promise<ComposedMetricMapping | undefined> {
