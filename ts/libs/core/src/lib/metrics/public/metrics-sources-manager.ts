@@ -1,6 +1,6 @@
-import { ComposedMetricMappingManager, ComposedMetricSourceFactory, GenericComposedMetricSourceFactory } from '../../../composed-metrics';
-import { ComposedMetricType, ObjectKind } from '../../../model';
-import { TimeSeriesSource } from '../../../raw-metrics-query/public/time-series';
+import { ComposedMetricMappingManager, ComposedMetricSourceFactory, GenericComposedMetricSourceFactory } from '../../composed-metrics';
+import { ComposedMetricType, ObjectKind } from '../../model';
+import { TimeSeriesSource } from '../../raw-metrics-query/public/time-series';
 import { MetricsSource } from './metrics-source';
 
 /**

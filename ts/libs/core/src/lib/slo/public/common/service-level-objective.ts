@@ -1,6 +1,6 @@
+import { MetricsSource } from '../../../metrics';
 import { SloMapping, SloTarget } from '../../../model';
 import { OrchestratorGateway } from '../../../orchestrator';
-import { MetricsSource } from '../../../runtime';
 import { ObservableOrPromise } from '../../../util';
 import { SloOutput } from './slo-output';
 

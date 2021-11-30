@@ -2,8 +2,8 @@ import { ComposedMetricMappingManager, ComposedMetricSource, ComposedMetricSourc
 import { DefaultComposedMetricMappingManager } from '../../../composed-metrics/public/control/impl';
 import { ComposedMetricParams, ComposedMetricType, ObjectKind } from '../../../model';
 import { TimeSeriesSource } from '../../../raw-metrics-query/public';
-import { MetricsSourcesManager } from '../../public/metrics-source';
-import { PolarisRuntime } from '../polaris-runtime';
+import { PolarisRuntime } from '../../../runtime';
+import { MetricsSourcesManager } from '../metrics-sources-manager';
 
 /** Stores a map of factories for one `ComposedMetricSourceType`. */
 interface ComposedMetricTypeFactories {
