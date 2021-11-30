@@ -4,7 +4,7 @@ import {
     Logger,
     MetricsSource,
     ObservableOrPromise,
-    PolarisRuntime,
+    OrchestratorGateway,
     ServiceLevelObjective,
     SloCompliance,
     SloMapping,
@@ -21,7 +21,7 @@ export class CpuUsageSlo implements ServiceLevelObjective<CpuUsageSloConfig, Slo
     configure(
         sloMapping: SloMapping<CpuUsageSloConfig, SloCompliance>,
         metricsSource: MetricsSource,
-        polarisRuntime: PolarisRuntime,
+        orchestrator: OrchestratorGateway,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

@@ -1,7 +1,7 @@
 import { ComposedMetricsManager } from '../../../composed-metrics/public/control/composed-metrics-manager';
 import { ElasticityStrategyManager } from '../../../elasticity/public/control/elasticity-strategy-manager';
 import { ElasticityStrategyService } from '../../../elasticity/public/service/elasticity-strategy-service';
-import { ObjectKindWatcher, OrchestratorClient, WatchManager } from '../../../orchestrator';
+import { OrchestratorGateway } from '../../../orchestrator';
 import { SloControlLoop } from '../../../slo/public/control/slo-control-loop';
 import { SloEvaluator } from '../../../slo/public/control/slo-evaluator';
 import { PolarisTransformationServiceManager } from '../../../transformation/public/common/polaris-transformation-service-manager';
@@ -43,7 +43,7 @@ export function initPolarisRuntime(runtime: PolarisRuntime): void {
  *
  * Use `initPolarisRuntime()` to set the instance of the `PolarisRuntime` singleton.
  */
-export interface PolarisRuntime {
+export interface PolarisRuntime extends OrchestratorGateway {
 
     /**
      * The `PolarisTransformationService` that should be used for converting between orchestrator-independent Polaris objects
@@ -75,21 +75,6 @@ export interface PolarisRuntime {
      * Creates an `ElasticityStrategyManager` instance.
      */
     createElasticityStrategyManager(): ElasticityStrategyManager;
-
-    /**
-     * Creates an `ObjectKindWatcher` specific to this runtime implementation.
-     */
-    createObjectKindWatcher(): ObjectKindWatcher;
-
-    /**
-     * Creates a new `WatchManager` for watching multiple `ObjectKinds`.
-     */
-    createWatchManager(): WatchManager;
-
-    /**
-     * Creates a new `OrchestratorClient` for performing CRUD operations on orchestrator objects.
-     */
-    createOrchestratorClient(): OrchestratorClient;
 
     /**
      * Creates a new `ComposedMetricsManager` for computing composed metrics in a dedicated controller.

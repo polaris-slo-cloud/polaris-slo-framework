@@ -1,5 +1,6 @@
 import { SloMapping, SloTarget } from '../../../model';
-import { MetricsSource, PolarisRuntime } from '../../../runtime';
+import { OrchestratorGateway } from '../../../orchestrator';
+import { MetricsSource } from '../../../runtime';
 import { ObservableOrPromise } from '../../../util';
 import { SloOutput } from './slo-output';
 
@@ -22,10 +23,10 @@ export interface ServiceLevelObjective<C, O, T extends SloTarget = SloTarget> {
      *
      * @param sloMapping The `SloMapping` that describes the configuration for this instance.
      * @param metricsSource The `MetricsSource` that should be used for querying the observed metrics.
-     * @param polarisRuntime The `PolarisRuntime` instance.
+     * @param orchestrator The `OrchestratorGateway` instance that allows creating orchestrator clients.
      * @returns An observable that emits and completes or a Promise that resolves when the SLO has finished its configuration.
      */
-    configure(sloMapping: SloMapping<C, O, T>, metricsSource: MetricsSource, polarisRuntime: PolarisRuntime): ObservableOrPromise<void>;
+    configure(sloMapping: SloMapping<C, O, T>, metricsSource: MetricsSource, orchestrator: OrchestratorGateway): ObservableOrPromise<void>;
 
     /**
      * Evaluates the SLO on the current system state.
