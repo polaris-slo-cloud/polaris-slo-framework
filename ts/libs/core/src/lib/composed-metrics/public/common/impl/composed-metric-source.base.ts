@@ -1,8 +1,8 @@
 import { Observable, interval } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { Sample } from '../../../raw-metrics-query/public';
-import { PolarisRuntime } from '../../../runtime';
-import { ComposedMetricSource } from './composed-metric-source';
+import { Sample } from '../../../../raw-metrics-query/public';
+import { PolarisRuntime } from '../../../../runtime';
+import { ComposedMetricSource } from '../composed-metric-source';
 
 const POLLING_INTERVAL_MSEC = 10000;
 
