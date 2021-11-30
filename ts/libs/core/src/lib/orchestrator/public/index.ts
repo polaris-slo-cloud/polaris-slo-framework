@@ -1,4 +1,5 @@
 export * from './error';
+export * from './microcontroller-factory';
 export * from './object-kind-watcher';
 export * from './orchestrator-client';
 export * from './orchestrator-gateway';

@@ -1,7 +1,7 @@
 import { of as observableOf, throwError } from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators';
 import { SloMapping, SloMappingSpec } from '../../../../model';
-import { MicrocontrollerFactory } from '../../../../runtime/public/microcontroller-factory';
+import { MicrocontrollerFactory } from '../../../../orchestrator';
 import { getPolarisRuntime } from '../../../../runtime/public/polaris-runtime';
 import { IndexByKey, Logger, ObservableStopper, executeSafely } from '../../../../util';
 import { ServiceLevelObjective } from '../../common';

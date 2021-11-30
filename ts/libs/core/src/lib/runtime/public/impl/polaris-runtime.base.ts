@@ -6,14 +6,13 @@ import { DefaultElasticityStrategyService } from '../../../elasticity/public/ser
 import { MetricsSourcesManager } from '../../../metrics';
 import { DefaultMetricsSourcesManager } from '../../../metrics/public/impl';
 import { ObjectKindWatcher, OrchestratorClient, WatchManager } from '../../../orchestrator';
-import { DefaultWatchManager } from '../../../orchestrator/public/impl';
+import { DefaultMicrocontrollerFactory, DefaultWatchManager } from '../../../orchestrator/public/impl';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { DefaultSloControlLoop } from '../../../slo/public/control/impl';
 import { PropertyTransformer } from '../../../transformation/internal/property-transformer';
 import { PolarisTransformationServiceManager } from '../../../transformation/public/common';
 import { DefaultPolarisTransformationService } from '../../../transformation/public/impl';
 import { PolarisRuntime } from '../polaris-runtime';
-import { DefaultMicrocontrollerFactory } from './default-microcontroller-factory';
 
 /**
  * `PolarisRuntimeBase` can be used as a superclass for orchestrator-specific {@link PolarisRuntime} implementations.

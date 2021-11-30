@@ -1,11 +1,9 @@
-import { ComposedMetricsManager } from '../../../composed-metrics/public/control/composed-metrics-manager';
-import { ElasticityStrategyManager } from '../../../elasticity/public/control/elasticity-strategy-manager';
-import { ElasticityStrategyService } from '../../../elasticity/public/service/elasticity-strategy-service';
-import { MetricsSourcesManager } from '../../../metrics';
-import { OrchestratorGateway } from '../../../orchestrator';
-import { SloControlLoop } from '../../../slo/public/control/slo-control-loop';
-import { SloEvaluator } from '../../../slo/public/control/slo-evaluator';
-import { PolarisTransformationServiceManager } from '../../../transformation/public/common/polaris-transformation-service-manager';
+import { ComposedMetricsManager } from '../../composed-metrics';
+import { ElasticityStrategyManager, ElasticityStrategyService } from '../../elasticity';
+import { MetricsSourcesManager } from '../../metrics';
+import { OrchestratorGateway } from '../../orchestrator';
+import { SloControlLoop, SloEvaluator } from '../../slo';
+import { PolarisTransformationServiceManager } from '../../transformation';
 
 let polarisRuntimeSingleton: PolarisRuntime;
 
