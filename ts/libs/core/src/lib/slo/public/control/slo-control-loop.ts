@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { SloMapping, SloMappingSpec } from '../../../model';
-import { MicrocontrollerFactory } from '../../../runtime/public/microcontroller-factory';
-import { WatchEventsHandler } from '../../../runtime/public/watch';
+import { WatchEventsHandler } from '../../../orchestrator';
+import { MicrocontrollerFactory } from '../../../runtime';
 import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloEvaluator } from './slo-evaluator';

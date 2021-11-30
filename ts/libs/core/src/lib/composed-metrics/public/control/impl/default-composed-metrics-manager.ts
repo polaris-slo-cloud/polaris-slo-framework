@@ -1,7 +1,8 @@
 import { interval } from 'rxjs';
 import { finalize, take, takeUntil, timeout } from 'rxjs/operators';
 import { ComposedMetricMapping, ComposedMetricParams, ObjectKind } from '../../../../model';
-import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../../runtime';
+import { ObjectKindWatchHandlerPair, WatchManager } from '../../../../orchestrator';
+import { PolarisRuntime } from '../../../../runtime';
 import { Logger, ObservableStopper, executeSafely } from '../../../../util';
 import { ComposedMetricError, ComposedMetricMappingError, ComposedMetricSource } from '../../common';
 import { ComposedMetricCollector } from '../composed-metric-collector';

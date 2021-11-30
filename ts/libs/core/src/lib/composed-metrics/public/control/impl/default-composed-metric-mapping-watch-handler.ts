@@ -1,5 +1,5 @@
 import { ComposedMetricMapping, ComposedMetricMappingSpec, ObjectKind, SloTarget } from '../../../../model';
-import { WatchEventsHandler } from '../../../../runtime';
+import { WatchEventsHandler } from '../../../../orchestrator';
 import { executeSafely } from '../../../../util';
 import { ComposedMetricComputationConfig, ComposedMetricsManager } from '../composed-metrics-manager';
 

@@ -1,4 +1,4 @@
-import { ApiObject, NamespacedObjectReference, Scale } from '../../../model';
+import { ApiObject, NamespacedObjectReference, Scale } from '../../model';
 
 /**
  * A client for performing CRUD operations on single `ApiObjects` on the orchestrator.

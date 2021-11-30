@@ -1,5 +1,6 @@
 import { ObjectKind, SloTarget } from '../../../../model';
-import { ObjectKindWatchHandlerPair, PolarisRuntime, WatchManager } from '../../../../runtime';
+import { ObjectKindWatchHandlerPair, WatchManager } from '../../../../orchestrator';
+import { PolarisRuntime } from '../../../../runtime';
 import { IndexByKey, executeSafely } from '../../../../util';
 import {
     ELASTICITY_STRATEGY_DEFAULT_TIMEOUT_MS,

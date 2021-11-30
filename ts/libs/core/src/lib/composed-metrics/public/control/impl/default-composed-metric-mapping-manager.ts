@@ -7,7 +7,7 @@ import {
     ObjectKind,
     OwnerReference,
 } from '../../../../model';
-import { OrchestratorClient } from '../../../../runtime';
+import { OrchestratorClient } from '../../../../orchestrator';
 import { Logger, POLARIS_API, isValueEqual } from '../../../../util';
 import { ComposedMetricMappingManager } from '../composed-metric-mapping-manager';
 

@@ -1,4 +1,4 @@
-import { ObjectKind } from '../../../model';
+import { ObjectKind } from '../../model';
 import { ObjectKindWatcher } from './object-kind-watcher';
 import { WatchEventsHandler } from './watch-events-handler';
 

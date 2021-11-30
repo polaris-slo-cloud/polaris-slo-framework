@@ -1,4 +1,4 @@
-import { ApiObject } from '../../../model';
+import { ApiObject } from '../../model';
 
 /**
  * Handles events that occur when watching an `ObjectKind` with an `ObjectKindWatcher`.

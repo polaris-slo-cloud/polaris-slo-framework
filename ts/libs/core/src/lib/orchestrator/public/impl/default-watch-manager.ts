@@ -1,6 +1,9 @@
 import { ApiObject, ObjectKind } from '../../../model';
-import { PolarisRuntime } from '../polaris-runtime';
-import { ObjectKindWatchHandlerPair, ObjectKindWatcher, ObjectKindsAlreadyWatchedError, WatchEventsHandler, WatchManager } from '../watch';
+import { PolarisRuntime } from '../../../runtime';
+import { ObjectKindsAlreadyWatchedError } from '../error';
+import { ObjectKindWatcher } from '../object-kind-watcher';
+import { WatchEventsHandler } from '../watch-events-handler';
+import { ObjectKindWatchHandlerPair, WatchManager } from '../watch-manager';
 
 export class DefaultWatchManager implements WatchManager {
 
