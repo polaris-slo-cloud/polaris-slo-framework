@@ -8,11 +8,11 @@ import { DefaultSloControlLoop } from '../../../slo/public/control/impl';
 import { PropertyTransformer } from '../../../transformation/internal/property-transformer';
 import { PolarisTransformationServiceManager } from '../../../transformation/public/common';
 import { DefaultPolarisTransformationService } from '../../../transformation/public/impl';
-import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
 import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
 import { PolarisRuntime } from '../polaris-runtime';
 import { ObjectKindWatcher, WatchManager } from '../watch';
+import { DefaultMetricsSourcesManager } from './default-metrics-sources-manager';
 import { DefaultMicrocontrollerFactory } from './default-microcontroller-factory';
 import { DefaultWatchManager } from './default-watch-manager';
 
