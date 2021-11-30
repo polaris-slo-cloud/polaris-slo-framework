@@ -1,5 +1,5 @@
-import { ObjectKind } from '../../../model';
 import { Constructor } from '../../../util';
+import { ObjectKind } from './object-kind.prm';
 
 export class PolarisTransformationError extends Error {}
 

@@ -1,7 +1,6 @@
-import { ObjectKind } from '../../../model';
 import { IndexByKey, JsonSchema,  PolarisConstructor, cloneDeepWithoutExcluded } from '../../../util';
 import { PolarisMetadataUtils, PolarisTransformationMetadata } from '../../internal';
-import { PolarisTransformationConfig, PolarisTransformationServiceManager, PolarisTransformer, UnknownObjectKindError } from '../common';
+import { ObjectKind, PolarisTransformationConfig, PolarisTransformationServiceManager, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from './transformers';
 
 /**

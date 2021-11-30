@@ -1,5 +1,5 @@
-import { ObjectKind } from '../../../model';
 import { PolarisConstructor } from '../../../util';
+import { ObjectKind } from './object-kind.prm';
 import { PolarisTransformationConfig } from './polaris-transformation-config';
 import { PolarisTransformationService } from './polaris-transformation-service';
 import { PolarisTransformer } from './polaris-transformer';

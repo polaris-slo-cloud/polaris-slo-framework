@@ -1,5 +1,5 @@
-import { ObjectKind } from '../../../model/object-kind.prm';
 import { JsonSchema, PolarisConstructor } from '../../../util';
+import { ObjectKind } from './object-kind.prm';
 
 /**
  * Implementations of this service should be used for converting between orchestrator-independent Polaris objects
