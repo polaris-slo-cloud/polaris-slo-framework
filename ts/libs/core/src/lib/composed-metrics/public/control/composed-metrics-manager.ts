@@ -1,5 +1,4 @@
-import { ComposedMetricMapping, ComposedMetricParams, ObjectKind } from '../../../model';
-import { WatchEventsHandler } from '../../../runtime';
+import { ComposedMetricParams, ObjectKind } from '../../../model';
 import { ComposedMetricSourceFactory, ComposedMetricType } from '../../public/common';
 import { ComposedMetricCollectorFactory } from './composed-metric-collector';
 
@@ -59,11 +58,6 @@ export interface ComposedMetricsManagerConfig {
     evaluationIntervalMs?: number;
 
 }
-
-/**
- * Concrete `WatchEventsHandler` subinterface for `ComposedMetricMappings`.
- */
- export interface ComposedMetricMappingWatchEventsHandler extends WatchEventsHandler<ComposedMetricMapping> {}
 
 /**
  * Watches `ComposedMetricMappings` and regularly computes the composed metric for each of them to expose them to a collector.

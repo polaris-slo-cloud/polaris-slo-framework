@@ -1,6 +1,5 @@
-import { SloControlLoop } from '../control';
-import { ServiceLevelObjective } from './service-level-objective';
-
+import { ServiceLevelObjective } from '../common';
+import { SloControlLoop } from './slo-control-loop';
 
 /**
  * This type of error is thrown by the `SloControlLoop`.

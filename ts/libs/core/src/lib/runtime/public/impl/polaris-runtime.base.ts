@@ -5,6 +5,7 @@ import { DefaultElasticityStrategyManager } from '../../../elasticity/public/con
 import { DefaultElasticityStrategyService } from '../../../elasticity/public/service/impl/default-elasticity-strategy.service';
 import { SloControlLoop, SloEvaluator } from '../../../slo';
 import { DefaultSloControlLoop } from '../../../slo/public/control/impl';
+import { PropertyTransformer } from '../../../transformation/internal/property-transformer';
 import { PolarisTransformationServiceManager } from '../../../transformation/public/common';
 import { DefaultPolarisTransformationService } from '../../../transformation/public/impl';
 import { DefaultMetricsSourcesManager } from '../../internal/metrics-source';
@@ -12,6 +13,7 @@ import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
 import { PolarisRuntime } from '../polaris-runtime';
 import { ObjectKindWatcher, WatchManager } from '../watch';
+import { DefaultMicrocontrollerFactory } from './default-microcontroller-factory';
 import { DefaultWatchManager } from './default-watch-manager';
 
 /**
@@ -27,6 +29,7 @@ export abstract class PolarisRuntimeBase implements PolarisRuntime {
 
     constructor() {
         this.elasticityStrategyService = new DefaultElasticityStrategyService(this.transformer);
+        PropertyTransformer.initPropertyTransformer(() => this.transformer);
     }
 
     abstract createSloEvaluator(): SloEvaluator;
@@ -36,7 +39,7 @@ export abstract class PolarisRuntimeBase implements PolarisRuntime {
     abstract createOrchestratorClient(): OrchestratorClient;
 
     createSloControlLoop(): SloControlLoop {
-        return new DefaultSloControlLoop();
+        return new DefaultSloControlLoop(new DefaultMicrocontrollerFactory());
     }
 
     createElasticityStrategyManager(): ElasticityStrategyManager {

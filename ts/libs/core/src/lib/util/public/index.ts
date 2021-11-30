@@ -1,5 +1,6 @@
 export * from './api-constants';
 export * from './error-handling';
+export * from './json-schema';
 export * from './logger';
 export * from './model-utils';
 export * from './object-utils';

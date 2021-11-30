@@ -1,5 +1,4 @@
-import { JsonSchema } from '../../../model';
-import { Constructor } from '../../../util';
+import { Constructor, JsonSchema } from '../../../util';
 import { PolarisTransformationService } from './polaris-transformation-service';
 
 /**

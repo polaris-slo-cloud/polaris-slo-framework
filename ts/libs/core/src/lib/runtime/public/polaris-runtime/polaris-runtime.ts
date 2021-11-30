@@ -1,7 +1,9 @@
-import { ComposedMetricsManager } from '../../../composed-metrics';
-import { ElasticityStrategyManager, ElasticityStrategyService } from '../../../elasticity';
-import { SloControlLoop, SloEvaluator } from '../../../slo';
-import { PolarisTransformationServiceManager } from '../../../transformation';
+import { ComposedMetricsManager } from '../../../composed-metrics/public/control/composed-metrics-manager';
+import { ElasticityStrategyManager } from '../../../elasticity/public/control/elasticity-strategy-manager';
+import { ElasticityStrategyService } from '../../../elasticity/public/service/elasticity-strategy-service';
+import { SloControlLoop } from '../../../slo/public/control/slo-control-loop';
+import { SloEvaluator } from '../../../slo/public/control/slo-evaluator';
+import { PolarisTransformationServiceManager } from '../../../transformation/public/common/polaris-transformation-service-manager';
 import { MetricsSourcesManager } from '../metrics-source';
 import { OrchestratorClient } from '../orchestrator-client';
 import { ObjectKindWatcher, WatchManager } from '../watch';

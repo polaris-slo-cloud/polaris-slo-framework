@@ -1,11 +1,11 @@
 import { of as observableOf, throwError } from 'rxjs';
 import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/operators';
 import { SloMapping, SloMappingSpec } from '../../../../model';
-import { DefaultMicrocontrollerFactory } from '../../../../runtime/public/impl';
 import { MicrocontrollerFactory } from '../../../../runtime/public/microcontroller-factory';
 import { getPolarisRuntime } from '../../../../runtime/public/polaris-runtime';
 import { IndexByKey, Logger, ObservableStopper, executeSafely } from '../../../../util';
-import { ServiceLevelObjective, SloControlLoopError, SloEvaluationError } from '../../common';
+import { ServiceLevelObjective } from '../../common';
+import { SloControlLoopError, SloEvaluationError } from '../errors';
 import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from '../slo-control-loop';
 import { DefaultSloWatchEventsHandler } from './default-slo-watch-events-handler';
 
@@ -30,8 +30,7 @@ interface RegisteredSlo {
  */
 export class DefaultSloControlLoop implements SloControlLoop {
 
-    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any>> =
-        new DefaultMicrocontrollerFactory();
+    readonly microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any>>;
 
     private stopper: ObservableStopper;
 
@@ -49,6 +48,10 @@ export class DefaultSloControlLoop implements SloControlLoop {
 
     get watchHandler(): SloWatchEventsHandler {
         return this._watchHandler;
+    }
+
+    constructor(microcontrollerFactory: MicrocontrollerFactory<SloMappingSpec<any, any, any>, ServiceLevelObjective<any, any>>) {
+        this.microcontrollerFactory = microcontrollerFactory;
     }
 
     addSlo(key: string, sloMapping: SloMapping<any, any>): Promise<ServiceLevelObjective<any, any>> {

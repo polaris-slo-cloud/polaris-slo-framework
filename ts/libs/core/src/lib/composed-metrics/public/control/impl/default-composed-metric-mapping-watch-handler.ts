@@ -1,6 +1,13 @@
 import { ComposedMetricMapping, ComposedMetricMappingSpec, ObjectKind, SloTarget } from '../../../../model';
+import { WatchEventsHandler } from '../../../../runtime';
 import { executeSafely } from '../../../../util';
-import { ComposedMetricComputationConfig, ComposedMetricMappingWatchEventsHandler, ComposedMetricsManager } from '../composed-metrics-manager';
+import { ComposedMetricComputationConfig, ComposedMetricsManager } from '../composed-metrics-manager';
+
+/**
+ * Concrete `WatchEventsHandler` subinterface for `ComposedMetricMappings`.
+ */
+export interface ComposedMetricMappingWatchEventsHandler extends WatchEventsHandler<ComposedMetricMapping> {}
+
 
 /**
  * {@link ComposedMetricsManager} extension that allows adding and removing composed metric mappings.
