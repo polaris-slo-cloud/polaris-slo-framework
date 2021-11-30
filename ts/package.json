@@ -50,9 +50,9 @@
     ]
   },
   "madge": {
-		"tsConfig": "tsconfig.base.json",
+    "tsConfig": "tsconfig.base.json",
     "fileExtensions": [ "ts" ]
-	},
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.2.11",
