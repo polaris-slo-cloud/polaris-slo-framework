@@ -127,7 +127,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager, Mo
         const activeMetric: ActiveComposedMetric = {
             mapping,
             metricParams,
-            metricSource: computationConfig.metricSourceFactory.createSource(metricParams, this.polarisRuntime),
+            metricSource: computationConfig.metricSourceFactory.createSource(metricParams, this.polarisRuntime.metricsSourcesManager, this.polarisRuntime),
             collectors: this.config.collectorFactories.map(factory => factory.createCollector(computationConfig.metricType, metricParams)),
             stopper: new ObservableStopper(),
         };

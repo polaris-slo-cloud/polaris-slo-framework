@@ -1,6 +1,10 @@
-import { ComposedMetricSource } from '../../composed-metrics';
+import { ComposedMetricSource } from '../../composed-metrics/public/common/composed-metric-source';
 import { ComposedMetricParams, ComposedMetricType } from '../../model';
 import { TimeSeriesSource } from '../../raw-metrics-query';
+
+// We import ComposedMetricsSource from its .ts file directly, instead through the composed-metrics/index.ts file
+// to avoid a circular dependency that would be created by this import in combination with an import by
+// the ComposedMetricSourceFactory. Unfortunately, I could not find a better way to avoid this at the moment.
 
 /**
  * Encapsulates a source for obtaining metrics.

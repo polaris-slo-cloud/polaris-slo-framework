@@ -1,5 +1,5 @@
 import { TotalCost, TotalCostMetric } from '@polaris-sloc/common-mappings';
-import { ComposedMetricParams, ComposedMetricSource, ComposedMetricSourceFactory, PolarisRuntime } from '@polaris-sloc/core';
+import { ComposedMetricParams, ComposedMetricSource, ComposedMetricSourceFactory, MetricsSource, OrchestratorGateway } from '@polaris-sloc/core';
 import { KubeCostMetricSource } from './kube-cost-metric-source';
 
 /**
@@ -13,8 +13,8 @@ export class KubeCostMetricSourceFactory implements ComposedMetricSourceFactory<
 
     readonly metricSourceName = `${TotalCostMetric.instance.metricTypeName}/kube-cost`;
 
-    createSource(params: ComposedMetricParams, polarisRuntime: PolarisRuntime): ComposedMetricSource<TotalCost> {
-        return new KubeCostMetricSource(params, polarisRuntime);
+    createSource(params: ComposedMetricParams, metricsSource: MetricsSource, orchestrator: OrchestratorGateway): ComposedMetricSource<TotalCost> {
+        return new KubeCostMetricSource(params, metricsSource, orchestrator);
     }
 
 }

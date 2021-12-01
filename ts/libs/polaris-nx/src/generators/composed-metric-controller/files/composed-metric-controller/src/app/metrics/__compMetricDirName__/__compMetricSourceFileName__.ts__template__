@@ -1,4 +1,4 @@
-import { ComposedMetricSourceBase, PolarisRuntime, Sample } from '@polaris-sloc/core';
+import { ComposedMetricSourceBase, MetricsSource, OrchestratorGateway, Sample } from '@polaris-sloc/core';
 import { <%= compMetricValueType %>, <%= compMetricParams %> } from '<%= compMetricTypePkg %>';
 import { Observable } from 'rxjs';
 
@@ -14,8 +14,8 @@ import { Observable } from 'rxjs';
  */
 export class <%= compMetricSource %> extends ComposedMetricSourceBase<<%= compMetricValueType %>> {
 
-    constructor(private params: <%= compMetricParams %>, polarisRuntime: PolarisRuntime) {
-        super(polarisRuntime);
+    constructor(private params: <%= compMetricParams %>, metricsSource: MetricsSource, orchestrator: OrchestratorGateway) {
+        super(metricsSource, orchestrator);
     }
 
     getValueStream(): Observable<Sample<<%= compMetricValueType %>>> {

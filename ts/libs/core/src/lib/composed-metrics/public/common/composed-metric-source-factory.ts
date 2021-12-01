@@ -1,6 +1,11 @@
+import { MetricsSource } from '../../../metrics/public/metrics-source';
 import { ComposedMetricParams, ComposedMetricType } from '../../../model';
-import { PolarisRuntime } from '../../../runtime';
+import { OrchestratorGateway } from '../../../orchestrator';
 import { ComposedMetricSource } from './composed-metric-source';
+
+// We import MetricsSource from its .ts file directly, instead through the metrics/index.ts file
+// to avoid a circular dependency that would be created by this import in combination with an import by MetricsSource.
+// Unfortunately, I could not find a better way to avoid this at the moment.
 
 /**
  * A `ComposedMetricSourceFactory` is used to create a {@link ComposedMetricSource} instance that is scoped
@@ -35,10 +40,11 @@ export interface ComposedMetricSourceFactory<M extends ComposedMetricType<V, P>,
      * Creates a new {@link ComposedMetricSource} for the specified `params`.
      *
      * @param params Parameters to configure the metric source.
-     * @param polarisRuntime The {@link PolarisRuntime} instance.
+     * @param metricsSource The `MetricsSource` that can be used for querying lower level metrics.
+     * @param orchestrator The `OrchestratorGateway` instance that allows creating orchestrator clients.
      * @returns A new {@link ComposedMetricSource}.
      */
-    createSource(params: P, polarisRuntime: PolarisRuntime): ComposedMetricSource<V>;
+    createSource(params: P, metricsSource: MetricsSource, orchestrator: OrchestratorGateway): ComposedMetricSource<V>;
 
 }
 
@@ -62,11 +68,12 @@ export interface GenericComposedMetricSourceFactory {
      *
      * @param metricType The {@link ComposedMetricType} that should be supplied by the created source.
      * @param params Parameters to configure the metric source.
-     * @param polarisRuntime The {@link PolarisRuntime} instance.
+     * @param metricsSource The `MetricsSource` that can be used for querying lower level metrics.
+     * @param orchestrator The `OrchestratorGateway` instance that allows creating orchestrator clients.
      * @returns A new {@link ComposedMetricSource}.
      */
     createSource<M extends ComposedMetricType<V, P>, V = any, P extends ComposedMetricParams = ComposedMetricParams>(
-        metricType: M, params: P, polarisRuntime: PolarisRuntime
+        metricType: M, params: P, metricsSource: MetricsSource, orchestrator: OrchestratorGateway
     ): ComposedMetricSource<V>;
 
 }

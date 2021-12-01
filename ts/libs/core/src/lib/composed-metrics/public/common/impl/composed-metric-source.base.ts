@@ -1,7 +1,8 @@
 import { Observable, interval } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { Sample } from '../../../../raw-metrics-query/public';
-import { PolarisRuntime } from '../../../../runtime';
+import { MetricsSource } from '../../../../metrics';
+import { OrchestratorGateway } from '../../../../orchestrator';
+import { Sample } from '../../../../raw-metrics-query';
 import { ComposedMetricSource } from '../composed-metric-source';
 
 const POLLING_INTERVAL_MSEC = 10000;
@@ -13,7 +14,7 @@ const POLLING_INTERVAL_MSEC = 10000;
  */
 export abstract class ComposedMetricSourceBase<V> implements ComposedMetricSource<V> {
 
-    constructor(protected polarisRuntime: PolarisRuntime) {}
+    constructor(protected metricsSource: MetricsSource, protected orchestrator: OrchestratorGateway) {}
 
     abstract getValueStream(): Observable<Sample<V>>;
 

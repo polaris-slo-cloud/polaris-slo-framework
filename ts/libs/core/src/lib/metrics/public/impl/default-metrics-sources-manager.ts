@@ -1,7 +1,7 @@
 import { ComposedMetricMappingManager, ComposedMetricSource, ComposedMetricSourceFactory, GenericComposedMetricSourceFactory } from '../../../composed-metrics';
 import { DefaultComposedMetricMappingManager } from '../../../composed-metrics/public/control/impl';
 import { ComposedMetricParams, ComposedMetricType, ObjectKind } from '../../../model';
-import { TimeSeriesSource } from '../../../raw-metrics-query/public';
+import { TimeSeriesSource } from '../../../raw-metrics-query';
 import { PolarisRuntime } from '../../../runtime';
 import { MetricsSourcesManager } from '../metrics-sources-manager';
 
@@ -95,12 +95,12 @@ export class DefaultMetricsSourcesManager implements MetricsSourcesManager {
             const targetTypeStr = ObjectKind.stringify(params.sloTarget);
             const factory = typeFactories.factories.get(targetTypeStr) ?? typeFactories.fallbackFactory;
             if (factory) {
-                return factory.createSource(params, this.polarisRuntime);
+                return factory.createSource(params, this.polarisRuntime.metricsSourcesManager, this.polarisRuntime);
             }
         }
 
         if (this.fallbackComposedMetricSourceFactory) {
-            return this.fallbackComposedMetricSourceFactory.createSource(metricType, params, this.polarisRuntime);
+            return this.fallbackComposedMetricSourceFactory.createSource(metricType, params, this.polarisRuntime.metricsSourcesManager, this.polarisRuntime);
         }
 
         return undefined;

@@ -6,7 +6,7 @@ import {
     LabelGrouping,
     MetricUnavailableError,
     MetricsSource,
-    PolarisRuntime,
+    OrchestratorGateway,
     Sample,
     TimeRange,
     TimeSeriesInstant,
@@ -32,12 +32,10 @@ interface RequestsFasterThanThresholdInfo {
  */
 export class RestApiCostEfficiencyMetricSource extends ComposedMetricSourceBase<CostEfficiency> {
 
-    private metricsSource: MetricsSource;
     private targetThresholdSecStr: string;
 
-    constructor(private params: CostEfficiencyParams, polarisRuntime: PolarisRuntime) {
-        super(polarisRuntime);
-        this.metricsSource = polarisRuntime.metricsSourcesManager;
+    constructor(private params: CostEfficiencyParams, metricsSource: MetricsSource, orchestrator: OrchestratorGateway) {
+        super(metricsSource, orchestrator);
         this.targetThresholdSecStr = (params.targetThreshold / 1000).toString();
     }
 
