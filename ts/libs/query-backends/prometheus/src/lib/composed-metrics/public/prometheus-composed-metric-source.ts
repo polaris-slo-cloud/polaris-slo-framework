@@ -6,8 +6,9 @@ import {
     ComposedMetricType,
     DataType,
     LabelFilters,
+    MetricsSource,
     ObjectKind,
-    PolarisRuntime,
+    OrchestratorGateway,
     Sample,
     TimeInstantQuery,
     TimeSeriesInstant,
@@ -101,10 +102,11 @@ export class PrometheusComposedMetricSource<V> extends ComposedMetricSourceBase<
         protected metricType: ComposedMetricType<V, ComposedMetricParams>,
         protected metricParams: ComposedMetricParams,
         protected metricMappingManager: ComposedMetricMappingManager,
-        polarisRuntime: PolarisRuntime,
+        metricsSource: MetricsSource,
+        orchestrator: OrchestratorGateway,
     ) {
-        super(polarisRuntime);
-        const timeSeriesSource = polarisRuntime.metricsSourcesManager.getTimeSeriesSource(PrometheusTimeSeriesSource.fullName);
+        super(metricsSource, orchestrator);
+        const timeSeriesSource = metricsSource.getTimeSeriesSource(PrometheusTimeSeriesSource.fullName);
         this.query = this.createQuery(timeSeriesSource);
     }
 

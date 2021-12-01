@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { PolarisCli } from './app/polaris-cli';
+import { PolarisCliImpl } from './app/polaris-cli.impl';
 
 try {
-    const cli = new PolarisCli({
+    const cli = new PolarisCliImpl({
         startupDir: process.cwd(),
     });
     cli.run();

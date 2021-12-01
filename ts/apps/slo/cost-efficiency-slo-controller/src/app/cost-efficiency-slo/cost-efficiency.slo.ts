@@ -3,7 +3,7 @@ import {
     ComposedMetricSource,
     MetricsSource,
     ObservableOrPromise,
-    PolarisRuntime,
+    OrchestratorGateway,
     ServiceLevelObjective,
     SloCompliance,
     SloMapping,
@@ -27,7 +27,7 @@ export class CostEfficiencySlo implements ServiceLevelObjective<CostEfficiencySl
     configure(
         sloMapping: SloMapping<CostEfficiencySloConfig, SloCompliance>,
         metricsSource: MetricsSource,
-        polarisRuntime: PolarisRuntime,
+        orchestrator: OrchestratorGateway,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

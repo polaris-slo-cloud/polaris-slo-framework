@@ -1,5 +1,4 @@
-import { ComposedMetricMapping } from '../../../model';
-import { ComposedMetricParams, ComposedMetricType } from '../common';
+import { ComposedMetricMapping, ComposedMetricParams, ComposedMetricType  } from '../../../model';
 
 /**
  * Used to check for and configure `ComposedMetricMappings` in the orchestrator.

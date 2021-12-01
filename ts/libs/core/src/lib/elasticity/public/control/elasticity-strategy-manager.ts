@@ -1,5 +1,4 @@
-import { ElasticityStrategy, ElasticityStrategyKind, SloTarget } from '../../../model';
-import { WatchEventsHandler } from '../../../runtime';
+import { ElasticityStrategyKind, SloTarget } from '../../../model';
 import { IndexByKey } from '../../../util';
 import { ElasticityStrategyController } from '../common';
 
@@ -39,11 +38,6 @@ export interface ElasticityStrategyManagerConfig {
     timeoutMs?: number;
 
 }
-
-/**
- * Concrete `WatchEventsHandler` subinterface for elasticity strategies.
- */
-export interface ElasticityStrategyWatchEventsHandler extends WatchEventsHandler<ElasticityStrategy<any>> {}
 
 /**
  * Watches elasticity strategies of the configured kinds and executes them if necessary.

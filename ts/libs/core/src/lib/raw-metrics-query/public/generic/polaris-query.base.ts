@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Observable } from 'rxjs';
-import { PolarisQuery, PolarisQueryResult } from '../generic';
+import { PolarisQuery, PolarisQueryResult } from './polaris-query';
 
 /**
  * Common superclass that can be used for implementing `PolarisQuery` realizations.

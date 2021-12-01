@@ -53,7 +53,7 @@ const generateSloController: Generator<SloControllerGeneratorSchema> = async (ho
     addSloControllerFiles(host, normalizedOptions);
 
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
-    polarisCliConfig.getOrCreateControllerProject(normalizedOptions, PolarisCliProjectType.ComposedMetricController);
+    polarisCliConfig.getOrCreateControllerProject(normalizedOptions, PolarisCliProjectType.SloController);
     polarisCliConfig.writeToFile();
 
     await formatFiles(host);

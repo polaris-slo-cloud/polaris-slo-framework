@@ -7,9 +7,8 @@ import {
     LabelGrouping,
     MetricUnavailableError,
     MetricsSource,
-    PolarisRuntime,
+    OrchestratorGateway,
     Sample,
-    TimeSeriesInstant,
 } from '@polaris-sloc/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -19,11 +18,8 @@ import { map, switchMap } from 'rxjs/operators';
  */
 export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
 
-    private metricsSource: MetricsSource;
-
-    constructor(private params: ComposedMetricParams, polarisRuntime: PolarisRuntime) {
-        super(polarisRuntime);
-        this.metricsSource = polarisRuntime.metricsSourcesManager;
+    constructor(private params: ComposedMetricParams, metricsSource: MetricsSource, orchestrator: OrchestratorGateway) {
+        super(metricsSource, orchestrator);
     }
 
     getValueStream(): Observable<Sample<TotalCost>> {
@@ -70,12 +66,6 @@ export class KubeCostMetricSource extends ComposedMetricSourceBase<TotalCost> {
             currentCostPerHour: totalCost.results[0].samples[0].value,
             accumulatedCostInPeriod: totalCost.results[0].samples[0].value,
         };
-    }
-
-    private sumResults(results: TimeSeriesInstant<number>[]): number {
-        let sum = 0;
-        results.forEach(result => sum += result.samples[0].value);
-        return sum;
     }
 
 }

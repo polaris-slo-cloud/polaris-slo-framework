@@ -53,7 +53,7 @@ const generateComposedMetricController: Generator<ComposedMetricControllerGenera
     updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 
     addCommonWorkspaceRootFiles(host);
-    addElasticityStrategyControllerFiles(host, normalizedOptions);
+    addComposedMetricControllerFiles(host, normalizedOptions);
 
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
     polarisCliConfig.getOrCreateControllerProject(normalizedOptions, PolarisCliProjectType.ComposedMetricController);
@@ -66,7 +66,7 @@ const generateComposedMetricController: Generator<ComposedMetricControllerGenera
 
 export default generateComposedMetricController;
 
-function addElasticityStrategyControllerFiles(host: Tree, options: ComposedMetricControllerGeneratorNormalizedSchema): void {
+function addComposedMetricControllerFiles(host: Tree, options: ComposedMetricControllerGeneratorNormalizedSchema): void {
     const compMetricNames = getComposedMetricTypeNames(options.compMetricType);
 
     const templateOptions = {

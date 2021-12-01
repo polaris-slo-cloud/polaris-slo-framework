@@ -1,5 +1,5 @@
 import { <%= sloConfigType %> } from '<%= sloMappingTypePkg %>';
-import { MetricsSource, ObservableOrPromise, PolarisRuntime, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput } from '@polaris-sloc/core';
+import { MetricsSource, ObservableOrPromise, OrchestratorGateway, ServiceLevelObjective, SloCompliance, SloMapping, SloOutput } from '@polaris-sloc/core';
 
 /**
  * Implements the <%= sloName %> SLO.
@@ -15,7 +15,7 @@ export class <%= sloMicrocontrollerName %> implements ServiceLevelObjective<<%= 
     configure(
         sloMapping: SloMapping<<%= sloConfigType %>, SloCompliance>,
         metricsSource: MetricsSource,
-        polarisRuntime: PolarisRuntime,
+        orchestrator: OrchestratorGateway,
     ): ObservableOrPromise<void> {
         this.sloMapping = sloMapping;
         this.metricsSource = metricsSource;

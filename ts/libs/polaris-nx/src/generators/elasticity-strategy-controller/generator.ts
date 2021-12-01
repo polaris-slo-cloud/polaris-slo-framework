@@ -55,7 +55,7 @@ const generateElasticityStrategyController: Generator<ElasticityStrategyControll
     addElasticityStrategyControllerFiles(host, normalizedOptions);
 
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
-    polarisCliConfig.getOrCreateControllerProject(normalizedOptions, PolarisCliProjectType.ComposedMetricController);
+    polarisCliConfig.getOrCreateControllerProject(normalizedOptions, PolarisCliProjectType.ElasticityStrategyController);
     polarisCliConfig.writeToFile();
 
     await formatFiles(host);

@@ -1,7 +1,8 @@
 import { pascalCase } from 'change-case';
-import { ComposedMetricError, ComposedMetricParams, ComposedMetricType } from '../composed-metrics';
 import { PolarisType } from '../transformation';
 import { ApiObject } from './api-object.prm';
+import { ComposedMetricParams } from './composed-metric-params.prm';
+import { ComposedMetricType } from './composed-metric-type';
 import { ObjectKind } from './object-kind.prm';
 import { OwnerReference } from './owner-reference.prm';
 import { SloTarget } from './slo-target.prm';
@@ -92,7 +93,7 @@ export class ComposedMetricMapping<T extends ComposedMetricMappingSpec<any, any>
     static getMappingObjectKind(metricType: ComposedMetricType<any>, override?: Partial<ObjectKind>): ObjectKind {
         const gvkComponents = metricType.metricTypeName.split('/');
         if (gvkComponents.length !== 3) {
-            throw new ComposedMetricError('Metric type does not conform to the `group/version/kind` naming standard.', metricType);
+            throw new Error(`Metric type \`${metricType.metricTypeName}\` does not conform to the \`group/version/kind\` naming standard.`);
         }
 
         const gvk = new ObjectKind({
