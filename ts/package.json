@@ -1,6 +1,6 @@
 {
   "name": "polaris-sloc",
-  "version": "0.2.0-beta.19",
+  "version": "0.2.0-beta.20",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "nx",
@@ -51,7 +51,9 @@
   },
   "madge": {
     "tsConfig": "tsconfig.base.json",
-    "fileExtensions": [ "ts" ]
+    "fileExtensions": [
+      "ts"
+    ]
   },
   "private": true,
   "dependencies": {
