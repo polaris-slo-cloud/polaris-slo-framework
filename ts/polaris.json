@@ -66,6 +66,10 @@
         "slo-cpu-usage-slo-controller": {
             "projectType": "slo-controller",
             "tsEntryPoint": "apps/slo/cpu-usage-slo-controller/src/main.ts"
+        },
+        "metrics-predicted-cost-efficiency-controller": {
+            "projectType": "composed-metric-controller",
+            "tsEntryPoint": "apps/metrics/predicted-cost-efficiency-controller/src/main.ts"
         }
     }
 }

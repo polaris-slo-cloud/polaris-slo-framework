@@ -1,1019 +1,888 @@
 {
-  "version": 1,
-  "projects": {
-    "cli-polaris-cli": {
-      "root": "apps/cli/polaris-cli",
-      "sourceRoot": "apps/cli/polaris-cli/src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/apps/cli/polaris-cli",
-            "main": "apps/cli/polaris-cli/src/main.ts",
-            "tsConfig": "apps/cli/polaris-cli/tsconfig.app.json",
-            "packageJson": "apps/cli/polaris-cli/package.json",
-            "assets": [
-              "apps/cli/polaris-cli/*.md",
-              "apps/cli/polaris-cli/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/cli/polaris-cli/src/environments/environment.ts",
-                  "with": "apps/cli/polaris-cli/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "cli-polaris-cli:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/cli/polaris-cli/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/cli/polaris-cli"
-          ],
-          "options": {
-            "jestConfig": "apps/cli/polaris-cli/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": [
-        "cli"
-      ]
-    },
-    "cli-polaris-k8s-serializer": {
-      "root": "apps/cli/polaris-k8s-serializer",
-      "sourceRoot": "apps/cli/polaris-k8s-serializer/src",
-      "projectType": "application",
-      "prefix": "cli-polaris-k8s-serializer",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/cli/polaris-k8s-serializer",
-            "main": "apps/cli/polaris-k8s-serializer/src/main.ts",
-            "tsConfig": "apps/cli/polaris-k8s-serializer/tsconfig.app.json",
-            "externalDependencies": "none",
-            "assets": [
-              "apps/cli/polaris-k8s-serializer/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/cli/polaris-k8s-serializer/src/environments/environment.ts",
-                  "with": "apps/cli/polaris-k8s-serializer/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "cli-polaris-k8s-serializer:build",
-            "inspect": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/cli/polaris-k8s-serializer/**/*.ts",
-              "apps/cli/polaris-k8s-serializer/**/*.spec.ts",
-              "apps/cli/polaris-k8s-serializer/**/*.d.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/cli/polaris-k8s-serializer/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/apps/cli/polaris-k8s-serializer"
-          ]
-        }
-      },
-      "tags": [
-        "scope:cli",
-        "orchestrator:kubernetes",
-        "query:prometheus"
-      ]
-    },
-    "core": {
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/core/**/*.ts",
-              "libs/core/**/*.spec.ts",
-              "libs/core/**/*.spec.tsx",
-              "libs/core/**/*.spec.js",
-              "libs/core/**/*.spec.jsx",
-              "libs/core/**/*.d.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/core/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/core"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/core",
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "packageJson": "libs/core/package.json",
-            "main": "libs/core/src/index.ts",
-            "assets": [
-              "libs/core/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "scope:core"
-      ]
-    },
-    "elasticity-horizontal-elasticity-strategy-controller": {
-      "root": "apps/elasticity/horizontal-elasticity-strategy-controller",
-      "sourceRoot": "apps/elasticity/horizontal-elasticity-strategy-controller/src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
-            "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
-            "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
-            "externalDependencies": "none",
-            "assets": [
-              "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/elasticity/horizontal-elasticity-strategy-controller/src/environments/environment.ts",
-                  "with": "apps/elasticity/horizontal-elasticity-strategy-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/elasticity/horizontal-elasticity-strategy-controller/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/elasticity/horizontal-elasticity-strategy-controller"
-          ],
-          "options": {
-            "jestConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": [
-        "scope:elasticity",
-        "orchestrator:kubernetes"
-      ]
-    },
-    "elasticity-vertical-elasticity-strategy-controller": {
-      "root": "apps/elasticity/vertical-elasticity-strategy-controller",
-      "sourceRoot": "apps/elasticity/vertical-elasticity-strategy-controller/src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/apps/elasticity/vertical-elasticity-strategy-controller",
-            "main": "apps/elasticity/vertical-elasticity-strategy-controller/src/main.ts",
-            "tsConfig": "apps/elasticity/vertical-elasticity-strategy-controller/tsconfig.app.json",
-            "externalDependencies": "none",
-            "assets": [
-              "apps/elasticity/vertical-elasticity-strategy-controller/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/elasticity/vertical-elasticity-strategy-controller/src/environments/environment.ts",
-                  "with": "apps/elasticity/vertical-elasticity-strategy-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "elasticity-vertical-elasticity-strategy-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/elasticity/vertical-elasticity-strategy-controller/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/elasticity/vertical-elasticity-strategy-controller"
-          ],
-          "options": {
-            "jestConfig": "apps/elasticity/vertical-elasticity-strategy-controller/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": [
-        "scope:elasticity",
-        "orchestrator:kubernetes"
-      ]
-    },
-    "mappings-common-mappings": {
-      "root": "libs/mappings/common-mappings",
-      "sourceRoot": "libs/mappings/common-mappings/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/mappings/common-mappings/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/mappings/common-mappings/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/mappings/common-mappings"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/mappings/common-mappings",
-            "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
-            "packageJson": "libs/mappings/common-mappings/package.json",
-            "main": "libs/mappings/common-mappings/src/index.ts",
-            "assets": [
-              "libs/mappings/common-mappings/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "scope:core"
-      ]
-    },
-    "metrics-cost-efficiency": {
-      "root": "libs/metrics/cost-efficiency",
-      "sourceRoot": "libs/metrics/cost-efficiency/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/metrics/cost-efficiency/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/metrics/cost-efficiency"
-          ],
-          "options": {
-            "jestConfig": "libs/metrics/cost-efficiency/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/libs/metrics/cost-efficiency",
-            "tsConfig": "libs/metrics/cost-efficiency/tsconfig.lib.json",
-            "packageJson": "libs/metrics/cost-efficiency/package.json",
-            "main": "libs/metrics/cost-efficiency/src/index.ts",
-            "assets": [
-              "libs/metrics/cost-efficiency/*.md"
-            ]
-          }
-        }
-      },
-      "tags": [
-        "scope:core",
-        "scope:metric"
-      ]
-    },
-    "metrics-rest-api-cost-efficiency-controller": {
-      "root": "apps/metrics/rest-api-cost-efficiency-controller",
-      "sourceRoot": "apps/metrics/rest-api-cost-efficiency-controller/src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/apps/metrics/rest-api-cost-efficiency-controller",
-            "main": "apps/metrics/rest-api-cost-efficiency-controller/src/main.ts",
-            "tsConfig": "apps/metrics/rest-api-cost-efficiency-controller/tsconfig.app.json",
-            "externalDependencies": "none",
-            "assets": [
-              "apps/metrics/rest-api-cost-efficiency-controller/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/metrics/rest-api-cost-efficiency-controller/src/environments/environment.ts",
-                  "with": "apps/metrics/rest-api-cost-efficiency-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "metrics-rest-api-cost-efficiency-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/metrics/rest-api-cost-efficiency-controller/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/metrics/rest-api-cost-efficiency-controller"
-          ],
-          "options": {
-            "jestConfig": "apps/metrics/rest-api-cost-efficiency-controller/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": [
-        "scope:metrics-controller"
-      ]
-    },
-    "schema-gen": {
-      "root": "libs/schema-gen",
-      "sourceRoot": "libs/schema-gen/src",
-      "projectType": "library",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/libs/schema-gen",
-            "tsConfig": "libs/schema-gen/tsconfig.lib.json",
-            "packageJson": "libs/schema-gen/package.json",
-            "main": "libs/schema-gen/src/index.ts",
-            "assets": [
-              "libs/schema-gen/*.md"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
-          "options": {
-            "lintFilePatterns": [
-              "libs/schema-gen/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/schema-gen"
-          ],
-          "options": {
-            "jestConfig": "libs/schema-gen/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": [
-        "scope:cli"
-      ]
-    },
-    "orchestrators-kubernetes": {
-      "root": "libs/orchestrators/kubernetes",
-      "sourceRoot": "libs/orchestrators/kubernetes/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/orchestrators/kubernetes/**/*.ts",
-              "libs/orchestrators/kubernetes/**/*.spec.ts",
-              "libs/orchestrators/kubernetes/**/*.spec.tsx",
-              "libs/orchestrators/kubernetes/**/*.spec.js",
-              "libs/orchestrators/kubernetes/**/*.spec.jsx",
-              "libs/orchestrators/kubernetes/**/*.d.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/orchestrators/kubernetes/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/orchestrators/kubernetes"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/orchestrators/kubernetes",
-            "tsConfig": "libs/orchestrators/kubernetes/tsconfig.lib.json",
-            "packageJson": "libs/orchestrators/kubernetes/package.json",
-            "main": "libs/orchestrators/kubernetes/src/index.ts",
-            "assets": [
-              "libs/orchestrators/kubernetes/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "orchestrator:kubernetes"
-      ]
-    },
-    "polaris-nx": {
-      "root": "libs/polaris-nx",
-      "sourceRoot": "libs/polaris-nx/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/polaris-nx/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/polaris-nx"
-          ],
-          "options": {
-            "jestConfig": "libs/polaris-nx/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/libs/polaris-nx",
-            "tsConfig": "libs/polaris-nx/tsconfig.lib.json",
-            "packageJson": "libs/polaris-nx/package.json",
-            "main": "libs/polaris-nx/src/index.ts",
-            "assets": [
-              "libs/polaris-nx/*.md",
-              {
-                "input": "./libs/polaris-nx/src",
-                "glob": "**/*.!(ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./libs/polaris-nx/src",
-                "glob": "**/.dockerignore__template__",
-                "output": "./src"
-              },
-              {
-                "input": "./libs/polaris-nx/src",
-                "glob": "**/Dockerfile__template__",
-                "output": "./src"
-              },
-              {
-                "input": "./libs/polaris-nx",
-                "glob": "generators.json",
-                "output": "."
-              },
-              {
-                "input": "./libs/polaris-nx",
-                "glob": "executors.json",
-                "output": "."
-              }
-            ]
-          }
-        }
-      },
-      "tags": [
-        "scope:cli"
-      ]
-    },
-    "polaris-nx-e2e": {
-      "projectType": "application",
-      "root": "apps/polaris-nx-e2e",
-      "sourceRoot": "apps/polaris-nx-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "polaris-nx:build",
-            "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
-          }
-        }
-      },
-      "tags": [
-        "scope:cli"
-      ],
-      "implicitDependencies": [
-        "polaris-nx"
-      ]
-    },
-    "query-backends-prometheus": {
-      "root": "libs/query-backends/prometheus",
-      "sourceRoot": "libs/query-backends/prometheus/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/query-backends/prometheus/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/query-backends/prometheus/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/query-backends/prometheus"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/libs/query-backends/prometheus",
-            "tsConfig": "libs/query-backends/prometheus/tsconfig.lib.json",
-            "packageJson": "libs/query-backends/prometheus/package.json",
-            "main": "libs/query-backends/prometheus/src/index.ts",
-            "assets": [
-              "libs/query-backends/prometheus/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "scope:core",
-        "query:prometheus"
-      ]
-    },
-    "slo-cost-efficiency-slo-controller": {
-      "root": "apps/slo/cost-efficiency-slo-controller",
-      "sourceRoot": "apps/slo/cost-efficiency-slo-controller/src",
-      "projectType": "application",
-      "prefix": "slo-cost-efficiency-slo-controller",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
-            "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
-            "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
-            "externalDependencies": "none",
-            "assets": [
-              "apps/slo/cost-efficiency-slo-controller/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.ts",
-                  "with": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "slo-cost-efficiency-slo-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/slo/cost-efficiency-slo-controller/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/apps/slo/cost-efficiency-slo-controller"
-          ]
-        }
-      },
-      "tags": [
-        "scope:cli",
-        "orchestrator:kubernetes",
-        "query:prometheus"
-      ]
-    },
-    "slo-cpu-usage-slo-controller": {
-      "root": "apps/slo/cpu-usage-slo-controller",
-      "sourceRoot": "apps/slo/cpu-usage-slo-controller/src",
-      "projectType": "application",
-      "prefix": "cpu-usage-slo-controller",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
-            "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
-            "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
-            "externalDependencies": "none",
-            "assets": [
-              "apps/slo/cpu-usage-slo-controller/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/slo/cpu-usage-slo-controller/src/environments/environment.ts",
-                  "with": "apps/slo/cpu-usage-slo-controller/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "slo-cpu-usage-slo-controller:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/slo/cpu-usage-slo-controller/**/*.ts",
-              "apps/slo/cpu-usage-slo-controller/**/*.spec.ts",
-              "apps/slo/cpu-usage-slo-controller/**/*.d.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/slo/cpu-usage-slo-controller/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/apps/slo/cpu-usage-slo-controller"
-          ]
-        }
-      },
-      "tags": [
-        "scope:slo",
-        "orchestrator:kubernetes"
-      ]
-    },
-    "ui-polaris-ui": {
-      "projectType": "application",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "apps/ui/polaris-ui",
-      "sourceRoot": "apps/ui/polaris-ui/src",
-      "prefix": "polaris",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/ui/polaris-ui",
-            "index": "apps/ui/polaris-ui/src/index.html",
-            "main": "apps/ui/polaris-ui/src/main.ts",
-            "polyfills": "apps/ui/polaris-ui/src/polyfills.ts",
-            "tsConfig": "apps/ui/polaris-ui/tsconfig.app.json",
-            "assets": [
-              "apps/ui/polaris-ui/src/favicon.ico",
-              "apps/ui/polaris-ui/src/assets"
-            ],
-            "styles": [
-              "apps/ui/polaris-ui/src/styles/styles.scss"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "apps/ui/polaris-ui/src/styles"
-              ]
-            },
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/ui/polaris-ui/src/environments/environment.ts",
-                  "with": "apps/ui/polaris-ui/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+    "version": 1,
+    "projects": {
+        "cli-polaris-cli": {
+            "root": "apps/cli/polaris-cli",
+            "sourceRoot": "apps/cli/polaris-cli/src",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/apps/cli/polaris-cli",
+                        "main": "apps/cli/polaris-cli/src/main.ts",
+                        "tsConfig": "apps/cli/polaris-cli/tsconfig.app.json",
+                        "packageJson": "apps/cli/polaris-cli/package.json",
+                        "assets": ["apps/cli/polaris-cli/*.md", "apps/cli/polaris-cli/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/cli/polaris-cli/src/environments/environment.ts",
+                                    "with": "apps/cli/polaris-cli/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "cli-polaris-cli:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["apps/cli/polaris-cli/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/cli/polaris-cli"],
+                    "options": {
+                        "jestConfig": "apps/cli/polaris-cli/jest.config.js",
+                        "passWithNoTests": true
+                    }
                 }
-              ]
-            }
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "defaultConfiguration": ""
+            },
+            "tags": ["cli"]
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ui-polaris-ui:build",
-            "proxyConfig": "./proxy.conf.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ui-polaris-ui:build:production"
-            }
-          }
+        "cli-polaris-k8s-serializer": {
+            "root": "apps/cli/polaris-k8s-serializer",
+            "sourceRoot": "apps/cli/polaris-k8s-serializer/src",
+            "projectType": "application",
+            "prefix": "cli-polaris-k8s-serializer",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "options": {
+                        "outputPath": "dist/apps/cli/polaris-k8s-serializer",
+                        "main": "apps/cli/polaris-k8s-serializer/src/main.ts",
+                        "tsConfig": "apps/cli/polaris-k8s-serializer/tsconfig.app.json",
+                        "externalDependencies": "none",
+                        "assets": ["apps/cli/polaris-k8s-serializer/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/cli/polaris-k8s-serializer/src/environments/environment.ts",
+                                    "with": "apps/cli/polaris-k8s-serializer/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": ["{options.outputPath}"]
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "cli-polaris-k8s-serializer:build",
+                        "inspect": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "apps/cli/polaris-k8s-serializer/**/*.ts",
+                            "apps/cli/polaris-k8s-serializer/**/*.spec.ts",
+                            "apps/cli/polaris-k8s-serializer/**/*.d.ts"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/cli/polaris-k8s-serializer/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/apps/cli/polaris-k8s-serializer"]
+                }
+            },
+            "tags": ["scope:cli", "orchestrator:kubernetes", "query:prometheus"]
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ui-polaris-ui:build"
-          }
+        "core": {
+            "root": "libs/core",
+            "sourceRoot": "libs/core/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/core/**/*.ts",
+                            "libs/core/**/*.spec.ts",
+                            "libs/core/**/*.spec.tsx",
+                            "libs/core/**/*.spec.js",
+                            "libs/core/**/*.spec.jsx",
+                            "libs/core/**/*.d.ts"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/core/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/libs/core"]
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/libs/core",
+                        "tsConfig": "libs/core/tsconfig.lib.json",
+                        "packageJson": "libs/core/package.json",
+                        "main": "libs/core/src/index.ts",
+                        "assets": ["libs/core/*.md"]
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            },
+            "tags": ["scope:core"]
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/ui/polaris-ui/tsconfig.app.json",
-              "apps/ui/polaris-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ui/polaris-ui/**/*"
-            ]
-          }
+        "elasticity-horizontal-elasticity-strategy-controller": {
+            "root": "apps/elasticity/horizontal-elasticity-strategy-controller",
+            "sourceRoot": "apps/elasticity/horizontal-elasticity-strategy-controller/src",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
+                        "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
+                        "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
+                        "externalDependencies": "none",
+                        "assets": ["apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/elasticity/horizontal-elasticity-strategy-controller/src/environments/environment.ts",
+                                    "with": "apps/elasticity/horizontal-elasticity-strategy-controller/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["apps/elasticity/horizontal-elasticity-strategy-controller/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/elasticity/horizontal-elasticity-strategy-controller"],
+                    "options": {
+                        "jestConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "tags": ["scope:elasticity", "orchestrator:kubernetes"]
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/ui/polaris-ui/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/apps/ui/polaris-ui"
-          ]
+        "elasticity-vertical-elasticity-strategy-controller": {
+            "root": "apps/elasticity/vertical-elasticity-strategy-controller",
+            "sourceRoot": "apps/elasticity/vertical-elasticity-strategy-controller/src",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/apps/elasticity/vertical-elasticity-strategy-controller",
+                        "main": "apps/elasticity/vertical-elasticity-strategy-controller/src/main.ts",
+                        "tsConfig": "apps/elasticity/vertical-elasticity-strategy-controller/tsconfig.app.json",
+                        "externalDependencies": "none",
+                        "assets": ["apps/elasticity/vertical-elasticity-strategy-controller/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/elasticity/vertical-elasticity-strategy-controller/src/environments/environment.ts",
+                                    "with": "apps/elasticity/vertical-elasticity-strategy-controller/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "elasticity-vertical-elasticity-strategy-controller:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["apps/elasticity/vertical-elasticity-strategy-controller/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/elasticity/vertical-elasticity-strategy-controller"],
+                    "options": {
+                        "jestConfig": "apps/elasticity/vertical-elasticity-strategy-controller/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "tags": ["scope:elasticity", "orchestrator:kubernetes"]
+        },
+        "mappings-common-mappings": {
+            "root": "libs/mappings/common-mappings",
+            "sourceRoot": "libs/mappings/common-mappings/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/mappings/common-mappings/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/mappings/common-mappings/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/libs/mappings/common-mappings"]
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/libs/mappings/common-mappings",
+                        "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
+                        "packageJson": "libs/mappings/common-mappings/package.json",
+                        "main": "libs/mappings/common-mappings/src/index.ts",
+                        "assets": ["libs/mappings/common-mappings/*.md"]
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            },
+            "tags": ["scope:core"]
+        },
+        "metrics-cost-efficiency": {
+            "root": "libs/metrics/cost-efficiency",
+            "sourceRoot": "libs/metrics/cost-efficiency/src",
+            "projectType": "library",
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/metrics/cost-efficiency/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/metrics/cost-efficiency"],
+                    "options": {
+                        "jestConfig": "libs/metrics/cost-efficiency/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/libs/metrics/cost-efficiency",
+                        "tsConfig": "libs/metrics/cost-efficiency/tsconfig.lib.json",
+                        "packageJson": "libs/metrics/cost-efficiency/package.json",
+                        "main": "libs/metrics/cost-efficiency/src/index.ts",
+                        "assets": ["libs/metrics/cost-efficiency/*.md"]
+                    }
+                }
+            },
+            "tags": ["scope:core", "scope:metric"]
+        },
+        "metrics-predicted-cost-efficiency-controller": {
+            "root": "apps/metrics/predicted-cost-efficiency-controller",
+            "sourceRoot": "apps/metrics/predicted-cost-efficiency-controller/src",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/apps/metrics/predicted-cost-efficiency-controller",
+                        "main": "apps/metrics/predicted-cost-efficiency-controller/src/main.ts",
+                        "tsConfig": "apps/metrics/predicted-cost-efficiency-controller/tsconfig.app.json",
+                        "assets": ["apps/metrics/predicted-cost-efficiency-controller/src/assets"],
+                        "externalDependencies": "none"
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/metrics/predicted-cost-efficiency-controller/src/environments/environment.ts",
+                                    "with": "apps/metrics/predicted-cost-efficiency-controller/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "metrics-predicted-cost-efficiency-controller:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "outputs": ["{options.outputFile}"],
+                    "options": {
+                        "lintFilePatterns": ["apps/metrics/predicted-cost-efficiency-controller/**/*.ts"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/metrics/predicted-cost-efficiency-controller"],
+                    "options": {
+                        "jestConfig": "apps/metrics/predicted-cost-efficiency-controller/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "docker-build": {
+                    "builder": "@nrwl/workspace:run-commands",
+                    "options": {
+                        "commands": [
+                            "docker build -f ./apps/metrics/predicted-cost-efficiency-controller/Dockerfile --build-arg POLARIS_APP_TYPE=metrics --build-arg POLARIS_APP_NAME=predicted-cost-efficiency-controller -t polarissloc/metrics-predicted-cost-efficiency-controller:latest ."
+                        ],
+                        "parallel": false
+                    }
+                },
+                "deploy": {
+                    "builder": "@nrwl/workspace:run-commands",
+                    "options": {
+                        "commands": ["kubectl apply -f ./apps/metrics/predicted-cost-efficiency-controller/manifests/kubernetes"],
+                        "parallel": false
+                    }
+                }
+            },
+            "tags": []
+        },
+        "metrics-rest-api-cost-efficiency-controller": {
+            "root": "apps/metrics/rest-api-cost-efficiency-controller",
+            "sourceRoot": "apps/metrics/rest-api-cost-efficiency-controller/src",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/apps/metrics/rest-api-cost-efficiency-controller",
+                        "main": "apps/metrics/rest-api-cost-efficiency-controller/src/main.ts",
+                        "tsConfig": "apps/metrics/rest-api-cost-efficiency-controller/tsconfig.app.json",
+                        "externalDependencies": "none",
+                        "assets": ["apps/metrics/rest-api-cost-efficiency-controller/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/metrics/rest-api-cost-efficiency-controller/src/environments/environment.ts",
+                                    "with": "apps/metrics/rest-api-cost-efficiency-controller/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "metrics-rest-api-cost-efficiency-controller:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["apps/metrics/rest-api-cost-efficiency-controller/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/metrics/rest-api-cost-efficiency-controller"],
+                    "options": {
+                        "jestConfig": "apps/metrics/rest-api-cost-efficiency-controller/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "tags": ["scope:metrics-controller"]
+        },
+        "orchestrators-kubernetes": {
+            "root": "libs/orchestrators/kubernetes",
+            "sourceRoot": "libs/orchestrators/kubernetes/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/orchestrators/kubernetes/**/*.ts",
+                            "libs/orchestrators/kubernetes/**/*.spec.ts",
+                            "libs/orchestrators/kubernetes/**/*.spec.tsx",
+                            "libs/orchestrators/kubernetes/**/*.spec.js",
+                            "libs/orchestrators/kubernetes/**/*.spec.jsx",
+                            "libs/orchestrators/kubernetes/**/*.d.ts"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/orchestrators/kubernetes/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/libs/orchestrators/kubernetes"]
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/libs/orchestrators/kubernetes",
+                        "tsConfig": "libs/orchestrators/kubernetes/tsconfig.lib.json",
+                        "packageJson": "libs/orchestrators/kubernetes/package.json",
+                        "main": "libs/orchestrators/kubernetes/src/index.ts",
+                        "assets": ["libs/orchestrators/kubernetes/*.md"]
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            },
+            "tags": ["orchestrator:kubernetes"]
+        },
+        "polaris-nx": {
+            "root": "libs/polaris-nx",
+            "sourceRoot": "libs/polaris-nx/src",
+            "projectType": "library",
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/polaris-nx/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/polaris-nx"],
+                    "options": {
+                        "jestConfig": "libs/polaris-nx/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/libs/polaris-nx",
+                        "tsConfig": "libs/polaris-nx/tsconfig.lib.json",
+                        "packageJson": "libs/polaris-nx/package.json",
+                        "main": "libs/polaris-nx/src/index.ts",
+                        "assets": [
+                            "libs/polaris-nx/*.md",
+                            {
+                                "input": "./libs/polaris-nx/src",
+                                "glob": "**/*.!(ts)",
+                                "output": "./src"
+                            },
+                            {
+                                "input": "./libs/polaris-nx/src",
+                                "glob": "**/.dockerignore__template__",
+                                "output": "./src"
+                            },
+                            {
+                                "input": "./libs/polaris-nx/src",
+                                "glob": "**/Dockerfile__template__",
+                                "output": "./src"
+                            },
+                            {
+                                "input": "./libs/polaris-nx",
+                                "glob": "generators.json",
+                                "output": "."
+                            },
+                            {
+                                "input": "./libs/polaris-nx",
+                                "glob": "executors.json",
+                                "output": "."
+                            }
+                        ]
+                    }
+                }
+            },
+            "tags": ["scope:cli"]
+        },
+        "polaris-nx-e2e": {
+            "projectType": "application",
+            "root": "apps/polaris-nx-e2e",
+            "sourceRoot": "apps/polaris-nx-e2e/src",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/nx-plugin:e2e",
+                    "options": {
+                        "target": "polaris-nx:build",
+                        "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
+                    }
+                }
+            },
+            "tags": ["scope:cli"],
+            "implicitDependencies": ["polaris-nx"]
+        },
+        "query-backends-prometheus": {
+            "root": "libs/query-backends/prometheus",
+            "sourceRoot": "libs/query-backends/prometheus/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["libs/query-backends/prometheus/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/query-backends/prometheus/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/libs/query-backends/prometheus"]
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/libs/query-backends/prometheus",
+                        "tsConfig": "libs/query-backends/prometheus/tsconfig.lib.json",
+                        "packageJson": "libs/query-backends/prometheus/package.json",
+                        "main": "libs/query-backends/prometheus/src/index.ts",
+                        "assets": ["libs/query-backends/prometheus/*.md"]
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            },
+            "tags": ["scope:core", "query:prometheus"]
+        },
+        "schema-gen": {
+            "root": "libs/schema-gen",
+            "sourceRoot": "libs/schema-gen/src",
+            "projectType": "library",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/libs/schema-gen",
+                        "tsConfig": "libs/schema-gen/tsconfig.lib.json",
+                        "packageJson": "libs/schema-gen/package.json",
+                        "main": "libs/schema-gen/src/index.ts",
+                        "assets": ["libs/schema-gen/*.md"]
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "outputs": ["{options.outputFile}"],
+                    "options": {
+                        "lintFilePatterns": ["libs/schema-gen/**/*.ts"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/schema-gen"],
+                    "options": {
+                        "jestConfig": "libs/schema-gen/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "tags": ["scope:cli"]
+        },
+        "slo-cost-efficiency-slo-controller": {
+            "root": "apps/slo/cost-efficiency-slo-controller",
+            "sourceRoot": "apps/slo/cost-efficiency-slo-controller/src",
+            "projectType": "application",
+            "prefix": "slo-cost-efficiency-slo-controller",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "options": {
+                        "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
+                        "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
+                        "tsConfig": "apps/slo/cost-efficiency-slo-controller/tsconfig.app.json",
+                        "externalDependencies": "none",
+                        "assets": ["apps/slo/cost-efficiency-slo-controller/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.ts",
+                                    "with": "apps/slo/cost-efficiency-slo-controller/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": ["{options.outputPath}"]
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "slo-cost-efficiency-slo-controller:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["apps/slo/cost-efficiency-slo-controller/**/*.ts"]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/apps/slo/cost-efficiency-slo-controller"]
+                }
+            },
+            "tags": ["scope:cli", "orchestrator:kubernetes", "query:prometheus"]
+        },
+        "slo-cpu-usage-slo-controller": {
+            "root": "apps/slo/cpu-usage-slo-controller",
+            "sourceRoot": "apps/slo/cpu-usage-slo-controller/src",
+            "projectType": "application",
+            "prefix": "cpu-usage-slo-controller",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "options": {
+                        "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
+                        "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
+                        "tsConfig": "apps/slo/cpu-usage-slo-controller/tsconfig.app.json",
+                        "externalDependencies": "none",
+                        "assets": ["apps/slo/cpu-usage-slo-controller/src/assets"]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/slo/cpu-usage-slo-controller/src/environments/environment.ts",
+                                    "with": "apps/slo/cpu-usage-slo-controller/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": ["{options.outputPath}"]
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "slo-cpu-usage-slo-controller:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "apps/slo/cpu-usage-slo-controller/**/*.ts",
+                            "apps/slo/cpu-usage-slo-controller/**/*.spec.ts",
+                            "apps/slo/cpu-usage-slo-controller/**/*.d.ts"
+                        ]
+                    },
+                    "outputs": ["{options.outputFile}"]
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/slo/cpu-usage-slo-controller/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/apps/slo/cpu-usage-slo-controller"]
+                }
+            },
+            "tags": ["scope:slo", "orchestrator:kubernetes"]
+        },
+        "ui-polaris-ui": {
+            "projectType": "application",
+            "schematics": {
+                "@nrwl/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "apps/ui/polaris-ui",
+            "sourceRoot": "apps/ui/polaris-ui/src",
+            "prefix": "polaris",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/ui/polaris-ui",
+                        "index": "apps/ui/polaris-ui/src/index.html",
+                        "main": "apps/ui/polaris-ui/src/main.ts",
+                        "polyfills": "apps/ui/polaris-ui/src/polyfills.ts",
+                        "tsConfig": "apps/ui/polaris-ui/tsconfig.app.json",
+                        "assets": ["apps/ui/polaris-ui/src/favicon.ico", "apps/ui/polaris-ui/src/assets"],
+                        "styles": ["apps/ui/polaris-ui/src/styles/styles.scss"],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["apps/ui/polaris-ui/src/styles"]
+                        },
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/ui/polaris-ui/src/environments/environment.ts",
+                                    "with": "apps/ui/polaris-ui/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": ["{options.outputPath}"],
+                    "defaultConfiguration": ""
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "ui-polaris-ui:build",
+                        "proxyConfig": "./proxy.conf.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "ui-polaris-ui:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "ui-polaris-ui:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["apps/ui/polaris-ui/tsconfig.app.json", "apps/ui/polaris-ui/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**", "!apps/ui/polaris-ui/**/*"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/ui/polaris-ui/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/apps/ui/polaris-ui"]
+                }
+            },
+            "tags": ["scope:ui"]
+        },
+        "ui-polaris-ui-e2e": {
+            "root": "apps/ui/polaris-ui-e2e",
+            "sourceRoot": "apps/ui/polaris-ui-e2e/src",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/cypress:cypress",
+                    "options": {
+                        "cypressConfig": "apps/ui/polaris-ui-e2e/cypress.json",
+                        "tsConfig": "apps/ui/polaris-ui-e2e/tsconfig.e2e.json",
+                        "devServerTarget": "ui-polaris-ui:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "ui-polaris-ui:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["apps/ui/polaris-ui-e2e/tsconfig.e2e.json"],
+                        "exclude": ["**/node_modules/**", "!apps/ui/polaris-ui-e2e/**/*"]
+                    }
+                }
+            },
+            "tags": ["scope:ui"],
+            "implicitDependencies": ["ui-polaris-ui"]
         }
-      },
-      "tags": [
-        "scope:ui"
-      ]
-    },
-    "ui-polaris-ui-e2e": {
-      "root": "apps/ui/polaris-ui-e2e",
-      "sourceRoot": "apps/ui/polaris-ui-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/ui/polaris-ui-e2e/cypress.json",
-            "tsConfig": "apps/ui/polaris-ui-e2e/tsconfig.e2e.json",
-            "devServerTarget": "ui-polaris-ui:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ui-polaris-ui:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/ui/polaris-ui-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ui/polaris-ui-e2e/**/*"
-            ]
-          }
-        }
-      },
-      "tags": [
-        "scope:ui"
-      ],
-      "implicitDependencies": [
-        "ui-polaris-ui"
-      ]
     }
-  }
 }
