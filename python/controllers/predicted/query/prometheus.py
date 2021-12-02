@@ -15,5 +15,7 @@ class PrometheusClient:
 
     @classmethod
     def from_env(cls) -> 'PrometheusClient':
-        base_url = os.getenv('PROMETHEUS_URL', 'localhost:30900')
-        return PrometheusClient(base_url)
+        host = os.getenv('PROMETHEUS_HOST', 'localhost')
+        port = os.getenv('PROMETHEUS_PORT', '30900')
+        url = f'{host}:{port}'
+        return PrometheusClient(url)
