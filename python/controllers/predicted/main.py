@@ -10,7 +10,7 @@ from preprocessing import handler as preprocessing_handler
 from query import handler as query_handler
 from query.prometheus import PrometheusClient
 from util.config import Config
-from util.context import Context
+from util.context import Context, TfServingConfig
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 
 client = PrometheusClient.from_env()
 config = Config.from_env()
-
+tfserving_config = TfServingConfig.from_env()
 
 @app.route('/', defaults={'path': ''}, methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
@@ -32,6 +32,7 @@ def call_ai_model(path):
     ctx = Context(
         client=client,
         config=config,
+        tfserving_config=tfserving_config,
         body=body
     )
 
@@ -43,7 +44,7 @@ def call_ai_model(path):
     input_features = preprocessing_handler.handle(raw_input_features, ctx)
     inference_result = invocation_handler.handle(input_features, ctx)
 
-    return {"result": inference_result}
+    return inference_result
 
 
 if __name__ == '__main__':
