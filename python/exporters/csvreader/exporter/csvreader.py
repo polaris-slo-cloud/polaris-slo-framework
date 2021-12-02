@@ -2,6 +2,7 @@ import csv
 import logging
 import time
 from typing import List
+
 from prometheus_client import Gauge, Histogram
 
 logger = logging.getLogger(__name__)
@@ -129,8 +130,10 @@ class CsvMetrics:
              Gauge(f'{prefix}_cycles_per_instruction', 'cycles per instruction', labelnames=labelnames)),
             ('memory accesses per instruction',
              Gauge(f'{prefix}_memory_accesses_per_instruction', 'memory accesses per instruction',
-                       labelnames=labelnames)),
+                   labelnames=labelnames)),
             ('CPU ratio usage', Gauge(f'{prefix}_cpu_ratio_usage', 'CPU ratio usage', labelnames=labelnames)),
             ('memory ratio usage', Gauge(f'{prefix}_memory_ratio_usage', 'memory ratio usage', labelnames=labelnames)),
             ('disk ratio usage', Gauge(f'{prefix}_disk_ratio_usage', 'disk ratio usage', labelnames=labelnames)),
+            ('end time', Gauge(f'{prefix}_end_time', 'end time', labelnames=labelnames)),
+            ('Efficiency', Gauge(f'{prefix}_efficiency', 'Efficiency', labelnames=labelnames))
         ]
