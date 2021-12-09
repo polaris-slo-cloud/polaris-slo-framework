@@ -5,7 +5,7 @@ metadata:
         component: metrics-predicted-cost-efficiency-controller
         tier: control-plane
     name: metrics-predicted-cost-efficiency-controller
-    namespace: polaris-demo
+    namespace: polaris
 spec:
     selector:
         matchLabels:
@@ -36,7 +36,7 @@ spec:
                   operator: Exists
                   effect: NoSchedule
             containers:
-                - image: polarissloc/metrics-predicted-cost-efficiency-controller:0.7.8
+                - image: aicg4t1/metrics-predicted-cost-efficiency-controller:0.7.8
                   name: composed-metrics-controller
                   resources:
                       limits:
@@ -62,7 +62,7 @@ spec:
                         value: kubernetes.default.svc
                       - name: PREDICTION_SERVICE_BASE_URL
                         value: 'http://0.0.0.0:5000'
-                - image: polarissloc/predicted-metric-container:0.6.1
+                - image: aicg4t1/predicted-metric-container:0.6.3
                   name: predicted-metrics-controller
                   ports:
                     - name: port
@@ -80,7 +80,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    namespace: polaris-demo
+    namespace: polaris
     name: metrics-predicted-cost-efficiency-controller
     labels:
         component: metrics-predicted-cost-efficiency-controller

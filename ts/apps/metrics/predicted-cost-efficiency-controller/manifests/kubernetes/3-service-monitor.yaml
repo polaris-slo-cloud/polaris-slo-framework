@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-    namespace: polaris-demo
+    namespace: polaris
     name: metrics-predicted-cost-efficiency-controller
     labels:
         component: metrics-predicted-cost-efficiency-controller
@@ -12,7 +12,7 @@ metadata:
 spec:
     namespaceSelector:
         matchNames:
-            - polaris-demo
+            - polaris
     selector:
         matchLabels:
             component: metrics-predicted-cost-efficiency-controller
