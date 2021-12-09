@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import json
 import logging
+import os
 
 from flask import Flask, request
 from waitress import serve
@@ -11,6 +12,7 @@ from query import handler as query_handler
 from query.prometheus import PrometheusClient
 from util.config import Config
 from util.context import Context, TfServingConfig
+from util.request import Request
 
 app = Flask(__name__)
 
@@ -20,13 +22,14 @@ client = PrometheusClient.from_env()
 config = Config.from_env()
 tfserving_config = TfServingConfig.from_env()
 
+
 @app.route('/', defaults={'path': ''}, methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 def call_ai_model(path):
     # TODO figure out what needs to be sent
     body = request.get_data(as_text=True)
     if len(body) > 0:
-        body = json.loads(body)
+        body = Request.from_json(body)
     log.info(f'Received request with body: {body}')
 
     ctx = Context(
@@ -48,6 +51,6 @@ def call_ai_model(path):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging._nameToLevel[os.environ.get('LOG_LEVEL', 'DEBUG')])
     port = 5000
     serve(app, host='0.0.0.0', port=port)

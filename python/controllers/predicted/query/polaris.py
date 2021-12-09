@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict
 from typing import Dict, List
 
@@ -6,6 +7,8 @@ import pandas as pd
 from query.prometheus import PrometheusClient
 from util.config import Config
 from util.context import Context
+
+logger = logging.getLogger(__name__)
 
 
 def transform_prom_result_to_list(result: Dict) -> List[float]:
@@ -21,7 +24,12 @@ def handle(ctx: Context):
     client: PrometheusClient = ctx.client
     cfg: Config = ctx.config
     data = defaultdict(list)
-    for key, query in cfg.metrics.items():
+    for key in cfg.requested_metrics:
+        query = cfg.metrics.get(key, None)
+        if query is None:
+            raise ValueError(f'Unknown metric "{key}"')
+        query = query % ("{" + f'target_gvk="{ctx.body.target_gvk}", target_namespace="{ctx.body.target_namespace}"' + "}")
+        logger.debug(f'Send following query to Prometheus: "{query}"')
         result = client.query(query)
         result_list = transform_prom_result_to_list(result)
         if len(result_list) == 0:

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from query.prometheus import PrometheusClient
 from util.config import Config
+from util.request import Request
 
 
 @dataclass
@@ -21,4 +22,4 @@ class Context:
     client: PrometheusClient
     config: Config
     tfserving_config: TfServingConfig
-    body: str
+    body: Request
