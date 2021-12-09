@@ -96,18 +96,16 @@ class CsvMetrics:
                     value = 0
 
                 if type(prom_obj) is Gauge:
-                    prom_obj.labels(target_gvk="sloTarget", target_namespace="sloTargetNamespace",
-                                    metric_prop_key="objPropKey") \
+                    prom_obj.labels(target_gvk="apps/v1/StatefulSet", target_namespace="demo-mesh") \
                         .set(value)
                 elif type(prom_obj) is Histogram:
-                    prom_obj.labels(target_gvk="sloTarget", target_namespace="sloTargetNamespace",
-                                    metric_prop_key="objPropKey") \
+                    prom_obj.labels(target_gvk="apps/v1/StatefulSet", target_namespace="demo-mesh") \
                         .observe(value)
                 else:
                     logging.error(f'Unknown prometheus object type: {type(prom_obj)}')
 
     def prepare_columns(self):
-        labelnames = ['target_namespace', 'target_gvk', 'metric_prop_key']
+        labelnames = ['target_namespace', 'target_gvk']
         prefix = 'polaris_composed'
         self.metrics = [
             ('CPU rate', Gauge(f'{prefix}_cpu_rate', 'CPU rate', labelnames=labelnames)),
