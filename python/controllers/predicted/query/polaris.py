@@ -28,7 +28,8 @@ def handle(ctx: Context):
         query = cfg.metrics.get(key, None)
         if query is None:
             raise ValueError(f'Unknown metric "{key}"')
-        query = query % ("{" + f'target_gvk="{ctx.body.target_gvk}", target_namespace="{ctx.body.target_namespace}"' + "}")
+        # TODO remove demo prefix!
+        query = query % ("{" + f'target_gvk="{ctx.body.target_gvk}", target_namespace="demo-{ctx.body.target_namespace}"' + "}")
         logger.debug(f'Send following query to Prometheus: "{query}"')
         result = client.query(query)
         result_list = transform_prom_result_to_list(result)
