@@ -1,11 +1,11 @@
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { CostEfficiency, CostEfficiencyParams } from '@polaris-sloc/common-mappings';
+import {CostEfficiency, CostEfficiencyParams} from '@polaris-sloc/common-mappings';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ComposedMetricSourceBase, MetricsSource, OrchestratorGateway, Sample } from '@polaris-sloc/core';
+import {ComposedMetricSourceBase, MetricsSource, ObjectKind, OrchestratorGateway, Sample} from '@polaris-sloc/core';
 import axios from 'axios';
-import { Observable } from 'rxjs';
-import { map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
-import { getEnvironmentVariable } from '../../util/environment-var-helper';
+import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {getEnvironmentVariable} from '../../util/environment-var-helper';
 // ToDo:
 // 1. Adapt the list of `supportedSloTargetTypes` in `CostEfficiencyMetricSourceFactory` (see cost-efficiency.metric-source.factory.ts).
 // 2. Adapt the `CostEfficiencyMetricSourceFactory.metricSourceName`, if needed (e.g., if there are multiple sources for CostEfficiencyMetric that differ
@@ -30,7 +30,7 @@ export class CostEfficiencyMetricSource extends ComposedMetricSourceBase<CostEff
 
     getValueStream(): Observable<Sample<CostEfficiency>> {
         return this.getDefaultPollingInterval().pipe(
-            switchMap(() => call(this.baseUrl)),
+            switchMap(() => callPrediction(this.baseUrl, this.params)),
             map(mapResponseToSample),
         );
     }
@@ -40,22 +40,26 @@ interface PredictionApiResponse {
     predictions: number[];
 }
 
-async function call(baseUrl: string): Promise<PredictionApiResponse> {
-    const response = await axios.get<PredictionApiResponse>(baseUrl);
-    console.log(response.data);
+async function callPrediction(baseUrl: string, params: CostEfficiencyParams): Promise<PredictionApiResponse> {
+    const body = {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        target_gvk: ObjectKind.stringify(params.sloTarget),
+        target_namespace: params.namespace,
+        target_name: params.sloTarget.name,
+    };
+    const response = await axios.post<PredictionApiResponse>(baseUrl, body);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return Promise.resolve(response.data);
 }
 
 function mapResponseToSample(response: PredictionApiResponse): Sample<CostEfficiency> {
     console.log(response);
-    const a = {
+    return {
         timestamp: Math.floor(Date.now() / 1000),
         value: {
             costEfficiency: response.predictions[0],
             percentileBetterThanThreshold: -1,
-            totalCost: { currentCostPerHour: -1, accumulatedCostInPeriod: -1 },
+            totalCost: {currentCostPerHour: -1, accumulatedCostInPeriod: -1},
         },
     };
-    return a;
 }
