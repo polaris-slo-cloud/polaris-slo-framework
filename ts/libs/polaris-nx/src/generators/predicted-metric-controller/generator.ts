@@ -81,7 +81,7 @@ function addComposedMetricControllerFiles(host: Tree, options: NormalizedPredict
         appsDir: options.appsDir,
         template: '',
     };
+
     generateFiles(host, path.join(__dirname, 'files/composed-metric-controller'), options.projectRoot, templateOptions);
-    generateFiles(host, path.join(__dirname, 'files/prediction-controller'), options.projectRoot, templateOptions);
     generateTypeScriptDockerfile(host, options);
 }
