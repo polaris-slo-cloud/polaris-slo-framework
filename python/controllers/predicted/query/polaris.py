@@ -21,6 +21,11 @@ def transform_prom_result_to_list(result: Dict) -> List[float]:
 
 
 def handle(ctx: Context):
+    """
+    Reads the requested metrics and maps them to Prometheus keys.
+    Additionally, the Prometheus keys have placeholders to insert labels - which are based on the Request.
+    Returns a DataFrame that contains the data fetched from Prometheus.
+    """
     client: PrometheusClient = ctx.client
     cfg: Config = ctx.config
     data = defaultdict(list)

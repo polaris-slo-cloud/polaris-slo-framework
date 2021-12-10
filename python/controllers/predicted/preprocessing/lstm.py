@@ -28,4 +28,4 @@ def lstm_handle(raw_input_features: pd.DataFrame):
 
     test_X, test_y = values[:1, :-1], values[:, -1]
 
-    return test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
+    return test_X.reshape((test_X.shape[0], 1, test_X.shape[1])).tolist()
