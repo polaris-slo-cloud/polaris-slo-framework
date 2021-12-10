@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: <%= controllerProjectName %>
+    tier: control-plane
+  name: <%= controllerProjectName %>
+  namespace: polaris
+spec:
+  selector:
+    matchLabels:
+      component: <%= controllerProjectName %>
+      tier: control-plane
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: <%= controllerProjectName %>
+        tier: control-plane
+        polaris-controller-type: composed-metric
+    spec:
+      serviceAccountName: <%= controllerProjectName %>
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  # Ensure that the controller is only scheduled on Intel 64-bit nodes.
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+      tolerations:
+        # Ensure that the controller can be scheduled on master nodes.
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+      containers:
+      - image: polarissloc/<%= controllerProjectName %>:latest
+        name: metrics-controller
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+        ports:
+          - name: metrics
+            containerPort: 3000
+        securityContext:
+          privileged: false
+        env:
+          # The hostname and port of the Prometheus service:
+          - name: PROMETHEUS_HOST
+            value: prometheus-release-1-prome-prometheus.default.svc
+          - name: PROMETHEUS_PORT
+            value: '9090'
+          - name: PROMETHEUS_METRICS_ENDPOINT_PORT
+            value: '3000' # If this is changed, the containerPort above needs to be changed accordingly as well.
+          - name: PROMETHEUS_METRICS_ENDPOINT_PATH
+            value: /metrics
+          # Workaround for an issue with kubernetes-client when using IPv6 (https://github.com/kubernetes-client/javascript/issues/599)
+          - name: KUBERNETES_SERVICE_HOST
+            value: kubernetes.default.svc
+          - name: PREDICTION_SERVICE_BASE_URL
+            value: 'http://0.0.0.0:5000'
+      - image: aicg4t1/predicted-metric-container:0.6.3
+        name: predicted-metrics-controller
+        ports:
+          - name: port
+            containerPort: 5000
+        env:
+          - name: PROMETHEUS_HOST
+            value: prometheus-release-1-prome-prometheus.default.svc
+          - name: PROMETHEUS_PORT
+            value: '9090'
+          - name: TFSERVING_URL
+            # TODO modify this to point to your Tensorflow Serving Service (or the selected Inference Service)
+            value: 'tfserving.default.svc'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: polaris
+  name: <%= controllerProjectName %>
+  labels:
+    component: <%= controllerProjectName %>
+    tier: control-plane
+    polaris-controller-type: composed-metric
+spec:
+  selector:
+    component: <%= controllerProjectName %>
+    tier: control-plane
+    polaris-controller-type: composed-metric
+  ports:
+    - name: metrics
+      port: 3000
+      targetPort: metrics

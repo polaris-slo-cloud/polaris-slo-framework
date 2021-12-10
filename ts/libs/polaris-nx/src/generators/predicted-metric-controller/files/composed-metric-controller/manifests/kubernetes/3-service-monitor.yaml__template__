@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  namespace: polaris
+  name: <%= controllerProjectName %>
+  labels:
+    component: <%= controllerProjectName %>
+    tier: control-plane
+    polaris-controller-type: composed-metric
+    # Needed because of https://github.com/prometheus-operator/prometheus-operator/issues/1470#issuecomment-397500048
+    release: prometheus-release-1
+spec:
+  namespaceSelector:
+    matchNames:
+      - polaris
+  selector:
+    matchLabels:
+      component: <%= controllerProjectName %>
+      tier: control-plane
+      polaris-controller-type: composed-metric
+  endpoints:
+    - targetPort: metrics
+      interval: 20s
