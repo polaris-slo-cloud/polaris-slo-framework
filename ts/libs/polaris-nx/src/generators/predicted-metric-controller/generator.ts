@@ -8,7 +8,7 @@ import {
     readProjectConfiguration,
     updateProjectConfiguration,
 } from '@nrwl/devkit';
-import { applicationGenerator } from '@nrwl/node';
+import {applicationGenerator} from '@nrwl/node';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,
@@ -20,14 +20,12 @@ import {
     addPolarisDependenciesToPackageJson,
     changeBuildDependencyBundling,
     getComposedMetricTypeNames,
+    getContainerImageName,
     normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
 } from '../../util';
-import { addCommonWorkspaceRootFiles, generateTypeScriptDockerfile } from '../common';
-import {
-    NormalizedPredictedMetricControllerGeneratorSchema,
-    PredictedMetricControllerGeneratorSchema,
-} from './schema';
+import {addCommonWorkspaceRootFiles, generateTypeScriptDockerfile} from '../common';
+import {NormalizedPredictedMetricControllerGeneratorSchema, PredictedMetricControllerGeneratorSchema} from './schema';
 
 /**
  * Generates a new Composed Metric Controller.
@@ -52,6 +50,18 @@ const generateComposedMetricController: Generator<PredictedMetricControllerGener
     const projectConfig = readProjectConfiguration(host, normalizedOptions.projectName);
     changeBuildDependencyBundling(projectConfig);
     addDockerBuildConfig(projectConfig, normalizedOptions);
+    projectConfig.targets['docker-build'] = {
+        executor: '@nrwl/workspace:run-commands',
+        options: {
+            commands: [
+                // eslint-disable-next-line max-len
+                `docker build -f ./${normalizedOptions.projectRoot}/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=${normalizedOptions.projectName} -t ${getContainerImageName(normalizedOptions)}-composed-metric-controller:latest .`,
+                // eslint-disable-next-line max-len
+                `docker build -f ./${normalizedOptions.projectRoot}/prediction-controller/Dockerfile -t ${getContainerImageName(normalizedOptions)}-prediction-controller:latest ./apps/${normalizedOptions.projectName}/prediction-controller`,
+            ],
+            parallel: false,
+        },
+    };
     addDeployTarget(projectConfig, normalizedOptions);
     updateProjectConfiguration(host, normalizedOptions.projectName, projectConfig);
 

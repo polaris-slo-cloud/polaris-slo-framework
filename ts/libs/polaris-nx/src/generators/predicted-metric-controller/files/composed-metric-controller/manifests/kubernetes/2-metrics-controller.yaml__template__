@@ -36,7 +36,7 @@ spec:
           operator: Exists
           effect: NoSchedule
       containers:
-      - image: polarissloc/<%= controllerProjectName %>:latest
+      - image: polarissloc/<%= controllerProjectName %>-composed-metric-controller:latest
         name: metrics-controller
         resources:
           limits:
@@ -62,8 +62,8 @@ spec:
             value: kubernetes.default.svc
           - name: PREDICTION_SERVICE_BASE_URL
             value: 'http://0.0.0.0:5000'
-      - image: aicg4t1/predicted-metric-container:0.6.3
-        name: predicted-metrics-controller
+      - image: polarissloc/<%= controllerProjectName %>-prediction-controller:latest
+        name: prediction-controller
         ports:
           - name: port
             containerPort: 5000
@@ -74,7 +74,7 @@ spec:
             value: '9090'
           - name: TFSERVING_URL
             # TODO modify this to point to your Tensorflow Serving Service (or the selected Inference Service)
-            value: 'tfserving.default.svc'
+            value: tfserving.default.svc
 ---
 apiVersion: v1
 kind: Service
