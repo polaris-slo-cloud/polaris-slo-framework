@@ -26,7 +26,7 @@ tfserving_config = TfServingConfig.from_env()
 @app.route('/', defaults={'path': ''}, methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 def call_ai_model(path):
-    # TODO figure out what needs to be sent
+
     body = request.get_data(as_text=True)
     if len(body) > 0:
         body = Request.from_json(body)
