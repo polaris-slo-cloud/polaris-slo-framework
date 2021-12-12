@@ -26,6 +26,7 @@ export function createGenerateCommand(cli: PolarisCli): CommandModule<any, any> 
                     'composed-metric-type',
                     'composed-metric-controller',
                     'metrics-alert',
+                    'predicted-metric-controller',
                 ],
             })
             .positional(NAME, {
