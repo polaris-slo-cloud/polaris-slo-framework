@@ -1,5 +1,5 @@
 import { KubeConfig } from '@kubernetes/client-node';
-import { <%= compMetricType %>, <%= compMetricMapping %> } from '<%= compMetricTypePkg %>';
+import { <%= compMetricType %>, <%= compMetricMapping %>, initPolarisLib } from '<%= compMetricTypePkg %>';
 import { Logger } from '@polaris-sloc/core';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
@@ -18,6 +18,7 @@ const promPort = getEnvironmentVariable('PROMETHEUS_PORT', convertToNumber) || 9
 initPrometheusQueryBackend(polarisRuntime, { host: promHost, port: promPort }, true);
 
 // Initialize any required Polaris mapping or composed metric libraries here.
+initPolarisLib(polarisRuntime);
 
 // Create the Prometheus scrapable endpoint.
 const metricsEndpointPath = getEnvironmentVariable('PROMETHEUS_METRICS_ENDPOINT_PATH');
