@@ -21,9 +21,9 @@ export class <%= compMetricSource %> extends ComposedMetricSourceBase<<%= compMe
 
     constructor(private params: <%= compMetricParams %>, metricsSource: MetricsSource, orchestrator: OrchestratorGateway) {
         super(metricsSource, orchestrator);
-        this.baseUrl = getEnvironmentVariable('PREDICTION_SERVICE_BASE_URL');
+        this.baseUrl = getEnvironmentVariable('AI_PROXY_BASE_URL');
         if (this.baseUrl == null) {
-           this.baseUrl = 'ai-proxy:5000';
+           this.baseUrl = '0.0.0.0:5000';
         }
         console.log(`Using ${this.baseUrl} as baseUrl.`);
     }

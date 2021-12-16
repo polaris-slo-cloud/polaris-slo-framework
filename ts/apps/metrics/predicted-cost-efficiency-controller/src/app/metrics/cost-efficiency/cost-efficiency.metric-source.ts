@@ -21,7 +21,7 @@ export class CostEfficiencyMetricSource extends ComposedMetricSourceBase<CostEff
 
     constructor(private params: CostEfficiencyParams, metricsSource: MetricsSource, orchestrator: OrchestratorGateway) {
         super(metricsSource, orchestrator);
-        this.baseUrl = getEnvironmentVariable('PREDICTION_SERVICE_BASE_URL');
+        this.baseUrl = getEnvironmentVariable('AI_PROXY_BASE_URL');
         if (this.baseUrl == null) {
             this.baseUrl = 'predicted-metrics-container:5000';
         }
