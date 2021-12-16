@@ -1,4 +1,4 @@
 version=${1:-latest}
-repo=polaris
-docker build -t "${repo}"/predicted-metric-container:"${version}" .
-docker push "${repo}"/predicted-metric-container:"${version}"
+repo=polarissloc
+docker build -t "${repo}"/ai-proxy:"${version}" .
+docker push "${repo}"/ai-proxy:"${version}"

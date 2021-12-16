@@ -1,1 +1,1 @@
-docker build -t polaris/predicted-metric-container:latest .
+docker build -t polarissloc/ai-proxy:latest .

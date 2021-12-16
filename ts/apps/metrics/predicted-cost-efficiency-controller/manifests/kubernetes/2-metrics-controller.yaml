@@ -62,8 +62,8 @@ spec:
                         value: kubernetes.default.svc
                       - name: PREDICTION_SERVICE_BASE_URL
                         value: 'http://0.0.0.0:5000'
-                - image: aicg4t1/predicted-metric-container:0.6.3
-                  name: predicted-metrics-controller
+                - image: polarissloc/ai-proxy:0.6.3
+                  name: ai-proxy
                   ports:
                     - name: port
                       containerPort: 5000

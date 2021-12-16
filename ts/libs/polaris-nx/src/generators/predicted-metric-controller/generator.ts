@@ -57,7 +57,7 @@ const generateComposedMetricController: Generator<PredictedMetricControllerGener
                 // eslint-disable-next-line max-len
                 `docker build -f ./${normalizedOptions.projectRoot}/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=${normalizedOptions.projectName} -t ${getContainerImageName(normalizedOptions)}-composed-metric-controller:latest .`,
                 // eslint-disable-next-line max-len
-                `docker build -f ./${normalizedOptions.projectRoot}/prediction-controller/Dockerfile -t ${getContainerImageName(normalizedOptions)}-prediction-controller:latest ./apps/${normalizedOptions.projectName}/prediction-controller`,
+                `docker build -f ./${normalizedOptions.projectRoot}/ai-proxy/Dockerfile -t ${getContainerImageName(normalizedOptions)}-ai-proxy:latest ./apps/${normalizedOptions.projectName}/ai-proxy/ .`,
             ],
             parallel: false,
         },
