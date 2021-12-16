@@ -1,6 +1,9 @@
-import { ComposedMetricSourceBase, MetricsSource, OrchestratorGateway, Sample } from '@polaris-sloc/core';
+import { ComposedMetricSourceBase, MetricsSource, ObjectKind, OrchestratorGateway, Sample } from '@polaris-sloc/core';
 import { <%= compMetricValueType %>, <%= compMetricParams %> } from '<%= compMetricTypePkg %>';
-import { Observable } from 'rxjs';
+import axios from 'axios';
+import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {getEnvironmentVariable} from '../../util/environment-var-helper';
 
 // ToDo:
 // 1. Adapt the list of `supportedSloTargetTypes` in `<%= compMetricSourceFactory %>` (see <%= compMetricSourceFactoryFileName %>.ts).
