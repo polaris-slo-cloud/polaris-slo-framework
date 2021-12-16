@@ -32,11 +32,13 @@ initCostEfficiencyMetrics(polarisRuntime);
 const sloControlLoop = polarisRuntime.createSloControlLoop();
 sloControlLoop.microcontrollerFactory.registerFactoryFn(CostEfficiencySloMappingSpec, () => new CostEfficiencySlo());
 
-// Create an SloEvaluator and start the control loop with an interval of 20 seconds.
+// Create an SloEvaluator and start the control loop with an interval read from the SLO_CONTROL_LOOP_INTERVAL_MSEC environment variable (default is 20 seconds).
 const sloEvaluator = polarisRuntime.createSloEvaluator();
+const intervalMsec = getEnvironmentVariable('SLO_CONTROL_LOOP_INTERVAL_MSEC', convertToNumber) || 20000
+Logger.log(`Starting SLO control loop with an interval of ${intervalMsec} milliseconds.`);
 sloControlLoop.start({
     evaluator: sloEvaluator,
-    interval$: interval(20000),
+    interval$: interval(intervalMsec),
 });
 
 // Create a WatchManager and watch the supported SLO mapping kinds.
