@@ -73,7 +73,7 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
 
     return {
         names: normalizedNames,
-        className: `${normalizedNames.className}`,
+        className: eStratNames.eStratType,
         projectName: options.project,
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
