@@ -9,7 +9,7 @@ export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSch
 
     return {
         names: normalizedNames,
-        className: `${normalizedNames.className}SloMapping`,
+        className: sloNames.sloMappingType,
         projectName: options.project,
         projectSrcRoot: projectConfig.sourceRoot,
         destDir: joinPathFragments('lib', options.directory),
