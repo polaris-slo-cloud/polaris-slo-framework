@@ -1,5 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { <%= eStratKind %>, <%= initPolarisLibFn %> as initMappingsLib } from '<%= eStratTypePkg %>';
+import { Logger } from '@polaris-sloc/core';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { <%= eStratControllerName %> } from './app/elasticity';
 
@@ -17,4 +18,4 @@ manager.startWatching({
     kindsToWatch: [
         { kind: new <%= eStratKind %>(), controller: new <%= eStratControllerName %>(polarisRuntime) },
     ],
-}).catch(error => void console.error(error))
+}).catch(error => void Logger.error(error));

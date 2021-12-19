@@ -1,5 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { <%= sloMappingType %>, <%= sloMappingSpecType %>, <%= initPolarisLibFn %> as initSloMappingsLib } from '<%= sloMappingTypePkg %>';
+import { Logger } from '@polaris-sloc/core';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
