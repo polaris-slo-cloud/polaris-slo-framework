@@ -13,10 +13,11 @@ rm -rf "$OUTPUT"
 # Build the projects.
 INPUT_YAML_FILES=(
     # CRDs
-    "go/config/crd/bases/elasticity.polaris-slo-cloud.github.io_horizontalelasticitystrategies.yaml"
-    "go/config/crd/bases/elasticity.polaris-slo-cloud.github.io_verticalelasticitystrategies.yaml"
-    "go/config/crd/bases/slo.polaris-slo-cloud.github.io_costefficiencyslomappings.yaml"
-    "go/config/crd/bases/slo.polaris-slo-cloud.github.io_cpuusageslomappings.yaml"
+    "ts/crds/kubernetes/costefficiencymetricmappings.metrics.polaris-slo-cloud.github.io.yaml"
+    "ts/crds/kubernetes/costefficiencyslomappings.slo.polaris-slo-cloud.github.io.yaml"
+    "ts/crds/kubernetes/cpuusageslomappings.slo.polaris-slo-cloud.github.io.yaml"
+    "ts/crds/kubernetes/horizontalelasticitystrategies.elasticity.polaris-slo-cloud.github.io.yaml"
+    "ts/crds/kubernetes/verticalelasticitystrategies.elasticity.polaris-slo-cloud.github.io.yaml"
 
     # Horizontal Elasticity Strategy controller
     "ts/apps/elasticity/horizontal-elasticity-strategy-controller/manifests/1-rbac.yaml"
