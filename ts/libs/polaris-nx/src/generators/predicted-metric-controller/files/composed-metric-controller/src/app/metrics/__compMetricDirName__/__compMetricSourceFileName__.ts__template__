@@ -6,11 +6,12 @@ import {map, switchMap} from 'rxjs/operators';
 import {getEnvironmentVariable} from '../../util/environment-var-helper';
 
 // ToDo:
-// 1. Adapt the list of `supportedSloTargetTypes` in `<%= compMetricSourceFactory %>` (see <%= compMetricSourceFactoryFileName %>.ts).
-// 2. Adapt the `<%= compMetricSourceFactory %>.metricSourceName`, if needed (e.g., if there are multiple sources for <%= compMetricType %> that differ
+// 1. Insert properties in the PredictionApiResponse and implement the mapResponseToSample function
+// 2. Adapt the list of `supportedSloTargetTypes` in `<%= compMetricSourceFactory %>` (see <%= compMetricSourceFactoryFileName %>.ts).
+// 3. Adapt the `<%= compMetricSourceFactory %>.metricSourceName`, if needed (e.g., if there are multiple sources for <%= compMetricType %> that differ
 //    based on the supported SloTarget types).
-// 3. Implement `<%= compMetricSource %>.getValueStream()` to compute the metric.
-// 4. Adapt the `release` label in `../../../../manifests/kubernetes/3-service-monitor.yaml` to ensure that Prometheus will scrape this controller.
+// 4. Implement `<%= compMetricSource %>.getValueStream()` to compute the metric.
+// 5. Adapt the `release` label in `../../../../manifests/kubernetes/3-service-monitor.yaml` to ensure that Prometheus will scrape this controller.
 
 /**
  * Computes the `<%= compMetricValueType %>` composed metric.
