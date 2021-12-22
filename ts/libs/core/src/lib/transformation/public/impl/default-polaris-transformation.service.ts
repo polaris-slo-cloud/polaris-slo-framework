@@ -1,4 +1,4 @@
-import { IndexByKey, JsonSchema,  PolarisConstructor, cloneDeepWithoutExcluded } from '../../../util';
+import { JsonSchema,  PolarisConstructor, cloneDeepWithoutExcluded } from '../../../util';
 import { PolarisMetadataUtils, PolarisTransformationMetadata } from '../../internal';
 import { ObjectKind, PolarisTransformationConfig, PolarisTransformationServiceManager, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from './transformers';
@@ -12,7 +12,7 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
 
     private _defaultTransformer: PolarisTransformer<any, any> = new DefaultTransformer<any>();
 
-    private knownObjectKinds: IndexByKey<PolarisConstructor<any>> = {};
+    private knownObjectKinds: Record<string, PolarisConstructor<any>> = {};
 
     get defaultTransformer(): PolarisTransformer<any, any> {
         return this._defaultTransformer;

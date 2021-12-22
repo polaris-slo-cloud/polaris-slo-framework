@@ -1,5 +1,4 @@
 import { ElasticityStrategy, SloTarget } from '../../../model';
-import { IndexByKey } from '../../../util';
 
 /**
  * This interface must be implemented by every controller that is responsible for an `ElasticityStrategy`.
@@ -12,7 +11,7 @@ import { IndexByKey } from '../../../util';
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
  * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export interface ElasticityStrategyController<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> {
+export interface ElasticityStrategyController<O, T extends SloTarget = SloTarget, C = Record<string, any>> {
 
     /**
      * Checks if an action is required for the specified `elasticityStrategy` instance.

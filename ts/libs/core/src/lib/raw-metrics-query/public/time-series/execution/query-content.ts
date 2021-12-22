@@ -3,7 +3,6 @@
  * Describes the type of a certain query content, i.e., the action that is executed.
  */
 
-import { IndexByKey } from '../../../../util';
 import { LabelFilter, LabelGroupingConfig, TimeRange, TimeSeriesQuery, ValueFilter } from '../query-model';
 import { JoinConfig } from '../query-model/join-config';
 import { BinaryOperator } from './binary-operator';
@@ -139,7 +138,7 @@ export interface FunctionQueryContent extends QueryContent {
 
     functionName: DBFunctionName;
 
-    params?: IndexByKey<string>;
+    params?: Record<string, string>;
 
 }
 
@@ -167,7 +166,7 @@ export interface AggregateByGroupQueryContent extends QueryContent {
     /**
      * Additional parameters for the aggregation function.
      */
-    params?: IndexByKey<string>;
+    params?: Record<string, string>;
 
 }
 

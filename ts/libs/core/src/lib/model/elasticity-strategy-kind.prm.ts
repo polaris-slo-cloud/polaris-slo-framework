@@ -1,4 +1,4 @@
-import { IndexByKey, TypeFn } from '../util';
+import { TypeFn } from '../util';
 import { ObjectKind } from './object-kind.prm';
 import { SloTarget } from './slo-target.prm';
 
@@ -10,7 +10,7 @@ import { SloTarget } from './slo-target.prm';
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
  * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategyKind<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> extends ObjectKind {
+export class ElasticityStrategyKind<O, T extends SloTarget = SloTarget, C = Record<string, any>> extends ObjectKind {
 
     /**
      * This property is needed to trigger type checking for the `O` parameter

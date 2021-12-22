@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { SloMapping, SloMappingSpec } from '../../../model';
 import { MicrocontrollerFactory, WatchEventsHandler } from '../../../orchestrator';
-import { IndexByKey } from '../../../util';
 import { ServiceLevelObjective } from '../common';
 import { SloEvaluator } from './slo-evaluator';
 
@@ -99,7 +98,7 @@ export interface SloControlLoop {
     /**
      * @returns A map of all SLOs that are currently part of this control loop.
      */
-    getAllSlos(): IndexByKey<ServiceLevelObjective<any, any>>;
+    getAllSlos(): Record<string, ServiceLevelObjective<any, any>>;
 
     /**
      * Starts the control loop.

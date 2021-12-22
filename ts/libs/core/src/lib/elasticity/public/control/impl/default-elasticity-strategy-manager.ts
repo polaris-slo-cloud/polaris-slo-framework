@@ -1,7 +1,7 @@
 import { ObjectKind, SloTarget } from '../../../../model';
 import { ObjectKindWatchHandlerPair, WatchManager } from '../../../../orchestrator';
 import { PolarisRuntime } from '../../../../runtime';
-import { IndexByKey, executeSafely } from '../../../../util';
+import { executeSafely } from '../../../../util';
 import {
     ELASTICITY_STRATEGY_DEFAULT_TIMEOUT_MS,
     ElasticityStrategyKindControllerPair,
@@ -57,7 +57,7 @@ export class DefaultElasticityStrategyManager implements ElasticityStrategyManag
         this.watchedKinds.clear();
     }
 
-    getWatchedElasticityStrategyKinds(): ElasticityStrategyKindControllerPair<any, SloTarget, IndexByKey<any>>[] {
+    getWatchedElasticityStrategyKinds(): ElasticityStrategyKindControllerPair<any, SloTarget, Record<string, any>>[] {
         const ret: ElasticityStrategyKindControllerPair[] = [];
         this.watchedKinds.forEach(pair => {
             ret.push({

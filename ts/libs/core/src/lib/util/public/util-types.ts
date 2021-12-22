@@ -1,27 +1,6 @@
 import { Subscribable } from 'rxjs';
 
 /**
- * Convenience type for a map object.
- */
-export type Index<K extends string | number, V> = {
-    [P in K]: V;
-}
-
-/**
- * Convenience type for a map object with string keys.
- */
-export interface IndexByKey<V> {
-    [name: string]: V;
-}
-
-/**
- * Convenience type for a map object with numeric keys.
- */
-export interface IndexById<V> {
-    [id: number]: V;
-}
-
-/**
  * A class or constructor function that creates an instance of `T`.
  */
 export type Constructor<T> = new(...args: any[]) => T

@@ -1,5 +1,4 @@
 import { ElasticityStrategyKind, SloTarget } from '../../../model';
-import { IndexByKey } from '../../../util';
 import { ElasticityStrategyController } from '../common';
 
 /** The default timeout period for elasticity strategy executions. */
@@ -8,7 +7,7 @@ export const ELASTICITY_STRATEGY_DEFAULT_TIMEOUT_MS = 60 * 1000;
 /**
  * Maps an `ElasticityStrategyKind` to the `ElasticityStrategyController` that is responsible for it.
  */
-export interface ElasticityStrategyKindControllerPair<O = any, T extends SloTarget = SloTarget, C = IndexByKey<any>> {
+export interface ElasticityStrategyKindControllerPair<O = any, T extends SloTarget = SloTarget, C = Record<string, any>> {
 
     /** The type of elasticity strategy. */
     kind: ElasticityStrategyKind<O, T, C>;

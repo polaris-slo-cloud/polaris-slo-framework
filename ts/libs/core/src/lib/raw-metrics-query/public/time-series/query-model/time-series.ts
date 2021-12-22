@@ -1,4 +1,3 @@
-import { IndexByKey } from '../../../../util';
 import { DataType } from '../../generic/data-types';
 import { Sample } from './sample';
 
@@ -20,7 +19,7 @@ export interface TimeSeries<T> {
     /**
      * Map of labels and their values (e.g., method='POST', node='node0')
      */
-    labels: IndexByKey<string>;
+    labels: Record<string, string>;
 
     /**
      * The length of the interval (in milliseconds) between two adjacent the samples.
