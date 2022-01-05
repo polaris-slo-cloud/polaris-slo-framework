@@ -5,8 +5,8 @@ import {
     KubeConfig,
     V1CustomResourceDefinition,
 } from '@kubernetes/client-node';
-import { SloMappingBase } from '@polaris-sloc/core';
-import { snakeCase } from 'change-case';
+import {SloMappingBase} from '@polaris-sloc/core';
+import {snakeCase} from 'change-case';
 
 export async function readKubernetesSecret(kubeConfig: KubeConfig, name: string, namespace: string, key: string): Promise<string> {
     const client = kubeConfig.makeApiClient(CoreV1Api);
@@ -70,9 +70,10 @@ function buildLabels(sloMappingObject: SloMappingBase<any>, crd: V1CustomResourc
     };
 }
 
-export async function listAllComposedMetrics(kubeConfig: KubeConfig): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {
+export async function listAllComposedMetrics(composedMetricTypePkg: string, composedMetricType: string, requiredNamespace: string, kubeConfig: KubeConfig): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {
     const sloGroup = 'slo.polaris-slo-cloud.github.io';
-    const metricsGroup = 'metrics.polaris-slo-cloud.github.io';
+    const mappingType = `${composedMetricType.toLowerCase()}metricmappings`;
+    const metricsGroup = `${mappingType}.metrics.polaris-slo-cloud.github.io`;
     const composedMetricsPerSlo: [SloMappingBase<any>, PrometheusComposedMetric[]][] = [];
     const crds = [];
     const metricsVersion = 'v1';
@@ -85,7 +86,8 @@ export async function listAllComposedMetrics(kubeConfig: KubeConfig): Promise<[S
 // filter crds that belong to slo group
     for (const crdsKey of allCrds.items) {
         const group = crdsKey.spec.group;
-        if (group === sloGroup) {
+        const namespace = crdsKey.metadata.namespace;
+        if (group === sloGroup && namespace === requiredNamespace) {
             crds.push(crdsKey);
         }
     }
@@ -94,7 +96,8 @@ export async function listAllComposedMetrics(kubeConfig: KubeConfig): Promise<[S
         const objects = await getSloMappingObjects(crd, customObjectsApi);
         for (const sloObject of objects) {
             const labels = buildLabels(sloObject, crd);
-            const composedMetrics = await listComposedMetricsWithLabels(kubeConfig, metricsGroup, metricsVersion, labels);
+            const composedMetrics = await listComposedMetricsWithLabels(kubeConfig, metricsGroup, metricsVersion, labels,
+                composedMetricTypePkg, composedMetricType);
             composedMetricsPerSlo.push([sloObject, composedMetrics]);
         }
     }
@@ -104,7 +107,7 @@ export async function listAllComposedMetrics(kubeConfig: KubeConfig): Promise<[S
 
 // get all metric mapping crds
 async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: string, version: string,
-                                             labels: Record<string, string>):Promise<PrometheusComposedMetric[]> {
+                                             labels: Record<string, string>, composedMetricTypePkg: string, composedMetricType: string): Promise<PrometheusComposedMetric[]> {
     const apiextensionsV1Api = kubeConfig.makeApiClient(ApiextensionsV1Api);
     const customObjectsApi = kubeConfig.makeApiClient(CustomObjectsApi);
 
@@ -140,6 +143,7 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: stri
         /* eslint-disable @typescript-eslint/no-unsafe-member-access */
         /* eslint-disable @typescript-eslint/restrict-template-expressions */
         /* eslint-disable @typescript-eslint/no-unsafe-call */
+        const metricPropKeys = await readMetricPropKeys(composedMetricTypePkg, composedMetricType);
         const obj = {
             sloName: metricMapping.metadata.labels['polaris-slo-cloud.github.io/owner-name'],
             sloKind: metricMapping.metadata.labels['polaris-slo-cloud.github.io/owner-kind'],
@@ -147,10 +151,16 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: stri
             targetGvk: `${metricMapping.spec.targetRef.apiVersion}/${metricMapping.spec.targetRef.kind}`,
             targetNamespace: metricMapping.metadata.namespace,
             targetName: metricMapping.spec.targetRef.name,
-            // TODO replace this when finding a way to get metric prop keys for MetricMapping
-            metricPropKeys: ['costEfficiency', 'percentileBetterThanThreshold', 'totalCost.currentCostPerHour', 'totalCost.accumulatedCostInPeriod'],
+            metricPropKeys,
         };
         prometheusMetrics.push(obj);
     }
     return prometheusMetrics;
+}
+
+async function readMetricPropKeys(composedMetricTypePkg: string, composedMetricType: string): Promise<string[]> {
+
+
+    return Promise.resolve(['costEfficiency', 'percentileBetterThanThreshold', 'totalCost.currentCostPerHour',
+        'totalCost.accumulatedCostInPeriod']);
 }

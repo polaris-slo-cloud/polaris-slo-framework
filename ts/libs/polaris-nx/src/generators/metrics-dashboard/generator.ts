@@ -13,6 +13,9 @@ import { GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSch
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
     const normalizedName = names(options.name).name;
+    const compMetricTypePkg = options.compMetricTypePkg;
+    const compMetricType = options.compMetricType;
+    const namespace = options.namespace;
     const panelType = options.panelType || 'graph';
     const datasource = options.dashboard || 'default';
     const refresh = options.refresh || '5s';
@@ -40,6 +43,9 @@ async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSc
 
     return {
         name: normalizedName,
+        compMetricTypePkg,
+        compMetricType,
+        namespace,
         datasource,
         panelType,
         refresh,
@@ -146,8 +152,12 @@ function generateDashboardForSlo(slo: SloMappingBase<any>, composedMetrics: Prom
             const row = new Row({
                 title: metricPropKey,
             });
-            const promQuery = `${composedMetric.timeSeriesName}{target_name="${composedMetric.targetName}", \
-            metric_prop_key="${metricPropKey}", target_gvk="${composedMetric.targetGvk}", target_namespace="${composedMetric.targetNamespace}"}`;
+            const promQuery = `${composedMetric.timeSeriesName}{
+                target_name="${composedMetric.targetName}",
+                metric_prop_key="${metricPropKey}",
+                target_gvk="${composedMetric.targetGvk}",
+                target_namespace="${composedMetric.targetNamespace}"
+            }`;
             const panel = createPanel(promQuery, options.panelType, options.asRate, metricPropKey);
             row.addPanel(panel);
             rows.push(row);

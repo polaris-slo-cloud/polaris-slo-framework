@@ -1,5 +1,8 @@
 export interface GrafanaDashboardGeneratorSchema {
     name: string;
+    compMetricType: string;
+    compMetricTypePkg: string;
+    namespace: string;
     asRate?: boolean;
     panelType?: string;
     refresh?: string;
@@ -39,5 +42,15 @@ export interface GrafanaDashboardGeneratorNormalizedSchema {
 
     /** Signals whether to export dashboard to JSON or call the Grafana REST API **/
     toDisk: boolean;
+
+    /** The name of the Composed Metric Type class **/
+    compMetricType: string;
+
+    /** The name of the npm package that contains the Composed Metric Type **/
+    compMetricTypePkg: string;
+
+    /** The namespace in which the deployed SloMappings reside **/
+    namespace: string;
+
 }
 

@@ -14,6 +14,24 @@
             },
             "x-prompt": "What name would you like to use for the dashboard?"
         },
+        "compMetricTypePkg": {
+            "type": "string",
+            "description": "The name of the npm package that contains the Composed Metric Type.",
+            "alias": "cp",
+            "x-prompt": "What is the name of the npm package that contains the Composed Metric Type?"
+        },
+        "compMetricType": {
+            "type": "string",
+            "description": "The name of the Composed Metric Type class.",
+            "alias": "ct",
+            "x-prompt": "What is the name of the Composed Metric Type class?"
+        },
+        "namespace": {
+            "type": "string",
+            "description": "The namespace in which the deployed SloMappings reside",
+            "alias": "n",
+            "x-prompt": "Which namespace should be used?"
+        },
         "panelType": {
             "type": "string",
             "description": "Specify the panel type for the metric (i.e., graph, gauge, bargauge, table, stat)",
@@ -56,6 +74,7 @@
         }
     },
     "required": [
-        "name"
+        "name",
+        "compMetricTypePkg"
     ]
 }
