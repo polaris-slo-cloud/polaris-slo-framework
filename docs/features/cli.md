@@ -70,3 +70,29 @@ The following parameters are available (`name`/`dashboardId`, and `panel` are ma
 Example usage:
 
     polaris-cli g metrics-alert wPD1Cn4nz --panel='"Process CPU seconds total"'
+
+## Predicted Metric Controller
+
+The CLI additionally allows to generate a component (Predicted Metric Controller) publishes predictions into the monitoring system.
+The component consists of two programs that are scaffolded by the CLI and deployed in an atomic unit.
+
+The first one is a _Composed Metric Controller_ that calls the second component, the _AI Proxy_ via REST to fetch the next prediction and transforms it into 
+the selected _Composed Metric Type_.
+
+The _AI Proxy_ queries raw data from the monitoring system, preprocesses it and calls an external AI service (i.e., [TF Serving](https://www.tensorflow.org/tfx/guide/serving)) and
+returns the prediction.
+
+The scaffolded code provides a basic implementation but leaves two main parts empty for custom logic:
+1. In the _Composed Metric Controller_: the mapping of the AI prediction into the _Composed Metric Type_
+2. In the _AI Proxy_:
+   1. The metrics that should be fetched
+   2. The preprocessing of the raw data into a format that is suitable for the deployed AI model
+
+To generate a Predicted Metric Controller, the CLI offers the following parameters:
+* `name` - the name of the controller
+* `compMetricTypePkg` - the name of the npm package that contains the Composed Metric Type
+* `compMetricType` - the name of the Composed Metric Type class
+* `tags` - add tags to the project (used for linting) (**optional**)
+* `directory` - a directory where the project is placed (**optional**)
+
+ 
