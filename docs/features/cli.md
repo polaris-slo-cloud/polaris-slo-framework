@@ -2,11 +2,10 @@
 
 ## Metrics Dashboard Generation
 
-The CLI provides means to generate metrics dashboards from scratch that display relevant metrics. In the current state,
-a static metric is used but can be displayed in different panel types (i.e., gauge).
+The CLI provides means to generate metrics dashboards from scratch that display relevant metrics.
+The CLI will scrape from the connected Kubernetes instance all SloMappings that correspond to the given Composed Metric Type and will
+automatically create for each property an own panel.
 Further, the current implementation is configured to work with Grafana but we work on modularizing the internals to allow support for other implementations/dashboards. 
-
-Future versions of this feature will be able to extract relevant metrics from deployed SLOMappings.
 
 ### Usage
 
@@ -16,6 +15,9 @@ The following parameters can be used (but only `name` is mandatory, in which cas
 file).
 
 * `name`: name of the dashboard
+* `compMetricType`: the name of the Composed Metric Type class
+* `compMetricTypePkg`: the name of the npm package that contains the Composed Metric Type
+* `namespace` The namespace in which the deployed SloMappings reside
 * `panelType`: select the type of panel used for the (currently) static metric (available: `graph`, `gauge`, `bargauge`
   , `table`, `stat`)
     * default: `stat`
