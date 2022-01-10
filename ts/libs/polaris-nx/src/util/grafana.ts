@@ -52,7 +52,7 @@ export function getPanels(dashboard: typeof Dashboard): typeof Panel[] {
  * @param overwrite
  * @param folderUid
  */
-export function createDashboardApi(options: { name: string, bearerToken: string, grafanaUrl: string },
+export async function createDashboardApi(options: { name: string, bearerToken: string, grafanaUrl: string },
                                    dashboard: string, overwrite?: boolean, folderUid?: string): Promise<void> {
     const body = {
         dashboard,
@@ -68,14 +68,19 @@ export function createDashboardApi(options: { name: string, bearerToken: string,
         timeout: 5000,
     };
     const url = `${options.grafanaUrl}/api/dashboards/db`;
-    return axios.post<GrafanaDashboardDbResponse>(url, body, config).then(response => {
-        const data: GrafanaDashboardDbResponse = response.data;
-        console.log(`Dashboard created successfully: ${options.grafanaUrl}${data.url}`);
-    }).catch((error: GrafanaDashboardDbError) => {
-        const message = error.response.data.message;
-        const status = error.response.data.status;
-        console.error(`Creating dashboard failed: Status: ${status} - Message: ${message}`);
-    });
+    try {
+        const response = await axios.post<GrafanaDashboardDbResponse>(url, body, config);
+        if (response.status !== 200) {
+            const message = response.statusText;
+            const status = response.status;
+            console.error(`Creating dashboard failed: Status: ${status} - Message: ${message}`);
+        }
+    } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            console.error(`Creating dashboard failed: ${e.message}`);
+
+    }
+    return Promise.resolve();
 }
 
 export async function getDashboard(dashboardId: string, grafanaUrl: string, bearerToken: string): Promise<string> {

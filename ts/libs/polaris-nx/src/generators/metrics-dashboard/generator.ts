@@ -198,9 +198,11 @@ export default async function (host: Tree, options: GrafanaDashboardGeneratorSch
             const composedMetric = t[1];
             const dashboard = generateDashboardForSlo(slo, composedMetric, normalizedOptions);
 
-            saveDashboard(host, dashboard, normalizedOptions).catch(e => {
-                console.error('Failed dashboard generation', e);
-            });
+            try {
+                await saveDashboard(host, dashboard, normalizedOptions);
+            } catch (e) {
+                console.error('Failed dashboard generation');
+            }
         }
 
     } catch (e) {
