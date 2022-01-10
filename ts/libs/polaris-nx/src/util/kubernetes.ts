@@ -56,15 +56,21 @@ export interface PrometheusComposedMetric {
     metricPropKeys: string[];
 }
 
-async function getSloMappingObjects(crd: V1CustomResourceDefinition, customObjectsApi: CustomObjectsApi): Promise<SloMappingBase<any>[]> {
+async function getSloMappingObjects(crd: V1CustomResourceDefinition, customObjectsApi: CustomObjectsApi, namespace: string): Promise<SloMappingBase<any>[]> {
     const group = crd.spec.group;
     const version = crd.spec.versions[0].name;
     const plural = crd.spec.names.plural;
-    const sloMapping = await customObjectsApi.listClusterCustomObject(group, version, plural);
+    const sloMappings = await customObjectsApi.listClusterCustomObject(group, version, plural);
 
-    const body: any = sloMapping.body;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    return body.items;
+    const body: any = sloMappings.body;
+    const relevantMappings = [];
+    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+    for (const sloMapping of body.items) {
+        if (sloMapping.metadata.namespace === namespace) {
+            relevantMappings.push(sloMapping)
+        }
+    }
+    return relevantMappings;
 }
 
 function buildLabels(sloMappingObject: SloMappingBase<any>, crd: V1CustomResourceDefinition): Record<string, string> {
@@ -92,15 +98,13 @@ export async function listAllComposedMetrics(composedMetricTypePkg: string, comp
 // filter crds that belong to slo group
     for (const crdsKey of allCrds.items) {
         const group = crdsKey.spec.group;
-        const namespace = crdsKey.metadata.namespace;
-        const matchesNamespace = namespace === undefined || namespace === requiredNamespace;
-        if (group === sloGroup && matchesNamespace) {
+        if (group === sloGroup) {
             crds.push(crdsKey);
         }
     }
 
     for (const crd of crds) {
-        const objects = await getSloMappingObjects(crd, customObjectsApi);
+        const objects = await getSloMappingObjects(crd, customObjectsApi, requiredNamespace);
         for (const sloObject of objects) {
             const labels = buildLabels(sloObject, crd);
             const composedMetrics = await listComposedMetricsWithLabels(kubeConfig, mappingKind, metricsGroup, metricsVersion, labels,
