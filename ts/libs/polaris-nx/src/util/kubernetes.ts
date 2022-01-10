@@ -5,8 +5,14 @@ import {
     KubeConfig,
     V1CustomResourceDefinition,
 } from '@kubernetes/client-node';
+import {Tree} from '@nrwl/devkit';
+import {flushChanges} from '@nrwl/tao/src/shared/tree';
 import {SloMappingBase} from '@polaris-sloc/core';
-import {snakeCase} from 'change-case';
+import {camelCase, snakeCase} from 'change-case';
+import {DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG, createGenerator} from 'ts-json-schema-generator';
+import {getTempDir} from '.';
+
+const TS_CONFIG_FILE = './tsconfig.base.json';
 
 export async function readKubernetesSecret(kubeConfig: KubeConfig, name: string, namespace: string, key: string): Promise<string> {
     const client = kubeConfig.makeApiClient(CoreV1Api);
@@ -70,10 +76,10 @@ function buildLabels(sloMappingObject: SloMappingBase<any>, crd: V1CustomResourc
     };
 }
 
-export async function listAllComposedMetrics(composedMetricTypePkg: string, composedMetricType: string, requiredNamespace: string, kubeConfig: KubeConfig): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {
+export async function listAllComposedMetrics(composedMetricTypePkg: string, composedMetricType: string, requiredNamespace: string, kubeConfig: KubeConfig, host: Tree): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {
     const sloGroup = 'slo.polaris-slo-cloud.github.io';
-    const mappingType = `${composedMetricType.toLowerCase()}metricmappings`;
-    const metricsGroup = `${mappingType}.metrics.polaris-slo-cloud.github.io`;
+    const mappingKind = `${composedMetricType}MetricMapping`;
+    const metricsGroup = 'metrics.polaris-slo-cloud.github.io';
     const composedMetricsPerSlo: [SloMappingBase<any>, PrometheusComposedMetric[]][] = [];
     const crds = [];
     const metricsVersion = 'v1';
@@ -87,7 +93,8 @@ export async function listAllComposedMetrics(composedMetricTypePkg: string, comp
     for (const crdsKey of allCrds.items) {
         const group = crdsKey.spec.group;
         const namespace = crdsKey.metadata.namespace;
-        if (group === sloGroup && namespace === requiredNamespace) {
+        const matchesNamespace = namespace === undefined || namespace === requiredNamespace;
+        if (group === sloGroup && matchesNamespace) {
             crds.push(crdsKey);
         }
     }
@@ -96,8 +103,8 @@ export async function listAllComposedMetrics(composedMetricTypePkg: string, comp
         const objects = await getSloMappingObjects(crd, customObjectsApi);
         for (const sloObject of objects) {
             const labels = buildLabels(sloObject, crd);
-            const composedMetrics = await listComposedMetricsWithLabels(kubeConfig, metricsGroup, metricsVersion, labels,
-                composedMetricTypePkg, composedMetricType);
+            const composedMetrics = await listComposedMetricsWithLabels(kubeConfig, mappingKind, metricsGroup, metricsVersion, labels,
+                composedMetricTypePkg, composedMetricType, host);
             composedMetricsPerSlo.push([sloObject, composedMetrics]);
         }
     }
@@ -106,8 +113,8 @@ export async function listAllComposedMetrics(composedMetricTypePkg: string, comp
 }
 
 // get all metric mapping crds
-async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: string, version: string,
-                                             labels: Record<string, string>, composedMetricTypePkg: string, composedMetricType: string): Promise<PrometheusComposedMetric[]> {
+async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, kind: string, group: string, version: string,
+                                             labels: Record<string, string>, composedMetricTypePkg: string, composedMetricType: string, host: Tree): Promise<PrometheusComposedMetric[]> {
     const apiextensionsV1Api = kubeConfig.makeApiClient(ApiextensionsV1Api);
     const customObjectsApi = kubeConfig.makeApiClient(CustomObjectsApi);
 
@@ -117,7 +124,8 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: stri
     // filter all crds that match our group
     for (const crd of allCrds.items) {
         const crdGroup = crd.spec.group;
-        if (crdGroup === group) {
+        const crdKind = crd.spec.names.kind;
+        if (crdGroup === group && kind === crdKind) {
             crds.push(crd);
         }
     }
@@ -143,7 +151,7 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: stri
         /* eslint-disable @typescript-eslint/no-unsafe-member-access */
         /* eslint-disable @typescript-eslint/restrict-template-expressions */
         /* eslint-disable @typescript-eslint/no-unsafe-call */
-        const metricPropKeys = await readMetricPropKeys(composedMetricTypePkg, composedMetricType);
+        const metricPropKeys = await readMetricPropKeys(composedMetricTypePkg, composedMetricType, host);
         const obj = {
             sloName: metricMapping.metadata.labels['polaris-slo-cloud.github.io/owner-name'],
             sloKind: metricMapping.metadata.labels['polaris-slo-cloud.github.io/owner-kind'],
@@ -158,9 +166,65 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, group: stri
     return prometheusMetrics;
 }
 
-async function readMetricPropKeys(composedMetricTypePkg: string, composedMetricType: string): Promise<string[]> {
+function createDummyFile(composedMetricType: string, composedMetricTypePkg: string, host: Tree): string {
+    const projectName = 'metrics-dashboard'
+    const tempDir = getTempDir(projectName, 'dash');
+    const content = `
+    import {${composedMetricType}} from '${composedMetricTypePkg}';`;
+    const filePath = `${tempDir}/dummy.ts`;
+    host.write(filePath, content);
+    const changes = host.listChanges();
+    flushChanges(host.root, changes);
+    return filePath;
+}
 
+function deleteDir(host: Tree): void {
+    const projectName = 'metrics-dashboard'
+    const tempDir = getTempDir(projectName, 'dash');
+    host.delete(tempDir);
+    const changes = host.listChanges();
+    flushChanges(host.root, changes);
+}
 
-    return Promise.resolve(['costEfficiency', 'percentileBetterThanThreshold', 'totalCost.currentCostPerHour',
-        'totalCost.accumulatedCostInPeriod']);
+async function readMetricPropKeys(composedMetricTypePkg: string, composedMetricType: string, host: Tree): Promise<string[]> {
+    const typeName = composedMetricType;
+    const path = createDummyFile(composedMetricType, composedMetricTypePkg, host);
+
+    const origJsonSchema = createGenerator({
+        ...TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG,
+        tsconfig: TS_CONFIG_FILE,
+        path,
+        type: typeName,
+        jsDoc: 'extended',
+        skipTypeCheck: false,
+        topRef: false,
+    }).createSchema(typeName);
+
+    const metricPropKeys = []
+    for (const propKey of Object.keys(origJsonSchema.properties)) {
+        const prop = origJsonSchema.properties[propKey];
+        if ((prop.hasOwnProperty('$ref'))) {
+            // console.log(`complex property ${propKey}`)
+        } else if (typeof prop === 'object' && prop.hasOwnProperty('type') && prop.type === 'number') {
+            // console.log(`add property ${propKey}`)
+            metricPropKeys.push(propKey)
+        } else {
+            // console.log(`Found metric prop key that is not of type number: ${propKey}`)
+        }
+    }
+    for (const defKey of Object.keys(origJsonSchema.definitions)) {
+        const definition = origJsonSchema.definitions[defKey];
+        if (typeof definition === 'object') {
+            const properties = definition.properties;
+            if (properties !== undefined) {
+                for (const propKey of Object.keys(properties)) {
+                    // console.log(`add property ${camelCase(defKey)}.${propKey}`)
+                    metricPropKeys.push(`${camelCase(defKey)}.${propKey}`)
+                }
+            }
+
+        }
+    }
+    deleteDir(host);
+    return Promise.resolve(metricPropKeys);
 }

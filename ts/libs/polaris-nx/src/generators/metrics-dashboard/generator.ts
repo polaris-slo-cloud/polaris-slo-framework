@@ -1,14 +1,14 @@
-import { Tree, names } from '@nrwl/devkit';
-import { SloMappingBase } from '@polaris-sloc/core';
-import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
+import {Tree, names} from '@nrwl/devkit';
+import {SloMappingBase} from '@polaris-sloc/core';
+import {Dashboard, Panels, Row, Target} from 'grafana-dash-gen';
 import {
     getPanels,
     readGrafanaBearerTokenFromKubernetes,
     readGrafanaUrlFromEnv,
     saveDashboard,
 } from '../../util/grafana';
-import { PrometheusComposedMetric, createKubeConfig, listAllComposedMetrics } from '../../util/kubernetes';
-import { GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema } from './schema';
+import {PrometheusComposedMetric, createKubeConfig, listAllComposedMetrics} from '../../util/kubernetes';
+import {GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema} from './schema';
 
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
@@ -77,7 +77,7 @@ function sanitizeForPrometheus(dashboard: typeof Dashboard, datasource: string):
         panel.datasource = datasource;
         for (let k = 0; k < panel.targets.length; k++) {
             const target = panel.targets[k];
-            delete Object.assign(target, { ['expr']: target['target'] })['target'];
+            delete Object.assign(target, {['expr']: target['target']})['target'];
         }
     }
     return dashboard;
@@ -178,17 +178,27 @@ function generateDashboardForSlo(slo: SloMappingBase<any>, composedMetrics: Prom
     return sanitizeForPrometheus(dashboard.generate(), options.datasource);
 }
 
-export default async function(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
+export default async function (host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<void> {
     try {
         const normalizedOptions = await normalizeOptions(host, options);
 
-        const slosWithComposedMetrics: [SloMappingBase<any>, PrometheusComposedMetric[]][] = await listAllComposedMetrics(createKubeConfig());
+        const composedMetricTypePkg = normalizedOptions.compMetricTypePkg;
+        const composedMetricType = normalizedOptions.compMetricType;
+        const requiredNamespace = normalizedOptions.namespace;
+        const slosWithComposedMetrics: [SloMappingBase<any>, PrometheusComposedMetric[]][] = await listAllComposedMetrics(
+            composedMetricTypePkg,
+            composedMetricType,
+            requiredNamespace,
+            createKubeConfig(),
+            host,
+        );
+
         for (const t of slosWithComposedMetrics) {
             const slo = t[0];
             const composedMetric = t[1];
             const dashboard = generateDashboardForSlo(slo, composedMetric, normalizedOptions);
 
-            return saveDashboard(host, dashboard, normalizedOptions).catch(e => {
+            saveDashboard(host, dashboard, normalizedOptions).catch(e => {
                 console.error('Failed dashboard generation', e);
             });
         }
