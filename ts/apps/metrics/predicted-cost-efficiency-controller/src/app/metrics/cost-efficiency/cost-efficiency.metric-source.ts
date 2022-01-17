@@ -37,7 +37,7 @@ export class CostEfficiencyMetricSource extends ComposedMetricSourceBase<CostEff
 }
 
 interface PredictionApiResponse {
-    predictions: number[];
+    predictions: number[][];
 }
 
 async function callPrediction(baseUrl: string, params: CostEfficiencyParams): Promise<PredictionApiResponse> {
@@ -57,7 +57,7 @@ function mapResponseToSample(response: PredictionApiResponse): Sample<CostEffici
     return {
         timestamp: Math.floor(Date.now() / 1000),
         value: {
-            costEfficiency: response.predictions[0],
+            costEfficiency: response.predictions[0][0],
             percentileBetterThanThreshold: -1,
             totalCost: {currentCostPerHour: -1, accumulatedCostInPeriod: -1},
         },
