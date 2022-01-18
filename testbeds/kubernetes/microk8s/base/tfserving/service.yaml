@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cost-efficiency-serving
+  name: cost-efficiency-serving-service
+  namespace: polaris
+spec:
+  ports:
+  - name: grpc-tf-serving
+    port: 9000
+    targetPort: 9000
+  - name: http-tf-serving
+    port: 8500
+    targetPort: 8500
+  selector:
+    app: cost-efficiency-serving
+  type: NodePort

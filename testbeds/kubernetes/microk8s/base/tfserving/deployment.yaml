@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cost-efficiency-serving
+  name: cost-efficiency-serving
+  namespace: polaris
+spec:
+  selector:
+    matchLabels:
+      app: cost-efficiency-serving
+  template:
+    metadata:
+      labels:
+        app: cost-efficiency-serving
+    spec:
+      containers:
+        - image: tensorflow/serving:2.4.3
+          imagePullPolicy: IfNotPresent
+          args:
+            - --port=9000
+            - --rest_api_port=8500
+            - --model_name=cost-efficiency
+            - --model_base_path=s3://models/cost-efficiency
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            tcpSocket:
+              port: 9000
+          name: cost-efficiency-serving
+          ports:
+          - containerPort: 9000
+          - containerPort: 8500
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            value: minio
+          - name: AWS_SECRET_ACCESS_KEY
+            value: minio123
+          - name: S3_USE_HTTPS
+            value: "0"
+          - name: S3_VERIFY_SSL
+            value: "0"
+          - name: S3_ENDPOINT
+            value: minio-service:9000

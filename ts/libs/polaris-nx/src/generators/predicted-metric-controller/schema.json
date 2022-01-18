@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "PredictedMetricController",
+  "title": "",
+  "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What name would you like to use for the Predicted Metric Controller project?"
+        },
+        "compMetricTypePkg": {
+            "type": "string",
+            "description": "The name of the npm package that contains the Composed Metric Type.",
+            "alias": "p",
+            "x-prompt": "What is the name of the npm package that contains the Composed Metric Type?"
+        },
+        "compMetricType": {
+            "type": "string",
+            "description": "The name of the Composed Metric Type class.",
+            "alias": "p",
+            "x-prompt": "What is the name of the Composed Metric Type class?"
+        },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the project (used for linting)",
+      "alias": "t"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed",
+      "alias": "d"
+    }
+  },
+    "required": [
+        "name",
+        "compMetricTypePkg",
+        "compMetricType"
+    ]
+}

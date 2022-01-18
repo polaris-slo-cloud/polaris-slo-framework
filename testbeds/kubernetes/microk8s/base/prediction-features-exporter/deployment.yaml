@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: predicted-metric-container-exporter
+  namespace: polaris
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: predicted-metric-container-exporter
+  template:
+    metadata:
+      labels:
+        app: predicted-metric-container-exporter
+    spec:
+      containers:
+        - name: exporter
+          image: aicg4t1/predicted-metric-container-exporter:0.4
+          imagePullPolicy: Always
+          env:
+            - name: RECONCILE_INTERVAL
+              value: "5"
+            - name: LOG
+              value: "DEBUG"
+            - name: EXPORTER_PORT
+              value: "9877"
+          ports:
+            - containerPort: 9877
+              name: mport
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: predicted-metric-container-exporter
+  name: predicted-metric-container-exporter-service
+  namespace: polaris
+spec:
+  selector:
+    app: predicted-metric-container-exporter
+  ports:
+  - name: mport
+    port: 9877
+    targetPort: 9877

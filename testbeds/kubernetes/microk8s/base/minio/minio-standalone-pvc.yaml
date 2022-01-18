@@ -1,0 +1,18 @@
+# This is a modified version of: https://raw.githubusercontent.com/kubernetes/examples/master/staging/storage/minio/minio-standalone-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  # This name uniquely identifies the PVC. Will be used in deployment below.
+  namespace: polaris
+  name: minio-pv-claim
+  labels:
+    app: minio-pv-claim
+spec:
+  # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-storage
+  resources:
+    # This is the request for storage. Should be available in the cluster.
+    requests:
+      storage: 10Mi

@@ -115,6 +115,7 @@
     "@types/yargs": "^17.0.4",
     "@typescript-eslint/eslint-plugin": "~4.33.0",
     "@typescript-eslint/parser": "~4.33.0",
+    "axios": "^0.24.0",
     "codelyzer": "6.0.2",
     "cypress": "^8.4.0",
     "dotenv": "10.0.0",

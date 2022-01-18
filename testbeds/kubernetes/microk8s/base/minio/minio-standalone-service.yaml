@@ -1,0 +1,15 @@
+# This is a modified version of: https://github.com/kubernetes/examples/blob/master/staging/storage/minio/minio-standalone-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  namespace: polaris
+spec:
+  type: NodePort
+  ports:
+    - port: 9000
+      targetPort: 9000
+      nodePort: 30909
+      protocol: TCP
+  selector:
+    app: minio

@@ -1,0 +1,5 @@
+.venv
+*.iml
+.idea
+Dockerfile
+bin
