@@ -1,4 +1,4 @@
-import { JsonSchema,  PolarisConstructor, cloneDeepWithoutExcluded } from '../../../util';
+import { JsonSchema, PolarisConstructor, cloneDeepWithoutExcluded, unwrapNestedArraySchema } from '../../../util';
 import { PolarisMetadataUtils, PolarisTransformationMetadata } from '../../internal';
 import { ObjectKind, PolarisTransformationConfig, PolarisTransformationServiceManager, PolarisTransformer, UnknownObjectKindError } from '../common';
 import { DefaultTransformer } from './transformers';
@@ -91,7 +91,7 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         if (polarisSchema.type === 'array') {
             return this.transformArrayToOrchestratorSchema(polarisSchema, polarisType, transformer);
         } else {
-            return transformer.transformToOrchestratorSchema(polarisSchema, polarisType, this);
+            return this.transformSingleObjToOrchestratorSchema(polarisSchema, polarisType, transformer);
         }
     }
 
@@ -118,6 +118,16 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
         return transformer.transformToOrchestratorPlainObject(polarisObj, this);
     }
 
+    private transformSingleObjToOrchestratorSchema<T, R>(
+        polarisSchema: JsonSchema<T>,
+        polarisType: PolarisConstructor<T>,
+        transformer: PolarisTransformer<T, R>,
+    ): JsonSchema<R> {
+        const objSchema = transformer.transformToOrchestratorSchema(polarisSchema, polarisType, this);
+        this.applyOrchestratorSchemaFixes(objSchema);
+        return objSchema;
+    }
+
     private transformArrayToOrchestratorSchema<T, R>(
         polarisSchema: JsonSchema<T>,
         polarisType: PolarisConstructor<T>,
@@ -125,15 +135,41 @@ export class DefaultPolarisTransformationService implements PolarisTransformatio
     ): JsonSchema<R> {
         const transformedSchema: JsonSchema<R> = cloneDeepWithoutExcluded(polarisSchema, 'items') as any;
 
+        // ToDo: Consider the special (and probably very rare) case of nested arrays in this method.
         if (Array.isArray(polarisSchema.items)) {
             transformedSchema.items = polarisSchema.items.map(
-                objSchema => transformer.transformToOrchestratorSchema(objSchema, polarisType, this),
+                objSchema => this.transformSingleObjToOrchestratorSchema(objSchema, polarisType, transformer),
             );
         } else {
-            transformedSchema.items = transformer.transformToOrchestratorSchema(polarisSchema.items, polarisType, this);
+            transformedSchema.items = this.transformSingleObjToOrchestratorSchema(polarisSchema.items, polarisType, transformer);
         }
 
         return transformedSchema;
+    }
+
+    /**
+     * Recursively fixes the following issues in a schema:
+     *
+     * - Converts `additionalProperties: {}`, which is generated for a `Record<string, unknown>` to `additionalProperties: true`.
+     */
+    private applyOrchestratorSchemaFixes<U>(schema: JsonSchema<U>): void {
+        const objSchema: JsonSchema<U> = unwrapNestedArraySchema(schema);
+
+        if (objSchema.type === 'object') {
+            // If `additionalProperties` is set to `{}` replace its value with `true`.
+            if (typeof objSchema.additionalProperties === 'object' && Object.keys(objSchema.additionalProperties).length === 0) {
+                objSchema.additionalProperties = true;
+            }
+
+            // Recursion
+            if (objSchema.properties) {
+                const propKeys = Object.keys(objSchema.properties) as (keyof U)[];
+                propKeys.forEach(propKey => {
+                    const nestedSchema = objSchema.properties[propKey];
+                    this.applyOrchestratorSchemaFixes(nestedSchema);
+                });
+            }
+        }
     }
 
 }
