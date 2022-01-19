@@ -84,7 +84,7 @@ export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> 
 
     sloConfig: C;
 
-    staticElasticityStrategyConfig?: Record<string, any>;
+    staticElasticityStrategyConfig?: Record<string, unknown>;
 
     constructor(initData?: Partial<SloMappingSpecBase<C, O, T>>) {
         initSelf(this, initData);
