@@ -3,7 +3,7 @@ import { catchError, map, switchMap, take, takeUntil, tap, timeout } from 'rxjs/
 import { SloMapping, SloMappingSpec } from '../../../../model';
 import { MicrocontrollerFactory } from '../../../../orchestrator';
 import { getPolarisRuntime } from '../../../../runtime/public/polaris-runtime';
-import { IndexByKey, Logger, ObservableStopper, executeSafely } from '../../../../util';
+import { Logger, ObservableStopper, executeSafely } from '../../../../util';
 import { ServiceLevelObjective } from '../../common';
 import { SloControlLoopError, SloEvaluationError } from '../errors';
 import { SLO_DEFAULT_TIMEOUT_MS, SloControlLoop, SloControlLoopConfig, SloWatchEventsHandler } from '../slo-control-loop';
@@ -108,8 +108,8 @@ export class DefaultSloControlLoop implements SloControlLoop {
         return false;
     }
 
-    getAllSlos(): IndexByKey<ServiceLevelObjective<any, any>> {
-        const allSlos: IndexByKey<ServiceLevelObjective<any, any>> = {};
+    getAllSlos(): Record<string, ServiceLevelObjective<any, any>> {
+        const allSlos: Record<string, ServiceLevelObjective<any, any>> = {};
         this.registeredSlos.forEach((slo, key) => allSlos[key] = slo.slo);
         return allSlos;
     }

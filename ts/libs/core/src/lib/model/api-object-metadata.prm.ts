@@ -1,5 +1,5 @@
 import { PolarisType } from '../transformation';
-import { IndexByKey, initSelf } from '../util';
+import { initSelf } from '../util';
 import { OwnerReference } from './owner-reference.prm';
 
 /**
@@ -29,12 +29,12 @@ export class ApiObjectMetadata {
      * Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
      */
-    annotations?: IndexByKey<string>;
+    annotations?: Record<string, string>;
 
     /**
      * Map of string keys and values that can be used to organize and categorize (scope and select) objects.
      */
-    labels: IndexByKey<string>;
+    labels: Record<string, string>;
 
     /**
      * Name must be unique within a namespace. Is required when creating resources

@@ -1,6 +1,5 @@
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, of as observableOf } from 'rxjs';
-import { IndexByKey } from '../../../common';
 
 import * as COMMON from './translations/common.translations.json';
 import * as VISUALIZATION from './translations/visualization.translations.json';
@@ -20,7 +19,7 @@ import * as VISUALIZATION from './translations/visualization.translations.json';
  * ```
  */
 export interface SingleLanguageTranslations {
-    [section: string]: IndexByKey<string>;
+    [section: string]: Record<string, string>;
 }
 
 interface MultiLanguageTranslations {
@@ -57,8 +56,8 @@ export class LocalTranslateLoader implements TranslateLoader {
         return singleLang;
     }
 
-    private buildSingleLanguageSection(multiLangSection: MultiLanguageTranslations, lang: string): IndexByKey<string> {
-        const singleLangSection: IndexByKey<string> = {};
+    private buildSingleLanguageSection(multiLangSection: MultiLanguageTranslations, lang: string): Record<string, string> {
+        const singleLangSection: Record<string, string> = {};
         Object.keys(multiLangSection).forEach(translationKey => {
             singleLangSection[translationKey] = multiLangSection[translationKey][lang];
         });

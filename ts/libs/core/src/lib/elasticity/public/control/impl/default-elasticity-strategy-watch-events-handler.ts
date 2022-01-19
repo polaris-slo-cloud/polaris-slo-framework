@@ -2,7 +2,7 @@ import { of as observableOf, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, take, timeout } from 'rxjs/operators';
 import { ElasticityStrategy, ElasticityStrategyKind, SloTarget } from '../../../../model';
 import { WatchEventsHandler } from '../../../../orchestrator';
-import { IndexByKey, Logger, executeSafely } from '../../../../util';
+import { Logger, executeSafely } from '../../../../util';
 import { ElasticityStrategyController, ElasticityStrategyExecutionError } from '../../common';
 import { ElasticityStrategyKindControllerPair } from '../elasticity-strategy-manager';
 
@@ -14,7 +14,7 @@ import { ElasticityStrategyKindControllerPair } from '../elasticity-strategy-man
 /**
  * Receives watch events for an elasticity strategy and executes the strategy's controller.
  */
-export class DefaultElasticityStrategyWatchEventsHandler<O = any, T extends SloTarget = SloTarget, C = IndexByKey<any>>
+export class DefaultElasticityStrategyWatchEventsHandler<O = any, T extends SloTarget = SloTarget, C = Record<string, any>>
     implements ElasticityStrategyKindControllerPair<O, T, C>, ElasticityStrategyWatchEventsHandler {
 
     /** Identifies the elasticity strategies that are currently being executed. */

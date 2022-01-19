@@ -1,9 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { IndexByKey } from '../../../common';
-
-export type HttpHeadersMap = IndexByKey<string | string[]>;
+export type HttpHeadersMap = Record<string, string | string[]>;
 
 /**
  * Provides an abstraction for accessing JSON REST APIs.

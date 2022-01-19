@@ -8,6 +8,7 @@ import {
     ObjectKind,
     PolarisTransformationService,
     ReusablePolarisTransformer,
+    unwrapNestedArraySchema,
 } from '@polaris-sloc/core';
 import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
@@ -107,6 +108,8 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
      * - Removes the `additionalProperties` field if `properties` is set, because these two fields are mutually exclusive in Kubernetes.
      */
     private applyKubernetesFixes<U>(k8sSchema: JsonSchema<U>): void {
+        k8sSchema = unwrapNestedArraySchema(k8sSchema);
+
         // Convert `type: number` to `type: integer`.
         if (k8sSchema.type === 'number') {
             k8sSchema.type = 'integer';

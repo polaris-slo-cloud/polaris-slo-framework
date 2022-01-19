@@ -1,5 +1,4 @@
 import { ElasticityStrategy, SloCompliance, SloTarget } from '../../../../../model';
-import { IndexByKey } from '../../../../../util';
 import { ElasticityStrategyController } from '../../../common';
 
 /**
@@ -7,7 +6,7 @@ import { ElasticityStrategyController } from '../../../common';
  *
  * This class implements `checkIfActionNeeded()` for `SloCompliance` values.
  */
-export abstract class SloComplianceElasticityStrategyControllerBase<T extends SloTarget = SloTarget, C = IndexByKey<any>>
+export abstract class SloComplianceElasticityStrategyControllerBase<T extends SloTarget = SloTarget, C = Record<string, any>>
     implements ElasticityStrategyController<SloCompliance, T, C> {
 
     abstract execute(elasticityStrategy: ElasticityStrategy<SloCompliance, T, C>): Promise<void>;

@@ -1,5 +1,5 @@
 import { PolarisType } from '../transformation';
-import { IndexByKey, initSelf } from '../util';
+import { initSelf } from '../util';
 import { ApiObject } from './api-object.prm';
 import { SloTarget } from './slo-target.prm';
 import { StabilizationWindow } from './stabilization-window.prm';
@@ -21,7 +21,7 @@ import { StabilizationWindow } from './stabilization-window.prm';
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
  * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> {
+export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget, C = Record<string, any>> {
 
     /** Specifies the target on which to execute the elasticity strategy. */
     @PolarisType(() => SloTarget)
@@ -65,7 +65,7 @@ export class ElasticityStrategySpec<O, T extends SloTarget = SloTarget, C = Inde
  * @param T (optional) The type of `SloTarget` that the elasticity strategy can operate on.
  * @param C (optional) The type of `staticConfig` that the elasticity strategy accepts.
  */
-export class ElasticityStrategy<O, T extends SloTarget = SloTarget, C = IndexByKey<any>> extends ApiObject<ElasticityStrategySpec<O, T, C>> {
+export class ElasticityStrategy<O, T extends SloTarget = SloTarget, C = Record<string, any>> extends ApiObject<ElasticityStrategySpec<O, T, C>> {
 
     @PolarisType(() => ElasticityStrategySpec)
     spec: ElasticityStrategySpec<O, T, C>;

@@ -1,4 +1,3 @@
-import { IndexByKey } from '@polaris-sloc/core';
 
 /** Describes the data stored in the polaris.json CLI config file. */
 export interface PolarisCliConfigData {
@@ -7,7 +6,7 @@ export interface PolarisCliConfigData {
     version: 1;
 
     /** List of projects managed by the Polaris CLI. */
-    projects: IndexByKey<PolarisCliProject>;
+    projects: Record<string, PolarisCliProject>;
 
 }
 

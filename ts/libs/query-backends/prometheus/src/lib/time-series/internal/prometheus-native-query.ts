@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
     DataType,
-    IndexByKey,
     PolarisQueryResult,
     QueryError,
     Sample,
@@ -87,7 +86,7 @@ export class PrometheusNativeQuery implements TimeSeriesQuery<any> {
         return {
             dataType: DataType.Float,
             metricName: promMetric.name,
-            labels: promMetric.labels as IndexByKey<string>,
+            labels: promMetric.labels as Record<string, string>,
             samples: null,
             start: null,
             end: null,

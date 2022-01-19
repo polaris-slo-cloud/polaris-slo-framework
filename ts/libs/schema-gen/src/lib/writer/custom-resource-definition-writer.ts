@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { IndexByKey, PolarisConstructor, PolarisRuntime } from '@polaris-sloc/core';
+import { PolarisConstructor, PolarisRuntime } from '@polaris-sloc/core';
 import * as Yaml from 'js-yaml';
 import { CustomResourceDefinitionGenerator, SchemaGeneratorConfig } from '../generator';
 
@@ -39,8 +39,8 @@ export class CustomResourceDefinitionWriter {
      * @returns A promise that resolves to a map that associates the name of each Polaris type with the path of the CRD file that has been written
      * or rejects with an error.
      */
-    async generateAndWriteCrds(config: CrdWriterConfig): Promise<IndexByKey<string>> {
-        const writtenFiles: IndexByKey<string> = {};
+    async generateAndWriteCrds(config: CrdWriterConfig): Promise<Record<string, string>> {
+        const writtenFiles: Record<string, string> = {};
 
         for (const polarisType of config.polarisTypes) {
             console.log('Generating CRD for ', polarisType.name);

@@ -1,5 +1,5 @@
 import { PolarisType } from '../transformation';
-import { IndexByKey, initSelf } from '../util';
+import { initSelf } from '../util';
 import { ApiObject } from './api-object.prm';
 import { ElasticityStrategyKind } from './elasticity-strategy-kind.prm';
 import { SloTarget } from './slo-target.prm';
@@ -57,7 +57,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
      * });
      * ```
      */
-    staticElasticityStrategyConfig?: IndexByKey<any>;
+    staticElasticityStrategyConfig?: Record<string, any>;
 
 }
 
@@ -84,7 +84,7 @@ export abstract class SloMappingSpecBase<C, O, T extends SloTarget = SloTarget> 
 
     sloConfig: C;
 
-    staticElasticityStrategyConfig?: IndexByKey<any>;
+    staticElasticityStrategyConfig?: Record<string, unknown>;
 
     constructor(initData?: Partial<SloMappingSpecBase<C, O, T>>) {
         initSelf(this, initData);

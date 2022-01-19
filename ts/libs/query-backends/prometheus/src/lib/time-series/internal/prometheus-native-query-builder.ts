@@ -8,8 +8,6 @@ import {
     Duration,
     FilterOnLabelQueryContent,
     FunctionQueryContent,
-    Index,
-    IndexByKey,
     JoinConfig,
     JoinGrouping,
     LabelComparisonOperator,
@@ -29,7 +27,7 @@ import { PrometheusNativeQuery } from './prometheus-native-query';
 /**
  * Maps the AggregationType values to the names of native PromQL aggregation functions.
  */
-const AGGREGATIONS_MAP: Index<AggregationType, string> = {
+const AGGREGATIONS_MAP: Record<AggregationType, string> = {
     sum: 'sum',
     min: 'min',
     max: 'max',
@@ -39,7 +37,7 @@ const AGGREGATIONS_MAP: Index<AggregationType, string> = {
 /**
  * Maps the `BinaryOperator` values to the operator strings of PromQL.
  */
-const BINARY_OPS_MAP: Index<BinaryOperator, string> = {
+const BINARY_OPS_MAP: Record<BinaryOperator, string> = {
     [BinaryOperator.Add]: '+',
     [BinaryOperator.Subtract]: '-',
     [BinaryOperator.Multiply]: '*',
@@ -54,7 +52,7 @@ const BINARY_OPS_MAP: Index<BinaryOperator, string> = {
 /**
  * Maps the AggregationType values to the names of native PromQL aggregation functions.
  */
-const FUNCTIONS_MAP: Index<DBFunctionName, string> = {
+const FUNCTIONS_MAP: Record<DBFunctionName, string> = {
     rate: 'rate',
     averageOverTime: 'avg_over_time',
 };
@@ -218,7 +216,7 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         return duration;
     }
 
-    private serializeFunctionParams(params?: IndexByKey<string>): string {
+    private serializeFunctionParams(params?: Record<string, string>): string {
         if (!params) {
             return '';
         }
