@@ -1,5 +1,7 @@
 # Polaris-CLI
 
+## Composed Metrics Controller
+
 ## Metrics Dashboard Generation
 
 The CLI provides means to generate metrics dashboards from scratch that display relevant metrics.
