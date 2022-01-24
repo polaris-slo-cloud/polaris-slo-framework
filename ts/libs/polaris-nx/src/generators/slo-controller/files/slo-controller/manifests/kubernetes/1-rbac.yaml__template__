@@ -55,6 +55,20 @@ rules:
   - patch
   - update
   - watch
+
+# Allow writing all metric mappings.
+- apiGroups:
+  - metrics.polaris-slo-cloud.github.io
+  resources:
+  - "*"
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
