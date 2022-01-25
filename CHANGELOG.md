@@ -13,6 +13,7 @@
 * Added [OrchestratorGateway](./ts/libs/core/src/lib/orchestrator/public/orchestrator-gateway.ts) to allow creating clients for the underlying orchestrator
 * Rewrote HorizontalElasticityStrategy in TypeScript and added stabilization window support
 * Initial release of [@polaris-sloc](https://www.npmjs.com/settings/polaris-sloc/packages) npm packages
+* Removed Go code, because with the TypeScript CRD generator it is no longer needed 
 
 
 ## v0.1.0 (2021-02-01)

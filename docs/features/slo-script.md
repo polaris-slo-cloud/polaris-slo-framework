@@ -15,7 +15,7 @@ One of the major goals of SLO Script is to decouple SLOs from elasticity strateg
 An instance of the `ServiceLevelObjective` construct defines and implements the business logic of an SLO and is configured by the service consumer using an `SloConfiguration`.
 The `ServiceLevelObjective` uses metrics to determine the current state of the system and compare it to the parameters specified by the service consumer in the `SloConfiguration`.
 The metrics are obtained using our strongly typed metrics query API, which abstracts a monitoring system, such as Prometheus.
-The metrics may be lowlevel metrics, directly observable on the system or higher-level metrics (which can be packaged into libraries) or a combination of both.
+The metrics may be low-level metrics, directly observable on the system or higher-level metrics (which can be packaged into libraries) or a combination of both.
 Every evaluation of the `ServiceLevelObjective` produces an `SloOutput`, which describes how much the SLO is currently fulfilled and is used as a part of the input to an `ElasticityStrategy`.
 Both, `ServiceLevelObjective` and `ElasticityStrategy`, define the type of `SloOutput` they produce or require respectively, which is one of the types needed for determining compatibility among them.
 

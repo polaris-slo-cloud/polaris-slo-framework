@@ -1,6 +1,6 @@
 # Polaris SLO Cloud
 
-The Polaris SLO Cloud project (previously called SLOC) aims to provide Service Level Objectives (SLOs) for next generation Cloud computing.
+The Polaris SLO Cloud project aims to provide Service Level Objectives (SLOs) for next generation Cloud computing.
 
 Service Level Agreements (SLAs) are very common in cloud computing.
 Each SLA consists of one or more Service Level Objectives, which are measurable capacity guarantees.
@@ -13,7 +13,34 @@ The other two are *cost elasticity* (i.e., how much is a customer willing to pay
 
 The goal of the Polaris project is to bring **high-level SLOs** to the cloud and enable customers to leverage all three levels of elasticity.
 
-For more details and background on the overall goals of the Polaris project, please see [this publication](https://ieeexplore.ieee.org/document/9146966).
+
+## Documentation
+
+The main documentation can be found [here](./docs).
+
+
+### Videos and Demos
+
+This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC - Service Level Objectives for Next Generation Cloud Computing, is used).
+
+The following videos showcase the capabilities of the Polaris CLI:
+
+* [Quick walkthrough](https://www.youtube.com/watch?v=JVZ4hB2AmGs)
+* [Step-by-step SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
+* [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
+
+Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
+
+
+### Scientific Publications
+
+For more details and background, please see our scientific publications:
+
+* [SLOC: Service Level Objectives for Next Generation Cloud Computing](https://ieeexplore.ieee.org/document/9146966) in *IEEE Internet Computing 24(3)*.
+* [SLO Script: A Novel Language for Implementing Complex Cloud-Native Elasticity-Driven SLOs](https://ieeexplore.ieee.org/document/9590275) in *2021 IEEE International Conference on Web Services (ICWS)*.
+* [A Novel Middleware for Efficiently Implementing Complex Cloud-Native SLOs](https://ieeexplore.ieee.org/document/9582269) in *2021 IEEE 14th International Conference on Cloud Computing (CLOUD)*.
+* [Polaris Scheduler: Edge Sensitive and SLO Aware Workload Scheduling in Cloud-Edge-IoT Clusters](https://ieeexplore.ieee.org/document/9582166) in *2021 IEEE 14th International Conference on Cloud Computing (CLOUD)*.
+
 
 
 ## Motivating Example
@@ -53,7 +80,7 @@ SLO Mappings allow service consumers to choose which elasticity strategy they wa
 
 ## Features
 
-The Polaris project offers/will offer (the project is still under development) the following features:
+The Polaris project offers the following features:
 
 * SLO Script, a language and framework for 
     * developing complex SLOs, based on one or more metrics
@@ -64,6 +91,7 @@ The Polaris project offers/will offer (the project is still under development) t
 * Generic elasticity strategies that can be used with multiple SLOs
 * Generic SLOs that can be used with multiple elasticity strategies
 * AI-based prediction models for metrics (see [polaris-ai](https://github.com/polaris-slo-cloud/polaris-ai)), usable as a composed metrics library
+* SLO-aware Kubernetes pod scheduling (see [polaris-scheduler](https://github.com/polaris-slo-cloud/polaris-scheduler))
 
 SLO Script consists of an orchestrator-independent core library and connector libraries for specific orchestrators.
 Currently, there is a connector for Kubernetes.
@@ -76,25 +104,11 @@ All code for this project is contained in this repository.
 
 | Directory                | Contents |
 |--------------------------|----------|
-| [`docs`](./docs)         | Documentation files (Work in progress) |
-| [`go`](./go)             | Go code, i.e., Kubernetes-specific controllers, etc. |
+| [`deployment`](./deployment) | YAML files for quickly deploying Polaris CRDs and controllers |
+| [`docs`](./docs)         | Documentation files |
+| [`python`](./python)     | Python code, e.g., predicted metric controller base |
 | [`testbeds`](./testbeds) | Configurations and demo applications, we use for testing |
 | [`ts`](./ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
-
-
-## Documentation and Demos
-
-Documentation for the Polaris project can be found in the [docs](./docs) folder.
-
-This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC, is used).
-
-The following videos showcase the capabilities of the Polaris CLI:
-
-* [Quick walkthrough](https://www.youtube.com/watch?v=JVZ4hB2AmGs)
-* [Step-by-step SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
-* [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
-
-Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
 
 
 ## Our Users
