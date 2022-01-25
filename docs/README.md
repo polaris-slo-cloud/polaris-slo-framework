@@ -20,3 +20,4 @@ This is the main documentation of the project.
     * [Transformer](./polaris-ai/polaris-ai-transformer.md)
     * [Profiling](./polaris-ai/polaris-ai-profiling.md)
 * [Documentation of interfaces, classes, etc.](./typedoc)
+* [Polaris SLO-aware Kubernetes Scheduler](https://github.com/polaris-slo-cloud/polaris-scheduler)

@@ -84,7 +84,7 @@ SLO Mappings allow service consumers to choose which elasticity strategy they wa
 
 ## Features
 
-The Polaris project offers/will offer (the project is still under development) the following features:
+The Polaris project offers the following features:
 
 * SLO Script, a language and framework for 
     * developing complex SLOs, based on one or more metrics
@@ -95,6 +95,7 @@ The Polaris project offers/will offer (the project is still under development) t
 * Generic elasticity strategies that can be used with multiple SLOs
 * Generic SLOs that can be used with multiple elasticity strategies
 * AI-based prediction models for metrics (see [polaris-ai](https://github.com/polaris-slo-cloud/polaris-ai)), usable as a composed metrics library
+* SLO-aware Kubernetes pod scheduling (see [polaris-scheduler](https://github.com/polaris-slo-cloud/polaris-scheduler))
 
 SLO Script consists of an orchestrator-independent core library and connector libraries for specific orchestrators.
 Currently, there is a connector for Kubernetes.
