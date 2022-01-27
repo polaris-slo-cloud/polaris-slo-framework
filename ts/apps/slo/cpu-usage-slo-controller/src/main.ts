@@ -36,4 +36,7 @@ sloControlLoop.start({
 // Create a WatchManager and watch the supported SLO mapping kinds.
 const watchManager = polarisRuntime.createWatchManager();
 watchManager.startWatchers([ new CpuUsageSloMapping().objectKind ], sloControlLoop.watchHandler)
-    .catch(error => void Logger.error(error))
+    .catch(error => {
+        Logger.error(error);
+        process.exit(1);
+    });

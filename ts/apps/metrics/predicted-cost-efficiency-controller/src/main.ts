@@ -55,4 +55,7 @@ manager
             },
         ],
     })
-    .catch(error => void Logger.error(error));
+    .catch(error => {
+        Logger.error(error);
+        process.exit(1);
+    });
