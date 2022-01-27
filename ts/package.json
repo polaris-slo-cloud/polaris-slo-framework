@@ -1,6 +1,6 @@
 {
   "name": "polaris-sloc",
-  "version": "0.2.0-beta.25",
+  "version": "0.2.0-beta.26",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "nx",
@@ -68,7 +68,7 @@
     "@angular/platform-browser-dynamic": "~12.2.11",
     "@angular/router": "~12.2.11",
     "@grafana/data": "^7.5.4",
-    "@kubernetes/client-node": "^0.15.1",
+    "@kubernetes/client-node": "^0.16.2",
     "@ngx-translate/core": "^13.0.0",
     "@openapi-contrib/json-schema-to-openapi-schema": "^2.1.0",
     "@stoplight/json-ref-resolver": "^3.1.3",

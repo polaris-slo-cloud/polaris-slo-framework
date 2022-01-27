@@ -1120,7 +1120,7 @@ spec:
           operator: Exists
           effect: NoSchedule
       containers:
-      - image: polarissloc/horizontal-elasticity-strategy:0.2.1
+      - image: polarissloc/horizontal-elasticity-strategy:0.3.0
         name: elasticity-controller
         resources:
           limits:
@@ -1247,7 +1247,7 @@ spec:
           operator: Exists
           effect: NoSchedule
       containers:
-      - image: polarissloc/vertical-elasticity-strategy:0.2.1
+      - image: polarissloc/vertical-elasticity-strategy:0.3.0
         name: elasticity-controller
         resources:
           limits:

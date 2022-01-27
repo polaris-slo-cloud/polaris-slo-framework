@@ -1,7 +1,7 @@
 import { of as observableOf, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, take, timeout } from 'rxjs/operators';
 import { ElasticityStrategy, ElasticityStrategyKind, SloTarget } from '../../../../model';
-import { WatchEventsHandler } from '../../../../orchestrator';
+import { ObjectKindWatcherError, WatchEventsHandler } from '../../../../orchestrator';
 import { Logger, executeSafely } from '../../../../util';
 import { ElasticityStrategyController, ElasticityStrategyExecutionError } from '../../common';
 import { ElasticityStrategyKindControllerPair } from '../elasticity-strategy-manager';
@@ -39,6 +39,10 @@ export class DefaultElasticityStrategyWatchEventsHandler<O = any, T extends SloT
         if (this.controller.onElasticityStrategyDeleted) {
             executeSafely(() => this.controller.onElasticityStrategyDeleted(obj));
         }
+    }
+
+    onError(error: ObjectKindWatcherError): void {
+        throw error;
     }
 
     private processElasticityStrategy(elasticityStrategy: ElasticityStrategy<O, T, C>): void {

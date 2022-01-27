@@ -3,15 +3,19 @@ import {
     ApiObject,
     Logger,
     ObjectKind,
+    ObjectKindNotFoundError,
     ObjectKindPropertiesMissingError,
     ObjectKindWatcher,
     ObjectKindWatcherError,
     PolarisTransformationService,
     WatchAlreadyStartedError,
     WatchEventsHandler,
+    WatchTerminatedError,
 } from '@polaris-sloc/core';
 
 const REQUIRED_OBJECT_KIND_PROPERTIES: (keyof ObjectKind)[] = [ 'version', 'kind' ];
+
+const CONNECTION_CHECK_TIMEOUT_MS = 10 * 1000 * 60; // 10m
 
 // Unfortunately @kubernetes/client-node does not provide these typings, so we need to define them ourselves.
 type WatchEventType = 'ADDED' | 'MODIFIED' | 'DELETED' | 'BOOKMARK';
@@ -28,6 +32,11 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     private watchReq: WatchRequest;
     private _kind: ObjectKind;
     private _handler: WatchEventsHandler;
+
+    // The timestamp when we last received an event form the watch.
+    // See setupConnectionWatchHeuristic()
+    private lastEventReceivedTimestamp: number;
+    private connectionCheckInterval: NodeJS.Timeout;
 
     get isActive(): boolean {
         return !!this.watchReq && !!this._kind && !!this._handler;
@@ -68,10 +77,21 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                 // This is the done callback.
                 // It is called if the watch terminates normally.
                 if (err) {
+                    let watchErr: ObjectKindWatcherError;
                     if ((err as Error)?.message === 'Not Found') {
-                        err = new ObjectKindWatcherError(this, 'ObjectKind not found');
+                        // Unfortunately this error usually occurs after the watch has started successfully,
+                        // so we most likely need to pass it to onError() instead of rejecting the promise.
+                        watchErr = new ObjectKindNotFoundError(this, kind);
+                    } else {
+                        watchErr = new WatchTerminatedError(this, err);
                     }
-                    Logger.log(err);
+                    // If the promise has already resolved, pass the error to onError(),
+                    // otherwise reject the promise.
+                    if (this.isActive) {
+                        this.handler.onError(watchErr);
+                    } else {
+                        throw watchErr;
+                    }
                 }
                 this.watchReq = null;
                 this.stopWatch();
@@ -80,11 +100,17 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
 
         Logger.log(`Started watch on ${path}`);
         this.watchReq = watchReq;
+        this.setupConnectionWatchHeuristic();
     }
 
     stopWatch(): void {
         if (this.watchReq) {
             Logger.log(`Stopping watch on ${this.getWatchPath(this.kind)}`);
+
+            if (this.connectionCheckInterval) {
+                clearInterval(this.connectionCheckInterval);
+                this.connectionCheckInterval = null;
+            }
 
             // We need to avoid an infinite loop between the watch's done callback and stopWatch().
             const watchReq = this.watchReq;
@@ -101,6 +127,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
     }
 
     private onK8sWatchCallbackEvent(type: WatchEventType, k8sObj: KubernetesObject): void {
+        this.lastEventReceivedTimestamp = Date.now();
         switch (type) {
             case 'ADDED':
                 this.transformToPolarisObjectAndForward(k8sObj, polarisObj => this._handler.onObjectAdded(polarisObj));
@@ -149,6 +176,33 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
         } catch (err) {
             Logger.log(err);
         }
+    }
+
+    /**
+     * Periodically checks if a new event has been received from the watch and signals an error,
+     * if no event has been received for some time.
+     *
+     * Until the @kubernetes/client-node implements HTTP/2 and pinging of the server, we use
+     * this as a heuristic to detect if the connection has been interrupted.
+     *
+     * @see https://github.com/kubernetes-client/javascript/issues/596#issuecomment-792067322
+     */
+    private setupConnectionWatchHeuristic(): void {
+        this.lastEventReceivedTimestamp = Date.now();
+        this.connectionCheckInterval = setInterval(
+            () => {
+                const now = Date.now();
+                const diff = now - this.lastEventReceivedTimestamp;
+                if (diff >= CONNECTION_CHECK_TIMEOUT_MS) {
+                    if (this.isActive) {
+                        this.handler.onError(new WatchTerminatedError(this, `No events received from the server for ${diff / 1000 / 60} minutes.`));
+                        clearInterval(this.connectionCheckInterval);
+                        this.connectionCheckInterval = null;
+                    }
+                }
+            },
+            CONNECTION_CHECK_TIMEOUT_MS,
+        );
     }
 
 }

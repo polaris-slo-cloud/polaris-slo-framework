@@ -20,4 +20,7 @@ manager.startWatching({
     kindsToWatch: [
         { kind: new HorizontalElasticityStrategyKind(), controller: new HorizontalElasticityStrategyController(polarisRuntime) },
     ],
-}).catch(error => void Logger.error(error))
+}).catch(error => {
+    Logger.error(error);
+    process.exit(1);
+});
