@@ -1,15 +1,15 @@
 {
   "name": "@polaris-sloc/kubernetes",
-  "version": "0.2.0-beta.25",
+  "version": "0.2.0-beta.26",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
   "type": "commonjs",
   "dependencies": {
-    "@kubernetes/client-node": "^0.15.1"
+    "@kubernetes/client-node": "^0.16.2"
   },
   "peerDependencies": {
-    "@polaris-sloc/core": "~0.2.0-beta.25"
+    "@polaris-sloc/core": "~0.2.0-beta.26"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.5",
