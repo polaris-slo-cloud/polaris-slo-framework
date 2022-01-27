@@ -1,5 +1,5 @@
 import { ComposedMetricMapping, ComposedMetricMappingSpec, ObjectKind, SloTarget } from '../../../../model';
-import { WatchEventsHandler } from '../../../../orchestrator';
+import { ObjectKindWatcherError, WatchEventsHandler } from '../../../../orchestrator';
 import { executeSafely } from '../../../../util';
 import { ComposedMetricComputationConfig, ComposedMetricsManager } from '../composed-metrics-manager';
 
@@ -80,6 +80,10 @@ export class DefaultComposedMetricMappingWatchEventsHandler implements ComposedM
 
     onObjectDeleted(obj: ComposedMetricMapping<ComposedMetricMappingSpec<any, SloTarget>>): void {
         executeSafely(() => this.manager.removeComposedMetricMapping(obj));
+    }
+
+    onError(error: ObjectKindWatcherError): void {
+        throw error;
     }
 
     private isSloTargetSupported(target: SloTarget): boolean {

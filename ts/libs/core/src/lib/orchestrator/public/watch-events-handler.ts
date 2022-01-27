@@ -1,4 +1,5 @@
 import { ApiObject } from '../../model';
+import { ObjectKindWatcherError } from './error';
 
 /**
  * Handles events that occur when watching an `ObjectKind` with an `ObjectKindWatcher`.
@@ -29,5 +30,15 @@ export interface WatchEventsHandler<T extends ApiObject<any> = ApiObject<any>> {
      * @param obj The `ApiObject` that has been deleted.
      */
     onObjectDeleted(obj: T): void;
+
+    /**
+     * Called when there is an error during the operation of the watch, i.e., after the promise returned by
+     * `startWatch()` has already been fulfilled.
+     *
+     * When this method is called, the watch must be considered broken and should be stopped.
+     *
+     * @param error The error that caused this situation.
+     */
+    onError(error: ObjectKindWatcherError): void;
 
 }

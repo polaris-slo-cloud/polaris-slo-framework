@@ -125,6 +125,20 @@ export class ObjectKindPropertiesMissingError extends ObjectKindWatcherError {
 }
 
 /**
+ * Error that is thrown if an `ObjectKind` is not found by the orchestrator.
+ */
+export class ObjectKindNotFoundError extends ObjectKindWatcherError {
+
+    constructor(
+        public watcher: ObjectKindWatcher,
+        public kind: ObjectKind,
+    ){
+        super(watcher, 'ObjectKind not found');
+    }
+
+}
+
+/**
  * Error that is thrown if `ObjectKindWatcher.startWatch()` is called while the watch is already active.
  */
 export class WatchAlreadyStartedError extends ObjectKindWatcherError {
@@ -142,6 +156,17 @@ export class ObjectKindsAlreadyWatchedError extends Error {
 
     constructor(public watchManager: WatchManager, public watchedKinds: ObjectKind[]) {
         super(`The following ObjectKinds are already being watched by this WatchManager: ${watchedKinds.map(kind => ObjectKind.stringify(kind)).join(',\n')}`)
+    }
+
+}
+
+/**
+ * Error that is passed to `WatchEventsHandler.onError()` if there watch has terminated unexpectedly.
+ */
+export class WatchTerminatedError extends ObjectKindWatcherError {
+
+    constructor(public watcher: ObjectKindWatcher, public cause?: any) {
+        super(watcher, 'The watch has terminated unexpectedly.');
     }
 
 }

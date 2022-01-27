@@ -3,12 +3,14 @@ import {
     ApiObject,
     Logger,
     ObjectKind,
+    ObjectKindNotFoundError,
     ObjectKindPropertiesMissingError,
     ObjectKindWatcher,
     ObjectKindWatcherError,
     PolarisTransformationService,
     WatchAlreadyStartedError,
     WatchEventsHandler,
+    WatchTerminatedError,
 } from '@polaris-sloc/core';
 
 const REQUIRED_OBJECT_KIND_PROPERTIES: (keyof ObjectKind)[] = [ 'version', 'kind' ];
@@ -68,10 +70,21 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                 // This is the done callback.
                 // It is called if the watch terminates normally.
                 if (err) {
+                    let watchErr: ObjectKindWatcherError;
                     if ((err as Error)?.message === 'Not Found') {
-                        err = new ObjectKindWatcherError(this, 'ObjectKind not found');
+                        // Unfortunately this error usually occurs after the watch has started successfully,
+                        // so we most likely need to pass it to onError() instead of rejecting the promise.
+                        watchErr = new ObjectKindNotFoundError(this, kind);
+                    } else {
+                        watchErr = new WatchTerminatedError(this, err);
                     }
-                    Logger.log(err);
+                    // If the promise has already resolved, pass the error to onError(),
+                    // otherwise reject the promise.
+                    if (this.isActive) {
+                        this.handler.onError(watchErr);
+                    } else {
+                        throw watchErr;
+                    }
                 }
                 this.watchReq = null;
                 this.stopWatch();

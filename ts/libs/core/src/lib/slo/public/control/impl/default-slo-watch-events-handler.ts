@@ -1,4 +1,5 @@
 import { SloMapping } from '../../../../model';
+import { ObjectKindWatcherError } from '../../../../orchestrator';
 import { Logger, executeSafely } from '../../../../util';
 import { SloControlLoop, SloWatchEventsHandler } from '../slo-control-loop';
 
@@ -20,6 +21,10 @@ export class DefaultSloWatchEventsHandler implements SloWatchEventsHandler {
     onObjectDeleted(obj: SloMapping<any, any>): void {
         const key = this.getFullSloName(obj);
         executeSafely(() => this.controlLoop.removeSlo(key));
+    }
+
+    onError(error: ObjectKindWatcherError): void {
+        throw error;
     }
 
     private getFullSloName(sloMapping: SloMapping<any, any>): string {
