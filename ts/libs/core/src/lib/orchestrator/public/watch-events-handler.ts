@@ -1,5 +1,4 @@
 import { ApiObject } from '../../model';
-import { ObjectKindWatcherError } from './error';
 
 /**
  * Handles events that occur when watching an `ObjectKind` with an `ObjectKindWatcher`.
@@ -39,6 +38,6 @@ export interface WatchEventsHandler<T extends ApiObject<any> = ApiObject<any>> {
      *
      * @param error The error that caused this situation.
      */
-    onError(error: ObjectKindWatcherError): void;
+    onError(error: Error): void;
 
 }
