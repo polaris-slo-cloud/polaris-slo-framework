@@ -75,9 +75,9 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
             (type: WatchEventType, k8sObj: KubernetesObject) => this.onK8sWatchCallbackEvent(type, k8sObj),
             (err) => {
                 // This is the done callback.
-                // It is called if the watch terminates normally.
+                // It is called if the watch terminates normally and if there is an error.
+                let watchErr: ObjectKindWatcherError;
                 if (err) {
-                    let watchErr: ObjectKindWatcherError;
                     if ((err as Error)?.message === 'Not Found') {
                         // Unfortunately this error usually occurs after the watch has started successfully,
                         // so we most likely need to pass it to onError() instead of rejecting the promise.
@@ -85,6 +85,15 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                     } else {
                         watchErr = new WatchTerminatedError(this, err);
                     }
+                } else {
+                    // err is undefined or null, so the library reports this as a normal termination of the watch.
+                    // However, if this.watchReq is set, then the termination was not requested by us,
+                    // so we treat it as an error.
+                    if (this.watchReq) {
+                        watchErr = new WatchTerminatedError(this, err);
+                    }
+                }
+                if (watchErr) {
                     // If the promise has already resolved, pass the error to onError(),
                     // otherwise reject the promise.
                     if (this.isActive) {
@@ -188,6 +197,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
      * @see https://github.com/kubernetes-client/javascript/issues/596#issuecomment-792067322
      */
     private setupConnectionWatchHeuristic(): void {
+        Logger.log(`Setting up connection check with interval of ${CONNECTION_CHECK_TIMEOUT_MS / 1000 / 60} minutes.`);
         this.lastEventReceivedTimestamp = Date.now();
         this.connectionCheckInterval = setInterval(
             () => {
