@@ -1,4 +1,5 @@
 export * from './api-constants';
+export * from './environment-var-helper';
 export * from './error-handling';
 export * from './json-schema';
 export * from './logger';
