@@ -11,11 +11,18 @@ import {
     WatchAlreadyStartedError,
     WatchEventsHandler,
     WatchTerminatedError,
+    convertToNumber,
+    getEnvironmentVariable,
 } from '@polaris-sloc/core';
 
 const REQUIRED_OBJECT_KIND_PROPERTIES: (keyof ObjectKind)[] = [ 'version', 'kind' ];
 
-const CONNECTION_CHECK_TIMEOUT_MS = 10 * 1000 * 60; // 10m
+/**
+ * Temporary solution for undetected watch disconnects.
+ * If this env var is set to a positive number, a periodic connection check heuristic will be executed.
+ * See `setupConnectionWatchHeuristic()` for details.
+ */
+const CONNECTION_CHECK_TIMEOUT_ENV_VAR = 'POLARIS_CONNECTION_CHECK_TIMEOUT_MS';
 
 // Unfortunately @kubernetes/client-node does not provide these typings, so we need to define them ourselves.
 type WatchEventType = 'ADDED' | 'MODIFIED' | 'DELETED' | 'BOOKMARK';
@@ -197,13 +204,20 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
      * @see https://github.com/kubernetes-client/javascript/issues/596#issuecomment-792067322
      */
     private setupConnectionWatchHeuristic(): void {
-        Logger.log(`Setting up connection check with interval of ${CONNECTION_CHECK_TIMEOUT_MS / 1000 / 60} minutes.`);
+        const connectionCheckTimeoutMs = getEnvironmentVariable(CONNECTION_CHECK_TIMEOUT_ENV_VAR, convertToNumber)
+        if (typeof connectionCheckTimeoutMs !== 'number' || connectionCheckTimeoutMs <= 0) {
+            // eslint-disable-next-line max-len
+            Logger.log(`If you would like to enable a periodic connection check on the watch, please set the environment variable ${CONNECTION_CHECK_TIMEOUT_ENV_VAR} to the length of the periodic interval in milliseconds.`);
+            return;
+        }
+
+        Logger.log(`Setting up connection check with interval of ${connectionCheckTimeoutMs / 1000 / 60} minutes.`);
         this.lastEventReceivedTimestamp = Date.now();
         this.connectionCheckInterval = setInterval(
             () => {
                 const now = Date.now();
                 const diff = now - this.lastEventReceivedTimestamp;
-                if (diff >= CONNECTION_CHECK_TIMEOUT_MS) {
+                if (diff >= connectionCheckTimeoutMs) {
                     if (this.isActive) {
                         this.handler.onError(new WatchTerminatedError(this, `No events received from the server for ${diff / 1000 / 60} minutes.`));
                         clearInterval(this.connectionCheckInterval);
@@ -211,7 +225,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
                     }
                 }
             },
-            CONNECTION_CHECK_TIMEOUT_MS,
+            connectionCheckTimeoutMs,
         );
     }
 
