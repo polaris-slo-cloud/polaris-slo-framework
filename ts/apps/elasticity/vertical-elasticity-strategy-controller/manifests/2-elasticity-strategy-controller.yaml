@@ -47,3 +47,10 @@ spec:
           # Workaround for an issue with kubernetes-client when using IPv6 (https://github.com/kubernetes-client/javascript/issues/599)
           - name: KUBERNETES_SERVICE_HOST
             value: kubernetes.default.svc
+          # Set up a 10 minute connection check interval for the ObjectKind watches.
+          # This is a temporary workaround for occasional watch disconnect issues that
+          # are not reported by the Kubernetes client library.
+          # See https://github.com/kubernetes-client/javascript/issues/596#issuecomment-792067322
+          # You can disable this check by removing this env var.
+          - name: POLARIS_CONNECTION_CHECK_TIMEOUT_MS
+            value: "600000"
