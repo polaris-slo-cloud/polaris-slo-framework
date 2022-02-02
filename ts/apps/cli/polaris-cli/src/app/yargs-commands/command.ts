@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { Arguments, CommandBuilder, CommandModule } from 'yargs';
+import { ArgumentsCamelCase, CommandBuilder, CommandModule } from 'yargs';
 
 /**
  * Extends the yargs `CommandModule` to allow asynchronous handlers.
@@ -7,7 +7,7 @@ import { Arguments, CommandBuilder, CommandModule } from 'yargs';
 export interface Command<T = {}, U = {}> extends Omit<CommandModule<T, U>, 'handler'> {
 
     /** This handler is passed the parsed arguments. */
-    handler: (args: Arguments<U>) => void | Promise<void>;
+    handler: (args: ArgumentsCamelCase<U>) => void | Promise<void>;
 
 }
 
@@ -26,7 +26,7 @@ export function createYargsCommand<U>(
     command: string | string[],
     description: string,
     builder: CommandBuilder<{}, U>,
-    handler: (args: Arguments<U>) => void | Promise<void>,
+    handler: (args: ArgumentsCamelCase<U>) => void | Promise<void>,
 ): CommandModule<{}, U>;
 /**
  * Creates a Yargs `CommandModule` from the specified `Command` object.
@@ -36,7 +36,7 @@ export function createYargsCommand<T, U>(
     command: (string | string[]) | Command<T, U>,
     description?: string,
     builder?: CommandBuilder<{}, U>,
-    handler?: (args: Arguments<U>) => void | Promise<void>,
+    handler?: (args: ArgumentsCamelCase<U>) => void | Promise<void>,
 ): CommandModule<T, U> {
     if (typeof command === 'string' || Array.isArray(command)) {
         return createYargsCommandFromParams(command, description, builder, handler);
@@ -47,7 +47,7 @@ export function createYargsCommand<T, U>(
 function createYargsCommandFromCommandObj<T = {}, U = {}>(command: Command<T, U>): CommandModule<T, U> {
     const { handler, ...cmd } = command;
 
-    const executeHandler: (args: Arguments<U>) => void = args => {
+    const executeHandler: (args: ArgumentsCamelCase<U>) => void = args => {
         const result = command.handler(args);
         if (result) {
             result
@@ -66,7 +66,7 @@ function createYargsCommandFromParams<U>(
     command: string | string[],
     description: string,
     builder: CommandBuilder<{}, U>,
-    handler: (args: Arguments<U>) => void | Promise<void>,
+    handler: (args: ArgumentsCamelCase<U>) => void | Promise<void>,
 ): CommandModule<{}, U> {
     return createYargsCommandFromCommandObj({
         command,
