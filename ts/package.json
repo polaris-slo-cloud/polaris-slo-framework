@@ -17,6 +17,7 @@
     "docker:build:metrics-rest-api-cost-efficiency-controller": "docker build -f ./apps/metrics/rest-api-cost-efficiency-controller/Dockerfile --build-arg POLARIS_APP_TYPE=metrics --build-arg POLARIS_APP_NAME=rest-api-cost-efficiency-controller -t polarissloc/metrics-rest-api-cost-efficiency-controller:latest .",
     "docs:build": "npx typedoc --tsconfig ./tsconfig.typedoc.json && git checkout ../docs/typedoc/README.md",
     "gen-crds": "npx ts-node --project ./tools/scripts/tsconfig.json ./tools/scripts/gen-crds.ts",
+    "serialize-slo-mappings": "npx ts-node --project ./tools/scripts/tsconfig.json ./tools/scripts/serialize-slo-mappings.ts",
     "ts-circular-dep-check": "npx madge --circular . > circular-dependencies-report.txt",
     "ts-circular-dep-check-svg": "npx madge --circular --image dependencies.svg .",
     "test": "ng test",
