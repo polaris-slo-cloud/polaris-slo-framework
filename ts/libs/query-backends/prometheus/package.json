@@ -6,9 +6,9 @@
   "private": false,
   "type": "commonjs",
   "dependencies": {
-    "express": "^4.17.1",
-    "prometheus-query": "^3.0.1",
-    "prom-client": "^13.2.0",
+    "express": "^4.17.2",
+    "prometheus-query": "^3.2.0",
+    "prom-client": "^14.0.1",
     "safe-flat": "^2.0.2"
   },
   "peerDependencies": {

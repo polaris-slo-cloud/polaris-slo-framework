@@ -9,8 +9,8 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
 export const VERSIONS = {
     polaris: '0.2.0-beta.28',
     rxJs: '^6.6.7',
-    tsNode: '^10.3.0',
-    tsNodeConfigPaths: '^3.11.0',
+    tsNode: '^10.4.0',
+    tsNodeConfigPaths: '^3.12.0',
 };
 
 /** Full names of packages added by the generators. */
