@@ -102,7 +102,7 @@ export interface PolarisTransformationService {
      * @param propertyKey The name of the property.
      * @returns The type that has been defined for the specified property or `undefined` if this information is not available.
      */
-    getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T & string): PolarisConstructor<any>;
+    getPropertyType<T>(polarisType: PolarisConstructor<T>, propertyKey: keyof T): PolarisConstructor<any>;
 
     /**
      * Gets the Polaris type that has been registered for the specified `ObjectKind`.

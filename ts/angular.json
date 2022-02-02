@@ -1030,19 +1030,6 @@
             "browserTarget": "ui-polaris-ui:build"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/ui/polaris-ui/tsconfig.app.json",
-              "apps/ui/polaris-ui/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ui/polaris-ui/**/*"
-            ]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
@@ -1074,18 +1061,6 @@
             "production": {
               "devServerTarget": "ui-polaris-ui:serve:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/ui/polaris-ui-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ui/polaris-ui-e2e/**/*"
-            ]
           }
         }
       },
