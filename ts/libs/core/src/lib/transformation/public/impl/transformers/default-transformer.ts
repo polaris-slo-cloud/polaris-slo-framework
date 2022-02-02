@@ -1,4 +1,4 @@
-import { classToPlain, plainToClass } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { cloneDeep } from 'lodash';
 import { Constructor, InterfaceOf, JsonSchema, cloneDeepWithoutExcluded } from '../../../../util';
 import { PolarisTransformationService, PolarisTransformer } from '../../common';
@@ -12,11 +12,11 @@ import { PolarisTransformationService, PolarisTransformer } from '../../common';
 export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<T>> {
 
     transformToPolarisObject(polarisType: Constructor<T>, orchPlainObj: InterfaceOf<T>, transformationService: PolarisTransformationService): T {
-        return plainToClass(polarisType, orchPlainObj);
+        return plainToInstance(polarisType, orchPlainObj);
     }
 
     transformToOrchestratorPlainObject(polarisObj: T, transformationService: PolarisTransformationService): InterfaceOf<T> {
-        return classToPlain(polarisObj) as any;
+        return instanceToPlain(polarisObj) as any;
     }
 
     /**
@@ -37,7 +37,7 @@ export class DefaultTransformer<T> implements PolarisTransformer<T, InterfaceOf<
         const propKeys = Object.keys(polarisSchema.properties) as (keyof T)[];
 
         propKeys.forEach(propKey => {
-            const propType = transformationService.getPropertyType(polarisType, propKey as any);
+            const propType = transformationService.getPropertyType(polarisType, propKey);
             const origPropSchema = polarisSchema.properties[propKey];
             if (propType && typeof origPropSchema === 'object') {
                 transformedSchema.properties[propKey] = transformationService.transformToOrchestratorSchema(origPropSchema, propType);

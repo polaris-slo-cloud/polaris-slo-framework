@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { TypeFn } from '../../../util';
+import { Constructor, TypeFn } from '../../../util';
 import { PropertyTransformer } from '../../internal/property-transformer';
 import { PolarisMetadataUtils } from '../../internal/reflect-metadata-utils';
 
@@ -17,10 +17,10 @@ import { PolarisMetadataUtils } from '../../internal/reflect-metadata-utils';
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function PolarisType(typeFn: TypeFn<any>): PropertyDecorator {
-    return (prototype: any, propertyKey: string) => {
+    return (prototype: object, propertyKey: string) => {
         const polarisType = typeFn();
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        PolarisMetadataUtils.setPropertyPolarisType(prototype.constructor, propertyKey, polarisType);
+        PolarisMetadataUtils.setPropertyPolarisType(prototype.constructor as Constructor<any>, propertyKey, polarisType);
 
         const propertyTransformer = new PropertyTransformer(polarisType);
         const origDecorator = Transform(transformParams => propertyTransformer.transform(transformParams));
