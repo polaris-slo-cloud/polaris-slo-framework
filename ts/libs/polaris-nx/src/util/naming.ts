@@ -14,6 +14,11 @@ export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
  */
 export const MODEL_FILE_SUFFIX = '.prm';
 
+/**
+ * The directory (within the root of the workspace), in which SloMapping instances should be placed.
+ */
+export const SLO_MAPPINGS_DIR = 'slo-mappings';
+
 const SLO_MAPPING_TYPE_FILE_SUFFIX = '.slo-mapping'
 const SLO_CONTROLLER_FILE_SUFFIX = '.controller';
 const ELASTICITY_STRATEGY_CONTROLLER_FILE_SUFFIX = '.controller';

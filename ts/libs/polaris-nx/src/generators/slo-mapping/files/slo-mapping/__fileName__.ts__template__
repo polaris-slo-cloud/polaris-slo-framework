@@ -1,0 +1,23 @@
+import { HorizontalElasticityStrategyKind } from '@polaris-sloc/common-mappings';
+import { ApiObjectMetadata, SloTarget } from '@polaris-sloc/core';
+import { <%= sloMappingType %>, <%= sloMappingType %>Spec } from '<%= sloMappingTypePkg %>';
+
+export default new <%= sloMappingType %> ({
+    metadata: new ApiObjectMetadata({
+        namespace: 'ToDo', // ToDo: Enter the target namespace.
+        name: '<%= sloMappingName %>',
+    }),
+    spec: new <%= sloMappingType %>Spec({
+        targetRef: new SloTarget({
+            // ToDo: Configure the target.
+            group: 'ToDo',
+            version: 'ToDo',
+            kind: 'ToDo',
+            name: 'ToDo',
+        }),
+        elasticityStrategy: new HorizontalElasticityStrategyKind(), // ToDo: Change the elasticity strategy, if needed.
+        sloConfig: {
+            // ToDo: Configure the SLO.
+        },
+    }),
+});

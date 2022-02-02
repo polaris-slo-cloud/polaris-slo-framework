@@ -29,6 +29,25 @@ describe('polaris-nx e2e', () => {
     //     expect(result.stdout).toContain('Executor ran');
     });
 
+    it('should create an slo-mapping instance', async () => {
+        const sloMappingName = uniq('my-slo-mapping');
+        const sloMappingType = 'CostEfficiencySloMapping';
+        const sloMappingTypePkg = '@polaris-sloc/common-mappings';
+
+        ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
+
+        // eslint-disable-next-line max-len
+        const result = await runNxCommandAsync(`generate @polaris-sloc/polaris-nx:slo-mapping ${sloMappingName} --directory=test --sloMappingTypePkg=${sloMappingTypePkg} --sloMappingType=${sloMappingType}`);
+        if (result.stderr) {
+            console.log(result.stderr);
+        }
+        expect(() => checkFilesExist(
+            `slo-mappings/test/${sloMappingName}.ts`,
+            'slo-mappings/tsconfig.json',
+            'slo-mappings/README.md',
+        )).not.toThrow();
+    });
+
     it('should create an slo-controller', async () => {
         const controllerName = uniq('slo-controller-test');
         const sloMappingType = 'CostEfficiencySloMapping';
