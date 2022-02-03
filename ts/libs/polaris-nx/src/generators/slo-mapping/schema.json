@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
     "$id": "SloMapping",
-    "title": "",
+    "title": "Generate an SLO Mapping instance.",
     "type": "object",
     "properties": {
         "name": {

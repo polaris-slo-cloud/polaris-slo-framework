@@ -10,7 +10,9 @@ import {
     offsetFromRoot,
 } from '@nrwl/devkit';
 import {
+    NPM_PACKAGES,
     SLO_MAPPINGS_DIR,
+    VERSIONS,
     addPolarisDependenciesToPackageJson,
     getWorkspaceTsConfigPath,
     runCallbacksSequentially,
@@ -18,11 +20,15 @@ import {
 import { SloMappingGeneratorNormalizedSchema, SloMappingGeneratorSchema } from './schema';
 
 /**
- * Generates a new Polaris ComposedMetricType.
+ * Generates a new Polaris SloMapping instance file.
+ *
+ * // ToDo: Register the slo-mappings directory as a project, turn serialize-slo-mapping into an executor, and adapt polaris-cli command.
  */
 const generateComposedMetricType: Generator<SloMappingGeneratorSchema> = async (host: Tree, options: SloMappingGeneratorSchema) => {
     const callbacks: GeneratorCallback[] = [
-        addPolarisDependenciesToPackageJson(host),
+        addPolarisDependenciesToPackageJson(host, {
+            [NPM_PACKAGES.polaris.orchestrators.kubernetes]: VERSIONS.polaris,
+        }),
     ];
 
     const normalizedOptions = normalizeOptions(host, options);
@@ -43,11 +49,13 @@ export default generateComposedMetricType;
 
 function normalizeOptions(host: Tree, options: SloMappingGeneratorSchema): SloMappingGeneratorNormalizedSchema {
     const normalizedNames = names(options.name);
+    const directory = options.directory ?? '';
 
     return {
         names: normalizedNames,
-        destDir: joinPathFragments(SLO_MAPPINGS_DIR, options.directory),
+        destDir: joinPathFragments(SLO_MAPPINGS_DIR, directory),
         ...options,
+        directory,
     };
 }
 

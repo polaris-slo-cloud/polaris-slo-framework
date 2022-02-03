@@ -18,6 +18,7 @@ The Polaris CLI supports the following commands:
 |--------------------------------------|-----------------------------------------|
 | `polaris-cli init <name>`            | Creates a new Nx workspace for creating Polaris projects.|
 | `polaris-cli generate <type> <name>` | Generates a new Polaris project/component [alias: `g`]|
+| `polaris-cli serialize-slo-mapping <slo-mapping-path>` | Serializes an SLO Mapping instance from a `.ts` file to Kubernetes YAML. [alias: `serialize`]|
 | `polaris-cli build <name>`           | Builds a Polaris project. |
 | `polaris-cli docker-build <name>`    | Builds the Docker container image for a Polaris controller project. |
 | `polaris-cli deploy <name>`          | Deploys a Polaris project or an SLO Mapping to an orchestrator. |
