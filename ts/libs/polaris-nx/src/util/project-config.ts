@@ -1,10 +1,10 @@
-import { GeneratorCallback, NxJsonProjectConfiguration, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
+import { GeneratorCallback, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/node';
 import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 
 /** Configuration for a project within an Nx CLI workspace. */
-export type ProjectConfig = ProjectConfiguration & NxJsonProjectConfiguration;
+export type ProjectConfig = ProjectConfiguration;
 
 /** Parameters for creating a library project. */
 export interface LibProjectOptions {

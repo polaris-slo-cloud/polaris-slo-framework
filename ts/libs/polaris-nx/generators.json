@@ -47,6 +47,16 @@
             "factory": "./src/generators/predicted-metric-controller/generator",
             "schema": "./src/generators/predicted-metric-controller/schema.json",
             "description": "predicted-metric-controller generator"
+        },
+        "slo-mapping": {
+            "factory": "./src/generators/slo-mapping/generator",
+            "schema": "./src/generators/slo-mapping/schema.json",
+            "description": "slo-mapping generator"
+        },
+        "serialize-slo-mapping": {
+            "factory": "./src/generators/serialize-slo-mapping/generator",
+            "schema": "./src/generators/serialize-slo-mapping/schema.json",
+            "description": "serialize-slo-mapping generator"
         }
     }
 }

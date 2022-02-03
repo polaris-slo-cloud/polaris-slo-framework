@@ -39,7 +39,7 @@ export class RunProcessTask implements Task {
             } catch (err) {
                 reject(new RunProcessTaskError(
                     `Error executing command: ${this.config.command}`,
-                    err,
+                    err as Error,
                 ));
             }
         });

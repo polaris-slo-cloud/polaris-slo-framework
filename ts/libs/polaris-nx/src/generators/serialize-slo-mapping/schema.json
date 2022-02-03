@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "title": "Serialize SLO Mapping",
+    "description": "Serialize an SLO Mapping instance to a Kubernetes-specific YAML.",
+    "type": "object",
+    "properties": {
+        "sloMappingTsPath": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "Please enter the path of the SLO Mapping's .ts file within the slo-mappings directory."
+        }
+    },
+    "required": ["sloMappingTsPath"]
+}

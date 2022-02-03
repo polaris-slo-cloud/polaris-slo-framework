@@ -18,6 +18,7 @@ The Polaris CLI supports the following commands:
 |--------------------------------------|-----------------------------------------|
 | `polaris-cli init <name>`            | Creates a new Nx workspace for creating Polaris projects.|
 | `polaris-cli generate <type> <name>` | Generates a new Polaris project/component [alias: `g`]|
+| `polaris-cli serialize-slo-mapping <slo-mapping-path>` | Serializes an SLO Mapping instance from a `.ts` file to Kubernetes YAML. [alias: `serialize`]|
 | `polaris-cli build <name>`           | Builds a Polaris project. |
 | `polaris-cli docker-build <name>`    | Builds the Docker container image for a Polaris controller project. |
 | `polaris-cli deploy <name>`          | Deploys a Polaris project or an SLO Mapping to an orchestrator. |
@@ -38,6 +39,7 @@ The `polaris-cli generate <type> <name>` command allows generating new polaris c
 If supports the following types:
 
 * [`slo-mapping-type`](#slo-mapping-type)
+* [`slo-mapping`](#slo-mapping)
 * [`slo-controller`](#slo-controller)
 * [`elasticity-strategy`](#elasticity-strategy)
 * [`elasticity-strategy-controller`](#elasticity-strategy-controller)
@@ -61,6 +63,23 @@ polaris-cli g slo-mapping-type <name> --project=<dest-project> --createLibProjec
 * `project`: The name of the publishable library project, to which the SLO Mapping type should be added. E.g., `my-lib`.
 * `createLibProject`: (optional) Create a publishable library project for the SLO Mapping type.
 * `importPath`: The import path of the publishable library, e.g., `@my-org/my-lib` (only used and required if `--createLibProject` is `true`).
+
+
+### SLO Mapping
+
+To generate an instance of an existing SLO Mapping for applying it to a workload, use the following command:
+
+```sh
+polaris-cli g slo-mapping <name> --sloMappingTypePkg=<slo-mapping-type-npm-package> --sloMappingType=<slo-mapping-type-name> --directory=<subdirectory>
+```
+
+All SLO Mapping instances are placed in the `slo-mappings` directory of your workspace.
+
+**Parameters:**
+* `name`: Name of the new SLO mapping instance. E.g., `my-cost-eff-slo`.
+* `sloMappingTypePkg`: The name of the npm package that contains the SLO Mapping type, e.g., `@my-org/my-lib`. If the npm package is not part of a project in this workspace, it will be installed automatically.
+* `sloMappingType`: The name of the SLO Mapping type class. E.g., `CostEfficiencySloMapping`.
+* `directory`: (optional) Subdirectory within `slo-mappings`, where the generated file should be placed.
 
 
 ### SLO Controller

@@ -19,7 +19,7 @@ export function createGenerateCommand(cli: PolarisCli): CommandModule<any, any> 
                 choices: [
                     'slo-mapping-type',
                     'slo-controller',
-                    // 'slo-mapping',
+                    'slo-mapping',
                     'metrics-dashboard',
                     'elasticity-strategy',
                     'elasticity-strategy-controller',

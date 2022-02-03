@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { PolarisCli } from './polaris-cli';
@@ -9,6 +10,7 @@ import {
     createGenerateCommand,
     createGenerateCrdCommand,
     createInitCommand,
+    createSerializeSloMappingCommand,
 } from './yargs-commands';
 
 export class PolarisCliImpl implements PolarisCli {
@@ -32,6 +34,7 @@ export class PolarisCliImpl implements PolarisCli {
             })
             .command(createInitCommand(this))
             .command(createGenerateCommand(this))
+            .command(createSerializeSloMappingCommand(this))
             .command(createBuildCommand(this))
             .command(createDockerBuildCommand(this))
             .command(createDeployCommand(this))
