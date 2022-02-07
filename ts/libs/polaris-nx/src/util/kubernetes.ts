@@ -82,7 +82,8 @@ function buildLabels(sloMappingObject: SloMappingBase<any>, crd: V1CustomResourc
     };
 }
 
-export async function listAllComposedMetrics(composedMetricTypePkg: string, composedMetricType: string, requiredNamespace: string, kubeConfig: KubeConfig, host: Tree): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {
+export async function listAllComposedMetrics(composedMetricTypePkg: string, composedMetricType: string,
+                                             requiredNamespace: string, kubeConfig: KubeConfig, host: Tree): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {
     const sloGroup = 'slo.polaris-slo-cloud.github.io';
     const mappingKind = `${composedMetricType}MetricMapping`;
     const metricsGroup = 'metrics.polaris-slo-cloud.github.io';
@@ -118,7 +119,8 @@ export async function listAllComposedMetrics(composedMetricTypePkg: string, comp
 
 // get all metric mapping crds
 async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, kind: string, group: string, version: string,
-                                             labels: Record<string, string>, composedMetricTypePkg: string, composedMetricType: string, host: Tree): Promise<PrometheusComposedMetric[]> {
+                                             labels: Record<string, string>, composedMetricTypePkg: string,
+                                             composedMetricType: string, host: Tree): Promise<PrometheusComposedMetric[]> {
     const apiextensionsV1Api = kubeConfig.makeApiClient(ApiextensionsV1Api);
     const customObjectsApi = kubeConfig.makeApiClient(CustomObjectsApi);
 
@@ -138,7 +140,8 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, kind: strin
     const metricMappings = [];
     for (const crd of crds) {
         const plural = crd.spec.names.plural;
-        const response = await customObjectsApi.listClusterCustomObject(group, version, plural, 'true', undefined, '', labelSelector);
+        const response = await customObjectsApi.listClusterCustomObject(group, version, plural, 'true',
+            false, undefined, '',  labelSelector);
 
         const body: any = response.body;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -153,6 +156,7 @@ async function listComposedMetricsWithLabels(kubeConfig: KubeConfig, kind: strin
     // convert each metric mapping into a PrometheusComposedMetric
     for (const metricMapping of metricMappings) {
         /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+        /* eslint-disable @typescript-eslint/no-unsafe-argument */
         /* eslint-disable @typescript-eslint/restrict-template-expressions */
         /* eslint-disable @typescript-eslint/no-unsafe-call */
         const metricPropKeys = await readMetricPropKeys(composedMetricTypePkg, composedMetricType, host);
