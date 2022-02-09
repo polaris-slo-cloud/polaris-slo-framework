@@ -28,7 +28,7 @@ rules:
 
 # Allow reading supported Elasticity Strategy types
 - apiGroups:
-  - elasticity.polaris-slo-cloud.github.io
+  - <%= eStratTypeApiGroup %>
   resources:
   - <%= eStratK8sResources %>
   verbs:
@@ -36,7 +36,7 @@ rules:
   - watch
   - list
 - apiGroups:
-  - elasticity.polaris-slo-cloud.github.io
+  - <%= eStratTypeApiGroup %>
   resources:
   - <%= eStratK8sResources %>/status
   verbs:

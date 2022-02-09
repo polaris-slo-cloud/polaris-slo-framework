@@ -21,7 +21,7 @@ export class <%= eStratKind %> extends ElasticityStrategyKind<SloCompliance, Slo
 
     constructor() {
         super({
-            group: 'elasticity.polaris-slo-cloud.github.io',
+            group: '<%= eStratTypeApiGroup %>',
             version: 'v1',
             kind: '<%= eStratType %>',
         });

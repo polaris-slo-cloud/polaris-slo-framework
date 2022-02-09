@@ -41,7 +41,7 @@ export class <%= sloMappingType %> extends SloMappingBase<<%= sloMappingSpecType
     constructor(initData?: SloMappingInitData<<%= sloMappingType %>>) {
         super(initData);
         this.objectKind = new ObjectKind({
-            group: 'slo.example.github.io', // ToDo: Replace the group with your own.
+            group: '<%= sloMappingTypeApiGroup %>', // ToDo: Replace the group with your own.
             version: 'v1',
             kind: '<%= sloMappingType %>',
         });
