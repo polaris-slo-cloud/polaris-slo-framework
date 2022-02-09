@@ -1,5 +1,5 @@
 import { names } from '@nrwl/devkit';
-import { getPlural as getPluralCore } from '@polaris-sloc/core';
+import { POLARIS_API, getPlural as getPluralCore } from '@polaris-sloc/core';
 
 /** The name of the function used to initialize a Polaris library. */
 export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
@@ -101,9 +101,14 @@ export interface SloNames {
     sloMappingSpecType: string;
 
     /**
-     * @example costefficiencyslomappings
+     * @example cpuusageslomappings
      */
     sloMappingK8sResources: string;
+
+    /**
+     * @example 'slo.polaris-slo-cloud.github.io'
+     */
+    sloMappingTypeApiGroup: string;
 
 }
 
@@ -151,6 +156,11 @@ export interface ElasticityStrategyNames {
      * @example horizontalelasticitystrategies
      */
     eStratK8sResources: string;
+
+    /**
+     * @example 'elasticity.polaris-slo-cloud.github.io'
+     */
+    eStratTypeApiGroup: string;
 
 }
 
@@ -248,6 +258,7 @@ export function getSloNames(sloMappingTypeName: string): SloNames {
         sloMappingType: sloMappingTypeName,
         sloMappingSpecType: `${sloMappingTypeName}Spec`,
         sloMappingK8sResources: getPlural(sloMappingTypeName.toLowerCase()),
+        sloMappingTypeApiGroup: POLARIS_API.SLO_GROUP,
     };
 }
 
@@ -276,6 +287,7 @@ export function getElasticityStrategyNames(eStratTypeName: string): ElasticitySt
         eStratType: eStratTypeName,
         eStratKind: `${eStratTypeName}Kind`,
         eStratK8sResources: getPlural(eStratTypeName.toLowerCase()),
+        eStratTypeApiGroup: POLARIS_API.ELASTICITY_GROUP,
     };
 }
 

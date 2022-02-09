@@ -9,12 +9,20 @@ import {
     initSelf,
 } from '@polaris-sloc/core';
 
+// ToDo after code generation:
+// - Add configuration parameters to the <%= sloConfigType %> interface.
+// - If the SLO does not produce SloCompliance objects as output,
+//   adapt the second generic parameter of <%= sloMappingSpecType %> accordingly.
+// - If the SLO should operate on a subtype of SloTarget,
+//   adapt the third generic parameter of <%= sloMappingSpecType %> accordingly.
+// - (optional) Replace the ObjectKind.group in the constructor of <%= sloMappingType %> with your own.
+//   If you change the group name, ensure that you also accordingly adapt the `1-rbac.yaml` files of all
+//   SLO controllers that need to write this SloMapping CRD.
+
 /**
  * Represents the configuration options of the <%= sloName %> SLO.
  */
 export interface  <%= sloConfigType %> {
-
-    // ToDo: Add SLO configuration properties.
 
 }
 
@@ -41,7 +49,7 @@ export class <%= sloMappingType %> extends SloMappingBase<<%= sloMappingSpecType
     constructor(initData?: SloMappingInitData<<%= sloMappingType %>>) {
         super(initData);
         this.objectKind = new ObjectKind({
-            group: 'slo.example.github.io', // ToDo: Replace the group with your own.
+            group: '<%= sloMappingTypeApiGroup %>',
             version: 'v1',
             kind: '<%= sloMappingType %>',
         });

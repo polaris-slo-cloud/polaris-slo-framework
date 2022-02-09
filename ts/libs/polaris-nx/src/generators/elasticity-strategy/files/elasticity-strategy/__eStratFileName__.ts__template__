@@ -6,6 +6,9 @@ import { ElasticityStrategy, ElasticityStrategyKind, SloCompliance, SloTarget, i
 //   adapt the first generic parameter of <%= eStratKind %> and <%= eStratType %> accordingly.
 // - If the elasticity strategy should operate on a subtype of SloTarget,
 //   adapt the second generic parameter of <%= eStratKind %> and <%= eStratType %> accordingly.
+// - (optional) Replace the ObjectKind.group in the constructor of <%= eStratType %> with your own.
+//   If you change the group name, ensure that you also accordingly adapt the `1-rbac.yaml` files of all
+//   the elasticity strategy controller that needs to read and SLO controllers that need to write this ElasticityStrategy CRD.
 
 /**
  * Configuration options for <%= eStratType %>.
@@ -21,7 +24,7 @@ export class <%= eStratKind %> extends ElasticityStrategyKind<SloCompliance, Slo
 
     constructor() {
         super({
-            group: 'elasticity.polaris-slo-cloud.github.io',
+            group: '<%= eStratTypeApiGroup %>',
             version: 'v1',
             kind: '<%= eStratType %>',
         });

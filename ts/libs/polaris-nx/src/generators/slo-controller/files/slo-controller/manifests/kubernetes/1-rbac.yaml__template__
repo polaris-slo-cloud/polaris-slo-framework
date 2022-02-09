@@ -28,7 +28,7 @@ rules:
 
 # Allow reading supported SLO mappings
 - apiGroups:
-  - slo.polaris-slo-cloud.github.io
+  - <%= sloMappingTypeApiGroup %>
   resources:
   - <%= sloMappingK8sResources %>
   verbs:
@@ -36,7 +36,7 @@ rules:
   - watch
   - list
 - apiGroups:
-  - slo.polaris-slo-cloud.github.io
+  - <%= sloMappingTypeApiGroup %>
   resources:
   - <%= sloMappingK8sResources %>/status
   verbs:
