@@ -4,6 +4,8 @@ import { ComposedMetricMapping, ComposedMetricMappingSpec, ComposedMetricParams,
 // - Add properties to the <%= compMetricValueType %> interface to store the value of a single metric instance.
 // - Add configuration parameters to the <%= compMetricParams %> interface, if needed.
 // - (optional) Replace `POLARIS_API.METRICS_GROUP` in <%= compMetricType %>.metricTypeName with a custom group name.
+//   If you change the group name, ensure that you also accordingly adapt the `1-rbac.yaml` files of all
+//   composed metric controllers and all SLO controllers that need to write this ComposedMetricType CRD.
 
 /**
  * Represents the value of a <%= compMetricValueType %> metric.
