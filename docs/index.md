@@ -21,17 +21,16 @@ The main documentation can be found [here](./docs).
 
 ### Videos and Demos
 
-This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC - Service Level Objectives for Next Generation Cloud Computing, is used):
+This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to the Polaris Framework and the concepts behind it.
 
-<a href="https://www.youtube.com/watch?v=qRw_oyn_7Ss" target="_blank" rel="noopener">
-    <img src="./assets/demo-video1-preview.png" alt="SLO Script Demo Video" width="640" height="360" border="10" />
+<a href="https://www.youtube.com/watch?v=Uh3VwT-urgk" target="_blank" rel="noopener">
+    <img src="./assets/polaris-concepts-video-preview.png" alt="Polaris Framework Concepts Video Preview" width="640" height="360" border="10" />
 </a>
 
-The following videos showcase the capabilities of the Polaris CLI:
+The following videos showcase the demos of the Polaris Framework and its CLI:
 
-* [Quick walkthrough](https://www.youtube.com/watch?v=JVZ4hB2AmGs)
-* [Step-by-step SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
-* [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
+* [End-to-end demo with reactive scaling of a workload](https://www.youtube.com/watch?v=qScTsLGyOi8)
+* [Proactive scaling concepts and demo](https://www.youtube.com/watch?v=epgcMXS55tQ)
 
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
 
