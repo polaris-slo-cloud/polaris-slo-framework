@@ -13,7 +13,7 @@
         "includeVersion": true,
         "readme": "none",
         "excludePrivate": true,
-        "out": "../docs/typedoc",
+        "out": "../gh-pages/typedoc",
         "entryPoints": [
             "libs/core/src/index.ts",
             "libs/mappings/common-mappings/src/index.ts",

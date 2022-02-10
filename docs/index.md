@@ -21,17 +21,16 @@ The main documentation can be found [here](./docs).
 
 ### Videos and Demos
 
-This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to SLO script and shows an end-to-end demo (note that in the video the old project name, SLOC - Service Level Objectives for Next Generation Cloud Computing, is used):
+This [video](https://www.youtube.com/watch?v=qRw_oyn_7Ss) provides an introduction to the Polaris Framework and the concepts behind it.
 
-<a href="https://www.youtube.com/watch?v=qRw_oyn_7Ss" target="_blank" rel="noopener">
-    <img src="./assets/demo-video1-preview.png" alt="SLO Script Demo Video" width="640" height="360" border="10" />
+<a href="https://www.youtube.com/watch?v=Uh3VwT-urgk" target="_blank" rel="noopener">
+    <img src="./assets/polaris-concepts-video-preview.png" alt="Polaris Framework Concepts Video Preview" width="640" height="360" border="10" />
 </a>
 
-The following videos showcase the capabilities of the Polaris CLI:
+The following videos showcase the demos of the Polaris Framework and its CLI:
 
-* [Quick walkthrough](https://www.youtube.com/watch?v=JVZ4hB2AmGs)
-* [Step-by-step SLO Mapping Type and SLO Controller generation](https://www.youtube.com/watch?v=3_z2koGTExw)
-* [Step-by-step Elasticity Strategy Type and Elasticity Strategy Controller generation](https://www.youtube.com/watch?v=U_Scw_oA0zw)
+* [End-to-end demo with reactive scaling of a workload](https://www.youtube.com/watch?v=qScTsLGyOi8)
+* [Proactive scaling concepts and demo](https://www.youtube.com/watch?v=epgcMXS55tQ)
 
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
 
@@ -113,6 +112,25 @@ All code for this project is contained in this repository.
 | [`python`](./python)     | Python code, e.g., predicted metric controller base |
 | [`testbeds`](./testbeds) | Configurations and demo applications, we use for testing |
 | [`ts`](./ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
+
+
+## Maintaining gh-pages
+
+The project's website is hosted using GitHub pages.
+
+```sh
+# Clone the polaris repository once more, this time into the ./gh-pages folder and check out the gh-pages branch.
+git clone -b gh-pages git@github.com:polaris-slo-cloud/polaris.git ./gh-pages
+
+# Run the update script to copy the current state from the docs folder to gh-pages and to regenerate the typedoc documentation.
+./update-gh-pages.sh
+
+# Go into the gh-pages directory and push the branch
+cd gh-pages
+git add .
+git commit -m "Update gh-pages"
+git push origin
+```
 
 
 ## Our Users

@@ -15,7 +15,7 @@
     "docker:build:slo-cost-efficiency-slo-controller": "docker build -f ./apps/slo/cost-efficiency-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cost-efficiency-slo-controller -t polarissloc/slo-cost-efficiency:latest .",
     "docker:build:slo-cpu-usage-slo": "docker build -f ./apps/slo/cpu-usage-slo-controller/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=cpu-usage-slo-controller -t polarissloc/slo-cpu-usage:latest .",
     "docker:build:metrics-rest-api-cost-efficiency-controller": "docker build -f ./apps/metrics/rest-api-cost-efficiency-controller/Dockerfile --build-arg POLARIS_APP_TYPE=metrics --build-arg POLARIS_APP_NAME=rest-api-cost-efficiency-controller -t polarissloc/metrics-rest-api-cost-efficiency-controller:latest .",
-    "docs:build": "npx typedoc --tsconfig ./tsconfig.typedoc.json && git checkout ../docs/typedoc/README.md",
+    "docs:build": "npx typedoc --tsconfig ./tsconfig.typedoc.json",
     "gen-crds": "npx ts-node --project ./tools/scripts/tsconfig.json ./tools/scripts/gen-crds.ts",
     "serialize-slo-mappings": "npx ts-node --project ./tools/scripts/tsconfig.json ./tools/scripts/serialize-slo-mappings.ts",
     "ts-circular-dep-check": "npx madge --circular . > circular-dependencies-report.txt",
