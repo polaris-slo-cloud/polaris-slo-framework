@@ -17,3 +17,6 @@
 # System Files
 .DS_Store
 Thumbs.db
+
+# Folder used to check out the gh-pages branch
+gh-pages/
