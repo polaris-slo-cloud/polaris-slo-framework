@@ -114,6 +114,25 @@ All code for this project is contained in this repository.
 | [`ts`](./ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
 
 
+## Maintaining gh-pages
+
+The project's website is hosted using GitHub pages.
+
+```sh
+# Clone the polaris repository once more, this time into the ./gh-pages folder and check out the gh-pages branch.
+git clone -b gh-pages git@github.com:polaris-slo-cloud/polaris.git ./gh-pages
+
+# Run the update script to copy the current state from the docs folder to gh-pages and to regenerate the typedoc documentation.
+./update-gh-pages.sh
+
+# Go into the gh-pages directory and push the branch
+cd gh-pages
+git add .
+git commit -m "Update gh-pages"
+git push origin
+```
+
+
 ## Our Users
 
 The Polaris SLO Cloud project is actively used by the [orchestration layer](https://gitlab.com/rainbow-project1/rainbow-orchestration) of the [RAINBOW](https://rainbow-h2020.eu) project to bring complex SLOs to Fog Computing.
