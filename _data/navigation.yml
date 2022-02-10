@@ -1,0 +1,21 @@
+main-nav:
+  - title: Home
+    url: /
+
+  - title: Documentation
+    url: /docs
+    children:
+      - title: Project Structure
+        url: /project-structure
+      - title: Bulding and Deployment
+        url: /deployment
+      - title: Features
+        children:
+          - title: SLO Script
+            url: /features/slo-script
+          - title: Generic Elasticity Strategies
+            url: /features/generic-elasticity-strategies
+          - title: Generic SLOs
+            url: /features/generic-slos
+          - title: Predictions
+            url: /features/predictions

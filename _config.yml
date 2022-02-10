@@ -1,0 +1,8 @@
+theme: jekyll-theme-cayman
+defaults:
+  - scope:
+      path: ""
+      type: docs
+    values:
+      sidebar:
+        nav: "main-nav"

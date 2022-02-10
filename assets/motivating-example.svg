@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="Roles_without_end_user.svg"
+   id="svg260"
+   version="1.1"
+   class="st24"
+   color-interpolation-filters="sRGB"
+   xml:space="preserve"
+   viewBox="0 0 574.6426 358.16466"
+   height="4.9745154in"
+   width="7.981154in"><metadata
+   id="metadata264"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   inkscape:current-layer="svg260"
+   inkscape:window-maximized="1"
+   inkscape:window-y="-9"
+   inkscape:window-x="-9"
+   inkscape:cy="238.77563"
+   inkscape:cx="409.06431"
+   inkscape:zoom="1.3877538"
+   showgrid="false"
+   id="namedview262"
+   inkscape:window-height="1361"
+   inkscape:window-width="2560"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0"
+   guidetolerance="10"
+   gridtolerance="10"
+   objecttolerance="10"
+   borderopacity="1"
+   bordercolor="#666666"
+   pagecolor="#ffffff" />
+	<style
+   id="style2"
+   type="text/css">
+	<![CDATA[
+		.st1 {fill:url(#grad0-4);stroke:#c7dce6;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st2 {fill:#000000;font-family:Calibri;font-size:2.50001em}
+		.st3 {fill:url(#grad0-10);stroke:#7e6bc9;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st4 {fill:#000000;font-family:Calibri;font-size:1.5em}
+		.st5 {fill:url(#grad0-17);stroke:#7e6bc9;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st6 {fill:#000000;font-family:Calibri;font-size:1.99999em}
+		.st7 {font-size:1em}
+		.st8 {marker-end:url(#mrkr4-37);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:4.5}
+		.st9 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.64102564102564}
+		.st10 {fill:url(#grad0-4)}
+		.st11 {stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st12 {stroke:#c7dde6;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st13 {fill:url(#grad0-4);stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;visibility:hidden}
+		.st14 {fill:#000000;font-family:Calibri;font-size:1.33333em}
+		.st15 {fill:url(#grad0-69);stroke:#9cb084;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st16 {stroke:#7e6bc9;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25}
+		.st17 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st18 {marker-end:url(#mrkr4-84);stroke:#7e6bc9;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25}
+		.st19 {fill:#7e6bc9;fill-opacity:1;stroke:#7e6bc9;stroke-opacity:1;stroke-width:0.47169811320755}
+		.st20 {fill:url(#grad4-88);stroke:#93a67c;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st21 {marker-end:url(#mrkr4-96);stroke:#9cb084;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25}
+		.st22 {fill:#9cb084;fill-opacity:1;stroke:#9cb084;stroke-opacity:1;stroke-width:0.47169811320755}
+		.st23 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25}
+		.st24 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs
+   id="Patterns_And_Gradients">
+		<linearGradient
+   gradientTransform="rotate(45,0.5,0.5)"
+   y2="0"
+   x2="1"
+   y1="0"
+   x1="0"
+   id="grad0-4">
+			<stop
+   id="stop4"
+   stop-opacity="1"
+   stop-color="#f0f5f7"
+   offset="0" />
+			<stop
+   id="stop6"
+   stop-opacity="1"
+   stop-color="#c7dce6"
+   offset="0.78" />
+			<stop
+   id="stop8"
+   stop-opacity="1"
+   stop-color="#c7dce6"
+   offset="0.86" />
+		</linearGradient>
+		<linearGradient
+   gradientTransform="rotate(45,0.5,0.5)"
+   y2="0"
+   x2="1"
+   y1="0"
+   x1="0"
+   id="grad0-10">
+			<stop
+   id="stop11"
+   stop-opacity="1"
+   stop-color="#f1f0f7"
+   offset="0" />
+			<stop
+   id="stop13"
+   stop-opacity="1"
+   stop-color="#7e6bc9"
+   offset="0.8" />
+			<stop
+   id="stop15"
+   stop-opacity="1"
+   stop-color="#7e6bc9"
+   offset="0.83" />
+			<stop
+   id="stop17"
+   stop-opacity="1"
+   stop-color="#7664bd"
+   offset="1" />
+		</linearGradient>
+		<linearGradient
+   gradientUnits="userSpaceOnUse"
+   gradientTransform="scale(0.86307692,1.1586453)"
+   y2="242.63681"
+   x2="66.262924"
+   y1="242.63681"
+   x1="-0.57932264"
+   id="grad0-17">
+			<stop
+   id="stop20"
+   stop-opacity="1"
+   stop-color="#cfcce8"
+   offset="0" />
+			<stop
+   id="stop22"
+   stop-opacity="1"
+   stop-color="#5b44bb"
+   offset="0.8" />
+			<stop
+   id="stop24"
+   stop-opacity="1"
+   stop-color="#5b44bb"
+   offset="0.83" />
+			<stop
+   id="stop26"
+   stop-opacity="1"
+   stop-color="#5946a8"
+   offset="1" />
+		</linearGradient>
+		<linearGradient
+   gradientUnits="userSpaceOnUse"
+   gradientTransform="scale(0.70528429,1.417868)"
+   y2="202.27554"
+   x2="49.979845"
+   y1="202.27554"
+   x1="-0.70893398"
+   id="grad0-69">
+			<stop
+   id="stop29"
+   stop-opacity="1"
+   stop-color="#f3f5f1"
+   offset="0" />
+			<stop
+   id="stop31"
+   stop-opacity="1"
+   stop-color="#9cb084"
+   offset="0.8" />
+			<stop
+   id="stop33"
+   stop-opacity="1"
+   stop-color="#9cb084"
+   offset="0.83" />
+			<stop
+   id="stop35"
+   stop-opacity="1"
+   stop-color="#93a67c"
+   offset="1" />
+		</linearGradient>
+		<radialGradient
+   gradientUnits="userSpaceOnUse"
+   fy="381.31951"
+   fx="28.888956"
+   gradientTransform="scale(1.2265258,0.81531105)"
+   r="64.452546"
+   cy="381.31951"
+   cx="28.888956"
+   id="grad4-88">
+			<stop
+   id="stop38"
+   stop-opacity="1"
+   stop-color="#f3f5f1"
+   offset="0" />
+			<stop
+   id="stop40"
+   stop-opacity="1"
+   stop-color="#e5e9e1"
+   offset="0.1" />
+			<stop
+   id="stop42"
+   stop-opacity="1"
+   stop-color="#9cb084"
+   offset="1" />
+		</radialGradient>
+	<linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="839.39971"
+   x2="128.79624"
+   y1="839.39971"
+   x1="-0.1851883"
+   gradientTransform="scale(2.6999546,0.3703766)"
+   id="linearGradient266"
+   xlink:href="#grad0-4"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="202.27554"
+   x2="49.979845"
+   y1="202.27554"
+   x1="-0.70893398"
+   gradientTransform="scale(0.70528429,1.417868)"
+   id="linearGradient268"
+   xlink:href="#grad0-10"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="487.97509"
+   x2="31.953071"
+   y1="487.97509"
+   x1="-0.27934424"
+   gradientTransform="scale(1.7899062,0.55868849)"
+   id="linearGradient270"
+   xlink:href="#grad0-10"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="304.45033"
+   x2="95.635259"
+   y1="304.45033"
+   x1="-0.44773479"
+   gradientTransform="scale(1.1167325,0.89546958)"
+   id="linearGradient272"
+   xlink:href="#grad0-10"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="271.8764"
+   x2="85.301446"
+   y1="271.8764"
+   x1="-0.50137859"
+   gradientTransform="scale(0.99725041,1.0027572)"
+   id="linearGradient274"
+   xlink:href="#grad0-10"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="369.20213"
+   x2="69.438952"
+   y1="369.20213"
+   x1="0"
+   gradientTransform="scale(1.2246729,0.81654459)"
+   id="linearGradient276"
+   xlink:href="#grad0-4"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="91.422855"
+   x2="7.2589945"
+   y1="91.422855"
+   x1="0"
+   gradientTransform="scale(0.27552025,3.6294972)"
+   id="linearGradient278"
+   xlink:href="#grad0-4"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="378.95983"
+   x2="32.9009"
+   y1="378.95983"
+   x1="-0.43496694"
+   gradientTransform="scale(1.1495126,0.86993389)"
+   id="linearGradient280"
+   xlink:href="#grad0-4"
+   inkscape:collect="always" /><linearGradient
+   gradientUnits="userSpaceOnUse"
+   y2="465.05545"
+   x2="40.543457"
+   y1="465.05545"
+   x1="-0.35444483"
+   gradientTransform="scale(1.4106568,0.70888966)"
+   id="linearGradient282"
+   xlink:href="#grad0-4"
+   inkscape:collect="always" /></defs>
+	<defs
+   id="Markers">
+		<g
+   id="lend4">
+			<path
+   id="path46"
+   style="stroke:none"
+   d="M 2,1 0,0 2,-1 v 2" />
+		</g>
+		<marker
+   overflow="visible"
+   markerUnits="strokeWidth"
+   orient="auto"
+   refX="-3.1199999"
+   class="st9"
+   id="mrkr4-37">
+			<use
+   height="100%"
+   width="100%"
+   y="0"
+   x="0"
+   id="use49"
+   transform="scale(-1.56)"
+   xlink:href="#lend4" />
+		</marker>
+		<marker
+   overflow="visible"
+   markerUnits="strokeWidth"
+   orient="auto"
+   refX="-4.2399998"
+   class="st19"
+   id="mrkr4-84">
+			<use
+   height="100%"
+   width="100%"
+   y="0"
+   x="0"
+   id="use52"
+   transform="scale(-2.12)"
+   xlink:href="#lend4" />
+		</marker>
+		<marker
+   overflow="visible"
+   markerUnits="strokeWidth"
+   orient="auto"
+   refX="-4.2399998"
+   class="st22"
+   id="mrkr4-96">
+			<use
+   height="100%"
+   width="100%"
+   y="0"
+   x="0"
+   id="use55"
+   transform="scale(-2.12)"
+   xlink:href="#lend4" />
+		</marker>
+	</defs>
+	<g
+   transform="translate(-19.628523,-0.00100367)"
+   id="g258">
+		<title
+   id="title59">Page-1</title>
+		<g
+   transform="translate(210.019,-0.5)"
+   id="shape1000-1">
+			<title
+   id="title61">Rectangle.1000</title>
+			<desc
+   id="desc63">Cloud Infrastructure</desc>
+			<rect
+   style="fill:url(#linearGradient266)"
+   id="rect65"
+   class="st1"
+   height="46.771702"
+   width="347.24399"
+   y="311.39401"
+   x="0" />
+			<text
+   id="text67"
+   class="st2"
+   y="343.78"
+   x="50.52">Cloud Infrastructure</text>		</g>
+		<g
+   transform="translate(42.7745,-61.9173)"
+   id="group1001-6">
+			<title
+   id="title70">User.1015</title>
+			<desc
+   id="desc72">Service Provider</desc>
+			<g
+   transform="translate(18.0575)"
+   id="shape1002-7">
+				<title
+   id="title74">Sheet.1002</title>
+				<path
+   style="fill:url(#linearGradient268)"
+   id="path76"
+   class="st3"
+   d="m 26.29,296.11 a 8.81,8.81 -180 1 0 -17.62,0 8.81,8.81 -180 1 0 17.62,0 z m 1.29,11.19 H 7.17 C 3.22,307.3 0,310.51 0,314.47 v 25 h 5.59 v -14.55 h 1.86 v 33.25 h 9.1 v -14.86 c 0,-0.52 0.42,-0.94 0.93,-0.94 0.52,0 0.94,0.42 0.94,0.94 v 14.86 h 9.62 v -33.3 h 1.87 v 14.6 h 4.84 v -25 c 0,-3.96 -3.21,-7.17 -7.17,-7.17 z" />
+			</g>
+			<g
+   id="shape1001-11">
+				<text
+   id="text79"
+   class="st4"
+   y="378.37"
+   x="-23.77">Service Provider</text>			</g>
+		</g>
+		<g
+   transform="translate(225.373,-47.7441)"
+   id="group1003-13">
+			<title
+   id="title83">Can.1003</title>
+			<desc
+   id="desc85">DB</desc>
+			<g
+   id="shape1004-14">
+				<title
+   id="title87">Sheet.1004</title>
+				<path
+   style="fill:url(#grad0-17)"
+   id="path89"
+   class="st5"
+   d="m 0,349.66 a 28.3465,8.50394 -180 0 0 56.69,0 V 281.63 H 0 Z" />
+			</g>
+			<g
+   id="shape1003-18">
+				<ellipse
+   style="fill:url(#linearGradient270)"
+   id="ellipse92"
+   class="st3"
+   ry="8.5039396"
+   rx="28.3465"
+   cy="281.63"
+   cx="28.3465" />
+				<text
+   id="text94"
+   class="st6"
+   y="322.85001"
+   x="14.44">DB</text>			</g>
+		</g>
+		<g
+   transform="translate(319.861,-47.7441)"
+   id="shape1005-22">
+			<title
+   id="title98">Rectangle.1005</title>
+			<desc
+   id="desc100">CMS Backend</desc>
+			<rect
+   style="fill:url(#linearGradient272)"
+   id="rect102"
+   class="st3"
+   height="85.039398"
+   width="106.299"
+   y="273.12601"
+   x="0" />
+			<text
+   id="text106"
+   class="st4"
+   y="310.25"
+   x="36.52">CMS <tspan
+   id="tspan104"
+   class="st7"
+   dy="1.2em"
+   x="22.110001">Backend</tspan></text>		</g>
+		<g
+   transform="translate(460.837,-47.7441)"
+   id="shape1006-27">
+			<title
+   id="title109">Rectangle.1006</title>
+			<desc
+   id="desc111">CMS Frontend</desc>
+			<rect
+   style="fill:url(#linearGradient274)"
+   id="rect113"
+   class="st3"
+   height="85.039398"
+   width="84.566902"
+   y="273.12601"
+   x="0" />
+			<text
+   id="text117"
+   class="st4"
+   y="310.25"
+   x="25.65">CMS <tspan
+   id="tspan115"
+   class="st7"
+   dy="1.2em"
+   x="8.5900002">Frontend</tspan></text>		</g>
+		<g
+   transform="translate(319.861,-83.1772)"
+   id="shape1007-32">
+			<title
+   id="title120">Dynamic connector.1007</title>
+			<path
+   id="path122"
+   class="st8"
+   d="M 0,351.08 H -23.76" />
+		</g>
+		<g
+   transform="translate(460.837,-83.1772)"
+   id="shape1008-38">
+			<title
+   id="title125">Dynamic connector.1008</title>
+			<path
+   id="path127"
+   class="st8"
+   d="M 0,351.08 H -20.64" />
+		</g>
+		<g
+   transform="translate(117.893,-61.9173)"
+   id="group1009-43">
+			<title
+   id="title130">2-D single.1009</title>
+			<desc
+   id="desc132">Provides</desc>
+			<g
+   id="shape1010-44">
+				<title
+   id="title134">Sheet.1010</title>
+				<path
+   style="fill:url(#linearGradient276)"
+   id="path136"
+   class="st10"
+   d="m 0,343.99 h 70.87 v 14.18 L 85.04,329.82 70.87,301.47 v 14.18 H 0 Z" />
+				<path
+   id="path138"
+   class="st11"
+   d="m 0,343.99 h 70.87 v 14.18 L 85.04,329.82 70.87,301.47 v 14.18 H 0" />
+			</g>
+			<g
+   id="shape1011-48">
+				<title
+   id="title141">Sheet.1011</title>
+				<path
+   id="path143"
+   class="st12"
+   d="m 0,343.99 h 70.87 v 14.18 L 85.04,329.82 70.87,301.47 v 14.18 H 0 v 28.34" />
+			</g>
+			<g
+   transform="translate(-2.1811,-15.1732)"
+   id="shape1012-52">
+				<title
+   id="title146">Sheet.1012</title>
+				<rect
+   style="fill:url(#linearGradient278)"
+   id="rect148"
+   class="st13"
+   height="26.3465"
+   width="2"
+   y="331.819"
+   x="0" />
+			</g>
+			<g
+   id="shape1009-55">
+				<text
+   id="text151"
+   class="st14"
+   y="334.62"
+   x="14.62">Provides</text>			</g>
+		</g>
+		<g
+   transform="translate(381.515,-122.567)"
+   id="shape1013-57">
+			<title
+   id="title155">Plaque.1013</title>
+			<desc
+   id="desc157">SLO</desc>
+			<path
+   style="fill:url(#linearGradient280)"
+   id="path159"
+   class="st1"
+   d="m 3.73,358.17 h 29.86 a 3.73222,3.73222 0 0 1 3.73,-3.74 v -20.52 a 3.73222,3.73222 0 0 1 -3.73,-3.74 H 3.73 A 3.73222,3.73222 0 0 1 0,333.91 v 20.52 a 3.73222,3.73222 0 0 1 3.73,3.74 z" />
+			<text
+   id="text161"
+   class="st14"
+   y="348.97"
+   x="6.3299999">SLO</text>		</g>
+		<g
+   transform="translate(304.507,-122.567)"
+   id="shape1014-61">
+			<title
+   id="title164">Rectangle.1014</title>
+			<desc
+   id="desc166">Metric</desc>
+			<rect
+   style="fill:url(#linearGradient282)"
+   id="rect168"
+   class="st1"
+   height="27.9921"
+   width="56.692902"
+   y="330.173"
+   x="0" />
+			<text
+   id="text170"
+   class="st14"
+   y="348.97"
+   x="6.8400002">Metric</text>		</g>
+		<g
+   transform="translate(49.8611,-286.799)"
+   id="group1016-65">
+			<title
+   id="title173">User.1016</title>
+			<desc
+   id="desc175">Service Consumer</desc>
+			<g
+   transform="translate(18.0575)"
+   id="shape1017-66">
+				<title
+   id="title177">Sheet.1017</title>
+				<path
+   style="fill:url(#grad0-69)"
+   id="path179"
+   class="st15"
+   d="m 26.29,296.11 a 8.81,8.81 -180 1 0 -17.62,0 8.81,8.81 -180 1 0 17.62,0 z m 1.29,11.19 H 7.17 C 3.22,307.3 0,310.51 0,314.47 v 25 h 5.59 v -14.55 h 1.86 v 33.25 h 9.1 v -14.86 c 0,-0.52 0.42,-0.94 0.93,-0.94 0.52,0 0.94,0.42 0.94,0.94 v 14.86 h 9.62 v -33.3 h 1.87 v 14.6 h 4.84 v -25 c 0,-3.96 -3.21,-7.17 -7.17,-7.17 z" />
+			</g>
+			<g
+   id="shape1016-70">
+				<text
+   id="text182"
+   class="st4"
+   y="378.37"
+   x="-30.09">Service Consumer</text>			</g>
+		</g>
+		<g
+   transform="matrix(1,0,0,-1,225.963,552.839)"
+   id="shape1018-72">
+			<title
+   id="title186">Side brace.1018</title>
+			<path
+   id="path188"
+   class="st16"
+   d="m 0,343.99 v 4.37 a 9.80298,9.80298 -180 0 0 9.8,9.81 h 96.26 a 9.80298,9.80298 0 0 1 9.81,9.8 9.80298,9.80298 0 0 1 9.8,-9.8 H 303.5 a 9.80298,9.80298 -180 0 0 9.8,-9.81 v -4.37" />
+		</g>
+		<g
+   transform="rotate(30.1382,597.95943,522.54239)"
+   id="shape1019-76">
+			<title
+   id="title191">Sheet.1019</title>
+			<desc
+   id="desc193">Deploy Workload</desc>
+			<rect
+   id="rect195"
+   class="st17"
+   height="20"
+   width="152"
+   y="338.16501"
+   x="0" />
+			<text
+   id="text197"
+   class="st14"
+   y="352.97"
+   x="19.559999">Deploy Workload</text>		</g>
+		<g
+   transform="translate(102.67,-312.145)"
+   id="shape1020-79">
+			<title
+   id="title200">Dynamic connector.1020</title>
+			<path
+   id="path202"
+   class="st18"
+   d="M 0,358.17 230.91,492.22" />
+		</g>
+		<g
+   transform="translate(340.412,-238.61)"
+   id="shape1021-85">
+			<title
+   id="title205">Rectangle.1021</title>
+			<desc
+   id="desc207">SLO Mapping</desc>
+			<rect
+   style="fill:url(#grad4-88)"
+   id="rect209"
+   class="st20"
+   height="46.771702"
+   width="70.866096"
+   y="311.39401"
+   x="0" />
+			<text
+   id="text213"
+   class="st14"
+   y="329.98001"
+   x="23.1">SLO <tspan
+   id="tspan211"
+   class="st7"
+   dy="1.2em"
+   x="6.5500002">Mapping</tspan></text>		</g>
+		<g
+   transform="translate(102.67,-318.13)"
+   id="shape1022-91">
+			<title
+   id="title216">Dynamic connector.1022</title>
+			<path
+   id="path218"
+   class="st21"
+   d="m 0,358.17 228.46,53.94" />
+		</g>
+		<g
+   transform="rotate(13.2849,1393.6941,747.08897)"
+   id="shape1023-97">
+			<title
+   id="title221">Sheet.1023</title>
+			<desc
+   id="desc223">Creates</desc>
+			<rect
+   id="rect225"
+   class="st17"
+   height="20"
+   width="152"
+   y="338.16501"
+   x="0" />
+			<text
+   id="text227"
+   class="st14"
+   y="352.97"
+   x="51.34">Creates</text>		</g>
+		<g
+   transform="translate(375.845,-238.61)"
+   id="shape1024-100">
+			<title
+   id="title230">Dynamic connector.1024</title>
+			<path
+   id="path232"
+   class="st21"
+   d="m 0,358.17 21.79,78.85" />
+		</g>
+		<g
+   transform="translate(311.184,-204.594)"
+   id="shape1025-105">
+			<title
+   id="title235">Sheet.1025</title>
+			<desc
+   id="desc237">Applies &amp; Configures</desc>
+			<rect
+   id="rect239"
+   class="st17"
+   height="20"
+   width="152"
+   y="338.16501"
+   x="0" />
+			<text
+   id="text241"
+   class="st14"
+   y="352.97"
+   x="8.2799997">Applies &amp; Configures</text>		</g>
+		<g
+   transform="matrix(0,1,1,0,204.767,215.933)"
+   id="shape1030-108">
+			<title
+   id="title244">Side brace.1030</title>
+			<path
+   id="path246"
+   class="st23"
+   d="m 0,343.99 v 4.25 a 9.9211,9.9211 -180 0 0 9.92,9.93 h 26.46 a 9.9211,9.9211 0 0 1 9.92,9.92 9.9211,9.9211 0 0 1 9.92,-9.92 h 28.35 a 9.9211,9.9211 -180 0 0 9.92,-9.93 v -4.25" />
+		</g>
+		<g
+   transform="rotate(90,372.6295,559.8065)"
+   id="shape1031-112">
+			<title
+   id="title249">Sheet.1031</title>
+			<desc
+   id="desc251">Services</desc>
+			<rect
+   id="rect253"
+   class="st17"
+   height="20"
+   width="152"
+   y="338.16501"
+   x="0" />
+			<text
+   id="text255"
+   class="st14"
+   y="352.97"
+   x="49.610001">Services</text>		</g>
+	</g>
+</svg>
