@@ -24,8 +24,23 @@ The main documentation can be found [here](./docs).
 The following videos provide an overview of the Polaris Framework and showcase the capabilities of the Polaris CLI:
 
 * [Polaris Framework Concepts](https://www.youtube.com/watch?v=Uh3VwT-urgk)
+    * What are the relationships between metrics, SLOs, and elasticity strategies and what are shortcomings of many existing elasticity approaches?
+    * How is Polaris different?
+    * How do composed metrics work and how to they enable proactive scaling?
+    * What are SLO controllers?
+    * What are elasticity strategies?
+    * What is the Polaris CLI?
 * [End-to-end demo with reactive scaling of a workload](https://www.youtube.com/watch?v=qScTsLGyOi8)
+    * Setup of a Polaris workspace using the Polaris CLI.
+    * Generation of a composed metric and a corresponding controller.
+    * Generation of an elasticity strategy and its corresponding controller.
+    * Generation of an SLO mapping type and an SLO controller.
+    * Application of an SLO mapping and scaling of a workload.
 * [Proactive scaling concepts and demo](https://www.youtube.com/watch?v=epgcMXS55tQ)
+    * Overview of how predicted metric controllers work.
+    * Generation of a predicted metric controller.
+    * Replacement of a reactive metric controller with the predicted metric controller.
+    * Proactive scaling of a workload.
 
 Additional demos can be found in [this repository](https://github.com/polaris-slo-cloud/polaris-demos).
 
