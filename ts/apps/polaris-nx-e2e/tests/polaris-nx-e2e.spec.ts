@@ -64,7 +64,6 @@ describe('polaris-nx e2e', () => {
         expect(() => checkFilesExist(
             `apps/${controllerName}/src/app/slo/cost-efficiency.controller.ts`,
             `apps/${controllerName}/src/app/slo/index.ts`,
-            `apps/${controllerName}/src/app/util/environment-var-helper.ts`,
             `apps/${controllerName}/src/main.ts`,
             `apps/${controllerName}/manifests/kubernetes/1-rbac.yaml`,
             `apps/${controllerName}/manifests/kubernetes/2-slo-controller.yaml`,

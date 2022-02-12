@@ -1,12 +1,11 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CostEfficiencySloMapping, CostEfficiencySloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
-import { Logger } from '@polaris-sloc/core';
+import { Logger, convertToNumber, getEnvironmentVariable } from '@polaris-sloc/core';
 import { initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
 import { CostEfficiencySlo } from './app/cost-efficiency-slo';
-import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // ToDo: It should be possible to build the SLO controller easily for multiple orchestrators.
 
