@@ -1,9 +1,8 @@
-import { ComposedMetricSourceBase, MetricsSource, ObjectKind, OrchestratorGateway, Sample } from '@polaris-sloc/core';
+import { ComposedMetricSourceBase, MetricsSource, ObjectKind, OrchestratorGateway, Sample, getEnvironmentVariable } from '@polaris-sloc/core';
 import { <%= compMetricValueType %>, <%= compMetricParams %> } from '<%= compMetricTypePkg %>';
 import axios from 'axios';
 import {Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
-import {getEnvironmentVariable} from '../../util/environment-var-helper';
 
 // ToDo:
 // 1. Insert properties in the PredictionApiResponse and implement the mapResponseToSample function

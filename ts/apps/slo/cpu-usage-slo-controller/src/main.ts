@@ -1,11 +1,10 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CpuUsageSloMapping, CpuUsageSloMappingSpec, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
-import { Logger } from '@polaris-sloc/core';
+import { Logger, convertToNumber, getEnvironmentVariable } from '@polaris-sloc/core';
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { interval } from 'rxjs';
 import { CpuUsageSlo } from './app/cpu-usage-slo';
-import { convertToNumber, getEnvironmentVariable } from './app/util/environment-var-helper';
 
 // Load the KubeConfig and initialize the @polaris-sloc/kubernetes library.
 const k8sConfig = new KubeConfig();
