@@ -110,6 +110,19 @@ All code for this project is contained in this repository.
 
 
 
+## Deployment
+
+To quickly deploy the default set of elasticity strategies shipped with Polaris, open a terminal in the root folder of the repository and execute the following command:
+
+```sh
+kubectl apply -f ./deployment
+```
+
+This will deploy the `HorizontalElasticityStrategy` and `VerticalElasticityStrategy` CRDs and controllers.
+More detailed build and deployment instructions can be found [here](./docs/deployment/).
+
+
+
 ## Maintaining gh-pages
 
 The project's website is hosted using GitHub pages.
