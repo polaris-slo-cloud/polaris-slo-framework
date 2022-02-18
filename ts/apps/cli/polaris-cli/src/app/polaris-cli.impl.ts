@@ -16,11 +16,13 @@ import {
 export class PolarisCliImpl implements PolarisCli {
 
     readonly startupDir: string;
+    readonly workspaceRootDir: string;
 
     readonly taskExecutor: TaskExecutor = new DefaultTaskExecutor();
 
-    constructor(startupInfo: Pick<PolarisCli, 'startupDir'>) {
+    constructor(startupInfo: Pick<PolarisCli, 'startupDir' | 'workspaceRootDir'>) {
         this.startupDir = startupInfo.startupDir;
+        this.workspaceRootDir = startupInfo.workspaceRootDir;
     }
 
     /**
