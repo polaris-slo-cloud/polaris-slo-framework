@@ -18,7 +18,7 @@ if (workspaceRoot) {
 } else {
     if (!globalCliOptions.requireExecutingOutsideOfWorkspace) {
         console.log('The current directory is not part of a Polaris or Nx workspace.');
-        console.log('To create a new workspace run: polaris-cli init <workspace-name>');
+        console.log('To create a new workspace run: polaris-cli init <workspace-name> [--packageManager <npm|yarn|pnpm>]');
         process.exit(1);
     }
     runOutsideWorkspace();

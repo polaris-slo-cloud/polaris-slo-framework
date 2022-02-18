@@ -1,5 +1,5 @@
 import { CommandModule } from 'yargs';
-import { POLARIS_NX, PolarisCli } from '../polaris-cli';
+import { POLARIS_CLI, POLARIS_NX, PolarisCli } from '../polaris-cli';
 import { RunNpmBinaryTask } from '../tasks';
 import { createYargsCommand } from './command';
 
@@ -52,6 +52,13 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
                 new RunNpmBinaryTask({
                     command: createPackageInstallCmd(pkgMgr, {
                         name: POLARIS_NX,
+                        devDependency: true,
+                    }),
+                    workingDir: workspaceDir,
+                }),
+                new RunNpmBinaryTask({
+                    command: createPackageInstallCmd(pkgMgr, {
+                        name: POLARIS_CLI,
                         devDependency: true,
                     }),
                     workingDir: workspaceDir,

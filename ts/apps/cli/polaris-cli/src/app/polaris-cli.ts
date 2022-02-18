@@ -3,6 +3,9 @@ import { TaskExecutor } from './tasks';
 /** Command used to execute the Nx CLI. */
 export const NX_CLI = 'nx';
 
+/** Polaris CLI package. */
+export const POLARIS_CLI = '@polaris-sloc/cli';
+
 /** Polaris Nx CLI plugin. */
 export const POLARIS_NX = '@polaris-sloc/polaris-nx';
 
