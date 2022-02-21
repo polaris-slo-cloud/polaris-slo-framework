@@ -2,6 +2,8 @@
 
 This is the CLI for the Polaris SLO Cloud project.
 
+For more information, please have a look at the [Polaris CLI documentation](https://polaris-slo-cloud.github.io/polaris/features/cli.html).
+
 ## Debugging the CLI:
 
 To debug the Polaris CLI, follow these steps:

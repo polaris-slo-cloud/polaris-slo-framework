@@ -2,6 +2,8 @@
 
 This library supports the generation of various schemas from TypeScript code.
 
+For more information, please visit the Polaris framework's [website](https://polaris-slo-cloud.github.io).
+
 
 ## JSON Schema Generation
 
@@ -13,8 +15,3 @@ This library relies on the [ts-json-schema-generator](https://www.npmjs.com/pack
 
 To generate an OpenAPI v3 schema, we first generate a JSON schema and then transform it to an OpenAPI v3 schema using the [@openapi-contrib/json-schema-to-openapi-schema](https://www.npmjs.com/package/@openapi-contrib/json-schema-to-openapi-schema) package.
 If an OpenAPI v3.1 schema is needed, the JSON Schema can be used directly.
-
-
-## Running unit tests
-
-Run `nx test schema-gen` to execute the unit tests via [Jest](https://jestjs.io).
