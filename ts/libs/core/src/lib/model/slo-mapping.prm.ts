@@ -57,7 +57,7 @@ export interface SloMappingSpec<C, O, T extends SloTarget = SloTarget> {
      * });
      * ```
      */
-    staticElasticityStrategyConfig?: Record<string, any>;
+    staticElasticityStrategyConfig?: Record<string, unknown>;
 
 }
 
