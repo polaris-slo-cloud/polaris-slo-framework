@@ -1,7 +1,3 @@
 # metrics-cost-efficiency
 
-This library was generated with [Nx](https://nx.dev).
-
-## Running unit tests
-
-Run `nx test metrics-cost-efficiency` to execute the unit tests via [Jest](https://jestjs.io).
+This library contains [Polaris](https://polaris-slo-cloud.github.io) composed metric for cost efficiency.
