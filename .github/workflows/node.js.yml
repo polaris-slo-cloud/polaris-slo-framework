@@ -10,8 +10,8 @@ on:
     branches: [ master ]
 
 jobs:
-  # Clones the repo, installs Node.JS, and downloads dependencies.
-  setup:
+  # Builds all Polaris components
+  build:
     runs-on: ubuntu-latest
     env:
       working-dir: ./ts
@@ -19,6 +19,7 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
+    # Checkout and install dependencies.
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
@@ -29,16 +30,7 @@ jobs:
     - run: npm ci
       working-directory: ${{ env.working-dir }}
 
-  # Builds all Polaris components
-  build:
-    runs-on: ubuntu-latest
-    needs: setup
-    env:
-      working-dir: ./ts
-    strategy:
-      matrix:
-        node-version: [14.x]
-    steps:
+    # Build the Polaris components
     - run: npx nx build core
       working-directory: ${{ env.working-dir }}
     - run: npx nx build mappings-common-mappings
@@ -68,16 +60,28 @@ jobs:
     - run: npx nx build ui-polaris-ui
       working-directory: ${{ env.working-dir }}
 
+
   # Runs the tests for all Polaris components
   test:
     runs-on: ubuntu-latest
-    needs: build
     env:
       working-dir: ./ts
     strategy:
       matrix:
         node-version: [14.x]
     steps:
+    # Checkout and install dependencies.
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: ./ts/package-lock.json
+    - run: npm ci
+      working-directory: ${{ env.working-dir }}
+
+    # Run the tests
     - run: npx nx run core:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run mappings-common-mappings:test
@@ -92,8 +96,6 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx run polaris-nx:test
       working-directory: ${{ env.working-dir }}
-    - run: npx nx e2e polaris-nx-e2e
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run cli-polaris-cli:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run elasticity-horizontal-elasticity-strategy-controller:test
@@ -107,30 +109,39 @@ jobs:
     - run: npx nx run slo-cpu-usage-slo-controller:test
       working-directory: ${{ env.working-dir }}
 
-  # Check if schema generation and SloMapping Serialization execute
-  crd-gen:
-    runs-on: ubuntu-latest
-    needs: build
-    env:
-      working-dir: ./ts
-    strategy:
-      matrix:
-        node-version: [14.x]
-    steps:
+    # Check if schema generation and SloMapping Serialization execute
     - run: npm run gen-crds
       working-directory: ${{ env.working-dir }}
     - run: npm run serialize-slo-mappings
       working-directory: ${{ env.working-dir }}
 
-  # Ensure that we have no circular dependencies
-  circular-dependency-check:
+    # Ensure that we have no circular dependencies
+    - run: npm run ts-circular-dep-check
+      working-directory: ${{ env.working-dir }}
+
+  # Runs the E2E tests
+  e2e:
     runs-on: ubuntu-latest
-    needs: build
     env:
       working-dir: ./ts
     strategy:
       matrix:
         node-version: [14.x]
     steps:
-    - run: npm run ts-circular-dep-check
+    # Checkout and install dependencies.
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: ./ts/package-lock.json
+    - run: npm ci
+      working-directory: ${{ env.working-dir }}
+
+    # Build required components
+    - run: npx nx build polaris-nx
+      working-directory: ${{ env.working-dir }}
+    # E2E tests
+    - run: npx nx run polaris-nx-e2e:e2e
       working-directory: ${{ env.working-dir }}
