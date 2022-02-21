@@ -17,7 +17,6 @@ PROJECTS=(
     "schema-gen"
     "polaris-nx"
     "cli-polaris-cli"
-    "cli-polaris-k8s-serializer"
     "elasticity-horizontal-elasticity-strategy-controller"
     "elasticity-vertical-elasticity-strategy-controller"
     "metrics-rest-api-cost-efficiency-controller"
