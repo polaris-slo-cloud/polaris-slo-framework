@@ -10,18 +10,14 @@ on:
     branches: [ master ]
 
 jobs:
-  build-and-test:
-
+  # Clones the repo, installs Node.JS, and downloads dependencies.
+  setup:
     runs-on: ubuntu-latest
-
     env:
       working-dir: ./ts
-
     strategy:
       matrix:
         node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -33,7 +29,16 @@ jobs:
     - run: npm ci
       working-directory: ${{ env.working-dir }}
 
-    # Build all Polaris components
+  # Builds all Polaris components
+  build:
+    runs-on: ubuntu-latest
+    needs: setup
+    env:
+      working-dir: ./ts
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
     - run: npx nx build core
       working-directory: ${{ env.working-dir }}
     - run: npx nx build mappings-common-mappings
@@ -63,7 +68,16 @@ jobs:
     - run: npx nx build ui-polaris-ui
       working-directory: ${{ env.working-dir }}
 
-    # Run the tests for all Polaris components
+  # Runs the tests for all Polaris components
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      working-dir: ./ts
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
     - run: npx nx run core:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run mappings-common-mappings:test
@@ -78,6 +92,8 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx run polaris-nx:test
       working-directory: ${{ env.working-dir }}
+    - run: npx nx e2e polaris-nx-e2e
+      working-directory: ${{ env.working-dir }}
     - run: npx nx run cli-polaris-cli:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run elasticity-horizontal-elasticity-strategy-controller:test
@@ -91,12 +107,30 @@ jobs:
     - run: npx nx run slo-cpu-usage-slo-controller:test
       working-directory: ${{ env.working-dir }}
 
-    # Check if schema generation and SloMapping Serialization execute
+  # Check if schema generation and SloMapping Serialization execute
+  crd-gen:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      working-dir: ./ts
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
     - run: npm run gen-crds
       working-directory: ${{ env.working-dir }}
     - run: npm run serialize-slo-mappings
       working-directory: ${{ env.working-dir }}
 
-    # Ensure that we have no circular dependencies
+  # Ensure that we have no circular dependencies
+  circular-dependency-check:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      working-dir: ./ts
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
     - run: npm run ts-circular-dep-check
       working-directory: ${{ env.working-dir }}
