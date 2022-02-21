@@ -14,6 +14,7 @@ import { ApiVersionKind, KubernetesObjectWithSpec } from '../../../model';
 import { KubernetesDefaultTransformer } from './kubernetes-default.transformer';
 
 const DEFAULT_INT_FORMAT = 'int64';
+const K8S_ADDITIONAL_PROPERTIES_KEY = 'x-kubernetes-preserve-unknown-fields';
 
 /**
  * Transforms plain orchestrator API objects to Polaris to instances of `ApiObject` or a subclass thereof,
@@ -116,8 +117,18 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
             k8sSchema.format = DEFAULT_INT_FORMAT;
         }
 
+        if (k8sSchema.additionalProperties === true) {
+            // `additionalProperties: true` does not allow nesting additional properties in Kubernetes.
+            // So if `additionalProperties` is set to `true` (instead of a specific type),
+            // we need to replace `additionalProperties` with a Kubernetes-specific schema extension.
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            (k8sSchema as any)[K8S_ADDITIONAL_PROPERTIES_KEY] = true;
+            delete k8sSchema.additionalProperties;
+        }
+
         if (k8sSchema.properties) {
             // `additionalProperties` and `properties` are mutually exclusive in Kubernetes.
+            // This does not apply to the K8S_ADDITIONAL_PROPERTIES_KEY schema extension above.
             delete k8sSchema.additionalProperties;
 
             // Recursion
