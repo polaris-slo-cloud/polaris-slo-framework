@@ -91,22 +91,4 @@ To publish the Polaris npm packages, do the following:
 
 ### Adding an SLO Mapping to the Cluster
 
-Currently SLO mappings need to be serialized to YAML and manually added to the cluster.
-In the future, there will be an automated controller for this.
-To manually add an SLO mapping:
-
-1. Add a new `.ts` file or open an [existing SLO mapping](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app) .ts file in the [polaris-k8s-serializer](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer) subproject.
-1. Configure the SLO mapping.
-1. Import and serialize it in the [`main.ts`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/main.ts) file of the polaris-k8s-serializer.
-1. Build the polaris-k8s-serializer:
-```npm run build cli-sloc-k8s-serializer```
-1. Run the serializer and apply its YAML output to the cluster:
-```node ./dist/apps/cli/sloc-k8s-serializer/main.js```
-If the respective SLO's controller is running, it will pick up and enforce the SLO configured by the mapping.
-
-
-### Run the CMS Workload
-
-The [testbeds](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds) include a deployment of the open-source headless CMS [Gentics Mesh](https://getmesh.io).
-To install it, please follow [these steps](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds/kubernetes/gentics-mesh).
-The defined cost efficiency SLO mapping defined [here](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/apps/cli/sloc-k8s-serializer/src/app/cost-efficiency.slo.ts) is configured to operate on the deployed Gentics Mesh stateful set.
+Please see the "Generating and Applying an SLO Mapping Instance" step in our SLO tutorials, e.g., [here](https://github.com/polaris-slo-cloud/polaris-demos/tree/main/cost-eff-composed-metrics#generating-and-applying-an-slo-mapping-instance).
