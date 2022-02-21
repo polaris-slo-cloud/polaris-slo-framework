@@ -25,6 +25,8 @@ The [`libs`](./libs) subfolder contains the following library projects:
 | [`mappings-common-mappings`](./libs/mappings/common-mappings) | Definitions of commonly used, generic SLO Mappings and elasticity strategies. |
 | [`orchestrators-kubernetes`](./libs/orchestrators/kubernetes) | Connector library for Kubernetes. |
 | [`query-backends-prometheus`](./libs/query-backends/prometheus) | Connector to allow the Metrics Query API to use Prometheus as a backend. |
+| [`polaris-nx`](./libs/polaris-nx) | Nx CLI plugin that implements the actions of the Polaris CLI. |
+| [`schema-gen`](./libs/schema-gen) | Supports the generation of Custom Resource Definitions (CRDs) from TypeScript code. |
 
 
 
@@ -32,6 +34,7 @@ The [`apps`](./apps) folder contains the following application projects:
 
 | Name              | Purpose |
 |-------------------|---------|
+| [`cli-polaris-cli`](./apps/cli/polaris-cli) | Polaris CLI convenience wrapper around the `polaris-nx` Nx plugin. |
 | [`cli-polaris-k8s-serializer`](./apps/cli/polaris-k8s-serializer) | Transforms SLO Mappings form SLO Script to Kubernetes-specific YAML. |
 | [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO (metrics evaluation is currently mocked). |
 | [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
@@ -54,6 +57,14 @@ npm run build -- cli-polaris-k8s-serializer
 ```
 
 The output can then be found in the `dist` folder.
+
+
+### Building all Components
+
+To build all components, execute the following command:
+```sh
+./build-all.sh
+```
 
 
 ### Updating the Polaris Package Versions

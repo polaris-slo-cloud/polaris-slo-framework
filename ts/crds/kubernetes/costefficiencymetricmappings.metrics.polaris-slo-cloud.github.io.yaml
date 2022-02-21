@@ -2,7 +2,7 @@ kind: CustomResourceDefinition
 apiVersion: apiextensions.k8s.io/v1
 metadata:
   annotations:
-    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.24
+    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.31
   name: costefficiencymetricmappings.metrics.polaris-slo-cloud.github.io
 spec:
   group: metrics.polaris-slo-cloud.github.io
