@@ -125,6 +125,12 @@ All code for this project is contained in this repository.
 
 
 
+## Building, Running, and Debugging
+
+For details, on how to build, run and debug the Polaris components, please see the README of the [TypeScript components](./ts).
+
+
+
 ## Deployment
 
 To quickly deploy the default set of elasticity strategies shipped with Polaris, open a terminal in the root folder of the repository and execute the following command:

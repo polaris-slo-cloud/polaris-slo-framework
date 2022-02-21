@@ -60,10 +60,13 @@ This section shows you how to build, run, and debug individual Polaris component
     # E.g., run the Horizontal Elasticity Strategy controller
     node ./dist/apps/elasticity/horizontal-elasticity-strategy-controller/main.ts
     ```
-    To debug a controller with Visual Studio Code, open the `ts` folder in VS Code - the IDE will then automatically detect the debug configurations in the [`ts/.vscode`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/.vscode) folder.
+    To debug a controller with Visual Studio Code, open the `ts` folder in VS Code and open a JavaScript Debug Terminal.
+    Then, execute the above `node` command in that terminal.
+    Additionally, there are some application-specific debug configurations in the [`ts/.vscode`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/.vscode) folder, which the the IDE will detect automatically.
 
 If you want to test if all Polaris components build successfully after a change, you can execute the `build-all.sh` script in the `ts` folder.
 
+For more details, please see the README in the [ts folder](https://github.com/polaris-slo-cloud/polaris/tree/master/ts) of the project.
 
 
 ## Publishing npm Packages
