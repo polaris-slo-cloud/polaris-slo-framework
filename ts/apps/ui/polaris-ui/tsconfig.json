@@ -2,8 +2,11 @@
     "extends": "../../../tsconfig.base.json",
     "compilerOptions": {
         "types": [
-            "node",
-            "jest"
+            "node"
+        ],
+        "lib": [
+            "ES2017",
+            "DOM"
         ]
     },
     "files": [],

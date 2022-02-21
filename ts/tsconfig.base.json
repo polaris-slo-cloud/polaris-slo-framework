@@ -17,8 +17,7 @@
             "typings"
         ],
         "lib": [
-            "es2017",
-            "dom"
+            "es2017"
         ],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
