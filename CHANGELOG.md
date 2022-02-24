@@ -1,9 +1,15 @@
 # Polaris SLO Cloud Changelog
 
+## v0.2.1 (2022-02-24)
+
+### Features
+
+* Added the following `TimeInstantQuery` operations: `averageByGroup()`, `minByGroup()`, and `maxByGroup()`
+
 
 ## v0.2.0 (2022-02-21)
 
-## Features
+### Features
 
 * Added support for writing elasticity strategies in TypeScript
 * Added support for [ComposedMetrics](./ts/libs/core/src/lib/composed-metrics)

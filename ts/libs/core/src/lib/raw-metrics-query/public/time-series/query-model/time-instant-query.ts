@@ -117,7 +117,7 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      *
      * @param exponent The constant by which this query's results should be raised.
      */
-     pow(exponent: T): TimeInstantQuery<T>;
+    pow(exponent: T): TimeInstantQuery<T>;
 
     /**
      * Raises the results of this query by the resulting values of another `TimeInstantQuery`.
@@ -164,10 +164,40 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      * sum within each group.
      *
      * @param groupingConfig The configuration used for grouping. Use the static methods of the `LabelGrouping` class
-     * to create this parameter. If no config is specified, grouping is performed by the set of all labels.
+     * to create this parameter. If no config is specified, no grouping is performed.
      * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
      */
     sumByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
+
+    /**
+     * Groups the `TimeSeries` using the specified `LabelGroupingConfig` and then computes the
+     * mean average within each group.
+     *
+     * @param groupingConfig The configuration used for grouping. Use the static methods of the `LabelGrouping` class
+     * to create this parameter. If no config is specified, no grouping is performed.
+     * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
+     */
+    averageByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
+
+    /**
+     * Groups the `TimeSeries` using the specified `LabelGroupingConfig` and then determines the
+     * minimum value within each group.
+     *
+     * @param groupingConfig The configuration used for grouping. Use the static methods of the `LabelGrouping` class
+     * to create this parameter. If no config is specified, no grouping is performed.
+     * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
+     */
+    minByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
+
+    /**
+     * Groups the `TimeSeries` using the specified `LabelGroupingConfig` and then determines the
+     * maximum value within each group.
+     *
+     * @param groupingConfig The configuration used for grouping. Use the static methods of the `LabelGrouping` class
+     * to create this parameter. If no config is specified, no grouping is performed.
+     * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
+     */
+    maxByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
 
 }
 
