@@ -108,6 +108,39 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         return this.createTimeInstantQuery(queryContent);
     }
 
+    averageByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(
+            QueryContentType.AggregateByGroup,
+            {
+                aggregationType: 'avg',
+                groupingConfig,
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    minByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(
+            QueryContentType.AggregateByGroup,
+            {
+                aggregationType: 'min',
+                groupingConfig,
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    maxByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number> {
+        const queryContent = createQueryContent(
+            QueryContentType.AggregateByGroup,
+            {
+                aggregationType: 'max',
+                groupingConfig,
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
     filterOnValue(predicate: ValueFilter): TimeInstantQuery<T> {
         const queryContent: FilterOnValueQueryContent = {
             contentType: QueryContentType.FilterOnValue,
