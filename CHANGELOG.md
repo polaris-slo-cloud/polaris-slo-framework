@@ -1,5 +1,18 @@
 # Polaris SLO Cloud Changelog
 
+## v0.2.2 (2022-03-08)
+
+### Features
+
+* Locked Nx and Polaris package versions for the `polaris-cli init` command to the ones used in that polaris-cli version to avoid problems with breaking changes in new versions.
+
+
+### Bugfixes
+
+* Fix a regression introduced by Nx v13.8.4. A [refactoring of the Nx JS and Node.js](https://github.com/nrwl/nx/pull/9086) generators caused the use of a removed builder for generated libraries.
+
+
+
 ## v0.2.1 (2022-02-24)
 
 ### Features

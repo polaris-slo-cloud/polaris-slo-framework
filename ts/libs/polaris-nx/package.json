@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/polaris-nx",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
@@ -8,15 +8,16 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@angular-devkit/schematics": "~12.2.11",
+    "@angular-devkit/schematics": "~13.2.5",
     "@nrwl/devkit": "*",
+    "@nrwl/js": "*",
     "@nrwl/node": "*",
     "@nrwl/workspace": "*",
-    "@polaris-sloc/core": "~0.2.1",
-    "@polaris-sloc/schema-gen": "~0.2.1",
-    "@polaris-sloc/kubernetes": "~0.2.1",
+    "@polaris-sloc/core": "~0.2.2",
+    "@polaris-sloc/schema-gen": "~0.2.2",
+    "@polaris-sloc/kubernetes": "~0.2.2",
     "grafana-dash-gen": "^3.2.1",
-    "axios": "0.21.1",
+    "axios": "0.26.0",
     "tslib": "^2.3.1"
   }
 }

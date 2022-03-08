@@ -18,6 +18,7 @@ import {
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getElasticityStrategyNames,
+    getProjectSrcRoot,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -75,7 +76,7 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
         names: normalizedNames,
         className: eStratNames.eStratType,
         projectName: options.project,
-        projectSrcRoot: projectConfig.sourceRoot,
+        projectSrcRoot: getProjectSrcRoot(projectConfig),
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
         fileName: eStratNames.eStratFileName,

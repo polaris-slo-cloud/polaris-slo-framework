@@ -7,7 +7,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -36,7 +36,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "cli-polaris-cli:build"
           }
@@ -100,7 +100,7 @@
           ]
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "options": {
             "outputPath": "dist/libs/core",
             "tsConfig": "libs/core/tsconfig.lib.json",
@@ -125,7 +125,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -153,7 +153,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build"
           }
@@ -191,7 +191,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -219,7 +219,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "elasticity-vertical-elasticity-strategy-controller:build"
           }
@@ -279,7 +279,7 @@
           ]
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "options": {
             "outputPath": "dist/libs/mappings/common-mappings",
             "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
@@ -325,7 +325,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -351,7 +351,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -379,7 +379,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "metrics-predicted-cost-efficiency-controller:build"
           }
@@ -432,7 +432,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -460,7 +460,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "metrics-rest-api-cost-efficiency-controller:build"
           }
@@ -524,7 +524,7 @@
           ]
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "options": {
             "outputPath": "dist/libs/orchestrators/kubernetes",
             "tsConfig": "libs/orchestrators/kubernetes/tsconfig.lib.json",
@@ -570,7 +570,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -662,7 +662,7 @@
           ]
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "options": {
             "outputPath": "dist/libs/query-backends/prometheus",
             "tsConfig": "libs/query-backends/prometheus/tsconfig.lib.json",
@@ -688,7 +688,7 @@
       "projectType": "library",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:package",
+          "builder": "@nrwl/js:tsc",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -736,7 +736,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "options": {
             "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
             "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
@@ -764,7 +764,7 @@
           ]
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "slo-cost-efficiency-slo-controller:build"
           }
@@ -805,7 +805,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "options": {
             "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
             "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
@@ -833,7 +833,7 @@
           ]
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "slo-cpu-usage-slo-controller:build"
           }

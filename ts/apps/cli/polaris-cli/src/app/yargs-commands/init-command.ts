@@ -1,15 +1,28 @@
 import { CommandModule } from 'yargs';
-import { POLARIS_CLI, POLARIS_NX, PolarisCli } from '../polaris-cli';
+import { PolarisCli } from '../polaris-cli';
 import { RunNpmBinaryTask } from '../tasks';
+import { NPM_PACKAGES, VERSIONS } from '../util/packages';
 import { createYargsCommand } from './command';
 
 type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
-interface NpmPackageInstallInfo {
+interface NpmPackageInfo {
 
     /** Name of the npm package. */
     name: string;
+
     version?: string;
+
+}
+
+interface NpmPackagesInstallInfo {
+
+    /** The name of the package manager. */
+    packageManager: PackageManager;
+
+    /** The packages that should be installed. */
+    packages: NpmPackageInfo[]
+
     devDependency?: boolean;
 
 }
@@ -47,18 +60,18 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
             return cli.taskExecutor.runTasksSequentially(
                 // Set up an Nx workspace
                 new RunNpmBinaryTask({
-                    command: `create-nx-workspace ${workspaceName} --preset=empty --packageManager=${pkgMgr} --interactive=false --nx-cloud=false `,
+                    // eslint-disable-next-line max-len
+                    command: `${NPM_PACKAGES.createNxWorkspace}@${VERSIONS.nx} ${workspaceName} --preset=empty --packageManager=${pkgMgr} --interactive=false --nx-cloud=false `,
                 }),
                 new RunNpmBinaryTask({
-                    command: createPackageInstallCmd(pkgMgr, {
-                        name: POLARIS_NX,
-                        devDependency: true,
-                    }),
-                    workingDir: workspaceDir,
-                }),
-                new RunNpmBinaryTask({
-                    command: createPackageInstallCmd(pkgMgr, {
-                        name: POLARIS_CLI,
+                    command: createPackagesInstallCmd({
+                        packageManager: pkgMgr,
+                        packages: [
+                            { name: NPM_PACKAGES.nrwl.js, version: VERSIONS.nx },
+                            { name: NPM_PACKAGES.nrwl.node, version: VERSIONS.nx },
+                            { name: NPM_PACKAGES.polaris.nx, version: VERSIONS.polaris },
+                            { name: NPM_PACKAGES.polaris.cli, version: VERSIONS.polaris },
+                        ],
                         devDependency: true,
                     }),
                     workingDir: workspaceDir,
@@ -68,20 +81,20 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
     });
 }
 
-
-function createPackageInstallCmd(pkgMgr: PackageManager, pkg: NpmPackageInstallInfo): string {
-    const pkgNameAndVersion = pkg.version ? `${pkg.name}@${pkg.version}` : pkg.name;
+function createPackagesInstallCmd(installInfo: NpmPackagesInstallInfo): string {
+    const packagesList = installInfo.packages.map(pkg => pkg.version ? `${pkg.name}@${pkg.version}` : pkg.name)
+    const packagesStr = packagesList.join(' ');
     let depType: string;
 
-    switch (pkgMgr) {
+    switch (installInfo.packageManager) {
         case 'npm':
-            depType = pkg.devDependency ? '--save-dev' : '--save'
-            return `npm install ${depType} ${pkgNameAndVersion}`;
+            depType = installInfo.devDependency ? '--save-dev' : '--save'
+            return `npm install ${depType} ${packagesStr}`;
         case 'yarn':
-            depType = pkg.devDependency ? '--dev' : '';
-            return `yarn add ${depType} ${pkgNameAndVersion}`;
+            depType = installInfo.devDependency ? '--dev' : '';
+            return `yarn add ${depType} ${packagesStr}`;
         case 'pnpm':
-            depType = pkg.devDependency ? '--dev' : '';
-            return `pnpm add ${depType} ${pkgNameAndVersion}`;
+            depType = installInfo.devDependency ? '--dev' : '';
+            return `pnpm add ${depType} ${packagesStr}`;
     }
 }

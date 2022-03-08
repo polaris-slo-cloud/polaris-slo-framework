@@ -1,5 +1,5 @@
 import { GeneratorCallback, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/node';
+import { libraryGenerator } from '@nrwl/js';
 import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 
@@ -73,4 +73,11 @@ export async function createLibProject(host: Tree, options: LibProjectOptions): 
 
     adaptLibModuleTypeForPolaris(host, options.projectName);
     return ret;
+}
+
+/**
+ * Gets the project's source root directory.
+ */
+export function getProjectSrcRoot(projectConfig: ProjectConfiguration): string {
+    return projectConfig.sourceRoot || projectConfig.root + '/src';
 }

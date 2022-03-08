@@ -1,5 +1,5 @@
 import { Tree, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
-import { getSloNames } from '../../../util';
+import { getProjectSrcRoot, getSloNames } from '../../../util';
 import { SloMappingTypeGeneratorNormalizedSchema, SloMappingTypeGeneratorSchema } from '../schema';
 
 export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSchema): SloMappingTypeGeneratorNormalizedSchema {
@@ -11,7 +11,7 @@ export function normalizeOptions(host: Tree, options: SloMappingTypeGeneratorSch
         names: normalizedNames,
         className: sloNames.sloMappingType,
         projectName: options.project,
-        projectSrcRoot: projectConfig.sourceRoot,
+        projectSrcRoot: getProjectSrcRoot(projectConfig),
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
         fileName: sloNames.sloMappingFileName,
