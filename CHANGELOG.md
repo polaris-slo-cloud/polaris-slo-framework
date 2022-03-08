@@ -1,5 +1,12 @@
 # Polaris SLO Cloud Changelog
 
+## v0.2.2 (2022-03-08)
+
+### Features
+
+* Locked Nx and Polaris package versions for the `polaris-cli init` command to the ones used in that polaris-cli version to avoid problems with breaking changes in new versions.
+
+
 ## v0.2.1 (2022-02-24)
 
 ### Features

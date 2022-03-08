@@ -1,6 +1,7 @@
 import { CommandModule } from 'yargs';
-import { POLARIS_CLI, POLARIS_NX, PolarisCli } from '../polaris-cli';
+import { PolarisCli } from '../polaris-cli';
 import { RunNpmBinaryTask } from '../tasks';
+import { NPM_PACKAGES, VERSIONS } from '../util/packages';
 import { createYargsCommand } from './command';
 
 type PackageManager = 'npm' | 'yarn' | 'pnpm';
@@ -47,18 +48,21 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
             return cli.taskExecutor.runTasksSequentially(
                 // Set up an Nx workspace
                 new RunNpmBinaryTask({
-                    command: `create-nx-workspace ${workspaceName} --preset=empty --packageManager=${pkgMgr} --interactive=false --nx-cloud=false `,
+                    // eslint-disable-next-line max-len
+                    command: `${NPM_PACKAGES.createNxWorkspace}@${VERSIONS.nx} ${workspaceName} --preset=empty --packageManager=${pkgMgr} --interactive=false --nx-cloud=false `,
                 }),
                 new RunNpmBinaryTask({
                     command: createPackageInstallCmd(pkgMgr, {
-                        name: POLARIS_NX,
+                        name: NPM_PACKAGES.polaris.nx,
+                        version: VERSIONS.polaris,
                         devDependency: true,
                     }),
                     workingDir: workspaceDir,
                 }),
                 new RunNpmBinaryTask({
                     command: createPackageInstallCmd(pkgMgr, {
-                        name: POLARIS_CLI,
+                        name: NPM_PACKAGES.polaris.cli,
+                        version: VERSIONS.polaris,
                         devDependency: true,
                     }),
                     workingDir: workspaceDir,
