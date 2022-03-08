@@ -34,7 +34,7 @@ export function createGenerateCommand(cli: PolarisCli): CommandModule<any, any> 
                 description: 'The name of the project/component.',
             }),
         args => {
-            const options = args._.slice(0).join(' ') || '--help';
+            const options = args._.slice(1).join(' ');
             return cli.taskExecutor.runTask(new RunNpmBinaryTask({
                 command: `${NX_CLI} g ${POLARIS_NX}:${args.type} ${args.name} ${options}`,
             }));
