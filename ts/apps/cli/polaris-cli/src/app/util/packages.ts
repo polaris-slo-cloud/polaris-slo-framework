@@ -16,6 +16,11 @@ export const NPM_PACKAGES = {
 
     createNxWorkspace: 'create-nx-workspace',
 
+    nrwl: {
+        js: '@nrwl/js',
+        node: '@nrwl/node',
+    },
+
     polaris: {
         nx: `${POLARIS_NPM_ORG}/polaris-nx`,
         cli: `${POLARIS_NPM_ORG}/cli`,

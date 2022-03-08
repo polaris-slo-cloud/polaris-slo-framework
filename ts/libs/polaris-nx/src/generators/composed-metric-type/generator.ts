@@ -18,6 +18,7 @@ import {
     addPolarisDependenciesToPackageJson,
     createLibProject,
     getComposedMetricTypeNames,
+    getProjectSrcRoot,
     runCallbacksSequentially,
 } from '../../util';
 import { addOrExtendInitFn } from '../common';
@@ -81,7 +82,7 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
         names: normalizedNames,
         className: `${normalizedNames.className}`,
         projectName: options.project,
-        projectSrcRoot: projectConfig.sourceRoot,
+        projectSrcRoot: getProjectSrcRoot(projectConfig),
         destDir: joinPathFragments('lib', options.directory),
         destDirInLib: options.directory,
         fileName: compMetricNames.compMetricFileName,

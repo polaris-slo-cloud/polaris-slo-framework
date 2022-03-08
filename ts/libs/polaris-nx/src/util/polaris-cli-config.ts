@@ -10,6 +10,7 @@ import {
     PolarisControllerProjectType,
     PolarisLibraryProject,
 } from './polaris-cli-config-data';
+import { getProjectSrcRoot } from './project-config';
 import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { getWorkspaceTsConfigPath } from './ts-config';
 
@@ -102,9 +103,10 @@ export class PolarisCliConfig {
         } else {
             const projectConfig = readProjectConfiguration(this.host, options.projectName);
             const packageJson: { name: string } = readJson(this.host, joinPathFragments(projectConfig.root, 'package.json'));
+            const srcRoot = getProjectSrcRoot(projectConfig);
             lib = {
                 projectType: PolarisCliProjectType.Library,
-                tsEntryPoint: joinPathFragmentsAndNormalize(projectConfig.sourceRoot, 'index.ts'),
+                tsEntryPoint: joinPathFragmentsAndNormalize(srcRoot, 'index.ts'),
                 importPath: packageJson.name,
             };
             this.data.projects[options.projectName] = lib;
@@ -146,9 +148,10 @@ export class PolarisCliConfig {
             }
         } else {
             const projectConfig = readProjectConfiguration(this.host, options.projectName);
+            const srcRoot = getProjectSrcRoot(projectConfig);
             controller = {
                 projectType: type,
-                tsEntryPoint: joinPathFragmentsAndNormalize(projectConfig.sourceRoot, 'main.ts'),
+                tsEntryPoint: joinPathFragmentsAndNormalize(srcRoot, 'main.ts'),
             };
             this.data.projects[options.projectName] = controller;
         }
