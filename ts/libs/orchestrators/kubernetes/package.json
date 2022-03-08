@@ -6,7 +6,7 @@
   "private": false,
   "type": "commonjs",
   "dependencies": {
-    "@kubernetes/client-node": "^0.16.2"
+    "@kubernetes/client-node": "^0.16.3"
   },
   "peerDependencies": {
     "@polaris-sloc/core": "~0.2.2"
