@@ -75,17 +75,9 @@ Follow these steps (based on this [guide](https://www.kubecost.com/install.html)
     helm repo add kubecost https://kubecost.github.io/cost-analyzer/
     helm repo update
     ```
+1. Go to [http://kubecost.com/install](http://kubecost.com/install) to get a free token for installing Kubecost.
 1. Install kubecost (the additional Prometheus scrape and relabeling config from [here](http://docs.kubecost.com/custom-prom) is already included in `./prometheus/values.yaml`):
     ```
-    helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values ./kubecost/values.yaml
+    helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values ./kubecost/values.yaml --set kubecostToken="<your token>"
     ```
 
-## ToDo
-* Import Grafana dashboards for ingress
-* Check again if using MicroK8s ingress is possible (monitoring and access were not working)
-* Check again if MicroK8s Prometheus is usable or upgrade operator chart (new name: kube-prometheus-stack)
-* kubecost with integrated Prometheus: `helm install kubecost kubecost/cost-analyzer --namespace=kubecost --set kubecostToken="dC5wdXN6dGFpQGRzZy50dXdpZW4uYWMuYXQ=xm343yadf98",prometheus.server.persistentVolume.size="5Gi",persistentVolume.dbSize="2.0Gi",persistentVolume.size="2.0Gi"`
-* For the MicroK8s hostPath storage provider only: Since MicroK8s uses hostPath as the default storage provider, which creates directories as root (see [here](https://github.com/ubuntu/microk8s/issues/737)), the storage directory must be made world writable. Execute the following command on every node:
-    ```
-    sudo chmod -R a+rwx /var/snap/microk8s/common/default-storage
-    ```
