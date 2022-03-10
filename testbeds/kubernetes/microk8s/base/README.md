@@ -58,7 +58,7 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
     ```
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     helm repo update
-    helm install -f ./ingress-nginx/values.yaml ingress-nginx ingress-nginx/ingress-nginx --atomic
+    helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace -f ./ingress-nginx/values.yaml --atomic
     ```
 1. Import the [Grafana dashboards](https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards) from the `ingress-nginx/grafana-dashboards` folder.
 
