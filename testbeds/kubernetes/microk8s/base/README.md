@@ -47,9 +47,12 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
     * Open your local KUBECONFIG and merge the connection data from MicroK8s into it.
     * In your local KUBECONFIG, adjust the IP address and port of the `server` to match that of the local port forwarded via SSH
     * In your local KUBECONFIG, add `tls-server-name: kubernetes`
-1. Install the [prometheus-operator helm chart](https://github.com/helm/charts/tree/master/stable/prometheus-operator):
+1. Install the [kube-prometheus-stack helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack):
     ```
-    helm install prometheus-release-1 stable/prometheus-operator -f ./prometheus/values.yaml
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    helm repo update
+    kubectl create namespace monitoring
+    helm install prometheus prometheus-community/kube-prometheus-stack -f ./prometheus/values.yaml
     ```
 1. Install the ingress-nginx controller:
     ```
