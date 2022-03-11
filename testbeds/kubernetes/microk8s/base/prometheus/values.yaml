@@ -835,7 +835,15 @@ kubeApiServer:
     ## RelabelConfigs to apply to samples before scraping
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
-    relabelings: []
+    relabelings:
+      - sourceLabels: [node]
+        targetLabel: kubernetes_node
+      - sourceLabels: [node]
+        targetLabel: instance
+      - sourceLabels: [pod]
+        targetLabel: pod_name
+      - sourceLabels: [container]
+        targetLabel: container_name
     # - sourceLabels:
     #     - __meta_kubernetes_namespace
     #     - __meta_kubernetes_service_name
@@ -883,7 +891,16 @@ kubelet:
     ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
-    cAdvisorMetricRelabelings: []
+    # kubecost note: container_cpu_usage_seconds_total is affected by this
+    cAdvisorMetricRelabelings:
+      - sourceLabels: [node]
+        targetLabel: kubernetes_node
+      - sourceLabels: [node]
+        targetLabel: instance
+      - sourceLabels: [pod]
+        targetLabel: pod_name
+      - sourceLabels: [container]
+        targetLabel: container_name
     # - sourceLabels: [__name__, image]
     #   separator: ;
     #   regex: container_([a-z_]+);
@@ -914,6 +931,7 @@ kubelet:
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
     ## metrics_path is required to match upstream rules and charts
+    # kubecost note: container_cpu_usage_seconds_total is affected by this
     cAdvisorRelabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
@@ -943,6 +961,14 @@ kubelet:
     resourceRelabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
+      - sourceLabels: [node]
+        targetLabel: kubernetes_node
+      - sourceLabels: [node]
+        targetLabel: instance
+      - sourceLabels: [pod]
+        targetLabel: pod_name
+      - sourceLabels: [container]
+        targetLabel: container_name
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
     #   regex: ^(.*)$
@@ -972,6 +998,14 @@ kubelet:
     relabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
+      - sourceLabels: [node]
+        targetLabel: kubernetes_node
+      - sourceLabels: [node]
+        targetLabel: instance
+      - sourceLabels: [pod]
+        targetLabel: pod_name
+      - sourceLabels: [container]
+        targetLabel: container_name
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
     #   regex: ^(.*)$
@@ -1366,7 +1400,15 @@ kube-state-metrics:
       ## RelabelConfigs to apply to samples before scraping
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
       ##
-      relabelings: []
+      relabelings:
+        - sourceLabels: [node]
+          targetLabel: kubernetes_node
+        - sourceLabels: [node]
+          targetLabel: instance
+        - sourceLabels: [pod]
+          targetLabel: pod_name
+        - sourceLabels: [container]
+          targetLabel: container_name
       # - sourceLabels: [__meta_kubernetes_pod_node_name]
       #   separator: ;
       #   regex: ^(.*)$
@@ -1417,6 +1459,9 @@ prometheus-node-exporter:
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
       ##
       metricRelabelings: []
+        # - sourceLabels: [ __name__ ]
+        #   regex: (container_cpu_allocation|container_cpu_usage_seconds_total|container_fs_limit_bytes|container_fs_writes_bytes_total|container_gpu_allocation|container_memory_allocation_bytes|container_memory_usage_bytes|container_memory_working_set_bytes|container_network_receive_bytes_total|container_network_transmit_bytes_total|DCGM_FI_DEV_GPU_UTIL|deployment_match_labels|kube_daemonset_status_desired_number_scheduled|kube_daemonset_status_number_ready|kube_deployment_spec_replicas|kube_deployment_status_replicas|kube_deployment_status_replicas_available|kube_job_status_failed|kube_namespace_annotations|kube_namespace_labels|kube_node_info|kube_node_labels|kube_node_status_allocatable|kube_node_status_allocatable_cpu_cores|kube_node_status_allocatable_memory_bytes|kube_node_status_capacity|kube_node_status_capacity_cpu_cores|kube_node_status_capacity_memory_bytes|kube_node_status_condition|kube_persistentvolume_capacity_bytes|kube_persistentvolume_status_phase|kube_persistentvolumeclaim_info|kube_persistentvolumeclaim_resource_requests_storage_bytes|kube_pod_container_info|kube_pod_container_resource_limits|kube_pod_container_resource_limits_cpu_cores|kube_pod_container_resource_limits_memory_bytes|kube_pod_container_resource_requests|kube_pod_container_resource_requests_cpu_cores|kube_pod_container_resource_requests_memory_bytes|kube_pod_container_status_restarts_total|kube_pod_container_status_running|kube_pod_container_status_terminated_reason|kube_pod_labels|kube_pod_owner|kube_pod_status_phase|kube_replicaset_owner|kube_statefulset_replicas|kube_statefulset_status_replicas|kubecost_cluster_info|kubecost_cluster_management_cost|kubecost_cluster_memory_working_set_bytes|kubecost_network_internet_egress_cost|kubecost_network_region_egress_cost|kubecost_network_zone_egress_cost|kubecost_node_is_spot|kubecost_pod_network_egress_bytes_total|node_cpu_hourly_cost|node_cpu_seconds_total|node_disk_reads_completed|node_disk_reads_completed_total|node_disk_writes_completed|node_disk_writes_completed_total|node_filesystem_device_error|node_gpu_count|node_gpu_hourly_cost|node_memory_Buffers_bytes|node_memory_Cached_bytes|node_memory_MemAvailable_bytes|node_memory_MemFree_bytes|node_memory_MemTotal_bytes|node_network_transmit_bytes_total|node_ram_hourly_cost|node_total_hourly_cost|pod_pvc_allocation|pv_hourly_cost|service_selector_labels|statefulSet_match_labels|up)
+        #   action: keep
       # - sourceLabels: [__name__]
       #   separator: ;
       #   regex: ^node_mountstats_nfs_(event|operations|transport)_.+
@@ -1426,7 +1471,15 @@ prometheus-node-exporter:
       ## RelabelConfigs to apply to samples before scraping
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
       ##
-      relabelings: []
+      relabelings:
+        - sourceLabels: [node]
+          targetLabel: kubernetes_node
+        - sourceLabels: [node]
+          targetLabel: instance
+        - sourceLabels: [pod]
+          targetLabel: pod_name
+        - sourceLabels: [container]
+          targetLabel: container_name
       # - sourceLabels: [__meta_kubernetes_pod_node_name]
       #   separator: ;
       #   regex: ^(.*)$
@@ -2474,20 +2527,17 @@ prometheus:
           type: 'A'
           port: 9003
         metric_relabel_configs:
-          - source_labels: [ container ]
-            target_label: container_name
-            regex: (.+)
-            action: replace
-          - source_labels: [ pod ]
-            target_label: pod_name
-            regex: (.+)
-            action: replace
           - source_labels: [node]
-            separator: ;
-            regex: (.*)
+            target_label: kubernetes_node
+          - source_labels: [node]
             target_label: instance
-            replacement: $1
-            action: replace
+          - source_labels: [pod]
+            target_label: pod_name
+          - source_labels: [container]
+            target_label: container_name
+        #   - source_labels: [__meta_kubernetes_pod_node_name]
+        #     action: replace
+        #     target_label: kubernetes_node
     # - job_name: kube-etcd
     #   kubernetes_sd_configs:
     #     - role: node
