@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/polaris-nx",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
@@ -13,9 +13,9 @@
     "@nrwl/js": "*",
     "@nrwl/node": "*",
     "@nrwl/workspace": "*",
-    "@polaris-sloc/core": "~0.2.2",
-    "@polaris-sloc/schema-gen": "~0.2.2",
-    "@polaris-sloc/kubernetes": "~0.2.2",
+    "@polaris-sloc/core": "~0.3.0",
+    "@polaris-sloc/schema-gen": "~0.3.0",
+    "@polaris-sloc/kubernetes": "~0.3.0",
     "grafana-dash-gen": "^3.2.1",
     "axios": "0.26.0",
     "tslib": "^2.3.1"
