@@ -44,7 +44,7 @@ spec:
         env:
           # The hostname and port of the Prometheus service:
           - name: PROMETHEUS_HOST
-            value: prometheus-release-1-prome-prometheus.default.svc
+            value: prometheus-kube-prometheus-prometheus.monitoring.svc
           - name: PROMETHEUS_PORT
             value: '9090'
           # SLO Control Loop interval in milliseconds.
