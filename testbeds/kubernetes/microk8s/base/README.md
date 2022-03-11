@@ -80,5 +80,3 @@ Follow these steps (based on this [guide](https://www.kubecost.com/install.html)
     ```
     helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values ./kubecost/values.yaml --set kubecostToken="<your token>"
     ```
-
-ToDo: replace release: prometheus-release-1 -> release: prometheus in ts folder
