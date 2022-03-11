@@ -1,6 +1,6 @@
 # Polaris SLO Cloud Changelog
 
-## v0.3.0 (2022-03-11)
+## v0.3.0 (2022-03-12)
 
 ### Features
 
