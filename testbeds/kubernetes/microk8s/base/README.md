@@ -47,7 +47,7 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
     * Open your local KUBECONFIG and merge the connection data from MicroK8s into it.
     * In your local KUBECONFIG, adjust the IP address and port of the `server` to match that of the local port forwarded via SSH
     * In your local KUBECONFIG, add `tls-server-name: kubernetes`
-1. Install the [kube-prometheus-stack helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack):
+1. Install the [kube-prometheus-stack helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack). The deployed Prometheus is configured to watch all `ServiceMonitors` - if you want to limit them to a specific selector, change `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` and/or `prometheus.prometheusSpec.serviceMonitorSelector` in `./prometheus/values.yaml` accordingly.
     ```
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     helm repo update
@@ -81,3 +81,4 @@ Follow these steps (based on this [guide](https://www.kubecost.com/install.html)
     helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values ./kubecost/values.yaml --set kubecostToken="<your token>"
     ```
 
+ToDo: replace release: prometheus-release-1 -> release: prometheus in ts folder

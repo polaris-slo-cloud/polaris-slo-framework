@@ -1,5 +1,13 @@
 # Polaris SLO Cloud Changelog
 
+## v0.3.0 (not yet released)
+
+### Features
+
+* Removed the default `ServiceMonitor` selector in the `3-service-monitor.yaml` files and improved the inline documentation about these selectors.
+
+
+
 ## v0.2.2 (2022-03-08)
 
 ### Features
