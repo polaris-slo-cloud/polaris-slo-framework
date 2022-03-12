@@ -133,6 +133,9 @@ For details, on how to build, run and debug the Polaris components, please see t
 
 ## Deployment
 
+You need a running Kubernetes cluster with a Prometheus installation to use Polaris.
+Instructions on setting up such a cluster can be found [here](./docs/deployment/#prerequisites).
+
 To quickly deploy the default set of elasticity strategies shipped with Polaris, open a terminal in the root folder of the repository and execute the following command:
 
 ```sh

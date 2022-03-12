@@ -8,15 +8,15 @@ import { ApiObjectMetadata } from '@polaris-sloc/core';
 
 export default new CostEfficiencySloMapping({
     metadata: new ApiObjectMetadata({
-        namespace: 'mesh',
-        name: 'gentics-mesh-cost-efficiency',
+        namespace: 'default',
+        name: 'resource-consumer',
     }),
     spec: new CostEfficiencySloMappingSpec({
         targetRef: new RestServiceTarget({
             group: 'apps',
             version: 'v1',
-            kind: 'StatefulSet',
-            name: 'mesh-gentics-mesh',
+            kind: 'Deployment',
+            name: 'resource-consumer',
         }),
         elasticityStrategy: new HorizontalElasticityStrategyKind(),
         sloConfig: {

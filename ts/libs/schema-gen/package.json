@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/schema-gen",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "author": "Polaris SLO Cloud Authors",
   "private": false,
@@ -12,7 +12,7 @@
     "ts-json-schema-generator": "^0.98.0"
   },
   "peerDependencies": {
-    "@polaris-sloc/core": "~0.2.2",
+    "@polaris-sloc/core": "~0.3.0",
     "rxjs": "^6.6.7"
   }
 }

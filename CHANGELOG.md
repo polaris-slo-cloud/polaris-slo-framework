@@ -1,5 +1,16 @@
 # Polaris SLO Cloud Changelog
 
+## v0.3.0 (2022-03-12)
+
+### Features
+
+* Removed the default `ServiceMonitor` selector in the `3-service-monitor.yaml` files and improved the inline documentation about these selectors.
+* Changed the default `PROMETHEUS_HOST` in the `2-slo-controller.yaml` and `2-metrics-controller.yaml` files to `prometheus-kube-prometheus-prometheus.monitoring.svc` to match the updated tutorial using the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) helm chart.
+* Upgrade the base container image for controllers to `node:14-alpine3.15`.
+* Upgrade [Nx libraries](https://nx.dev) to v13.8.8.
+
+
+
 ## v0.2.2 (2022-03-08)
 
 ### Features

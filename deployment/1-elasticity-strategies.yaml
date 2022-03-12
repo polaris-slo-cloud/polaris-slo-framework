@@ -2,7 +2,7 @@ kind: CustomResourceDefinition
 apiVersion: apiextensions.k8s.io/v1
 metadata:
   annotations:
-    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.24
+    polaris-slo-cloud.github.io/schema-gen-version: 0.3.0
   name: costefficiencymetricmappings.metrics.polaris-slo-cloud.github.io
 spec:
   group: metrics.polaris-slo-cloud.github.io
@@ -127,7 +127,7 @@ kind: CustomResourceDefinition
 apiVersion: apiextensions.k8s.io/v1
 metadata:
   annotations:
-    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.24
+    polaris-slo-cloud.github.io/schema-gen-version: 0.3.0
   name: costefficiencyslomappings.slo.polaris-slo-cloud.github.io
 spec:
   group: slo.polaris-slo-cloud.github.io
@@ -317,7 +317,6 @@ spec:
                   description: The configuration of a Cost Efficiency SLO Mapping.
                 staticElasticityStrategyConfig:
                   type: object
-                  additionalProperties: true
                   description: >-
                     Any static configuration parameters, which are unknown to
                     the SLO, but which may be required to configure the chosen
@@ -340,6 +339,7 @@ spec:
                     {          // Anything in here will be copied over to the
                     `staticConfig` property of the elasticity strategy
                     spec.          maxReplicas: 100,      }, }); ```
+                  x-kubernetes-preserve-unknown-fields: true
             apiVersion:
               type: string
               description: >-
@@ -363,7 +363,7 @@ kind: CustomResourceDefinition
 apiVersion: apiextensions.k8s.io/v1
 metadata:
   annotations:
-    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.24
+    polaris-slo-cloud.github.io/schema-gen-version: 0.3.0
   name: cpuusageslomappings.slo.polaris-slo-cloud.github.io
 spec:
   group: slo.polaris-slo-cloud.github.io
@@ -503,7 +503,6 @@ spec:
                   description: Configuration for a `CpuUsageSloMapping`.
                 staticElasticityStrategyConfig:
                   type: object
-                  additionalProperties: true
                   description: >-
                     Any static configuration parameters, which are unknown to
                     the SLO, but which may be required to configure the chosen
@@ -526,6 +525,7 @@ spec:
                     {          // Anything in here will be copied over to the
                     `staticConfig` property of the elasticity strategy
                     spec.          maxReplicas: 100,      }, }); ```
+                  x-kubernetes-preserve-unknown-fields: true
             apiVersion:
               type: string
               description: >-
@@ -549,7 +549,7 @@ kind: CustomResourceDefinition
 apiVersion: apiextensions.k8s.io/v1
 metadata:
   annotations:
-    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.24
+    polaris-slo-cloud.github.io/schema-gen-version: 0.3.0
   name: horizontalelasticitystrategies.elasticity.polaris-slo-cloud.github.io
 spec:
   group: elasticity.polaris-slo-cloud.github.io
@@ -753,7 +753,7 @@ kind: CustomResourceDefinition
 apiVersion: apiextensions.k8s.io/v1
 metadata:
   annotations:
-    polaris-slo-cloud.github.io/schema-gen-version: 0.2.0-beta.24
+    polaris-slo-cloud.github.io/schema-gen-version: 0.3.0
   name: verticalelasticitystrategies.elasticity.polaris-slo-cloud.github.io
 spec:
   group: elasticity.polaris-slo-cloud.github.io
