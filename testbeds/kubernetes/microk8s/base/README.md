@@ -47,7 +47,7 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
     * Open your local KUBECONFIG and merge the connection data from MicroK8s into it.
     * In your local KUBECONFIG, adjust the IP address and port of the `server` to match that of the local port forwarded via SSH
     * In your local KUBECONFIG, add `tls-server-name: kubernetes`
-1. Install the [kube-prometheus-stack helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack). The deployed Prometheus is configured to watch all `ServiceMonitors` - if you want to limit them to a specific selector, change `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` and/or `prometheus.prometheusSpec.serviceMonitorSelector` in `./prometheus/values.yaml` accordingly.
+1. Install the [kube-prometheus-stack helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack). The deployed Prometheus is configured to watch all ServiceMonitors, probes, rules, and pod monitors - if you want to limit them to a specific selector, change the selector configuration for each watched resource type accordingly, e.g., `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` and/or `prometheus.prometheusSpec.serviceMonitorSelector` in `./prometheus/values.yaml` for the ServiceMonitors.
     ```
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     helm repo update
