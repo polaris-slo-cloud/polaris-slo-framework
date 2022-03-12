@@ -11,7 +11,7 @@ To build the components of the Polaris project for local development or testing,
 
 Furthermore, you need a Kubernetes cluster, with a running Prometheus instance.
 For testing locally, e.g., [minikube](https://minikube.sigs.k8s.io/docs/), [kind](https://kind.sigs.k8s.io/), or [MicroK8s](https://microk8s.io/) can be used.
-For deploying Prometheus, the [prometheus-operator helm chart](https://github.com/helm/charts/tree/master/stable/prometheus-operator) can be used.
+For instructions on setting up a cluster for Polaris, please see our testbed [setup guide](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds/kubernetes).
 
 The Polaris Kubernetes controllers should normally run as pods within the Kubernetes cluster.
 For testing and development, they can also be run as a normal process on your development machine and connect to a local or remote cluster
