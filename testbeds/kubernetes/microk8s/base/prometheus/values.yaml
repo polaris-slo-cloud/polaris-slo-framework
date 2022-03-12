@@ -89,13 +89,18 @@ defaultRules:
 
 ## Provide custom recording or alerting rules to be deployed into the cluster.
 ##
-additionalPrometheusRulesMap: {}
-#  rule-name:
-#    groups:
-#    - name: my_group
-#      rules:
-#      - record: my_record
-#        expr: 100 * my_record
+additionalPrometheusRulesMap:
+  rule-name:
+    groups:
+    - name: legacy_prom_op_rules
+      rules:
+      - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
+        expr: |
+          sum by (cluster, namespace, pod, container) (
+            rate(container_cpu_usage_seconds_total{job="kubelet", metrics_path="/metrics/cadvisor", image!="", container!="POD"}[5m])
+          ) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (
+            1, max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
+          )
 
 ##
 global:
