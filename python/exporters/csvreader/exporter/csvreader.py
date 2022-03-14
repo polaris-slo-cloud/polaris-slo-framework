@@ -1,5 +1,6 @@
 import csv
 import logging
+import os
 import time
 from typing import List
 
@@ -71,6 +72,9 @@ class CsvMetrics:
         self.metrics = []
         self.csv_readers = [CsvReader(csv_file) for csv_file in csv_files]
         self.prepare_columns()
+        self.target_gvk = None
+        self.target_namespace = None
+        self.read_targets()
 
     def run_metrics_loop(self):
         """Metrics fetching loop"""
@@ -95,11 +99,14 @@ class CsvMetrics:
                     logger.error(e)
                     value = 0
 
+                target_gvk = self.target_gvk
+                target_namespace = self.target_namespace
+
                 if type(prom_obj) is Gauge:
-                    prom_obj.labels(target_gvk="apps/v1/StatefulSet", target_namespace="demo-mesh") \
+                    prom_obj.labels(target_gvk=target_gvk, target_namespace=target_namespace) \
                         .set(value)
                 elif type(prom_obj) is Histogram:
-                    prom_obj.labels(target_gvk="apps/v1/StatefulSet", target_namespace="demo-mesh") \
+                    prom_obj.labels(target_gvk=target_gvk, target_namespace=target_namespace) \
                         .observe(value)
                 else:
                     logging.error(f'Unknown prometheus object type: {type(prom_obj)}')
@@ -135,3 +142,7 @@ class CsvMetrics:
             ('end time', Gauge(f'{prefix}_end_time', 'end time', labelnames=labelnames)),
             ('Efficiency', Gauge(f'{prefix}_efficiency', 'Efficiency', labelnames=labelnames))
         ]
+
+    def read_targets(self):
+        self.target_gvk = os.environ['TARGET_GVK']
+        self.target_namespace = os.environ['TARGET_NAMESPACE']
