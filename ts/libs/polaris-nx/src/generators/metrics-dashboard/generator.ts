@@ -193,19 +193,24 @@ export default async function (host: Tree, options: GrafanaDashboardGeneratorSch
             host,
         );
 
+        if (slosWithComposedMetrics.length === 0) {
+            console.log('No dashboards created because there was no SLO.')
+        }
+
         for (const t of slosWithComposedMetrics) {
             const slo = t[0];
             const composedMetric = t[1];
             const dashboard = generateDashboardForSlo(slo, composedMetric, normalizedOptions);
-
             try {
                 await saveDashboard(host, dashboard, normalizedOptions);
+                console.log(`Dashboard created for SLO ${slo.metadata.name}`)
             } catch (e) {
                 console.error('Failed dashboard generation');
             }
         }
 
     } catch (e) {
+        console.error('Failed dashboard generation');
         console.error(e);
         return Promise.resolve();
     }
