@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: exporter
-          image: aicg4t1/predicted-metric-container-exporter:0.4
+          image: aicg4t1/predicted-metric-container-exporter:0.5
           imagePullPolicy: Always
           env:
             - name: RECONCILE_INTERVAL
@@ -24,6 +24,10 @@ spec:
               value: "DEBUG"
             - name: EXPORTER_PORT
               value: "9877"
+            - name: TARGET_GVK
+              value: "apps/v1/Deployment"
+            - name: TARGET_NAMESPACE
+              value: "demo"
           ports:
             - containerPort: 9877
               name: mport
