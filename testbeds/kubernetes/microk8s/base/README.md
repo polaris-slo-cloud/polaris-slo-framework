@@ -3,7 +3,7 @@
 ## Install MicroK8s Base
 
 1. Install [MicroK8s](https://microk8s.io) by running
-    ```
+    ```sh
     sudo snap install microk8s --classic
     ```
 1. Run `microk8s status --wait-ready` and execute the suggested commands to add your user to the microk8s group. Then log out and log back in.
@@ -16,7 +16,9 @@
     ```
 1. Create directories for the local storage class on all nodes.
 Unfortunately we need to use local storage, because the hostPath volumes, which can be provisioned automatically by MicroK8s cannot ensure that a new pod gets scheduled on the same node as a previously claimed PV.
-    ```shell
+Note that this tutorial assumes that the nodes of your cluster are called `rainbow0`, `rainbow1`, and `rainbow2` and that the storage directories are created under `/mnt/disks`.
+If you are using different names, please adjust the paths and the `nodeSelectorTerms` in `persistent-volumes/persistent-volumes.yaml` accordingly.
+    ```sh
     # Node rainbow0:
     sudo -i
     cd /mnt/disks
@@ -36,9 +38,9 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
     chmod a+rw rainbow2-k8s-disk-01 rainbow2-k8s-disk-02 rainbow2-k8s-disk-03 rainbow2-k8s-disk-04 rainbow2-k8s-disk-05
     ```
 1. Create the default storage class and PVs:
-    ```
-    kubectl apply -f ./persistent-volumes/local-storage.yaml
-    kubectl apply -f ./persistent-volumes/persistent-volumes.yaml
+    ```sh
+    microk8s kubectl apply -f ./persistent-volumes/local-storage.yaml
+    microk8s kubectl apply -f ./persistent-volumes/persistent-volumes.yaml
     ```
 1. Run `microk8s config > ~/.kube/config` to get the KUBECONFIG file that can be used with an external version of kubectl.
 1. If you are using SSH to connect to the machine running MicroK8s, do the following:
@@ -48,14 +50,14 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
     * In your local KUBECONFIG, adjust the IP address and port of the `server` to match that of the local port forwarded via SSH
     * In your local KUBECONFIG, add `tls-server-name: kubernetes`
 1. Install the [kube-prometheus-stack helm chart](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack). The deployed Prometheus is configured to watch all ServiceMonitors, probes, rules, and pod monitors - if you want to limit them to a specific selector, change the selector configuration for each watched resource type accordingly, e.g., `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` and/or `prometheus.prometheusSpec.serviceMonitorSelector` in `./prometheus/values.yaml` for the ServiceMonitors.
-    ```
+    ```sh
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     helm repo update
     kubectl create namespace monitoring
     helm install prometheus prometheus-community/kube-prometheus-stack -f ./prometheus/values.yaml
     ```
 1. Install the ingress-nginx controller:
-    ```
+    ```sh
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     helm repo update
     helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace -f ./ingress-nginx/values.yaml --atomic
@@ -67,16 +69,16 @@ Unfortunately we need to use local storage, because the hostPath volumes, which 
 Follow these steps (based on this [guide](https://www.kubecost.com/install.html)) to install [Kubecost](https://www.kubecost.com), which also installs Prometheus and Grafana:
 
 1. Create a kubecost namespace:
-    ```
+    ```sh
     kubectl create namespace kubecost
     ```
 1. Add the kubecost Helm repository:
-    ```
+    ```sh
     helm repo add kubecost https://kubecost.github.io/cost-analyzer/
     helm repo update
     ```
 1. Go to [http://kubecost.com/install](http://kubecost.com/install) to get a free token for installing Kubecost.
 1. Install kubecost (the additional Prometheus scrape and relabeling config from [here](http://docs.kubecost.com/custom-prom) is already included in `./prometheus/values.yaml`):
-    ```
+    ```sh
     helm install kubecost kubecost/cost-analyzer --namespace=kubecost --values ./kubecost/values.yaml --set kubecostToken="<your token>"
     ```
