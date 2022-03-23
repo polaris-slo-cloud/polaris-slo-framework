@@ -10,7 +10,7 @@ rm -rf ./tmp
 # Build the projects.
 PROJECTS=(
     "core"
-    "mappings-common-mappings"
+    "common-mappings"
     "orchestrators-kubernetes"
     "query-backends-prometheus"
     "metrics-cost-efficiency"

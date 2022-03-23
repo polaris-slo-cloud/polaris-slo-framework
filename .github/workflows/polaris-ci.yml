@@ -33,7 +33,7 @@ jobs:
     # Build the Polaris components
     - run: npx nx build core
       working-directory: ${{ env.working-dir }}
-    - run: npx nx build mappings-common-mappings
+    - run: npx nx build common-mappings
       working-directory: ${{ env.working-dir }}
     - run: npx nx build orchestrators-kubernetes
       working-directory: ${{ env.working-dir }}
@@ -84,7 +84,7 @@ jobs:
     # Run the tests
     - run: npx nx run core:test
       working-directory: ${{ env.working-dir }}
-    - run: npx nx run mappings-common-mappings:test
+    - run: npx nx run common-mappings:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run orchestrators-kubernetes:test
       working-directory: ${{ env.working-dir }}

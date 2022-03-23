@@ -24,7 +24,7 @@
         "baseUrl": ".",
         "paths": {
             "@polaris-sloc/common-mappings": [
-                "libs/mappings/common-mappings/src/index.ts"
+                "libs/common-mappings/src/index.ts"
             ],
             "@polaris-sloc/core": [
                 "libs/core/src/index.ts"

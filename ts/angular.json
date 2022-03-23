@@ -67,6 +67,53 @@
         "cli"
       ]
     },
+    "common-mappings": {
+      "root": "libs/common-mappings",
+      "sourceRoot": "libs/common-mappings/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/common-mappings/**/*.ts"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common-mappings/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/libs/common-mappings"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/js:tsc",
+          "options": {
+            "outputPath": "dist/libs/common-mappings",
+            "tsConfig": "libs/common-mappings/tsconfig.lib.json",
+            "packageJson": "libs/common-mappings/package.json",
+            "main": "libs/common-mappings/src/index.ts",
+            "assets": [
+              "libs/common-mappings/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      },
+      "tags": [
+        "scope:core"
+      ]
+    },
     "core": {
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
@@ -249,53 +296,6 @@
       "tags": [
         "scope:elasticity",
         "orchestrator:kubernetes"
-      ]
-    },
-    "mappings-common-mappings": {
-      "root": "libs/mappings/common-mappings",
-      "sourceRoot": "libs/mappings/common-mappings/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/mappings/common-mappings/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/mappings/common-mappings/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/mappings/common-mappings"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/js:tsc",
-          "options": {
-            "outputPath": "dist/libs/mappings/common-mappings",
-            "tsConfig": "libs/mappings/common-mappings/tsconfig.lib.json",
-            "packageJson": "libs/mappings/common-mappings/package.json",
-            "main": "libs/mappings/common-mappings/src/index.ts",
-            "assets": [
-              "libs/mappings/common-mappings/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "scope:core"
       ]
     },
     "metrics-cost-efficiency": {

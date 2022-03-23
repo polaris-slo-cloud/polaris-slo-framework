@@ -10,7 +10,7 @@ rm -rf ./tmp
 # Build the projects.
 PROJECTS=(
     "core"
-    "mappings-common-mappings"
+    "common-mappings"
     "orchestrators-kubernetes"
     "query-backends-prometheus"
     "metrics-cost-efficiency"
@@ -27,7 +27,7 @@ done
 # Publish the npm packages.
 NPM_PKGS=(
     "./libs/core"
-    "./libs/mappings/common-mappings"
+    "./libs/common-mappings"
     "./libs/orchestrators/kubernetes"
     "./libs/query-backends/prometheus"
     "./libs/metrics/cost-efficiency"

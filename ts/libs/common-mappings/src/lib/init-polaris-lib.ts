@@ -13,5 +13,5 @@ export function initPolarisLib(polarisRuntime: PolarisRuntime): void {
     polarisRuntime.transformer.registerObjectKind(new CostEfficiencySloMapping().objectKind, CostEfficiencySloMapping);
     polarisRuntime.transformer.registerObjectKind(new HorizontalElasticityStrategyKind(), HorizontalElasticityStrategy);
     polarisRuntime.transformer.registerObjectKind(new VerticalElasticityStrategyKind(), VerticalElasticityStrategy);
-    polarisRuntime.transformer.registerObjectKind(new CostEfficiencyMetricMapping().objectKind, CostEfficiencyMetricMapping)
+    polarisRuntime.transformer.registerObjectKind(new CostEfficiencyMetricMapping().objectKind, CostEfficiencyMetricMapping);
 }

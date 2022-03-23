@@ -25,6 +25,6 @@ export class TotalCostMetric extends ComposedMetricType<TotalCost> {
     /** The singleton instance of this type. */
     static readonly instance = new TotalCostMetric();
 
-    readonly metricTypeName =  POLARIS_API.METRICS_GROUP + '/v1/total-cost';
+    readonly metricTypeName = POLARIS_API.METRICS_GROUP + '/v1/total-cost';
 
 }

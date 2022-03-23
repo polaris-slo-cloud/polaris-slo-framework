@@ -1,4 +1,3 @@
-
 import { SloTarget } from '@polaris-sloc/core';
 
 /**
