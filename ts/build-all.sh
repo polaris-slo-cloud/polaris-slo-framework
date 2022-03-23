@@ -11,7 +11,7 @@ rm -rf ./tmp
 PROJECTS=(
     "core"
     "common-mappings"
-    "orchestrators-kubernetes"
+    "kubernetes"
     "query-backends-prometheus"
     "metrics-cost-efficiency"
     "schema-gen"

@@ -185,7 +185,7 @@ export class KubernetesObjectKindWatcher implements ObjectKindWatcher {
      */
     private transformToPolarisObjectAndForward(k8sObj: KubernetesObject, fn: (polarisObj: ApiObject<any>) => void): void {
         try {
-            const polarisObj = this.transformer.transformToPolarisObject(this._kind, k8sObj);
+            const polarisObj = this.transformer.transformToPolarisObject(this._kind, k8sObj) as ApiObject<any>;
             if (polarisObj) {
                 fn(polarisObj);
             }

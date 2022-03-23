@@ -11,7 +11,7 @@ rm -rf ./tmp
 PROJECTS=(
     "core"
     "common-mappings"
-    "orchestrators-kubernetes"
+    "kubernetes"
     "query-backends-prometheus"
     "metrics-cost-efficiency"
     "schema-gen"
@@ -28,7 +28,7 @@ done
 NPM_PKGS=(
     "./libs/core"
     "./libs/common-mappings"
-    "./libs/orchestrators/kubernetes"
+    "./libs/kubernetes"
     "./libs/query-backends/prometheus"
     "./libs/metrics/cost-efficiency"
     "./libs/schema-gen"

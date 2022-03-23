@@ -109,6 +109,7 @@ export class ContainerResourcesTransformer implements ReusablePolarisTransformer
         }
         const requests: any = requirements.requests;
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         Object.keys(requests).forEach(key => {
             if (limits[key] === undefined) {
                 limits[key] = requests[key];

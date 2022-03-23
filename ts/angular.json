@@ -491,58 +491,6 @@
         "scope:metrics-controller"
       ]
     },
-    "orchestrators-kubernetes": {
-      "root": "libs/orchestrators/kubernetes",
-      "sourceRoot": "libs/orchestrators/kubernetes/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/orchestrators/kubernetes/**/*.ts",
-              "libs/orchestrators/kubernetes/**/*.spec.ts",
-              "libs/orchestrators/kubernetes/**/*.spec.tsx",
-              "libs/orchestrators/kubernetes/**/*.spec.js",
-              "libs/orchestrators/kubernetes/**/*.spec.jsx",
-              "libs/orchestrators/kubernetes/**/*.d.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/orchestrators/kubernetes/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/orchestrators/kubernetes"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/js:tsc",
-          "options": {
-            "outputPath": "dist/libs/orchestrators/kubernetes",
-            "tsConfig": "libs/orchestrators/kubernetes/tsconfig.lib.json",
-            "packageJson": "libs/orchestrators/kubernetes/package.json",
-            "main": "libs/orchestrators/kubernetes/src/index.ts",
-            "assets": [
-              "libs/orchestrators/kubernetes/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "orchestrator:kubernetes"
-      ]
-    },
     "polaris-nx": {
       "root": "libs/polaris-nx",
       "sourceRoot": "libs/polaris-nx/src",
@@ -997,6 +945,58 @@
       ],
       "implicitDependencies": [
         "ui-polaris-ui"
+      ]
+    },
+    "kubernetes": {
+      "root": "libs/kubernetes",
+      "sourceRoot": "libs/kubernetes/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/kubernetes/**/*.ts",
+              "libs/kubernetes/**/*.spec.ts",
+              "libs/kubernetes/**/*.spec.tsx",
+              "libs/kubernetes/**/*.spec.js",
+              "libs/kubernetes/**/*.spec.jsx",
+              "libs/kubernetes/**/*.d.ts"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/kubernetes/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/libs/kubernetes"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/js:tsc",
+          "options": {
+            "outputPath": "dist/libs/kubernetes",
+            "tsConfig": "libs/kubernetes/tsconfig.lib.json",
+            "packageJson": "libs/kubernetes/package.json",
+            "main": "libs/kubernetes/src/index.ts",
+            "assets": [
+              "libs/kubernetes/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      },
+      "tags": [
+        "orchestrator:kubernetes"
       ]
     }
   }

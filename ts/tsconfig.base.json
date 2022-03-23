@@ -33,7 +33,7 @@
                 "libs/metrics/cost-efficiency/src/index.ts"
             ],
             "@polaris-sloc/kubernetes": [
-                "libs/orchestrators/kubernetes/src/index.ts"
+                "libs/kubernetes/src/index.ts"
             ],
             "@polaris-sloc/polaris-nx": [
                 "libs/polaris-nx/src/index.ts"

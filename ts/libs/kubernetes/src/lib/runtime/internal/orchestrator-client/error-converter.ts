@@ -12,5 +12,6 @@ export function convertKubernetesErrorToPolaris(err: any): OrchestratorRequestEr
 
         return new OrchestratorRequestError(statusCode, message, err);
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return new OrchestratorRequestError(0, 'Local error, check the `reason` property.', err);
 }

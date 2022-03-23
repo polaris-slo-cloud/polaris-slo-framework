@@ -38,7 +38,7 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
 
     create<T extends ApiObject<any>>(newObj: T): Promise<T> {
         return this.execRequestSafely(async () => {
-            const k8sObj = this.transformer.transformToOrchestratorPlainObject(newObj);
+            const k8sObj = this.transformer.transformToOrchestratorPlainObject(newObj) as KubernetesObject;
             const polarisType = this.getPolarisType(newObj);
             const response = await this.k8sClient.create(k8sObj);
             return this.transformer.transformToPolarisObject(polarisType, response.body);
@@ -47,7 +47,7 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
 
     read<T extends ApiObject<any>>(query: T): Promise<T> {
         return this.execRequestSafely(async () => {
-            const k8sObj = this.transformer.transformToOrchestratorPlainObject(query);
+            const k8sObj = this.transformer.transformToOrchestratorPlainObject(query) as KubernetesObject;
             const polarisType = this.getPolarisType(query);
             const response = await this.k8sClient.read(k8sObj);
             return this.transformer.transformToPolarisObject(polarisType, response.body);
@@ -56,7 +56,7 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
 
     update<T extends ApiObject<any>>(obj: T): Promise<T> {
         return this.execRequestSafely(async () => {
-            const k8sObj = this.transformer.transformToOrchestratorPlainObject(obj);
+            const k8sObj = this.transformer.transformToOrchestratorPlainObject(obj) as KubernetesObject;
             const polarisType = this.getPolarisType(obj);
             const response = await this.k8sClient.replace(k8sObj);
             return this.transformer.transformToPolarisObject(polarisType, response.body);
@@ -65,7 +65,7 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
 
     delete<T extends ApiObject<any>>(query: T): Promise<void> {
         return this.execRequestSafely(async () => {
-            const k8sObj = this.transformer.transformToOrchestratorPlainObject(query);
+            const k8sObj = this.transformer.transformToOrchestratorPlainObject(query) as KubernetesObject;
             await this.k8sClient.delete(k8sObj);
         });
     }
@@ -81,7 +81,7 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
     setScale(target: NamespacedObjectReference, newScale: Scale): Promise<Scale> {
         return this.execRequestSafely(async () => {
             const k8sObj = this.objectRefToK8sObject(target);
-            const k8sScale = this.transformer.transformToOrchestratorPlainObject(newScale);
+            const k8sScale = this.transformer.transformToOrchestratorPlainObject(newScale) as KubernetesObject;
             const response = await this.k8sScaleClient.replaceScale(k8sObj, k8sScale);
             return this.transformer.transformToPolarisObject(Scale, response.body);
         });
