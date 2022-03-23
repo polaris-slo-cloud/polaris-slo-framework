@@ -34,8 +34,13 @@ The [`apps`](./apps) folder contains the following application projects:
 
 | Name              | Purpose |
 |-------------------|---------|
+| [`elasticity-horizontal-elasticity-strategy-controller`](./apps/elasticity/horizontal-elasticity-strategy-controller) | Elasticity Strategy controller for horizontal scaling. |
+| [`elasticity-vertical-elasticity-strategy-controller`](./apps/elasticity/vertical-elasticity-strategy-controller) | Elasticity Strategy controller for vertical scaling. |
+| [`metrics-rest-api-cost-efficiency-controller`](./apps/metrics/rest-api-cost-efficiency-controller) | Composed metric controller for computing the REST API cost efficiency. |
+| [`metrics-predicted-cost-efficiency-controller`](./apps/metrics/predicted-cost-efficiency-controller) | Composed metric controller for computing predictions of a resource efficiency metric. |
 | [`polaris-cli`](./apps/polaris-cli) | Polaris CLI convenience wrapper around the `polaris-nx` Nx plugin. |
-| [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO (metrics evaluation is currently mocked). |
+| [`polaris-nx-e2e`](./apps/polaris-nx-e2e) | End-to-End tests for the polaris-nx plugin for the Nx CLI. |
+| [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO. |
 | [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
 | [`ui-polaris-ui`](./apps/ui/polaris-ui) | Angular UI for Polaris. |
 
