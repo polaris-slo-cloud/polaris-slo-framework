@@ -16,7 +16,7 @@ PROJECTS=(
     "cost-efficiency"
     "schema-gen"
     "polaris-nx"
-    "cli-polaris-cli"
+    "polaris-cli"
 )
 
 for proj in ${PROJECTS[@]}; do
@@ -30,10 +30,10 @@ NPM_PKGS=(
     "./libs/common-mappings"
     "./libs/kubernetes"
     "./libs/prometheus"
-    "./libs/metrics/cost-efficiency"
+    "./libs/cost-efficiency"
     "./libs/schema-gen"
     "./libs/polaris-nx"
-    "./apps/cli/polaris-cli"
+    "./apps/polaris-cli"
 )
 
 cd ./dist

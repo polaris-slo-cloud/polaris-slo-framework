@@ -1,6 +1,6 @@
 module.exports = {
-    displayName: 'cli-polaris-cli',
-    preset: '../../../jest.preset.js',
+    displayName: 'polaris-cli',
+    preset: '../../jest.preset.js',
     globals: {
         'ts-jest': {
             tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -10,6 +10,6 @@ module.exports = {
         '^.+\\.[tj]s$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageDirectory: '../../../coverage/apps/cli/polaris-cli',
+    coverageDirectory: '../../coverage/apps/polaris-cli',
     testEnvironment: 'node',
 };

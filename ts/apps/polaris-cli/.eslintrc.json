@@ -1,6 +1,6 @@
 {
     "extends": [
-        "../../../.eslintrc.js"
+        "../../.eslintrc.js"
     ],
     "ignorePatterns": [
         "!**/*"
@@ -15,7 +15,7 @@
             ],
             "parserOptions": {
                 "project": [
-                    "apps/cli/polaris-cli/tsconfig.*?.json"
+                    "apps/polaris-cli/tsconfig.*?.json"
                 ]
             },
             "rules": {}

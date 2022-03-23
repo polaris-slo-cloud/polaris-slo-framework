@@ -10,7 +10,7 @@ To debug the Polaris CLI, follow these steps:
 
 1. Build the CLI:
     ```sh
-    nx build cli-polaris-cli --skip-nx-cache=true --sourceMap=true
+    nx build polaris-cli --skip-nx-cache=true --sourceMap=true
     ```
 
 2. Run the polaris-nx E2E tests:
@@ -22,5 +22,5 @@ To debug the Polaris CLI, follow these steps:
 
 4. Set breakpoints in the Polaris CLI code and run the command you want to debug:
     ```sh
-    node ../../../dist/apps/cli/polaris-cli/src/main.js <cmd>
+    node ../../../dist/apps/polaris-cli/src/main.js <cmd>
     ```

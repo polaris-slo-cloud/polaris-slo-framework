@@ -1,72 +1,6 @@
 {
   "version": 1,
   "projects": {
-    "cli-polaris-cli": {
-      "root": "apps/cli/polaris-cli",
-      "sourceRoot": "apps/cli/polaris-cli/src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/js:tsc",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/apps/cli/polaris-cli",
-            "main": "apps/cli/polaris-cli/src/main.ts",
-            "tsConfig": "apps/cli/polaris-cli/tsconfig.app.json",
-            "packageJson": "apps/cli/polaris-cli/package.json",
-            "assets": [
-              "apps/cli/polaris-cli/*.md",
-              "apps/cli/polaris-cli/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/cli/polaris-cli/src/environments/environment.ts",
-                  "with": "apps/cli/polaris-cli/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:node",
-          "options": {
-            "buildTarget": "cli-polaris-cli:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/cli/polaris-cli/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/cli/polaris-cli"
-          ],
-          "options": {
-            "jestConfig": "apps/cli/polaris-cli/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "tags": [
-        "cli"
-      ]
-    },
     "common-mappings": {
       "root": "libs/common-mappings",
       "sourceRoot": "libs/common-mappings/src",
@@ -997,6 +931,72 @@
       "tags": [
         "scope:core",
         "scope:metric"
+      ]
+    },
+    "polaris-cli": {
+      "root": "apps/polaris-cli",
+      "sourceRoot": "apps/polaris-cli/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/js:tsc",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/polaris-cli",
+            "main": "apps/polaris-cli/src/main.ts",
+            "tsConfig": "apps/polaris-cli/tsconfig.app.json",
+            "packageJson": "apps/polaris-cli/package.json",
+            "assets": [
+              "apps/polaris-cli/*.md",
+              "apps/polaris-cli/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/polaris-cli/src/environments/environment.ts",
+                  "with": "apps/polaris-cli/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:node",
+          "options": {
+            "buildTarget": "polaris-cli:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/polaris-cli/**/*.ts"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/polaris-cli"
+          ],
+          "options": {
+            "jestConfig": "apps/polaris-cli/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": [
+        "cli"
       ]
     }
   }

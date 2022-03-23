@@ -16,7 +16,7 @@ PROJECTS=(
     "cost-efficiency"
     "schema-gen"
     "polaris-nx"
-    "cli-polaris-cli"
+    "polaris-cli"
     "elasticity-horizontal-elasticity-strategy-controller"
     "elasticity-vertical-elasticity-strategy-controller"
     "metrics-rest-api-cost-efficiency-controller"

@@ -34,7 +34,7 @@ The [`apps`](./apps) folder contains the following application projects:
 
 | Name              | Purpose |
 |-------------------|---------|
-| [`cli-polaris-cli`](./apps/cli/polaris-cli) | Polaris CLI convenience wrapper around the `polaris-nx` Nx plugin. |
+| [`polaris-cli`](./apps/polaris-cli) | Polaris CLI convenience wrapper around the `polaris-nx` Nx plugin. |
 | [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO (metrics evaluation is currently mocked). |
 | [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
 | [`ui-polaris-ui`](./apps/ui/polaris-ui) | Angular UI for Polaris. |
@@ -50,9 +50,9 @@ To build any application/library use the following command:
 ```
 npm run build -- <subproject-name>
 ```
-For example, to build the cli-polaris-cli app:
+For example, to build the polaris-cli app:
 ```
-npm run build -- cli-polaris-cli
+npm run build -- polaris-cli
 ```
 
 The output can then be found in the `dist` folder.
