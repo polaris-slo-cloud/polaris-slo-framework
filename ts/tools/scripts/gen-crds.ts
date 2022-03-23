@@ -18,7 +18,7 @@ import { CustomResourceDefinitionWriter } from '@polaris-sloc/schema-gen';
 
 const OUT_DIR = 'crds/kubernetes';
 const TS_CONFIG_FILE = './tsconfig.base.json';
-const TS_INDEX_FILE = 'libs/mappings/common-mappings/src/index.ts';
+const TS_INDEX_FILE = 'libs/common-mappings/src/index.ts';
 const POLARIS_TYPES: PolarisConstructor<any>[] = [
     HorizontalElasticityStrategy,
     VerticalElasticityStrategy,
