@@ -45,7 +45,7 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx build polaris-nx
       working-directory: ${{ env.working-dir }}
-    - run: npx nx build cli-polaris-cli
+    - run: npx nx build polaris-cli
       working-directory: ${{ env.working-dir }}
     - run: npx nx build elasticity-horizontal-elasticity-strategy-controller
       working-directory: ${{ env.working-dir }}
@@ -96,7 +96,7 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx run polaris-nx:test
       working-directory: ${{ env.working-dir }}
-    - run: npx nx run cli-polaris-cli:test
+    - run: npx nx run polaris-cli:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run elasticity-horizontal-elasticity-strategy-controller:test
       working-directory: ${{ env.working-dir }}
