@@ -582,54 +582,6 @@
         "polaris-nx"
       ]
     },
-    "query-backends-prometheus": {
-      "root": "libs/query-backends/prometheus",
-      "sourceRoot": "libs/query-backends/prometheus/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/query-backends/prometheus/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/query-backends/prometheus/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": [
-            "coverage/libs/query-backends/prometheus"
-          ]
-        },
-        "build": {
-          "builder": "@nrwl/js:tsc",
-          "options": {
-            "outputPath": "dist/libs/query-backends/prometheus",
-            "tsConfig": "libs/query-backends/prometheus/tsconfig.lib.json",
-            "packageJson": "libs/query-backends/prometheus/package.json",
-            "main": "libs/query-backends/prometheus/src/index.ts",
-            "assets": [
-              "libs/query-backends/prometheus/*.md"
-            ]
-          },
-          "outputs": [
-            "{options.outputPath}"
-          ]
-        }
-      },
-      "tags": [
-        "scope:core",
-        "query:prometheus"
-      ]
-    },
     "schema-gen": {
       "root": "libs/schema-gen",
       "sourceRoot": "libs/schema-gen/src",
@@ -997,6 +949,54 @@
       },
       "tags": [
         "orchestrator:kubernetes"
+      ]
+    },
+    "prometheus": {
+      "root": "libs/prometheus",
+      "sourceRoot": "libs/prometheus/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/prometheus/**/*.ts"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/prometheus/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/libs/prometheus"
+          ]
+        },
+        "build": {
+          "builder": "@nrwl/js:tsc",
+          "options": {
+            "outputPath": "dist/libs/prometheus",
+            "tsConfig": "libs/prometheus/tsconfig.lib.json",
+            "packageJson": "libs/prometheus/package.json",
+            "main": "libs/prometheus/src/index.ts",
+            "assets": [
+              "libs/prometheus/*.md"
+            ]
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        }
+      },
+      "tags": [
+        "scope:core",
+        "query:prometheus"
       ]
     }
   }

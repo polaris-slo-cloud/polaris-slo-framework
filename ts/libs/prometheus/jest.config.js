@@ -1,6 +1,6 @@
 module.exports = {
-    displayName: 'query-backends-prometheus',
-    preset: '../../../jest.preset.js',
+    displayName: 'prometheus',
+    preset: '../../jest.preset.js',
     globals: {
         'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
     },
@@ -8,6 +8,6 @@ module.exports = {
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coverageDirectory: '../../../coverage/libs/query-backends/prometheus',
+    coverageDirectory: '../../coverage/libs/prometheus',
     testEnvironment: 'node',
 };

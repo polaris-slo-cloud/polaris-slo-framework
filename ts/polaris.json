@@ -1,6 +1,22 @@
 {
     "version": 1,
     "projects": {
+        "common-mappings": {
+            "projectType": "library",
+            "tsEntryPoint": "libs/common-mappings/src/index.ts",
+            "importPath": "@polaris-sloc/common-mappings",
+            "crds": {
+                "tsConfig": "tsconfig.base.json",
+                "outDir": "crds/kubernetes",
+                "polarisTypes": [
+                    "HorizontalElasticityStrategy",
+                    "VerticalElasticityStrategy",
+                    "CostEfficiencyMetricMapping",
+                    "CostEfficiencySloMapping",
+                    "CpuUsageSloMapping"
+                ]
+            }
+        },
         "core": {
             "projectType": "library",
             "tsEntryPoint": "libs/core/src/index.ts",
@@ -14,21 +30,10 @@
             "projectType": "elasticity-strategy-controller",
             "tsEntryPoint": "apps/elasticity/vertical-elasticity-strategy-controller/src/main.ts"
         },
-        "mappings-common-mappings": {
+        "kubernetes": {
             "projectType": "library",
-            "tsEntryPoint": "libs/mappings/common-mappings/src/index.ts",
-            "importPath": "@polaris-sloc/common-mappings",
-            "crds": {
-                "tsConfig": "tsconfig.base.json",
-                "outDir": "crds/kubernetes",
-                "polarisTypes": [
-                    "HorizontalElasticityStrategy",
-                    "VerticalElasticityStrategy",
-                    "CostEfficiencyMetricMapping",
-                    "CostEfficiencySloMapping",
-                    "CpuUsageSloMapping"
-                ]
-            }
+            "tsEntryPoint": "libs/kubernetes/src/index.ts",
+            "importPath": "@polaris-sloc/kubernetes"
         },
         "metrics-cost-efficiency": {
             "projectType": "library",
@@ -44,19 +49,14 @@
             "tsEntryPoint": "libs/schema-gen/src/index.ts",
             "importPath": "@polaris-sloc/schema-gen"
         },
-        "orchestrators-kubernetes": {
-            "projectType": "library",
-            "tsEntryPoint": "libs/orchestrators/kubernetes/src/index.ts",
-            "importPath": "@polaris-sloc/kubernetes"
-        },
         "polaris-nx": {
             "projectType": "library",
             "tsEntryPoint": "libs/polaris-nx/src/index.ts",
             "importPath": "@polaris-sloc/polaris-nx"
         },
-        "query-backends-prometheus": {
+        "prometheus": {
             "projectType": "library",
-            "tsEntryPoint": "libs/query-backends/prometheus/src/index.ts",
+            "tsEntryPoint": "libs/prometheus/src/index.ts",
             "importPath": "@polaris-sloc/prometheus"
         },
         "slo-cost-efficiency-slo-controller": {

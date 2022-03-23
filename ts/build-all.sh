@@ -12,7 +12,7 @@ PROJECTS=(
     "core"
     "common-mappings"
     "kubernetes"
-    "query-backends-prometheus"
+    "prometheus"
     "metrics-cost-efficiency"
     "schema-gen"
     "polaris-nx"

@@ -37,7 +37,7 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx build kubernetes
       working-directory: ${{ env.working-dir }}
-    - run: npx nx build query-backends-prometheus
+    - run: npx nx build prometheus
       working-directory: ${{ env.working-dir }}
     - run: npx nx build metrics-cost-efficiency
       working-directory: ${{ env.working-dir }}
@@ -88,7 +88,7 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx run kubernetes:test
       working-directory: ${{ env.working-dir }}
-    - run: npx nx run query-backends-prometheus:test
+    - run: npx nx run prometheus:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run metrics-cost-efficiency:test
       working-directory: ${{ env.working-dir }}

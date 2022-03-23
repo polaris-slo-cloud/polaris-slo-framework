@@ -39,7 +39,7 @@
                 "libs/polaris-nx/src/index.ts"
             ],
             "@polaris-sloc/prometheus": [
-                "libs/query-backends/prometheus/src/index.ts"
+                "libs/prometheus/src/index.ts"
             ],
             "@polaris-sloc/schema-gen": [
                 "libs/schema-gen/src/index.ts"

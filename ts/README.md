@@ -22,9 +22,9 @@ The [`libs`](./libs) subfolder contains the following library projects:
 | Name              | Purpose |
 |-------------------|---------|
 | [`core`](./libs/core) | Main SLO Script library containing the language abstractions and orchestrator-independent runtime facilities. |
-| [`mappings-common-mappings`](./libs/mappings/common-mappings) | Definitions of commonly used, generic SLO Mappings and elasticity strategies. |
-| [`orchestrators-kubernetes`](./libs/orchestrators/kubernetes) | Connector library for Kubernetes. |
-| [`query-backends-prometheus`](./libs/query-backends/prometheus) | Connector to allow the Metrics Query API to use Prometheus as a backend. |
+| [`common-mappings`](./libs/common-mappings) | Definitions of commonly used, generic SLO Mappings and elasticity strategies. |
+| [`kubernetes`](./libs/kubernetes) | Connector library for Kubernetes. |
+| [`prometheus`](./libs/prometheus) | Connector to allow the Metrics Query API to use Prometheus as a backend. |
 | [`polaris-nx`](./libs/polaris-nx) | Nx CLI plugin that implements the actions of the Polaris CLI. |
 | [`schema-gen`](./libs/schema-gen) | Supports the generation of Custom Resource Definitions (CRDs) from TypeScript code. |
 
