@@ -22,6 +22,11 @@
             "tsEntryPoint": "libs/core/src/index.ts",
             "importPath": "@polaris-sloc/core"
         },
+        "cost-efficiency": {
+            "projectType": "library",
+            "tsEntryPoint": "libs/metrics/cost-efficiency/src/index.ts",
+            "importPath": "@polaris-sloc/cost-efficiency"
+        },
         "elasticity-horizontal-elasticity-strategy-controller": {
             "projectType": "elasticity-strategy-controller",
             "tsEntryPoint": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts"
@@ -34,11 +39,6 @@
             "projectType": "library",
             "tsEntryPoint": "libs/kubernetes/src/index.ts",
             "importPath": "@polaris-sloc/kubernetes"
-        },
-        "metrics-cost-efficiency": {
-            "projectType": "library",
-            "tsEntryPoint": "libs/metrics/cost-efficiency/src/index.ts",
-            "importPath": "@polaris-sloc/cost-efficiency"
         },
         "metrics-rest-api-cost-efficiency-controller": {
             "projectType": "composed-metric-controller",

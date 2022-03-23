@@ -13,7 +13,7 @@ PROJECTS=(
     "common-mappings"
     "kubernetes"
     "prometheus"
-    "metrics-cost-efficiency"
+    "cost-efficiency"
     "schema-gen"
     "polaris-nx"
     "cli-polaris-cli"

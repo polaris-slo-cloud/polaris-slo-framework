@@ -39,7 +39,7 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx build prometheus
       working-directory: ${{ env.working-dir }}
-    - run: npx nx build metrics-cost-efficiency
+    - run: npx nx build cost-efficiency
       working-directory: ${{ env.working-dir }}
     - run: npx nx build schema-gen
       working-directory: ${{ env.working-dir }}
@@ -90,7 +90,7 @@ jobs:
       working-directory: ${{ env.working-dir }}
     - run: npx nx run prometheus:test
       working-directory: ${{ env.working-dir }}
-    - run: npx nx run metrics-cost-efficiency:test
+    - run: npx nx run cost-efficiency:test
       working-directory: ${{ env.working-dir }}
     - run: npx nx run schema-gen:test
       working-directory: ${{ env.working-dir }}

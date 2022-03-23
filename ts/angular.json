@@ -298,53 +298,6 @@
         "orchestrator:kubernetes"
       ]
     },
-    "metrics-cost-efficiency": {
-      "root": "libs/metrics/cost-efficiency",
-      "sourceRoot": "libs/metrics/cost-efficiency/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/metrics/cost-efficiency/**/*.ts"
-            ]
-          },
-          "outputs": [
-            "{options.outputFile}"
-          ]
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/metrics/cost-efficiency"
-          ],
-          "options": {
-            "jestConfig": "libs/metrics/cost-efficiency/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/js:tsc",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/libs/metrics/cost-efficiency",
-            "tsConfig": "libs/metrics/cost-efficiency/tsconfig.lib.json",
-            "packageJson": "libs/metrics/cost-efficiency/package.json",
-            "main": "libs/metrics/cost-efficiency/src/index.ts",
-            "assets": [
-              "libs/metrics/cost-efficiency/*.md"
-            ]
-          }
-        }
-      },
-      "tags": [
-        "scope:core",
-        "scope:metric"
-      ]
-    },
     "metrics-predicted-cost-efficiency-controller": {
       "root": "apps/metrics/predicted-cost-efficiency-controller",
       "sourceRoot": "apps/metrics/predicted-cost-efficiency-controller/src",
@@ -997,6 +950,53 @@
       "tags": [
         "scope:core",
         "query:prometheus"
+      ]
+    },
+    "cost-efficiency": {
+      "root": "libs/cost-efficiency",
+      "sourceRoot": "libs/cost-efficiency/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/cost-efficiency/**/*.ts"
+            ]
+          },
+          "outputs": [
+            "{options.outputFile}"
+          ]
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/cost-efficiency"
+          ],
+          "options": {
+            "jestConfig": "libs/cost-efficiency/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/js:tsc",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/libs/cost-efficiency",
+            "tsConfig": "libs/cost-efficiency/tsconfig.lib.json",
+            "packageJson": "libs/cost-efficiency/package.json",
+            "main": "libs/cost-efficiency/src/index.ts",
+            "assets": [
+              "libs/cost-efficiency/*.md"
+            ]
+          }
+        }
+      },
+      "tags": [
+        "scope:core",
+        "scope:metric"
       ]
     }
   }

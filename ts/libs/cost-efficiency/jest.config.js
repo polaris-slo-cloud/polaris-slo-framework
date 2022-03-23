@@ -1,6 +1,6 @@
 module.exports = {
-    displayName: 'metrics-cost-efficiency',
-    preset: '../../../jest.preset.js',
+    displayName: 'cost-efficiency',
+    preset: '../../jest.preset.js',
     globals: {
         'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
     },
@@ -8,6 +8,6 @@ module.exports = {
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coverageDirectory: '../../../coverage/libs/metrics/cost-efficiency',
+    coverageDirectory: '../../coverage/libs/cost-efficiency',
     testEnvironment: 'node',
 };
