@@ -24,22 +24,22 @@
         "baseUrl": ".",
         "paths": {
             "@polaris-sloc/common-mappings": [
-                "libs/mappings/common-mappings/src/index.ts"
+                "libs/common-mappings/src/index.ts"
             ],
             "@polaris-sloc/core": [
                 "libs/core/src/index.ts"
             ],
             "@polaris-sloc/cost-efficiency": [
-                "libs/metrics/cost-efficiency/src/index.ts"
+                "libs/cost-efficiency/src/index.ts"
             ],
             "@polaris-sloc/kubernetes": [
-                "libs/orchestrators/kubernetes/src/index.ts"
+                "libs/kubernetes/src/index.ts"
             ],
             "@polaris-sloc/polaris-nx": [
                 "libs/polaris-nx/src/index.ts"
             ],
             "@polaris-sloc/prometheus": [
-                "libs/query-backends/prometheus/src/index.ts"
+                "libs/prometheus/src/index.ts"
             ],
             "@polaris-sloc/schema-gen": [
                 "libs/schema-gen/src/index.ts"

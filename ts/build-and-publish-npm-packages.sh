@@ -10,13 +10,13 @@ rm -rf ./tmp
 # Build the projects.
 PROJECTS=(
     "core"
-    "mappings-common-mappings"
-    "orchestrators-kubernetes"
-    "query-backends-prometheus"
-    "metrics-cost-efficiency"
+    "common-mappings"
+    "kubernetes"
+    "prometheus"
+    "cost-efficiency"
     "schema-gen"
     "polaris-nx"
-    "cli-polaris-cli"
+    "polaris-cli"
 )
 
 for proj in ${PROJECTS[@]}; do
@@ -27,13 +27,13 @@ done
 # Publish the npm packages.
 NPM_PKGS=(
     "./libs/core"
-    "./libs/mappings/common-mappings"
-    "./libs/orchestrators/kubernetes"
-    "./libs/query-backends/prometheus"
-    "./libs/metrics/cost-efficiency"
+    "./libs/common-mappings"
+    "./libs/kubernetes"
+    "./libs/prometheus"
+    "./libs/cost-efficiency"
     "./libs/schema-gen"
     "./libs/polaris-nx"
-    "./apps/cli/polaris-cli"
+    "./apps/polaris-cli"
 )
 
 cd ./dist

@@ -10,13 +10,13 @@ rm -rf ./tmp
 # Build the projects.
 PROJECTS=(
     "core"
-    "mappings-common-mappings"
-    "orchestrators-kubernetes"
-    "query-backends-prometheus"
-    "metrics-cost-efficiency"
+    "common-mappings"
+    "kubernetes"
+    "prometheus"
+    "cost-efficiency"
     "schema-gen"
     "polaris-nx"
-    "cli-polaris-cli"
+    "polaris-cli"
     "elasticity-horizontal-elasticity-strategy-controller"
     "elasticity-vertical-elasticity-strategy-controller"
     "metrics-rest-api-cost-efficiency-controller"
