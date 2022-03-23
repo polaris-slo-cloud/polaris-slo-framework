@@ -16,13 +16,13 @@ newVersion="$1"
 PACKAGE_DIRS=(
     "."
     "./libs/core"
-    "./libs/mappings/common-mappings"
-    "./libs/orchestrators/kubernetes"
-    "./libs/query-backends/prometheus"
-    "./libs/metrics/cost-efficiency"
+    "./libs/common-mappings"
+    "./libs/kubernetes"
+    "./libs/prometheus"
+    "./libs/cost-efficiency"
     "./libs/schema-gen"
     "./libs/polaris-nx"
-    "./apps/cli/polaris-cli"
+    "./apps/polaris-cli"
 )
 
 POLARIS_PKGS=(
