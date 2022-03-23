@@ -16,10 +16,10 @@
         "out": "../gh-pages/typedoc",
         "entryPoints": [
             "libs/core/src/index.ts",
-            "libs/mappings/common-mappings/src/index.ts",
-            "libs/metrics/cost-efficiency/src/lib/metrics/index.ts",
-            "libs/orchestrators/kubernetes/src/index.ts",
-            "libs/query-backends/prometheus/src/index.ts",
+            "libs/common-mappings/src/index.ts",
+            "libs/cost-efficiency/src/lib/metrics/index.ts",
+            "libs/kubernetes/src/index.ts",
+            "libs/prometheus/src/index.ts",
             "libs/schema-gen/src/index.ts"
         ],
         "exclude": [
