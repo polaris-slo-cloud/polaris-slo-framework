@@ -70,5 +70,6 @@ function launchCli(): void {
         cli.run();
     } catch (e) {
         console.error(e);
+        process.exit(1);
     }
 }

@@ -1,5 +1,13 @@
 # Polaris SLO Cloud Changelog
 
+## v0.3.1 (not yet released)
+
+### Bugfixes
+
+* Ensure that the polaris-cli exists with an error code if an error occurs during execution.
+
+
+
 ## v0.3.0 (2022-03-12)
 
 ### Features

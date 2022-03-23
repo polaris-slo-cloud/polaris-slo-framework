@@ -46,4 +46,7 @@ crdWriter.generateAndWriteCrds({
 .then(writtenFiles => {
     console.log('Successfully generated CRDs and saved to the following files: ', writtenFiles)
 })
-.catch(err => console.error(err));
+.catch(err => {
+    console.error(err);
+    process.exit(1);
+});
