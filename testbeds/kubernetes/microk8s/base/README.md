@@ -66,7 +66,7 @@ If you are using different names, please adjust the paths and the `nodeSelectorT
 
 ## Install KubeCost
 
-Follow these steps (based on this [guide](https://www.kubecost.com/install.html)) to install [Kubecost](https://www.kubecost.com), which also installs Prometheus and Grafana:
+Follow these steps (based on this [guide](https://www.kubecost.com/install.html)) to install [Kubecost](https://www.kubecost.com), using the previously installed Prometheus and Grafana instances:
 
 1. Create a kubecost namespace:
     ```sh
