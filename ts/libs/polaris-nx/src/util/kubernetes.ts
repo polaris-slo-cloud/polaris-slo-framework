@@ -6,9 +6,9 @@ import {
     V1CustomResourceDefinition,
 } from '@kubernetes/client-node';
 import {Tree} from '@nrwl/devkit';
-import {flushChanges} from '@nrwl/tao/src/shared/tree';
 import {SloMappingBase} from '@polaris-sloc/core';
 import {camelCase, snakeCase} from 'change-case';
+import {flushChanges} from 'nx/src/config/tree';
 import {DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG, createGenerator} from 'ts-json-schema-generator';
 import {getTempDir} from '.';
 
@@ -73,6 +73,7 @@ async function getSloMappingObjects(crd: V1CustomResourceDefinition, customObjec
     return relevantMappings;
 }
 
+/* eslint-disable @typescript-eslint/naming-convention */
 function buildLabels(sloMappingObject: SloMappingBase<any>, crd: V1CustomResourceDefinition): Record<string, string> {
     return {
         'polaris-slo-cloud.github.io/owner-api-group': crd.spec.group,
@@ -81,6 +82,7 @@ function buildLabels(sloMappingObject: SloMappingBase<any>, crd: V1CustomResourc
         'polaris-slo-cloud.github.io/owner-name': sloMappingObject.metadata.name,
     };
 }
+/* eslint-enable @typescript-eslint/naming-convention */
 
 export async function listAllComposedMetrics(composedMetricTypePkg: string, composedMetricType: string,
                                              requiredNamespace: string, kubeConfig: KubeConfig, host: Tree): Promise<[SloMappingBase<any>, PrometheusComposedMetric[]][]> {

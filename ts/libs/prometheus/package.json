@@ -6,8 +6,8 @@
   "private": false,
   "type": "commonjs",
   "dependencies": {
-    "express": "^4.17.2",
-    "prometheus-query": "^3.2.0",
+    "express": "^4.17.3",
+    "prometheus-query": "^3.2.3",
     "prom-client": "^14.0.1",
     "safe-flat": "^2.0.2"
   },

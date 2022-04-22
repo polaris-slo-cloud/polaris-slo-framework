@@ -2,6 +2,12 @@
 
 ## v0.3.1 (not yet released)
 
+### Dependency Updates
+
+* Upgrade [Nx libraries](https://nx.dev) to v13.10.3.
+* Upgrade [ts-json-schema-generator](https://github.com/vega/ts-json-schema-generator) to v1.0.0.
+
+
 ### Bugfixes
 
 * Ensure that the polaris-cli exists with an error code if an error occurs during execution.
