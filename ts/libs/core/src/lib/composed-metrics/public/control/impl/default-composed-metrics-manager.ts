@@ -110,6 +110,7 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager, Mo
             throw new ComposedMetricMappingError(
                 'Cannot add Composed Metric, because an instance of it already exists.',
                 mapping,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 computationConfig.metricType,
             );
         }
@@ -167,6 +168,11 @@ export class DefaultComposedMetricsManager implements ComposedMetricsManager, Mo
             );
             metricValue$.subscribe({
                 next: value => {
+                    if (!value) {
+                        // eslint-disable-next-line max-len
+                        Logger.log(`Skipping invalid value returned by MetricSource ${activeMetric.mapping?.metadata?.namespace}.${activeMetric.mapping?.metadata?.name}:`, value);
+                        return;
+                    }
                     activeMetric.collectors.forEach(
                         collector => executeSafely(() => collector.collect(value)),
                     );
