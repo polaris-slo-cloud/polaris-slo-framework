@@ -1,7 +1,7 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
 import { Executor, ExecutorContext, Tree, generateFiles, joinPathFragments, offsetFromRoot } from '@nrwl/devkit';
-import { FsTree, flushChanges } from '@nrwl/tao/src/shared/tree';
+import { FsTree, flushChanges } from 'nx/src/config/tree';
 import { PolarisCliConfig, PolarisCliError, PolarisCliProjectType, PolarisLibraryProject, getTempDir, getWorkspaceTsConfigPath } from '../../util';
 import { GenerateCrdsExecutorSchema } from './schema';
 

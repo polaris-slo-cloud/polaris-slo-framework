@@ -18,6 +18,7 @@
     "@polaris-sloc/kubernetes": "~0.3.0",
     "grafana-dash-gen": "^3.2.1",
     "axios": "0.26.1",
+    "nx": "*",
     "tslib": "^2.4.0"
   }
 }
