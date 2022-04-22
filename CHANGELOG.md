@@ -11,7 +11,8 @@
 ### Bugfixes
 
 * Ensure that the polaris-cli exists with an error code if an error occurs during execution.
-* Added missing `js-yaml` v4.1.0 as a dependency of `@polaris-sloc/schema-gen`. 
+* Explicitly handle invalid composed metric values in the Prometheus `ComposedMetricsManager`.
+* Added missing `js-yaml` v4.1.0 as a dependency of `@polaris-sloc/schema-gen`.
 
 
 
