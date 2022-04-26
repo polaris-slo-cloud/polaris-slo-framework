@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 module.exports = {
     displayName: 'polaris-nx-e2e',
-    preset: '../../jest.preset.js',
+    preset: '../../jest.preset.ts',
     globals: {
         'ts-jest': {
             tsconfig: '<rootDir>/tsconfig.spec.json',

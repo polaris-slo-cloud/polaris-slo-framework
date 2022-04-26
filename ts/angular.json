@@ -623,7 +623,7 @@
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "polaris-nx:build",
-            "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
+            "jestConfig": "apps/polaris-nx-e2e/jest.config.ts"
           }
         }
       },
