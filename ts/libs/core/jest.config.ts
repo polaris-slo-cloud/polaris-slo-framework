@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 module.exports = {
-    preset: '../../jest.preset.js',
     globals: {
         'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
     },
@@ -10,4 +13,5 @@ module.exports = {
     coverageDirectory: '../../coverage/libs/core',
     displayName: 'core',
     testEnvironment: 'node',
+    preset: '../../jest.preset.ts',
 };

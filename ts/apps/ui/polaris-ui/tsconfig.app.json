@@ -13,6 +13,7 @@
         "src/testing/**",
         "**/*.mock.ts",
         "**/*.spec.ts",
-        "**/*.worker.ts"
+        "**/*.worker.ts",
+        "jest.config.ts"
     ]
 }
