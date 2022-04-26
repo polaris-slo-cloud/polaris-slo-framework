@@ -4,7 +4,7 @@
 
 ### Dependency Updates
 
-* Upgrade [Nx libraries](https://nx.dev) to v13.10.3.
+* Upgrade [Nx libraries](https://nx.dev) to v14.0.3.
 * Upgrade [ts-json-schema-generator](https://github.com/vega/ts-json-schema-generator) to v1.0.0.
 
 
@@ -13,6 +13,7 @@
 * Ensure that the polaris-cli exists with an error code if an error occurs during execution.
 * Explicitly handle invalid composed metric values in the Prometheus `ComposedMetricsManager`.
 * Added missing `js-yaml` v4.1.0 as a dependency of `@polaris-sloc/schema-gen`.
+* Fix Docker build failure when not using BuildKit by upgrading to Nx v14.0.3 (see [details](https://github.com/nrwl/nx/issues/9451)).
 
 
 
