@@ -34,6 +34,8 @@ export function generateDockerfileCopyWorkspaceConfig(host: Tree): string {
     appendIfExists('angular.json');
     appendIfExists('decorate-angular-cli.js');
     appendIfExists('workspace.json');
+    appendIfExists('jest.config.ts');
+    appendIfExists('jest.preset.ts');
 
     return `COPY ${files} ./`
 }

@@ -21,7 +21,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/common-mappings/jest.config.js",
+            "jestConfig": "libs/common-mappings/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
@@ -73,7 +73,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/core/jest.config.js",
+            "jestConfig": "libs/core/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
@@ -122,7 +122,7 @@
             "coverage/libs/cost-efficiency"
           ],
           "options": {
-            "jestConfig": "libs/cost-efficiency/jest.config.js",
+            "jestConfig": "libs/cost-efficiency/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -203,7 +203,7 @@
             "coverage/apps/elasticity/horizontal-elasticity-strategy-controller"
           ],
           "options": {
-            "jestConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/jest.config.js",
+            "jestConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -269,7 +269,7 @@
             "coverage/apps/elasticity/vertical-elasticity-strategy-controller"
           ],
           "options": {
-            "jestConfig": "apps/elasticity/vertical-elasticity-strategy-controller/jest.config.js",
+            "jestConfig": "apps/elasticity/vertical-elasticity-strategy-controller/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -304,7 +304,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/kubernetes/jest.config.js",
+            "jestConfig": "libs/kubernetes/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
@@ -387,7 +387,7 @@
             "coverage/apps/metrics/predicted-cost-efficiency-controller"
           ],
           "options": {
-            "jestConfig": "apps/metrics/predicted-cost-efficiency-controller/jest.config.js",
+            "jestConfig": "apps/metrics/predicted-cost-efficiency-controller/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -468,7 +468,7 @@
             "coverage/apps/metrics/rest-api-cost-efficiency-controller"
           ],
           "options": {
-            "jestConfig": "apps/metrics/rest-api-cost-efficiency-controller/jest.config.js",
+            "jestConfig": "apps/metrics/rest-api-cost-efficiency-controller/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -534,7 +534,7 @@
             "coverage/apps/polaris-cli"
           ],
           "options": {
-            "jestConfig": "apps/polaris-cli/jest.config.js",
+            "jestConfig": "apps/polaris-cli/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -565,7 +565,7 @@
             "coverage/libs/polaris-nx"
           ],
           "options": {
-            "jestConfig": "libs/polaris-nx/jest.config.js",
+            "jestConfig": "libs/polaris-nx/jest.config.ts",
             "passWithNoTests": true
           }
         },
@@ -623,7 +623,7 @@
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "polaris-nx:build",
-            "jestConfig": "apps/polaris-nx-e2e/jest.config.js"
+            "jestConfig": "apps/polaris-nx-e2e/jest.config.ts"
           }
         }
       },
@@ -654,7 +654,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/prometheus/jest.config.js",
+            "jestConfig": "libs/prometheus/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
@@ -719,7 +719,7 @@
             "coverage/libs/schema-gen"
           ],
           "options": {
-            "jestConfig": "libs/schema-gen/jest.config.js",
+            "jestConfig": "libs/schema-gen/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -783,7 +783,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.js",
+            "jestConfig": "apps/slo/cost-efficiency-slo-controller/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
@@ -854,7 +854,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/slo/cpu-usage-slo-controller/jest.config.js",
+            "jestConfig": "apps/slo/cpu-usage-slo-controller/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
@@ -961,7 +961,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/ui/polaris-ui/jest.config.js",
+            "jestConfig": "apps/ui/polaris-ui/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": [
