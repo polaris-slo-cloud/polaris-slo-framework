@@ -1,6 +1,10 @@
 # Polaris SLO Cloud Changelog
 
-## v0.3.1 (not yet released)
+## v0.4.0 (not yet released)
+
+### Features
+
+* Allow configuring the computation interval of a composed metric controller through the `COMPOSED_METRIC_COMPUTATION_INTERVAL_MS` environment variable.
 
 ### Dependency Updates
 

@@ -57,6 +57,10 @@ spec:
             value: '3000' # If this is changed, the containerPort above needs to be changed accordingly as well.
           - name: PROMETHEUS_METRICS_ENDPOINT_PATH
             value: /metrics
+          # Composed Metric computation interval in milliseconds.
+          # When changing this, you might also want to change the scrape interval in 3-service-monitor.yaml.
+          - name: COMPOSED_METRIC_COMPUTATION_INTERVAL_MS
+            value: '20000'
           # Workaround for an issue with kubernetes-client when using IPv6 (https://github.com/kubernetes-client/javascript/issues/599)
           - name: KUBERNETES_SERVICE_HOST
             value: kubernetes.default.svc
