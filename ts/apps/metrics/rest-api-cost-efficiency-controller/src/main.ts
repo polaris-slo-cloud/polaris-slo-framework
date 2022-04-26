@@ -1,6 +1,6 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { CostEfficiencyMetric, CostEfficiencyMetricMapping, initPolarisLib as initCommonMappingsLib } from '@polaris-sloc/common-mappings';
-import { Logger, convertToNumber, getEnvironmentVariable } from '@polaris-sloc/core';
+import { COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS, Logger, convertToNumber, getEnvironmentVariable } from '@polaris-sloc/core';
 import { RestApiCostEfficiencyMetricSourceFactory, initCostEfficiencyMetrics } from '@polaris-sloc/cost-efficiency';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
@@ -33,7 +33,10 @@ promMetricsCollectorManager.start({ path: metricsEndpointPath, port: metricsEndp
 
 // Create a ComposedMetricsManager and watch the supported composed metric type kinds.
 const manager = polarisRuntime.createComposedMetricsManager();
+const intervalMsec = getEnvironmentVariable('COMPOSED_METRIC_COMPUTATION_INTERVAL_MS', convertToNumber) || COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS
+Logger.log(`Starting ComposedMetricsManager with a computation interval of ${intervalMsec} milliseconds.`);
 manager.startWatching({
+    evaluationIntervalMs: intervalMsec,
     collectorFactories: [ promMetricsCollectorManager ],
     kindsToWatch: [
         {
