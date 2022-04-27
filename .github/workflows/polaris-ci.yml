@@ -30,7 +30,6 @@ jobs:
         cache: 'npm'
         cache-dependency-path: ./ts/package-lock.json
     - run: npm ci
-      working-directory: ${{ env.working-dir }}
 
     # Build the Polaris components
     - run: npx nx build core
