@@ -8,13 +8,15 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+    
+defaults:
+  run:
+    working-directory: ./ts
 
 jobs:
   # Builds all Polaris components
   build:
     runs-on: ubuntu-latest
-    env:
-      working-dir: ./ts
     strategy:
       matrix:
         node-version: [14.x]
@@ -28,44 +30,26 @@ jobs:
         cache: 'npm'
         cache-dependency-path: ./ts/package-lock.json
     - run: npm ci
-      working-directory: ${{ env.working-dir }}
 
     # Build the Polaris components
     - run: npx nx build core
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build common-mappings
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build kubernetes
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build prometheus
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build cost-efficiency
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build schema-gen
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build polaris-nx
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build polaris-cli
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build elasticity-horizontal-elasticity-strategy-controller
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build elasticity-vertical-elasticity-strategy-controller
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build metrics-rest-api-cost-efficiency-controller
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build slo-cost-efficiency-slo-controller
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build slo-cpu-usage-slo-controller
-      working-directory: ${{ env.working-dir }}
     - run: npx nx build ui-polaris-ui
-      working-directory: ${{ env.working-dir }}
-
 
   # Runs the tests for all Polaris components
   test:
     runs-on: ubuntu-latest
-    env:
-      working-dir: ./ts
     strategy:
       matrix:
         node-version: [14.x]
@@ -79,57 +63,37 @@ jobs:
         cache: 'npm'
         cache-dependency-path: ./ts/package-lock.json
     - run: npm ci
-      working-directory: ${{ env.working-dir }}
 
     # Run the tests
     - run: npx nx run core:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run common-mappings:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run kubernetes:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run prometheus:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run cost-efficiency:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run schema-gen:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run polaris-nx:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run polaris-cli:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run elasticity-horizontal-elasticity-strategy-controller:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run elasticity-vertical-elasticity-strategy-controller:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run metrics-rest-api-cost-efficiency-controller:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run slo-cost-efficiency-slo-controller:test
-      working-directory: ${{ env.working-dir }}
     - run: npx nx run slo-cpu-usage-slo-controller:test
-      working-directory: ${{ env.working-dir }}
 
     # Check if schema generation and SloMapping Serialization execute
     - run: npm run gen-crds
-      working-directory: ${{ env.working-dir }}
     - run: npm run serialize-slo-mappings
-      working-directory: ${{ env.working-dir }}
 
     # Ensure that we can build the typedoc
     - run: npm run docs:build
-      working-directory: ${{ env.working-dir }}
 
     # Ensure that we have no circular dependencies
     - run: npm run ts-circular-dep-check
-      working-directory: ${{ env.working-dir }}
 
   # ToDo: Add Verdaccio to the job to allow executing e2e for an unpublished package version.
   # Currently this would fail, because npm would try to download the unpublished Polaris packages from the public npm registry.
   # # Runs the E2E tests
   # e2e:
   #   runs-on: ubuntu-latest
-  #   env:
-  #     working-dir: ./ts
   #   strategy:
   #     matrix:
   #       node-version: [14.x]
@@ -143,11 +107,8 @@ jobs:
   #       cache: 'npm'
   #       cache-dependency-path: ./ts/package-lock.json
   #   - run: npm ci
-  #     working-directory: ${{ env.working-dir }}
   #
   #   # Build required components
   #   - run: npx nx build polaris-nx
-  #     working-directory: ${{ env.working-dir }}
   #   # E2E tests
   #   - run: npx nx run polaris-nx-e2e:e2e
-  #     working-directory: ${{ env.working-dir }}
