@@ -1,5 +1,19 @@
 # Polaris SLO Cloud Changelog
 
+
+## v0.5.0 (not yet released)
+
+### Features
+
+
+### Dependency Updates
+
+* Upgrade [Nx libraries](https://nx.dev) to v14.4.0.
+
+### Bugfixes
+
+
+
 ## v0.4.0 (2022-04-26)
 
 ### Features
