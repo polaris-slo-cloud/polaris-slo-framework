@@ -8,7 +8,7 @@ import {
 import {Tree} from '@nrwl/devkit';
 import {SloMappingBase} from '@polaris-sloc/core';
 import {camelCase, snakeCase} from 'change-case';
-import {flushChanges} from 'nx/src/config/tree';
+import {flushChanges} from 'nx/src/generators/tree';
 import {DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG, createGenerator} from 'ts-json-schema-generator';
 import {getTempDir} from '.';
 
