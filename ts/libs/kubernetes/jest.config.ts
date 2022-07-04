@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-module.exports = {
+export default {
     globals: {
         'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
     },
@@ -13,5 +13,5 @@ module.exports = {
     coverageDirectory: '../../coverage/libs/kubernetes',
     displayName: 'kubernetes',
     testEnvironment: 'node',
-    preset: '../../jest.preset.ts',
+    preset: '../../jest.preset.js',
 };

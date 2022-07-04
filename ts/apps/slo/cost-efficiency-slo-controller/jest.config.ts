@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-module.exports = {
+export default {
     displayName: 'slo-cost-efficiency-slo-controller',
 
     globals: {
@@ -14,5 +14,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/slo/cost-efficiency-slo-controller',
     testEnvironment: 'node',
-    preset: '../../../jest.preset.ts',
+    preset: '../../../jest.preset.js',
 };
