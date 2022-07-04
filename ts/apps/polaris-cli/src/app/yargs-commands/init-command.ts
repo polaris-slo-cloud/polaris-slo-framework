@@ -53,7 +53,7 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
                 });
         },
         handler: args => {
-            const pkgMgr: PackageManager = args['packageManager'];
+            const pkgMgr: PackageManager = args['packageManager'] as any;
             const workspaceName: string = args['name'];
             const workspaceDir = `${cli.startupDir}/${workspaceName}`;
 
