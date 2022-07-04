@@ -1,7 +1,7 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
 import { Generator, Tree, generateFiles, joinPathFragments, offsetFromRoot } from '@nrwl/devkit';
-import { FsTree, flushChanges } from 'nx/src/config/tree';
+import { FsTree, flushChanges } from 'nx/src/generators/tree';
 import { SLO_MAPPINGS_DIR, getTempDir, getWorkspaceTsConfigPath } from '../../util';
 import { SerializeSloMappingGeneratorNormalizedSchema, SerializeSloMappingGeneratorSchema } from './schema';
 

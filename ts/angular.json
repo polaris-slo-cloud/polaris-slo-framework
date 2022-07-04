@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "common-mappings": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/common-mappings",
       "sourceRoot": "libs/common-mappings/src",
       "projectType": "library",
@@ -49,6 +50,7 @@
       ]
     },
     "core": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
       "projectType": "library",
@@ -101,6 +103,7 @@
       ]
     },
     "cost-efficiency": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/cost-efficiency",
       "sourceRoot": "libs/cost-efficiency/src",
       "projectType": "library",
@@ -148,6 +151,7 @@
       ]
     },
     "elasticity-horizontal-elasticity-strategy-controller": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/elasticity/horizontal-elasticity-strategy-controller",
       "sourceRoot": "apps/elasticity/horizontal-elasticity-strategy-controller/src",
       "projectType": "application",
@@ -214,6 +218,7 @@
       ]
     },
     "elasticity-vertical-elasticity-strategy-controller": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/elasticity/vertical-elasticity-strategy-controller",
       "sourceRoot": "apps/elasticity/vertical-elasticity-strategy-controller/src",
       "projectType": "application",
@@ -280,6 +285,7 @@
       ]
     },
     "kubernetes": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/kubernetes",
       "sourceRoot": "libs/kubernetes/src",
       "projectType": "library",
@@ -332,6 +338,7 @@
       ]
     },
     "metrics-predicted-cost-efficiency-controller": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/metrics/predicted-cost-efficiency-controller",
       "sourceRoot": "apps/metrics/predicted-cost-efficiency-controller/src",
       "projectType": "application",
@@ -392,7 +399,7 @@
           }
         },
         "docker-build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": [
               "docker build -f ./apps/metrics/predicted-cost-efficiency-controller/Dockerfile --build-arg POLARIS_APP_TYPE=metrics --build-arg POLARIS_APP_NAME=predicted-cost-efficiency-controller -t polarissloc/metrics-predicted-cost-efficiency-controller:latest ."
@@ -401,7 +408,7 @@
           }
         },
         "deploy": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
             "commands": [
               "kubectl apply -f ./apps/metrics/predicted-cost-efficiency-controller/manifests/kubernetes"
@@ -413,6 +420,7 @@
       "tags": []
     },
     "metrics-rest-api-cost-efficiency-controller": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/metrics/rest-api-cost-efficiency-controller",
       "sourceRoot": "apps/metrics/rest-api-cost-efficiency-controller/src",
       "projectType": "application",
@@ -478,6 +486,7 @@
       ]
     },
     "polaris-cli": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/polaris-cli",
       "sourceRoot": "apps/polaris-cli/src",
       "projectType": "application",
@@ -544,6 +553,7 @@
       ]
     },
     "polaris-nx": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/polaris-nx",
       "sourceRoot": "libs/polaris-nx/src",
       "projectType": "library",
@@ -615,6 +625,7 @@
       ]
     },
     "polaris-nx-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/polaris-nx-e2e",
       "sourceRoot": "apps/polaris-nx-e2e/src",
@@ -635,6 +646,7 @@
       ]
     },
     "prometheus": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/prometheus",
       "sourceRoot": "libs/prometheus/src",
       "projectType": "library",
@@ -683,6 +695,7 @@
       ]
     },
     "schema-gen": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/schema-gen",
       "sourceRoot": "libs/schema-gen/src",
       "projectType": "library",
@@ -729,6 +742,7 @@
       ]
     },
     "slo-cost-efficiency-slo-controller": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/slo/cost-efficiency-slo-controller",
       "sourceRoot": "apps/slo/cost-efficiency-slo-controller/src",
       "projectType": "application",
@@ -798,6 +812,7 @@
       ]
     },
     "slo-cpu-usage-slo-controller": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/slo/cpu-usage-slo-controller",
       "sourceRoot": "apps/slo/cpu-usage-slo-controller/src",
       "projectType": "application",
@@ -868,6 +883,7 @@
       ]
     },
     "ui-polaris-ui": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "schematics": {
         "@nrwl/angular:component": {
@@ -974,6 +990,7 @@
       ]
     },
     "ui-polaris-ui-e2e": {
+      "$schema": "../../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/ui/polaris-ui-e2e",
       "sourceRoot": "apps/ui/polaris-ui-e2e/src",
       "projectType": "application",

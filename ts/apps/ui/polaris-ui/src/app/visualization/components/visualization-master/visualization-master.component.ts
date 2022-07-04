@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable, of as observableOf } from 'rxjs';
 
 import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { PanelIdentifier } from '../../../shared';
 })
 export class VisualizationMasterComponent implements OnInit {
 
-    panelForm: FormGroup;
+    panelForm: UntypedFormGroup;
     selectedDashboard$: Observable<DashboardDTO>;
 
     constructor(
@@ -27,9 +27,9 @@ export class VisualizationMasterComponent implements OnInit {
     }
 
     private initForm(): void {
-        this.panelForm = new FormGroup({
-            dashboardUid: new FormControl(null, Validators.required),
-            panelId: new FormControl(null, Validators.required),
+        this.panelForm = new UntypedFormGroup({
+            dashboardUid: new UntypedFormControl(null, Validators.required),
+            panelId: new UntypedFormControl(null, Validators.required),
         });
 
         this.selectedDashboard$ = this.panelForm.valueChanges.pipe(

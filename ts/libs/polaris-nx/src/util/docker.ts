@@ -35,7 +35,7 @@ export function generateDockerfileCopyWorkspaceConfig(host: Tree): string {
     appendIfExists('decorate-angular-cli.js');
     appendIfExists('workspace.json');
     appendIfExists('jest.config.ts');
-    appendIfExists('jest.preset.ts');
+    appendIfExists('jest.preset.js');
 
     return `COPY ${files} ./`
 }
@@ -58,7 +58,7 @@ export function generateDockerfilePackageInstallCmd(host: Tree): string {
  */
 export function addDockerBuildConfig(projectConfig: ProjectConfig, options: NormalizedProjectGeneratorSchema): void {
     projectConfig.targets['docker-build'] = {
-        executor: '@nrwl/workspace:run-commands',
+        executor: 'nx:run-commands',
         options: {
             commands: [
                 // eslint-disable-next-line max-len

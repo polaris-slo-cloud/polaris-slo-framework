@@ -25,7 +25,7 @@ export function changeBuildDependencyBundling(projectConfig: ProjectConfig): voi
  */
 export function addDeployTarget(projectConfig: ProjectConfig, options: NormalizedProjectGeneratorSchema): void {
     projectConfig.targets['deploy'] = {
-        executor: '@nrwl/workspace:run-commands',
+        executor: 'nx:run-commands',
         options: {
             commands: [
                 // Allows specifying the destination context, but if user does not specify the destination, its string value is 'undefined'
@@ -68,6 +68,8 @@ export async function createLibProject(host: Tree, options: LibProjectOptions): 
             name: options.projectName,
             publishable: true,
             importPath: options.importPath,
+            buildable: true,
+            config: 'project',
         },
     );
 

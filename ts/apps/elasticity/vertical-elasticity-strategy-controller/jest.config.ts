@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-module.exports = {
+export default {
     displayName: 'elasticity-vertical-elasticity-strategy-controller',
 
     globals: {
@@ -16,5 +16,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/elasticity/vertical-elasticity-strategy-controller',
     testEnvironment: 'node',
-    preset: '../../../jest.preset.ts',
+    preset: '../../../jest.preset.js',
 };

@@ -9,7 +9,7 @@ ENV POLARIS_APP_NAME ${POLARIS_APP_NAME}
 
 # Copy package.json and similar files and download dependencies.
 # Copying only package.json files here allows us to cache the downloaded dependencies as a layer.
-COPY angular.json decorate-angular-cli.js jest.config.ts jest.preset.ts nx.json package.json package-lock.json tsconfig.base.json ./
+COPY angular.json decorate-angular-cli.js jest.config.ts jest.preset.js nx.json package.json package-lock.json tsconfig.base.json ./
 COPY ./tools ./tools
 RUN npm ci --unsafe-perm
 
