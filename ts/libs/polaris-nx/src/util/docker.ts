@@ -58,7 +58,7 @@ export function generateDockerfilePackageInstallCmd(host: Tree): string {
  */
 export function addDockerBuildConfig(projectConfig: ProjectConfig, options: NormalizedProjectGeneratorSchema): void {
     projectConfig.targets['docker-build'] = {
-        executor: '@nrwl/workspace:run-commands',
+        executor: 'nx:run-commands',
         options: {
             commands: [
                 // eslint-disable-next-line max-len

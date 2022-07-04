@@ -51,7 +51,7 @@ const generateComposedMetricController: Generator<PredictedMetricControllerGener
     changeBuildDependencyBundling(projectConfig);
     addDockerBuildConfig(projectConfig, normalizedOptions);
     projectConfig.targets['docker-build'] = {
-        executor: '@nrwl/workspace:run-commands',
+        executor: 'nx:run-commands',
         options: {
             commands: [
                 // eslint-disable-next-line max-len
