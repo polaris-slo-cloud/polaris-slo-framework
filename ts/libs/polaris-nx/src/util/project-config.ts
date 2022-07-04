@@ -68,6 +68,8 @@ export async function createLibProject(host: Tree, options: LibProjectOptions): 
             name: options.projectName,
             publishable: true,
             importPath: options.importPath,
+            buildable: true,
+            config: 'project',
         },
     );
 

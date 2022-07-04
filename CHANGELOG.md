@@ -12,6 +12,8 @@
 
 ### Bugfixes
 
+* Make generated library projects buildable.
+
 
 
 ## v0.4.0 (2022-04-26)
