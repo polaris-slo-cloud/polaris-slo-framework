@@ -1,10 +1,7 @@
 # Polaris SLO Cloud Changelog
 
 
-## v0.5.0 (not yet released)
-
-### Features
-
+## v0.4.1 (2022-07-11)
 
 ### Dependency Updates
 
