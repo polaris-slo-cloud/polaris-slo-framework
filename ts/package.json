@@ -32,7 +32,10 @@
     "update": "nx migrate latest",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "workspace-generator": "nx workspace-generator"
+    "workspace-generator": "nx workspace-generator",
+    "local-registry:enable": "npm set registry http://localhost:4873/ --location project",
+    "local-registry:start": "verdaccio",
+    "local-registry:disable": "npm config delete registry --location project"
   },
   "husky": {
     "hooks": {
@@ -115,7 +118,8 @@
     "ts-node": "10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typedoc": "~0.25.0",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "verdaccio": "^5.26.2"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.7",
