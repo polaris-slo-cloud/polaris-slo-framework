@@ -1,6 +1,14 @@
 # Polaris SLO Cloud Changelog
 
 
+## v0.5.0 (not released yet)
+
+### Features
+
+* Local npm registry using [Verdaccio](https://verdaccio.org/)
+
+
+
 ## v0.4.1 (2022-07-11)
 
 ### Dependency Updates
