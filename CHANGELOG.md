@@ -1,5 +1,13 @@
 # Polaris SLO Framework Changelog
 
+## v0.8.0 (not released yet)
+
+### Features
+
+* Local npm registry using [Verdaccio](https://verdaccio.org/)
+
+
+
 ## v0.7.0 (2023-11-03)
 
 ### Features
