@@ -5,6 +5,7 @@
 ### Features
 
 * Local npm registry using [Verdaccio](https://verdaccio.org/)
+* Run e2e tests in GithubActions
 
 
 
