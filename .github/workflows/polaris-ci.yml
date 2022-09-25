@@ -8,7 +8,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    
+
 defaults:
   run:
     working-directory: ./ts
@@ -89,26 +89,24 @@ jobs:
     # Ensure that we have no circular dependencies
     - run: npm run ts-circular-dep-check
 
-  # ToDo: Add Verdaccio to the job to allow executing e2e for an unpublished package version.
-  # Currently this would fail, because npm would try to download the unpublished Polaris packages from the public npm registry.
-  # # Runs the E2E tests
-  # e2e:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [14.x]
-  #   steps:
-  #   # Checkout and install dependencies.
-  #   - uses: actions/checkout@v2
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #       cache-dependency-path: ./ts/package-lock.json
-  #   - run: npm ci
-  #
-  #   # Build required components
-  #   - run: npx nx build polaris-nx
-  #   # E2E tests
-  #   - run: npx nx run polaris-nx-e2e:e2e
+  # Runs the E2E tests
+  e2e:
+     runs-on: ubuntu-latest
+     strategy:
+       matrix:
+         node-version: [14.x]
+     steps:
+     # Checkout and install dependencies.
+     - uses: actions/checkout@v2
+     - name: Use Node.js ${{ matrix.node-version }}
+       uses: actions/setup-node@v2
+       with:
+         node-version: ${{ matrix.node-version }}
+         cache: 'npm'
+         cache-dependency-path: ./ts/package-lock.json
+     - run: npm ci
+
+     # Build required components
+     - run: npx nx build polaris-nx
+     # E2E tests
+     - run: npx nx run polaris-nx-e2e:e2e
