@@ -1,4 +1,3 @@
-
 import { Tree, joinPathFragments, readJson, readProjectConfiguration, writeJson } from '@nrwl/devkit';
 import { PolarisCliError } from './errors';
 import { joinPathFragmentsAndNormalize } from './fs';
@@ -20,7 +19,6 @@ const POLARIS_CLI_CONFIG_FILE = './polaris.json';
  * Provides access to and manages the Polaris CLI configuration file.
  */
 export class PolarisCliConfig {
-
     /**
      * The config data of this project.
      *
@@ -82,7 +80,7 @@ export class PolarisCliConfig {
     getAndValidateProject(name: string, type: PolarisCliProjectType): PolarisCliProject {
         const project = this.getProject(name);
         if (!project) {
-            throw new PolarisCliError(`Project ${name} does not exist in ${POLARIS_CLI_CONFIG_FILE}`)
+            throw new PolarisCliError(`Project ${name} does not exist in ${POLARIS_CLI_CONFIG_FILE}`);
         }
         if (project.projectType !== type) {
             throw new PolarisCliError(`Project ${name} is not of type ${type}, but is a ${project.projectType} instead.`, project);
@@ -158,5 +156,4 @@ export class PolarisCliConfig {
 
         return controller;
     }
-
 }

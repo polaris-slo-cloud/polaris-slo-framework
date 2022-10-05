@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/naming-convention */
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { PolarisCli } from './polaris-cli';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
 import {
+    configCommand,
     createBuildCommand,
     createDeployCommand,
     createDockerBuildCommand,
@@ -14,7 +16,6 @@ import {
 } from './yargs-commands';
 
 export class PolarisCliImpl implements PolarisCli {
-
     readonly startupDir: string;
     readonly workspaceRootDir: string;
 
@@ -41,9 +42,9 @@ export class PolarisCliImpl implements PolarisCli {
             .command(createDockerBuildCommand(this))
             .command(createDeployCommand(this))
             .command(createGenerateCrdCommand(this))
+            .command(configCommand(this))
             .help()
             .recommendCommands()
             .parseSync();
     }
-
 }
