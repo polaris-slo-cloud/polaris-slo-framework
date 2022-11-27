@@ -26,3 +26,15 @@ export const NPM_PACKAGES = {
         cli: `${POLARIS_NPM_ORG}/cli`,
     },
 };
+
+/** Full names of @polaris-sloc packages */
+export const POLARIS_PKGS = [
+    '@polaris-sloc/core',
+    '@polaris-sloc/common-mappings',
+    '@polaris-sloc/kubernetes',
+    '@polaris-sloc/prometheus',
+    '@polaris-sloc/cost-efficiency',
+    '@polaris-sloc/schema-gen',
+    '@polaris-sloc/polaris-nx',
+    '@polaris-sloc/cli',
+];

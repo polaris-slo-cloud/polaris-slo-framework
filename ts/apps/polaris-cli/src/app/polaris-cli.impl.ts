@@ -5,13 +5,14 @@ import { hideBin } from 'yargs/helpers';
 import { PolarisCli } from './polaris-cli';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
 import {
-    configCommand,
     createBuildCommand,
+    createConfigCommand,
     createDeployCommand,
     createDockerBuildCommand,
     createGenerateCommand,
     createGenerateCrdCommand,
     createInitCommand,
+    createMigrateCommand,
     createSerializeSloMappingCommand,
 } from './yargs-commands';
 
@@ -42,7 +43,8 @@ export class PolarisCliImpl implements PolarisCli {
             .command(createDockerBuildCommand(this))
             .command(createDeployCommand(this))
             .command(createGenerateCrdCommand(this))
-            .command(configCommand(this))
+            .command(createConfigCommand(this))
+            .command(createMigrateCommand(this))
             .help()
             .recommendCommands()
             .parseSync();
