@@ -1,5 +1,8 @@
 # Polaris SLO Cloud Changelog
 
+## v0.5.0 (unreleased)
+
+* Add histogram quantile support to core/raw-metrics-query and the prometheus adapter
 
 ## v0.4.1 (2022-07-11)
 

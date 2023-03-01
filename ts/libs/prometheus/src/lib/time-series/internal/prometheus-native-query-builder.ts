@@ -8,6 +8,7 @@ import {
     Duration,
     FilterOnLabelQueryContent,
     FunctionQueryContent,
+    HistogramQuantileQueryContent,
     JoinConfig,
     JoinGrouping,
     LabelComparisonOperator,
@@ -55,6 +56,7 @@ const BINARY_OPS_MAP: Record<BinaryOperator, string> = {
 const FUNCTIONS_MAP: Record<DBFunctionName, string> = {
     rate: 'rate',
     averageOverTime: 'avg_over_time',
+    histogramQuantile: 'histogram_quantile'
 };
 
 export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
@@ -102,6 +104,9 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
                     break;
                 case QueryContentType.Function:
                     query = this.buildFunctionCall(segment as FunctionQueryContent, query);
+                    break;
+                case QueryContentType.HistogramQuantile:
+                    query = this.buildHistogramQuantile(segment as HistogramQuantileQueryContent, query);
                     break;
                 default:
                     break;
@@ -191,6 +196,20 @@ export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
         const params = this.serializeFunctionParams(queryContent.params);
 
         return `${nativeFn}(${params}${innerQuery})`;
+    }
+
+    private buildHistogramQuantile(queryContent: HistogramQuantileQueryContent, innerQuery: string): string {
+        const nativeFn = FUNCTIONS_MAP[queryContent.functionName];
+        if (!nativeFn) {
+            throw new QueryError(`Unknown DB function '${queryContent.functionName}'`);
+        }
+        const quantile = queryContent.quantile
+        if (quantile > 100 || quantile < 0) {
+            throw new QueryError(`Bad quantile percentage value: '${queryContent.quantile}', min-max value is 0-100`);
+        }
+
+        const q = quantile/100
+        return `${nativeFn}(${q},${innerQuery})`;
     }
 
     private serializeTimeRange(range: TimeRange): string {

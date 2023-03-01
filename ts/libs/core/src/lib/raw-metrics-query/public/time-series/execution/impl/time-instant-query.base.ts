@@ -15,6 +15,7 @@ import {
     FilterOnValueQueryContent,
     QueryContentType,
     createQueryContent,
+    HistogramQuantileQueryContent,
 } from '../query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
@@ -146,6 +147,15 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
             contentType: QueryContentType.FilterOnValue,
             filter: predicate,
         };
+        return this.createTimeInstantQuery(queryContent);
+    }
+
+    histogramQuantile(quantile: number): TimeInstantQuery<T> {
+        const queryContent: HistogramQuantileQueryContent = {
+            contentType: QueryContentType.HistogramQuantile,
+            quantile,
+            functionName: 'histogramQuantile'
+        }
         return this.createTimeInstantQuery(queryContent);
     }
 
