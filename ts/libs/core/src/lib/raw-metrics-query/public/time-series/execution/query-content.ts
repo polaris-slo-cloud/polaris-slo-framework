@@ -43,6 +43,10 @@ export enum QueryContentType {
      */
     Function = 'functionQuery',
 
+    /**
+     * Calculates the quantile of a histogram.
+     */
+    HistogramQuantile = 'histogramQuantileQuery',
 }
 
 /**
@@ -170,6 +174,17 @@ export interface AggregateByGroupQueryContent extends QueryContent {
 
 }
 
+export interface HistogramQuantileQueryContent extends QueryContent {
+
+    contentType: QueryContentType.HistogramQuantile;
+
+    /**
+     * The quantile to calculate. This must be a value between 0 and 100.
+     */
+    quantile: number;
+
+    functionName: DBFunctionName;
+}
 
 /**
  * Maps the QueryContentTypes to their respective interfaces.
@@ -181,8 +196,9 @@ export interface QueryContentTypeMapping {
     binaryOperationQuery: BinaryOperationQueryContent;
     binaryOperationWithConstOperandQuery: BinaryOperationWithConstOperandQueryContent;
     changeResolutionQuery: ChangeResolutionQueryContent;
-    functionQuery: FunctionQueryContent
+    functionQuery: FunctionQueryContent;
     aggregateByGroupQuery: AggregateByGroupQueryContent;
+    histogramQuantileQuery: HistogramQuantileQueryContent;
 }
 
 /**

@@ -199,6 +199,13 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
      */
     maxByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
 
+    /**
+     * Calculates the `quantile` from a histgoram.
+     *
+     * @param quantile The quantile to calculate. Must be between 0 and 100.
+     * @returns A `TimeInstantQuery` with the quantile value from the histogram.
+     */
+    histogramQuantile(quantile: number): TimeInstantQuery<T>
 }
 
 /**
