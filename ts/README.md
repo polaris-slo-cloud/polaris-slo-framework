@@ -88,6 +88,14 @@ npm run gen-crds
 ```
 
 
+### Serializing the Example SLO Mapping
+
+To serialize the [SLO mappings](./slo-mappings), execute the following command:
+```sh
+npm run serialize-slo-mappings
+```
+
+
 ### Publishing npm Packages
 
 To build and publish all npm packages with their currently configured versions, use the [`build-and-publish-npm-packages.sh`](./build-and-publish-npm-packages.sh) script.
