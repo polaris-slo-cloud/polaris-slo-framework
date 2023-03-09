@@ -2,7 +2,15 @@
 
 ## v0.5.0 (unreleased)
 
+### Features
+
 * Add histogram quantile support to core/raw-metrics-query and the prometheus adapter
+
+### Bugfixes
+
+* Lock `@openapi-contrib/json-schema-to-openapi-schema` to v2.1.1 and `ts-json-schema-generator` to v1.0.0 to avoid issues in YAML generation.
+
+
 
 ## v0.4.1 (2022-07-11)
 
