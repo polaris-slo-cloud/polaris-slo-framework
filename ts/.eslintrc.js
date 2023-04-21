@@ -28,7 +28,7 @@ module.exports = {
                     "tsconfig.*?.json"
                 ],
                 "sourceType": "module",
-                "ecmaVersion": 2018,
+                "ecmaVersion": 2020,
             },
             "rules": {
                 "@angular-eslint/component-class-suffix": "error",
@@ -161,7 +161,6 @@ module.exports = {
 
                             "public-abstract-field",
                             "protected-abstract-field",
-                            "private-abstract-field",
 
                             // We don't require that decorated fields are placed in a particular order in respect to other instance fields.
                             // "public-decorated-field",
@@ -198,7 +197,6 @@ module.exports = {
 
                             "public-abstract-method",
                             "protected-abstract-method",
-                            "private-abstract-method",
 
                             "public-decorated-method",
                             "protected-decorated-method",
@@ -346,7 +344,6 @@ module.exports = {
                     }
                 ],
                 "jsdoc/check-alignment": "error",
-                "jsdoc/newline-after-description": "error",
                 "jsdoc/no-types": "error",
                 "linebreak-style": [
                     "error",

@@ -157,7 +157,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/webpack:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -168,7 +168,9 @@
             "externalDependencies": "none",
             "assets": [
               "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
-            ]
+            ],
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {
@@ -224,7 +226,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/webpack:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -235,7 +237,9 @@
             "externalDependencies": "none",
             "assets": [
               "apps/elasticity/vertical-elasticity-strategy-controller/src/assets"
-            ]
+            ],
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {
@@ -344,7 +348,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/webpack:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -355,7 +359,9 @@
             "assets": [
               "apps/metrics/predicted-cost-efficiency-controller/src/assets"
             ],
-            "externalDependencies": "none"
+            "externalDependencies": "none",
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {
@@ -426,7 +432,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/webpack:webpack",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -437,7 +443,9 @@
             "externalDependencies": "none",
             "assets": [
               "apps/metrics/rest-api-cost-efficiency-controller/src/assets"
-            ]
+            ],
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {
@@ -750,7 +758,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/webpack:webpack",
           "options": {
             "outputPath": "dist/apps/slo/cost-efficiency-slo-controller",
             "main": "apps/slo/cost-efficiency-slo-controller/src/main.ts",
@@ -758,7 +766,9 @@
             "externalDependencies": "none",
             "assets": [
               "apps/slo/cost-efficiency-slo-controller/src/assets"
-            ]
+            ],
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {
@@ -820,7 +830,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nrwl/webpack:webpack",
           "options": {
             "outputPath": "dist/apps/slo/cpu-usage-slo-controller",
             "main": "apps/slo/cpu-usage-slo-controller/src/main.ts",
@@ -828,7 +838,9 @@
             "externalDependencies": "none",
             "assets": [
               "apps/slo/cpu-usage-slo-controller/src/assets"
-            ]
+            ],
+            "target": "node",
+            "compiler": "tsc"
           },
           "configurations": {
             "production": {

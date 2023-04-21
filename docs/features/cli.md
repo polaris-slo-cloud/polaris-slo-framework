@@ -3,7 +3,7 @@
 The Polaris CLI is implemented as a plugin for the [Nx CLI](https://nx.dev), which is exposed through a Polaris-specific wrapper application.
 It has the following prerequisites:
 
-* Node.JS v14.x+
+* Node.JS v18.x+
 * Linux, [Windows Subsystem for Linux (WSL) 2](https://docs.microsoft.com/en-us/windows/wsl/install), or MacOS
 
 To install the Polaris CLI execute the following command:

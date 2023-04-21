@@ -9,6 +9,7 @@ The TypeScript subprojects are managed using the [Nx](https://nx.dev) monorepo t
 
 To set up a development environment:
 
+1. Ensure that you have Node.js v18 or higher installed.
 1. Run `npm install` in the `ts` folder of the Polaris repository.
 1. If you want to test components locally, set the Kubernetes cluster, where you want to test the controller, as the current context in your KUBECONFIG file.
 
