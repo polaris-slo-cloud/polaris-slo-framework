@@ -1,5 +1,17 @@
 # Polaris SLO Cloud Changelog
 
+## v0.6.0 (not yet released)
+
+### Breaking Changes
+
+* Upgrade to Node.js v18 - this is the minimum required version from now on.
+* Change target JavaScript version to ES2020 (TypeScript tsconfig `target` property).
+
+### Dependency Updates
+
+* Upgrade [Nx libraries](https://nx.dev) to v14.8.8.
+
+
 ## v0.5.0 (2023-03-09)
 
 ### Features
