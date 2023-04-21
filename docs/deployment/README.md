@@ -5,7 +5,7 @@
 
 To build the components of the Polaris project for local development or testing, you need to have the following tools installed:
 
-* Node.JS v14.x+
+* Node.JS v18.x+
 * Docker 20.10+
 * kubectl
 
