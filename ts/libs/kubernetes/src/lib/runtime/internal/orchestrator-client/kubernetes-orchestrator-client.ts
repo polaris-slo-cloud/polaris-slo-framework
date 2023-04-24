@@ -10,6 +10,7 @@ import {
     PolarisTransformationService,
     Scale,
 } from '@polaris-sloc/core';
+import { KubernetesObjectHeader } from '../../../model';
 import { KubernetesScaleApi } from '../kubernetes-scale-api/kubernetes-scale-api';
 import { convertKubernetesErrorToPolaris } from './error-converter';
 
@@ -48,8 +49,16 @@ export class KubernetesOrchestratorClient implements OrchestratorClient {
     read<T extends ApiObject<any>>(query: T): Promise<T> {
         return this.execRequestSafely(async () => {
             const k8sObj = this.transformer.transformToOrchestratorPlainObject(query) as KubernetesObject;
+            const k8sObjHeader: KubernetesObjectHeader<KubernetesObject> = {
+                apiVersion: k8sObj.apiVersion,
+                kind: k8sObj.kind,
+                metadata: {
+                    namespace: k8sObj.metadata.namespace,
+                    name: k8sObj.metadata.name,
+                },
+            };
             const polarisType = this.getPolarisType(query);
-            const response = await this.k8sClient.read(k8sObj);
+            const response = await this.k8sClient.read(k8sObjHeader);
             return this.transformer.transformToPolarisObject(polarisType, response.body);
         });
     }
