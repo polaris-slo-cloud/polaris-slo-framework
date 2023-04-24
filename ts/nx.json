@@ -27,7 +27,6 @@
       }
     }
   },
-  "defaultProject": "ui-polaris-ui",
   "generators": {
     "@nrwl/angular:application": {
       "unitTestRunner": "jest",

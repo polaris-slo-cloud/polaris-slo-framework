@@ -43,7 +43,6 @@ The [`apps`](./apps) folder contains the following application projects:
 | [`polaris-nx-e2e`](./apps/polaris-nx-e2e) | End-to-End tests for the polaris-nx plugin for the Nx CLI. |
 | [`slo-cost-efficiency-slo-controller`](./apps/slo/cost-efficiency-slo-controller) | Controller for the cost efficiency SLO. |
 | [`slo-cpu-usage-slo-controller`](./apps/slo/cpu-usage-slo-controller) | Controller for the CPU usage SLO. |
-| [`ui-polaris-ui`](./apps/ui/polaris-ui) | Angular UI for Polaris. |
 
 
 
