@@ -1,0 +1,77 @@
+{
+    "name": "polaris-cli",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/polaris-cli/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/apps/polaris-cli",
+                "main": "apps/polaris-cli/src/main.ts",
+                "tsConfig": "apps/polaris-cli/tsconfig.app.json",
+                "assets": [
+                    "apps/polaris-cli/*.md",
+                    "apps/polaris-cli/src/assets"
+                ]
+            },
+            "configurations": {
+                "development": {},
+                "production": {
+                    "generateLockfile": true
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "polaris-cli:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "polaris-cli:build:development"
+                },
+                "production": {
+                    "buildTarget": "polaris-cli:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "apps/polaris-cli/**/*.ts"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+                "jestConfig": "apps/polaris-cli/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": [
+        "cli"
+    ]
+}

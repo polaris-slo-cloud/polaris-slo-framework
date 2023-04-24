@@ -1,21 +1,11 @@
 /* eslint-disable */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 export default {
     displayName: 'polaris-cli',
-
-    globals: {
-        'ts-jest': {
-            tsconfig: '<rootDir>/tsconfig.spec.json',
-        },
-    },
+    preset: '../../jest.preset.js',
+    testEnvironment: 'node',
     transform: {
-        '^.+\\.[tj]s$': 'ts-jest',
+        '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/apps/polaris-cli',
-    testEnvironment: 'node',
-    preset: '../../jest.preset.js',
 };
