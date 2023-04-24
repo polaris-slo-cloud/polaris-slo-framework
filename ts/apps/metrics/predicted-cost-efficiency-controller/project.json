@@ -16,6 +16,7 @@
                 "outputPath": "dist/apps/metrics/predicted-cost-efficiency-controller",
                 "main": "apps/metrics/predicted-cost-efficiency-controller/src/main.ts",
                 "tsConfig": "apps/metrics/predicted-cost-efficiency-controller/tsconfig.app.json",
+                "externalDependencies": "none",
                 "assets": [
                     "apps/metrics/predicted-cost-efficiency-controller/src/assets"
                 ],
