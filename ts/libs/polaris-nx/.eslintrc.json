@@ -1,38 +1,25 @@
 {
-    "extends": [
-        "../../.eslintrc.js"
-    ],
-    "ignorePatterns": [
-        "!**/*"
-    ],
+    "extends": ["../../.eslintrc.js"],
+    "ignorePatterns": ["!**/*"],
     "overrides": [
         {
-            "files": [
-                "*.ts",
-                "*.tsx",
-                "*.js",
-                "*.jsx"
-            ],
-            "parserOptions": {
-                "project": [
-                    "libs/polaris-nx/tsconfig.*?.json"
-                ]
-            },
+            "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
             "rules": {}
         },
         {
-            "files": [
-                "*.ts",
-                "*.tsx"
-            ],
+            "files": ["*.ts", "*.tsx"],
             "rules": {}
         },
         {
-            "files": [
-                "*.js",
-                "*.jsx"
-            ],
+            "files": ["*.js", "*.jsx"],
             "rules": {}
+        },
+        {
+            "files": ["./package.json", "./generators.json", "./executors.json"],
+            "parser": "jsonc-eslint-parser",
+            "rules": {
+            "@nrwl/nx/nx-plugin-checks": "error"
+            }
         }
     ]
 }

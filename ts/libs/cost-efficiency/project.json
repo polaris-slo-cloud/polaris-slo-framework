@@ -1,0 +1,54 @@
+{
+    "name": "cost-efficiency",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/cost-efficiency/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/libs/cost-efficiency",
+                "tsConfig": "libs/cost-efficiency/tsconfig.lib.json",
+                "packageJson": "libs/cost-efficiency/package.json",
+                "main": "libs/cost-efficiency/src/index.ts",
+                "assets": [
+                    "libs/cost-efficiency/*.md"
+                ]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "libs/cost-efficiency/**/*.ts"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+                "jestConfig": "libs/cost-efficiency/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": [
+        "scope:core",
+        "scope:metric"
+    ]
+}

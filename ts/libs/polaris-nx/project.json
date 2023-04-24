@@ -1,0 +1,76 @@
+{
+    "name": "polaris-nx",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/polaris-nx/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/libs/polaris-nx",
+                "main": "libs/polaris-nx/src/index.ts",
+                "tsConfig": "libs/polaris-nx/tsconfig.lib.json",
+                "packageJson": "libs/polaris-nx/package.json",
+                "assets": [
+                    "libs/polaris-nx/*.md",
+                    {
+                        "input": "./libs/polaris-nx/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/polaris-nx/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/polaris-nx",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./libs/polaris-nx",
+                        "glob": "executors.json",
+                        "output": "."
+                    }
+                ]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "libs/polaris-nx/**/*.ts",
+                    "libs/polaris-nx/generators.json",
+                    "libs/polaris-nx/executors.json",
+                    "libs/polaris-nx/package.json"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+                "jestConfig": "libs/polaris-nx/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": [
+        "scope:cli"
+    ]
+}
