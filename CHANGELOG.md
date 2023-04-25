@@ -17,7 +17,7 @@
     # Upgrade to v15.9.2
     npx nx migrate 15.9.2
 
-    # Before continuing the Nx upgrade, open your package.json file and set all Polaris package versions to "~0.6.0-beta.2".
+    # Before continuing the Nx upgrade, open your package.json file and set all Polaris package versions to "~0.6.0".
 
     # Continue the Nx upgrade.
     npm install
