@@ -10,13 +10,15 @@ export class DefaultElasticityStrategyService implements ElasticityStrategyServi
     }
 
     fromSloOutput<T>(name: string, sloOutput: SloOutput<T>): ElasticityStrategy<T> {
+        const elasticityStrategyKind = sloOutput.elasticityStrategy ?? sloOutput.sloMapping.spec.elasticityStrategy;
         const elasticityStrategyCtor: PolarisConstructor<ElasticityStrategy<T>> =
-            this.transformationService.getPolarisType(sloOutput.sloMapping.spec.elasticityStrategy) ?? ElasticityStrategy;
+            this.transformationService.getPolarisType(elasticityStrategyKind) ?? ElasticityStrategy;
         const specCtor: PolarisConstructor<ElasticityStrategySpec<T>> =
             this.transformationService.getPropertyType(elasticityStrategyCtor, 'spec') ?? ElasticityStrategySpec;
+        const staticElasticityStrategyConfig = sloOutput.staticElasticityStrategyConfig ?? sloOutput.sloMapping.spec.staticElasticityStrategyConfig;
 
         return new elasticityStrategyCtor({
-            objectKind: new ElasticityStrategyKind(sloOutput.sloMapping.spec.elasticityStrategy),
+            objectKind: new ElasticityStrategyKind(elasticityStrategyKind),
             metadata: new ApiObjectMetadata({
                 name,
                 namespace: sloOutput.sloMapping.metadata.namespace,
@@ -33,7 +35,7 @@ export class DefaultElasticityStrategyService implements ElasticityStrategyServi
                 targetRef: sloOutput.sloMapping.spec.targetRef,
                 sloOutputParams: sloOutput.elasticityStrategyParams,
                 stabilizationWindow: sloOutput.sloMapping.spec.stabilizationWindow,
-                staticConfig: sloOutput.sloMapping.spec.staticElasticityStrategyConfig,
+                staticConfig: staticElasticityStrategyConfig,
             }),
         });
     }

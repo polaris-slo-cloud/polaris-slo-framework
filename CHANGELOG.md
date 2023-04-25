@@ -8,6 +8,10 @@
 * Change target JavaScript version to ES2020 (TypeScript tsconfig `target` property).
 * Remove deprecated polaris-ui project - this will soon be replaced with another UI project.
 
+### Features
+
+* Allow SLOs to trigger alternative elasticity strategies by setting the optional `SloOutput.elasticityStrategy` and `SloOutput.staticElasticityStrategyConfig` properties.
+
 ### Dependency Updates
 
 * Upgrade [Nx libraries](https://nx.dev) to v15.9.2.

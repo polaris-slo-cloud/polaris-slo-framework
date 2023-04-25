@@ -11,7 +11,7 @@ export interface SloEvaluator {
     /**
      * Executes the specified SLO and applies its output to the orchestrator.
      *
-     * If this returns an observalbe, it is possible to cancel the evaluation of the SLO
+     * If this returns an observable, it is possible to cancel the evaluation of the SLO
      * by unsubscribing from the observable (e.g., after a timeout).
      *
      * @param key The key used to identify the SLO.
