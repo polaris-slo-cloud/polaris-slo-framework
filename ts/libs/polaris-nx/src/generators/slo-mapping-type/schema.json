@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/schema",
     "cli": "nx",
     "id": "SloMappingType",
-    "title": "Create an SLO Mapping type for use with Polaris SLO Cloud",
+    "title": "Create an SLO Mapping type for use with Polaris SLO Framework",
     "type": "object",
     "properties": {
         "name": {

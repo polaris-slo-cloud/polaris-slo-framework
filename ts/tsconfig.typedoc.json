@@ -9,7 +9,7 @@
         "**/*.po.ts"
     ],
     "typedocOptions": {
-        "name": "Polaris SLO Cloud",
+        "name": "Polaris SLO Framework",
         "includeVersion": true,
         "readme": "none",
         "excludePrivate": true,

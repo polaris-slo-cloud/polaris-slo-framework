@@ -1,6 +1,6 @@
-# Polaris SLO Cloud
+# Polaris SLO Framework
 
-The Polaris SLO Cloud project aims to provide Service Level Objectives (SLOs) for next generation Cloud computing.
+The Polaris SLO Framework project aims to provide Service Level Objectives (SLOs) for the Edge-Cloud continuum.
 
 Service Level Agreements (SLAs) are very common in cloud computing.
 Each SLA consists of one or more Service Level Objectives, which are measurable capacity guarantees.
@@ -174,4 +174,4 @@ git push origin
 
 ## Our Users
 
-The Polaris SLO Cloud project is actively used by the [orchestration layer](https://gitlab.com/rainbow-project1/rainbow-orchestration) of the [RAINBOW](https://rainbow-h2020.eu) project to bring complex SLOs to Fog Computing.
+The Polaris SLO Framework project is actively used by the [orchestration layer](https://gitlab.com/rainbow-project1/rainbow-orchestration) of the [RAINBOW](https://rainbow-h2020.eu) project to bring complex SLOs to Fog Computing.

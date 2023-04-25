@@ -1,4 +1,4 @@
-# Polaris SLO Cloud Changelog
+# Polaris SLO Framework Changelog
 
 ## v0.6.0 (not yet released)
 

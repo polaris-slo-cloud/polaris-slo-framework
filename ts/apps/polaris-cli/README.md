@@ -1,6 +1,6 @@
 # Polaris CLI
 
-This is the CLI for the Polaris SLO Cloud project.
+This is the CLI for the Polaris SLO Framework project.
 
 For more information, please have a look at the [Polaris CLI documentation](https://polaris-slo-cloud.github.io/polaris/features/cli.html).
 
