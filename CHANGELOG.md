@@ -6,7 +6,7 @@
 
 * Upgrade to Node.js v18 - this is the minimum required version from now on.
 * Change target JavaScript version to ES2020 (TypeScript tsconfig `target` property).
-* Upgrade to Nx v15.9.2 - this requires a manual upgrade of the Nx dependencies in existing Polaris workspaces **before** updating the polaris dependencies. Please run the following commands:
+* Upgrade to Nx v15.9.2 - this requires a manual upgrade of the Nx dependencies in existing Polaris workspaces (**during** this process you will also update the Polaris dependencies). Please run the following commands:
     ```sh
     # Upgrade to latest version of Nx v14 branch.
     npx nx migrate 14.8.8
@@ -16,6 +16,10 @@
 
     # Upgrade to v15.9.2
     npx nx migrate 15.9.2
+
+    # Before continuing the Nx upgrade, open your package.json file and set all Polaris package versions to "~0.6.0-beta.2".
+
+    # Continue the Nx upgrade.
     npm install
     npx nx migrate --run-migrations
     rm ./migrations.json
