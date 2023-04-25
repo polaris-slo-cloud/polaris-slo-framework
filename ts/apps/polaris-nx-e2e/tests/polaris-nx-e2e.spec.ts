@@ -6,6 +6,11 @@ import { POLARIS_CLI_CONFIG_FILE, WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } fro
 
 describe('polaris-nx e2e', () => {
 
+    beforeEach(() => {
+        // eslint-disable-next-line max-len
+        console.log('E2E tests are currently broken, because polaris-nx cannot find the core library. We are waiting for the resolution of the following issue: https://github.com/nrwl/nx/issues/4851');
+    });
+
     it('should create an slo-mapping-type', async () => {
         const libProj = uniq('slo-mappings-lib');
         const sloMappingType = uniq('MyTest');

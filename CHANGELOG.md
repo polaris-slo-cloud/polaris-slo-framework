@@ -6,10 +6,13 @@
 
 * Upgrade to Node.js v18 - this is the minimum required version from now on.
 * Change target JavaScript version to ES2020 (TypeScript tsconfig `target` property).
+* Remove deprecated polaris-ui project - this will soon be replaced with another UI project.
 
 ### Dependency Updates
 
-* Upgrade [Nx libraries](https://nx.dev) to v14.8.8.
+* Upgrade [Nx libraries](https://nx.dev) to v15.9.2.
+* Migrate to Nx project.json files and remove Angular CLI.
+* Remove all Angular dependencies, except for `@angular-devkit/core` and `@angular-devkit/schematics`, which are required by a dependency of `polaris-nx`.
 
 
 ## v0.5.0 (2023-03-09)

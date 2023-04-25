@@ -9,9 +9,9 @@
         ]
     },
     "include": [
-        "**/*.test.ts",
-        "**/*.spec.ts",
-        "**/*.d.ts",
-        "jest.config.ts"
+        "jest.config.ts",
+        "src/**/*.test.ts",
+        "src/**/*.spec.ts",
+        "src/**/*.d.ts"
     ]
 }

@@ -1,26 +1,81 @@
 module.exports = {
     "root": true,
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
-    },
+    "ignorePatterns": [
+        "**/*"
+    ],
     "plugins": [
+        "@nrwl/nx",
+        "@typescript-eslint",
         "eslint-plugin-import",
         "eslint-plugin-jsdoc",
-        "@angular-eslint/eslint-plugin",
-        "@angular-eslint/eslint-plugin-template",
-        "eslint-plugin-prefer-arrow",
-        "@nrwl/nx",
-        "@typescript-eslint"
+        "eslint-plugin-prefer-arrow"
     ],
     "overrides": [
         {
-            "files": ["*.ts"],
+            "files": [
+                "*.ts",
+                "*.tsx",
+                "*.js",
+                "*.jsx"
+            ],
+            "rules": {
+                "@nrwl/nx/enforce-module-boundaries": [
+                    "error",
+                    {
+                        "enforceBuildableLibDependency": true,
+                        "allow": [],
+                        "depConstraints": [
+                            // Orchestrator-independent core libraries may only depend on each other.
+                            { "sourceTag": "scope:core", "onlyDependOnLibsWithTags": ["scope:core"] },
+
+                            // Metrics may only depend on core libraries and other metrics.
+                            { "sourceTag": "scope:metric", "onlyDependOnLibsWithTags": ["scope:core", "scope:metric"] },
+
+                            // SLOs may depend on core, metrics, and other SLOs.
+                            // If an SLO only has "scope:slo", it must be orchestrator-independent.
+                            // If it should be orchestrator-specific, the tag of the respective orchestrator must be added.
+                            // There appears to be a bug in the ESLint plugin that uses the intersection of the allowed libraries of the applied source tags instead of the union.
+                            // ToDo: Check if this is fixed in a new version.
+                            // { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo" ] },
+                            { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": ["*"] },
+
+                            // Elasticity strategy controllers may only depend on core and other elasticity libraries.
+                            // ToDo: Same as for scope:slo.
+                            { "sourceTag": "scope:elasticity", "onlyDependOnLibsWithTags": ["*"] },
+
+                            // ElasticityStrategies may depend on core, metrics, SLOs, and other strategies.
+                            { "sourceTag": "scope:elasticity-strategy", "onlyDependOnLibsWithTags": ["scope:core", "scope:metric", "scope:slo", "scope:elasticity-strategy"] },
+
+                            // Kubernetes-specific libraries may only depend on core libraries and other Kubernetes libraries.
+                            // A Kubernetes-specific SLO would e.g., have the tags "scope:slo" and "orchestrator:kubernetes"
+                            { "sourceTag": "orchestrator:kubernetes", "onlyDependOnLibsWithTags": ["scope:core", "orchestrator:kubernetes"] },
+
+                            // CLI apps may only depend on core and the respective orchestrator library that they define using "orchestrator:*".
+                            // { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "scope:core" ] },
+                            // There appears to be a bug in the ESLint plugin that uses the intersection of the allowed libraries of the applied source tags instead of the union.
+                            // ToDo: Check if this is fixed in a new version.
+                            { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": ["*"] },
+
+                            // UI projects may depend on any library project.
+                            { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": ["*"] },
+
+                            // ToDo:
+                            { "sourceTag": "query:prometheus", "onlyDependOnLibsWithTags": ["*"] },
+                            { "sourceTag": "scope:metrics-controller", "onlyDependOnLibsWithTags": ["*"] },
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.ts",
+                "*.tsx"
+            ],
             "extends": [
+                "plugin:@nrwl/nx/typescript",
                 "plugin:@typescript-eslint/recommended",
-                "plugin:@typescript-eslint/recommended-requiring-type-checking",
-                "plugin:@angular-eslint/recommended",
+                "plugin:@typescript-eslint/recommended-requiring-type-checking"
             ],
             "parser": "@typescript-eslint/parser",
             "parserOptions": {
@@ -31,64 +86,6 @@ module.exports = {
                 "ecmaVersion": 2020,
             },
             "rules": {
-                "@angular-eslint/component-class-suffix": "error",
-                "@angular-eslint/directive-class-suffix": "error",
-                "@angular-eslint/no-conflicting-lifecycle": "error",
-                "@angular-eslint/no-host-metadata-property": "error",
-                "@angular-eslint/no-input-rename": "error",
-                "@angular-eslint/no-inputs-metadata-property": "error",
-                "@angular-eslint/no-output-native": "error",
-                "@angular-eslint/no-output-on-prefix": "error",
-                "@angular-eslint/no-output-rename": "error",
-                "@angular-eslint/no-outputs-metadata-property": "error",
-                "@angular-eslint/use-lifecycle-interface": "error",
-                "@angular-eslint/use-pipe-transform-interface": "error",
-                "@nrwl/nx/enforce-module-boundaries": [
-                    "error",
-                    {
-                        "enforceBuildableLibDependency": true,
-                        "allow": [],
-                        "depConstraints": [
-                            // Orchestrator-independent core libraries may only depend on each other.
-                            { "sourceTag": "scope:core", "onlyDependOnLibsWithTags": [ "scope:core" ] },
-
-                            // Metrics may only depend on core libraries and other metrics.
-                            { "sourceTag": "scope:metric", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric" ] },
-
-                            // SLOs may depend on core, metrics, and other SLOs.
-                            // If an SLO only has "scope:slo", it must be orchestrator-independent.
-                            // If it should be orchestrator-specific, the tag of the respective orchestrator must be added.
-                            // There appears to be a bug in the ESLint plugin that uses the intersection of the allowed libraries of the applied source tags instead of the union.
-                            // ToDo: Check if this is fixed in a new version.
-                            // { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo" ] },
-                            { "sourceTag": "scope:slo", "onlyDependOnLibsWithTags": [ "*" ] },
-
-                            // Elasticity strategy controllers may only depend on core and other elasticity libraries.
-                            // ToDo: Same as for scope:slo.
-                            { "sourceTag": "scope:elasticity", "onlyDependOnLibsWithTags": [ "*" ] },
-
-                            // ElasticityStrategies may depend on core, metrics, SLOs, and other strategies.
-                            { "sourceTag": "scope:elasticity-strategy", "onlyDependOnLibsWithTags": [ "scope:core", "scope:metric", "scope:slo", "scope:elasticity-strategy" ] },
-
-                            // Kubernetes-specific libraries may only depend on core libraries and other Kubernetes libraries.
-                            // A Kubernetes-specific SLO would e.g., have the tags "scope:slo" and "orchestrator:kubernetes"
-                            { "sourceTag": "orchestrator:kubernetes", "onlyDependOnLibsWithTags": [ "scope:core", "orchestrator:kubernetes" ] },
-
-                            // CLI apps may only depend on core and the respective orchestrator library that they define using "orchestrator:*".
-                            // { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "scope:core" ] },
-                            // There appears to be a bug in the ESLint plugin that uses the intersection of the allowed libraries of the applied source tags instead of the union.
-                            // ToDo: Check if this is fixed in a new version.
-                            { "sourceTag": "scope:cli", "onlyDependOnLibsWithTags": [ "*" ] },
-
-                            // UI projects may depend on any library project.
-                            { "sourceTag": "scope:ui", "onlyDependOnLibsWithTags": [ "*" ] },
-
-                            // ToDo:
-                            { "sourceTag": "query:prometheus", "onlyDependOnLibsWithTags": [ "*" ] },
-                            { "sourceTag": "scope:metrics-controller", "onlyDependOnLibsWithTags": [ "*" ] },
-                        ]
-                    }
-                ],
                 "@typescript-eslint/array-type": [
                     "error",
                     {
@@ -469,14 +466,31 @@ module.exports = {
             },
         },
         {
-            "files": ["*.component.html"],
-            "extends": ["plugin:@angular-eslint/template/recommended"],
-            "rules": {
-                /**
-                 * Any template/HTML related rules you wish to use/reconfigure over and above the
-                 * recommended set provided by the @angular-eslint project would go here.
-                 */
-            }
+            "files": [
+                "*.js",
+                "*.jsx"
+            ],
+            "extends": [
+                "plugin:@nrwl/nx/javascript"
+            ],
+            "rules": {}
         },
+        {
+            "files": [
+                "*.spec.ts",
+                "*.spec.tsx",
+                "*.spec.js",
+                "*.spec.jsx"
+            ],
+            "env": {
+                "jest": true
+            },
+            "rules": {}
+        },
+        {
+            "files": "*.json",
+            "parser": "jsonc-eslint-parser",
+            "rules": {}
+        }
     ]
 };

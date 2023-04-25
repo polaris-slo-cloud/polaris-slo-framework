@@ -22,7 +22,6 @@ PROJECTS=(
     "metrics-rest-api-cost-efficiency-controller"
     "slo-cost-efficiency-slo-controller"
     "slo-cpu-usage-slo-controller"
-    "ui-polaris-ui"
 )
 
 for proj in ${PROJECTS[@]}; do

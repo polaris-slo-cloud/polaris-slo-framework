@@ -1,18 +1,11 @@
 /* eslint-disable */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 export default {
-    globals: {
-        'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
-    },
+    displayName: 'slo-cpu-usage-slo-controller',
+    preset: '../../../jest.preset.js',
+    testEnvironment: 'node',
     transform: {
-        '^.+\\.[tj]s$': 'ts-jest',
+        '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../../coverage/apps/slo/cpu-usage-slo-controller',
-    displayName: 'slo-cpu-usage-slo-controller',
-    testEnvironment: 'node',
-    preset: '../../../jest.preset.js',
 };

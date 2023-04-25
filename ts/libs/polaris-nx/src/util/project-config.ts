@@ -1,10 +1,18 @@
 import { GeneratorCallback, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/js';
+import { applicationGenerator } from '@nrwl/node';
 import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 
 /** Configuration for a project within an Nx CLI workspace. */
 export type ProjectConfig = ProjectConfiguration;
+
+/** Parameters for creating an application project. */
+export interface AppProjectOptions {
+    projectName: string;
+    directory?: string;
+    tags?: string;
+}
 
 /** Parameters for creating a library project. */
 export interface LibProjectOptions {
@@ -47,6 +55,35 @@ export function addGenCrdsTarget(projectConfig: ProjectConfig, options: Normaliz
             options: {},
         };
     }
+}
+
+/**
+ * Creates a new application project.
+ *
+ * Throws an error if the project already exists.
+ */
+export async function createAppProject(host: Tree, options: AppProjectOptions): Promise<GeneratorCallback> {
+    let projectExists = false;
+    try {
+        projectExists = !!readProjectConfiguration(host, options.projectName);
+    } catch (e) {}
+    if (projectExists) {
+        throw new Error(`Cannot create a new application project, because a project with the name ${options.projectName} already exists.`);
+    }
+
+    const ret: GeneratorCallback = await applicationGenerator(
+        host,
+        {
+            name: options.projectName,
+            directory: options.directory,
+            tags: options.tags,
+            bundler: 'webpack',
+            framework: 'none',
+            e2eTestRunner: 'none',
+        },
+    );
+
+    return ret;
 }
 
 /**

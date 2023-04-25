@@ -1,0 +1,80 @@
+{
+    "name": "elasticity-horizontal-elasticity-strategy-controller",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/elasticity/horizontal-elasticity-strategy-controller/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/webpack:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/apps/elasticity/horizontal-elasticity-strategy-controller",
+                "main": "apps/elasticity/horizontal-elasticity-strategy-controller/src/main.ts",
+                "tsConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/tsconfig.app.json",
+                "externalDependencies": "none",
+                "assets": [
+                    "apps/elasticity/horizontal-elasticity-strategy-controller/src/assets"
+                ],
+                "isolatedConfig": true,
+                "webpackConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/webpack.config.js"
+            },
+            "configurations": {
+                "development": {},
+                "production": {
+                    "generateLockfile": true
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build:development"
+                },
+                "production": {
+                    "buildTarget": "elasticity-horizontal-elasticity-strategy-controller:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "apps/elasticity/horizontal-elasticity-strategy-controller/**/*.ts"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+                "jestConfig": "apps/elasticity/horizontal-elasticity-strategy-controller/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": [
+        "scope:elasticity",
+        "orchestrator:kubernetes"
+    ]
+}

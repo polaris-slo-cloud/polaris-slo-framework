@@ -8,7 +8,6 @@ import {
     readProjectConfiguration,
     updateProjectConfiguration,
 } from '@nrwl/devkit';
-import { applicationGenerator } from '@nrwl/node';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,
@@ -19,6 +18,7 @@ import {
     addDockerBuildConfig,
     addPolarisDependenciesToPackageJson,
     changeBuildDependencyBundling,
+    createAppProject,
     getSloNames,
     normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
@@ -32,11 +32,14 @@ import { SloControllerGeneratorNormalizedSchema, SloControllerGeneratorSchema } 
 const generateSloController: Generator<SloControllerGeneratorSchema> = async (host: Tree, options: SloControllerGeneratorSchema) => {
     const normalizedOptions = normalizeProjectGeneratorOptions(host, options);
 
-    const nodeAppResult = await applicationGenerator(host, {
-        name: options.name,
-        directory: options.directory,
-        tags: options.tags,
-    });
+    const nodeAppResult = await createAppProject(
+        host,
+        {
+            projectName: options.name,
+            directory: options.directory,
+            tags: options.tags,
+        },
+    );
 
     const installPkgsFn = addPolarisDependenciesToPackageJson(host, {
         [NPM_PACKAGES.polaris.orchestrators.kubernetes]: VERSIONS.polaris,

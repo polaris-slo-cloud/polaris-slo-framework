@@ -1,6 +1,6 @@
 import { KubernetesObject, KubernetesObjectApi } from '@kubernetes/client-node';
 import { ApiObject, Logger, PolarisRuntime, SloEvaluatorBase, SloOutput } from '@polaris-sloc/core';
-import { KubernetesObjectWithSpec } from '../../model';
+import { KubernetesObjectHeader, KubernetesObjectWithSpec } from '../../model';
 
 export class KubernetesSloEvaluator extends SloEvaluatorBase {
 
@@ -36,10 +36,13 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
     }
 
     private async updateExistingElasticityStrategy(newSpec: KubernetesObjectWithSpec<any>): Promise<void> {
-        const readReq: KubernetesObject = {
+        const readReq: KubernetesObjectHeader<KubernetesObject> = {
             apiVersion: newSpec.apiVersion,
             kind: newSpec.kind,
-            metadata: { ...newSpec.metadata },
+            metadata: {
+                namespace: newSpec.metadata.namespace,
+                name: newSpec.metadata.name,
+            },
         };
         const readResponse = await this.k8sClient.read(readReq);
         const currStrategyData = readResponse.body;

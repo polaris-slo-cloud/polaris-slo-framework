@@ -9,9 +9,7 @@
         {
             "files": [
                 "*.ts",
-                "*.tsx",
-                "*.js",
-                "*.jsx"
+                "*.tsx"
             ],
             "parserOptions": {
                 "project": [

@@ -45,7 +45,6 @@ jobs:
     - run: npx nx build metrics-rest-api-cost-efficiency-controller
     - run: npx nx build slo-cost-efficiency-slo-controller
     - run: npx nx build slo-cpu-usage-slo-controller
-    - run: npx nx build ui-polaris-ui
 
   # Runs the tests for all Polaris components
   test:
