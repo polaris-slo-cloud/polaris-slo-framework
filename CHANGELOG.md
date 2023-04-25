@@ -23,6 +23,10 @@
 * Remove deprecated polaris-ui project - this will soon be replaced with another UI project.
 * A recent Nx version broke the generation of source maps for applications (see [issue]() and workaround). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file (see [changes](https://github.com/polaris-slo-cloud/polaris/pull/68/commits/a33474d75f5b537fb0d6e98dee902b38dd875a54#diff-3a4c63f3f75415fd052210bc27bafbd298fed2b8cf5b043c20fa6de2443691bd)).
 
+### Features
+
+* Allow SLOs to trigger alternative elasticity strategies by setting the optional `SloOutput.elasticityStrategy` and `SloOutput.staticElasticityStrategyConfig` properties.
+
 ### Dependency Updates
 
 * Upgrade [Nx libraries](https://nx.dev) to v15.9.2.
