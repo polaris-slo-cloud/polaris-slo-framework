@@ -11,7 +11,7 @@ It is commonly understood as provisioning more resources for an application as t
 However, this *resource elasticity* is only one of three possible [elasticity dimensions](https://ieeexplore.ieee.org/document/6015579).
 The other two are *cost elasticity* (i.e., how much is a customer willing to pay for a service) and *quality elasticity* (e.g., the desired accuracy of the prediction of a machine learning model).
 
-The goal of the Polaris project is to bring **high-level SLOs** to the cloud and enable customers to leverage all three levels of elasticity.
+The goal of the Polaris project is to bring **high-level SLOs** to the Edge-Cloud continuum and enable customers to leverage all three levels of elasticity.
 
 
 ## Documentation
