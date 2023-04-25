@@ -25,6 +25,11 @@
     },
     "tags": [],
     "implicitDependencies": [
+        "core",
+        "common-mappings",
+        "kubernetes",
+        "prometheus",
+        "schema-gen",
         "polaris-nx"
     ]
 }
