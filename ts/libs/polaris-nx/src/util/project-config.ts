@@ -1,6 +1,6 @@
-import { GeneratorCallback, ProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/js';
-import { applicationGenerator } from '@nrwl/node';
+import { GeneratorCallback, ProjectConfiguration, Tree, readProjectConfiguration } from '@nx/devkit';
+import { libraryGenerator } from '@nx/js';
+import { applicationGenerator } from '@nx/node';
 import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
 import { adaptLibModuleTypeForPolaris } from './ts-config';
 

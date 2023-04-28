@@ -1,22 +1,6 @@
 import * as path from 'path';
-import {
-    Generator,
-    GeneratorCallback,
-    Tree,
-    formatFiles,
-    generateFiles,
-    joinPathFragments,
-    names,
-    offsetFromRoot,
-} from '@nrwl/devkit';
-import {
-    NPM_PACKAGES,
-    SLO_MAPPINGS_DIR,
-    VERSIONS,
-    addPolarisDependenciesToPackageJson,
-    getWorkspaceTsConfigPath,
-    runCallbacksSequentially,
-} from '../../util';
+import { Generator, GeneratorCallback, Tree, formatFiles, generateFiles, joinPathFragments, names, offsetFromRoot } from '@nx/devkit';
+import { NPM_PACKAGES, SLO_MAPPINGS_DIR, VERSIONS, addPolarisDependenciesToPackageJson, getWorkspaceTsConfigPath, runCallbacksSequentially } from '../../util';
 import { SloMappingGeneratorNormalizedSchema, SloMappingGeneratorSchema } from './schema';
 
 /**
@@ -42,7 +26,7 @@ const generateComposedMetricType: Generator<SloMappingGeneratorSchema> = async (
     await formatFiles(host);
 
     return runCallbacksSequentially(...callbacks);
-}
+};
 
 // Export the generator function as the default export to enable integration with Nx.
 export default generateComposedMetricType;

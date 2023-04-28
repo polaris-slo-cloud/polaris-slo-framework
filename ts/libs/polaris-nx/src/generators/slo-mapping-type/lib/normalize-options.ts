@@ -1,4 +1,4 @@
-import { Tree, joinPathFragments, names, readProjectConfiguration } from '@nrwl/devkit';
+import { Tree, joinPathFragments, names, readProjectConfiguration } from '@nx/devkit';
 import { getProjectSrcRoot, getSloNames } from '../../../util';
 import { SloMappingTypeGeneratorNormalizedSchema, SloMappingTypeGeneratorSchema } from '../schema';
 

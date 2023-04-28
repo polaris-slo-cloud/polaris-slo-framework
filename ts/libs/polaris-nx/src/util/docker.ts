@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 import { ProjectConfig } from './project-config';
 import { NormalizedProjectGeneratorSchema } from './schema';
 
@@ -37,7 +37,7 @@ export function generateDockerfileCopyWorkspaceConfig(host: Tree): string {
     appendIfExists('jest.config.ts');
     appendIfExists('jest.preset.js');
 
-    return `COPY ${files} ./`
+    return `COPY ${files} ./`;
 }
 
 /**
@@ -75,4 +75,3 @@ export function addDockerBuildConfig(projectConfig: ProjectConfig, options: Norm
 export function getContainerImageName(options: NormalizedProjectGeneratorSchema): string {
     return `polarissloc/${options.projectName}`;
 }
-

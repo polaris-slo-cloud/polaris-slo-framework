@@ -1,11 +1,11 @@
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {CostEfficiency, CostEfficiencyParams} from '@polaris-sloc/common-mappings';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {ComposedMetricSourceBase, MetricsSource, ObjectKind, OrchestratorGateway, Sample} from '@polaris-sloc/core';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { CostEfficiency, CostEfficiencyParams } from '@polaris-sloc/common-mappings';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ComposedMetricSourceBase, MetricsSource, ObjectKind, OrchestratorGateway, Sample } from '@polaris-sloc/core';
 import axios from 'axios';
-import {Observable} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
-import {getEnvironmentVariable} from '../../util/environment-var-helper';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { getEnvironmentVariable } from '../../util/environment-var-helper';
 // ToDo:
 // 1. Adapt the list of `supportedSloTargetTypes` in `CostEfficiencyMetricSourceFactory` (see cost-efficiency.metric-source.factory.ts).
 // 2. Adapt the `CostEfficiencyMetricSourceFactory.metricSourceName`, if needed (e.g., if there are multiple sources for CostEfficiencyMetric that differ
@@ -59,7 +59,7 @@ function mapResponseToSample(response: PredictionApiResponse): Sample<CostEffici
         value: {
             costEfficiency: response.predictions[0][0],
             percentileBetterThanThreshold: -1,
-            totalCost: {currentCostPerHour: -1, accumulatedCostInPeriod: -1},
+            totalCost: { currentCostPerHour: -1, accumulatedCostInPeriod: -1 },
         },
     };
 }

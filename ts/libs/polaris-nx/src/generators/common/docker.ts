@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Tree, generateFiles } from '@nrwl/devkit';
+import { Tree, generateFiles } from '@nx/devkit';
 import {
     NormalizedProjectGeneratorSchema,
     generateDockerfileCopyLibs,

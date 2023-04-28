@@ -1,11 +1,4 @@
-import {
-    Generator,
-    GeneratorCallback,
-    Tree,
-    formatFiles,
-    readProjectConfiguration,
-    updateProjectConfiguration,
-} from '@nrwl/devkit';
+import { Generator, GeneratorCallback, Tree, formatFiles, readProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import {
     PolarisCliConfig,
     adaptTsConfigForPolaris,
@@ -58,7 +51,7 @@ const generateSloMappingType: Generator<SloMappingTypeGeneratorSchema> = async (
     await formatFiles(host);
 
     return runCallbacksSequentially(...callbacks);
-}
+};
 
 // Export the generator function as the default export to enable integration with Nx.
 export default generateSloMappingType;

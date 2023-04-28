@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "cli": "nx",
     "id": "ElasticityStrategyController",
     "title": "Create an Elasticity Strategy Controller project",
     "type": "object",

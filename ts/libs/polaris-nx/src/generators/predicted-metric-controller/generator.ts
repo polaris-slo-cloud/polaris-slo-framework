@@ -1,13 +1,5 @@
 import * as path from 'path';
-import {
-    Generator,
-    Tree,
-    formatFiles,
-    generateFiles,
-    offsetFromRoot,
-    readProjectConfiguration,
-    updateProjectConfiguration,
-} from '@nrwl/devkit';
+import { Generator, Tree, formatFiles, generateFiles, offsetFromRoot, readProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,
@@ -24,8 +16,8 @@ import {
     normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
 } from '../../util';
-import {addCommonWorkspaceRootFiles, generateTypeScriptDockerfile} from '../common';
-import {NormalizedPredictedMetricControllerGeneratorSchema, PredictedMetricControllerGeneratorSchema} from './schema';
+import { addCommonWorkspaceRootFiles, generateTypeScriptDockerfile } from '../common';
+import { NormalizedPredictedMetricControllerGeneratorSchema, PredictedMetricControllerGeneratorSchema } from './schema';
 
 /**
  * Generates a new Composed Metric Controller.

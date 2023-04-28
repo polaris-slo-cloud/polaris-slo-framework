@@ -1,9 +1,8 @@
 {
-  "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
-  "$id": "PredictedMetricController",
-  "title": "",
-  "type": "object",
+    "$schema": "http://json-schema.org/schema",
+    "$id": "PredictedMetricController",
+    "title": "",
+    "type": "object",
     "properties": {
         "name": {
             "type": "string",
@@ -26,17 +25,17 @@
             "alias": "p",
             "x-prompt": "What is the name of the Composed Metric Type class?"
         },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
+        "tags": {
+            "type": "string",
+            "description": "Add tags to the project (used for linting)",
+            "alias": "t"
+        },
+        "directory": {
+            "type": "string",
+            "description": "A directory where the project is placed",
+            "alias": "d"
+        }
     },
-    "directory": {
-      "type": "string",
-      "description": "A directory where the project is placed",
-      "alias": "d"
-    }
-  },
     "required": [
         "name",
         "compMetricTypePkg",

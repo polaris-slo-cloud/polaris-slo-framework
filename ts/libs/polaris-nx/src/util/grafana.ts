@@ -1,7 +1,7 @@
-import {Tree} from '@nrwl/devkit';
-import axios, {AxiosResponse} from 'axios';
-import {Dashboard, Panel} from 'grafana-dash-gen';
-import {createKubeConfig, readKubernetesSecret} from './kubernetes';
+import { Tree } from '@nx/devkit';
+import axios, { AxiosResponse } from 'axios';
+import { Dashboard, Panel } from 'grafana-dash-gen';
+import { createKubeConfig, readKubernetesSecret } from './kubernetes';
 
 export function readGrafanaUrlFromEnv(): string {
     const grafanaHost = process.env['GRAFANA_HOST'] || 'localhost';
@@ -18,7 +18,7 @@ export async function readGrafanaBearerTokenFromKubernetes(): Promise<string> {
     }
 }
 
-export function getPanels(dashboard: typeof Dashboard): typeof Panel[] {
+export function getPanels(dashboard: typeof Dashboard): (typeof Panel)[] {
     const panels: typeof Panel = [];
     if ('panels' in dashboard) {
         /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -40,9 +40,8 @@ export function getPanels(dashboard: typeof Dashboard): typeof Panel[] {
         }
     }
 
-    return panels
+    return panels;
 }
-
 
 /**
  * Calls the Grafana REST API and creates a new dashboard
@@ -52,8 +51,12 @@ export function getPanels(dashboard: typeof Dashboard): typeof Panel[] {
  * @param overwrite
  * @param folderUid
  */
-export async function createDashboardApi(options: { name: string, bearerToken: string, grafanaUrl: string },
-                                   dashboard: string, overwrite?: boolean, folderUid?: string): Promise<void> {
+export async function createDashboardApi(
+    options: { name: string; bearerToken: string; grafanaUrl: string },
+    dashboard: string,
+    overwrite?: boolean,
+    folderUid?: string,
+): Promise<void> {
     const body = {
         dashboard,
         folderId: 0,
@@ -63,7 +66,7 @@ export async function createDashboardApi(options: { name: string, bearerToken: s
     };
     const config = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: {Authorization: `Bearer ${options.bearerToken}`},
+        headers: { Authorization: `Bearer ${options.bearerToken}` },
         // in ms
         timeout: 5000,
     };
@@ -77,8 +80,7 @@ export async function createDashboardApi(options: { name: string, bearerToken: s
         }
     } catch (e) {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            console.error(`Creating dashboard failed: ${e.message}`);
-
+        console.error(`Creating dashboard failed: ${e.message}`);
     }
     return Promise.resolve();
 }
@@ -87,7 +89,7 @@ export async function getDashboard(dashboardId: string, grafanaUrl: string, bear
     const url = `${grafanaUrl}/api/dashboards/uid/${dashboardId}`;
     const config = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: {Authorization: `Bearer ${bearerToken}`},
+        headers: { Authorization: `Bearer ${bearerToken}` },
         // in ms
         timeout: 5000,
     };
@@ -96,7 +98,7 @@ export async function getDashboard(dashboardId: string, grafanaUrl: string, bear
         throw new Error(`Can't find dashboard with id ${dashboardId}`);
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    return (response.data as any).dashboard;
+    return response.data.dashboard;
 }
 
 /**
@@ -109,9 +111,13 @@ export async function getDashboard(dashboardId: string, grafanaUrl: string, bear
  * @param overwrite
  * @param folderUid
  */
-export function saveDashboard(host: Tree, dashboard: typeof Dashboard,
-                              options: { destDir: string, toDisk: boolean, name: string, bearerToken: string, grafanaUrl: string }
-    , overwrite?: boolean, folderUid?: string): Promise<void> {
+export function saveDashboard(
+    host: Tree,
+    dashboard: typeof Dashboard,
+    options: { destDir: string; toDisk: boolean; name: string; bearerToken: string; grafanaUrl: string },
+    overwrite?: boolean,
+    folderUid?: string,
+): Promise<void> {
     if (options.toDisk) {
         const stringified = JSON.stringify(dashboard);
         const filePath = `${options.destDir}/${options.name}.json`;
@@ -119,6 +125,7 @@ export function saveDashboard(host: Tree, dashboard: typeof Dashboard,
         host.write(filePath, `${stringified}`);
         return Promise.resolve();
     } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return createDashboardApi(options, dashboard, overwrite, folderUid);
     }
 }
@@ -144,7 +151,6 @@ export interface GrafanaDashboardDbError {
         data: {
             message: string;
             status: string;
-        }
+        };
     };
 }
-

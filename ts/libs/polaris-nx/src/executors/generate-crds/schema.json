@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "cli": "nx",
     "title": "Generate CRDs executor",
     "description": "Generate the Custom Resource Definition (CRDs) for the Polaris types in a project",
     "type": "object",

@@ -5,7 +5,7 @@
     "projectType": "application",
     "targets": {
         "build": {
-            "executor": "@nrwl/webpack:webpack",
+            "executor": "@nx/webpack:webpack",
             "outputs": [
                 "{options.outputPath}"
             ],
@@ -31,7 +31,7 @@
             }
         },
         "serve": {
-            "executor": "@nrwl/js:node",
+            "executor": "@nx/js:node",
             "defaultConfiguration": "development",
             "options": {
                 "buildTarget": "metrics-rest-api-cost-efficiency-controller:build"
@@ -46,7 +46,7 @@
             }
         },
         "lint": {
-            "executor": "@nrwl/linter:eslint",
+            "executor": "@nx/linter:eslint",
             "outputs": [
                 "{options.outputFile}"
             ],
@@ -57,7 +57,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": [
                 "{workspaceRoot}/coverage/{projectRoot}"
             ],

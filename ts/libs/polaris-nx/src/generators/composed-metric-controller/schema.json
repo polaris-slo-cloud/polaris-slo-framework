@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "cli": "nx",
     "$id": "ComposedMetricController",
     "title": "Create a Composed Metric Controller project",
     "type": "object",

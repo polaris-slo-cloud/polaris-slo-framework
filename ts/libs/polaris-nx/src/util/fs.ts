@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { joinPathFragments } from '@nrwl/devkit';
+import { joinPathFragments } from '@nx/devkit';
 
 /** Joins the path fragments and returns them as a normalized Unix path. */
 export function joinPathFragmentsAndNormalize(...fragments: string[]): string {

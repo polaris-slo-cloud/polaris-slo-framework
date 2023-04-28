@@ -7,18 +7,17 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
  * Defines the versions of packages that are currently used.
  */
 export const VERSIONS = {
-    nx: '15.9.2',
+    nx: '16.0.0',
     polaris: polarisVersion,
 };
 
 /** Full names of packages. */
 export const NPM_PACKAGES = {
-
     createNxWorkspace: 'create-nx-workspace',
 
     nrwl: {
-        js: '@nrwl/js',
-        node: '@nrwl/node',
+        js: '@nx/js',
+        node: '@nx/node',
     },
 
     polaris: {

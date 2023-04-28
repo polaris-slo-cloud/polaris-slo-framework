@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "cli": "nx",
     "id": "ElasticityStrategy",
     "title": "Create an ElasticityStrategy type for use with Polaris SLO Framework",
     "type": "object",

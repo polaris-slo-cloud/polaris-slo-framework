@@ -1,11 +1,11 @@
-import { names } from '@nrwl/devkit';
+import { names } from '@nx/devkit';
 import { POLARIS_API, getPlural as getPluralCore } from '@polaris-sloc/core';
 
 /** The name of the function used to initialize a Polaris library. */
 export const POLARIS_INIT_LIB_FN_NAME = 'initPolarisLib';
 
 /** The name of the file that contains the function to initialize a Polaris library (.ts needs to be appended). */
- export const POLARIS_INIT_FN_FILE_NAME = 'init-polaris-lib'
+export const POLARIS_INIT_FN_FILE_NAME = 'init-polaris-lib';
 
 /**
  * The suffix of files containing a Polaris Resource Model type (.ts needs to be appended).
@@ -19,7 +19,7 @@ export const MODEL_FILE_SUFFIX = '.prm';
  */
 export const SLO_MAPPINGS_DIR = 'slo-mappings';
 
-const SLO_MAPPING_TYPE_FILE_SUFFIX = '.slo-mapping'
+const SLO_MAPPING_TYPE_FILE_SUFFIX = '.slo-mapping';
 const SLO_CONTROLLER_FILE_SUFFIX = '.controller';
 const ELASTICITY_STRATEGY_CONTROLLER_FILE_SUFFIX = '.controller';
 const COMPOSED_METRIC_SOURCE_FILE_SUFFIX = '.metric-source';
@@ -30,10 +30,9 @@ const ELASTICITY_STRATEGY_TYPE_SUFFIX = 'ElasticityStrategy';
 const COMPOSED_METRIC_TYPE_SUFFIX = 'Metric';
 
 /**
- * Represents a set of commonly used forms of the same name, as returned by the `name()` function of `@nrwl/devkit`.
+ * Represents a set of commonly used forms of the same name, as returned by the `name()` function of `@nx/devkit`.
  */
 export interface NormalizedNames {
-
     /**
      * The name given as input.
      */
@@ -64,7 +63,6 @@ export interface NormalizedNames {
  * Represents a set of commonly used forms of an SLO name.
  */
 export interface SloNames {
-
     /**
      * @example 'CpuUsage'
      */
@@ -109,14 +107,12 @@ export interface SloNames {
      * @example 'slo.polaris-slo-cloud.github.io'
      */
     sloMappingTypeApiGroup: string;
-
 }
 
 /**
  * Represents a set of commonly used forms of an ElasticityStrategy name.
  */
 export interface ElasticityStrategyNames {
-
     /**
      * @example 'Horizontal'
      */
@@ -161,14 +157,12 @@ export interface ElasticityStrategyNames {
      * @example 'elasticity.polaris-slo-cloud.github.io'
      */
     eStratTypeApiGroup: string;
-
 }
 
 /**
  * Represents a set of commonly used forms of a ComposedMetricType name.
  */
- export interface ComposedMetricTypeNames {
-
+export interface ComposedMetricTypeNames {
     /**
      * @example 'CostEfficiency'
      */
@@ -230,9 +224,7 @@ export interface ElasticityStrategyNames {
      * @example 'costefficiencymetricmappings'
      */
     compMetricK8sResources: string;
-
 }
-
 
 /**
  * Generates various SLO-related names, based on the name of an SLO mapping class.
@@ -261,7 +253,6 @@ export function getSloNames(sloMappingTypeName: string): SloNames {
         sloMappingTypeApiGroup: POLARIS_API.SLO_GROUP,
     };
 }
-
 
 /**
  * Generates various ElasticityStrategy-related names, based on the name of an ElasticityStrategy class.

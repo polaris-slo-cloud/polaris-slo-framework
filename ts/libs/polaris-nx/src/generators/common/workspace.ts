@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Tree, generateFiles } from '@nrwl/devkit';
+import { Tree, generateFiles } from '@nx/devkit';
 
 /**
  * Adds files to the workspace's root directory, which are required by multiple project types.
