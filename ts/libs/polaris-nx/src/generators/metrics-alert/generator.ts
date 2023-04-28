@@ -1,13 +1,7 @@
-import {Tree} from '@nrwl/devkit';
-import {Dashboard} from 'grafana-dash-gen';
-import {
-    getDashboard,
-    getPanels,
-    readGrafanaBearerTokenFromKubernetes,
-    readGrafanaUrlFromEnv,
-    saveDashboard,
-} from '../../util/grafana';
-import {MetricsAlertGeneratorSchema, MetricsAlertGeneratorSchemaNormalized} from './schema';
+import { Tree } from '@nx/devkit';
+import { Dashboard } from 'grafana-dash-gen';
+import { getDashboard, getPanels, readGrafanaBearerTokenFromKubernetes, readGrafanaUrlFromEnv, saveDashboard } from '../../util/grafana';
+import { MetricsAlertGeneratorSchema, MetricsAlertGeneratorSchemaNormalized } from './schema';
 
 async function normalizeOptions(host: Tree, options: MetricsAlertGeneratorSchema): Promise<MetricsAlertGeneratorSchemaNormalized> {
     console.log(options);
@@ -25,7 +19,6 @@ async function normalizeOptions(host: Tree, options: MetricsAlertGeneratorSchema
 
     if (destDir !== '') {
         toDisk = true;
-
     } else {
         if (grafanaUrl === '') {
             grafanaUrl = readGrafanaUrlFromEnv();
@@ -52,7 +45,6 @@ async function normalizeOptions(host: Tree, options: MetricsAlertGeneratorSchema
         toDisk,
         destDir,
     };
-
 }
 
 function createAlert(metricsAlert: MetricsAlertGeneratorSchemaNormalized): any {
@@ -61,9 +53,7 @@ function createAlert(metricsAlert: MetricsAlertGeneratorSchemaNormalized): any {
         conditions: [
             {
                 evaluator: {
-                    params: [
-                        metricsAlert.threshold,
-                    ],
+                    params: [metricsAlert.threshold],
                     type: 'gt',
                 },
                 operator: {
@@ -89,7 +79,6 @@ function createAlert(metricsAlert: MetricsAlertGeneratorSchemaNormalized): any {
     };
 }
 
-
 function thresholds(m: MetricsAlertGeneratorSchemaNormalized): any {
     return [
         {
@@ -98,9 +87,9 @@ function thresholds(m: MetricsAlertGeneratorSchemaNormalized): any {
             line: true,
             op: 'gt',
             value: m.threshold,
-        }];
+        },
+    ];
 }
-
 
 function addAlert(dashboard: typeof Dashboard, options: MetricsAlertGeneratorSchemaNormalized): any {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

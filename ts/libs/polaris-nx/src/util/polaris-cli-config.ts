@@ -1,5 +1,4 @@
-
-import { Tree, joinPathFragments, readJson, readProjectConfiguration, writeJson } from '@nrwl/devkit';
+import { Tree, joinPathFragments, readJson, readProjectConfiguration, writeJson } from '@nx/devkit';
 import { PolarisCliError } from './errors';
 import { joinPathFragmentsAndNormalize } from './fs';
 import {
@@ -82,7 +81,7 @@ export class PolarisCliConfig {
     getAndValidateProject(name: string, type: PolarisCliProjectType): PolarisCliProject {
         const project = this.getProject(name);
         if (!project) {
-            throw new PolarisCliError(`Project ${name} does not exist in ${POLARIS_CLI_CONFIG_FILE}`)
+            throw new PolarisCliError(`Project ${name} does not exist in ${POLARIS_CLI_CONFIG_FILE}`);
         }
         if (project.projectType !== type) {
             throw new PolarisCliError(`Project ${name} is not of type ${type}, but is a ${project.projectType} instead.`, project);

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Tree, generateFiles, joinPathFragments } from '@nrwl/devkit';
+import { Tree, generateFiles, joinPathFragments } from '@nx/devkit';
 import { SloMappingTypeGeneratorNormalizedSchema } from '../schema';
 
 /**
@@ -18,5 +18,3 @@ export function addSloMappingTypeFile(host: Tree, options: SloMappingTypeGenerat
         templateOptions,
     );
 }
-
-

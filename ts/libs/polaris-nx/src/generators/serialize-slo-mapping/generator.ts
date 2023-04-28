@@ -1,6 +1,6 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
-import { Generator, Tree, generateFiles, joinPathFragments, offsetFromRoot } from '@nrwl/devkit';
+import { Generator, Tree, generateFiles, joinPathFragments, offsetFromRoot } from '@nx/devkit';
 import { FsTree, flushChanges } from 'nx/src/generators/tree';
 import { SLO_MAPPINGS_DIR, getTempDir, getWorkspaceTsConfigPath } from '../../util';
 import { SerializeSloMappingGeneratorNormalizedSchema, SerializeSloMappingGeneratorSchema } from './schema';
@@ -48,7 +48,7 @@ const executeSerializeSloMapping: Generator<SerializeSloMappingGeneratorSchema> 
     // return Promise.resolve({
     //     success: result.status === 0,
     // });
-}
+};
 
 export default executeSerializeSloMapping;
 
@@ -66,7 +66,7 @@ function normalizeOptions(options: SerializeSloMappingGeneratorSchema): Serializ
         sloMappingPathWithoutExtension,
         fullSloMappingTsPath: joinPathFragments(SLO_MAPPINGS_DIR, sloMappingTsPath),
         fullSloMappingPathWithoutExtension: joinPathFragments(SLO_MAPPINGS_DIR, sloMappingPathWithoutExtension),
-    }
+    };
 }
 
 function checkSloMapping(host: Tree, options: SerializeSloMappingGeneratorNormalizedSchema): void {
@@ -83,7 +83,8 @@ function extractSloMappingPackageName(host: Tree, options: SerializeSloMappingGe
     const sloMappingTsContent = host.read(options.fullSloMappingTsPath);
     const sloMappingTsContentStr = sloMappingTsContent.toString();
 
-    const regex = /import {[\w\d\s\n,]*SloMapping[\w\d\s\n,]*} from [\'\"](@?[\w\d\/-]*)[\'\"];/m
+    // eslint-disable-next-line no-useless-escape
+    const regex = /import {[\w\d\s\n,]*SloMapping[\w\d\s\n,]*} from [\'\"](@?[\w\d\/-]*)[\'\"];/m;
     const result = regex.exec(sloMappingTsContentStr);
     if (Array.isArray(result) && result.length === 2) {
         return result[1];

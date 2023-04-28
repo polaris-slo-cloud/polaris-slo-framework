@@ -1,5 +1,5 @@
-import { ChangeType, Tree, applyChangesToString, joinPathFragments } from '@nrwl/devkit';
-import { findNodes } from '@nrwl/workspace'
+import { ChangeType, Tree, applyChangesToString, joinPathFragments } from '@nx/devkit';
+import { findNodes } from '@nx/js';
 import * as ts from 'typescript';
 import { POLARIS_INIT_FN_FILE_NAME } from './naming';
 import { NormalizedLibraryClassGeneratorSchema } from './schema';

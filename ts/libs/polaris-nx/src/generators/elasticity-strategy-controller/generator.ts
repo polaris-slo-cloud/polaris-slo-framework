@@ -7,7 +7,7 @@ import {
     offsetFromRoot,
     readProjectConfiguration,
     updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,

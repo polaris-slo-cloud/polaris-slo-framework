@@ -1,6 +1,6 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
-import { Executor, ExecutorContext, Tree, generateFiles, joinPathFragments, offsetFromRoot } from '@nrwl/devkit';
+import { Executor, ExecutorContext, Tree, generateFiles, joinPathFragments, offsetFromRoot } from '@nx/devkit';
 import { FsTree, flushChanges } from 'nx/src/generators/tree';
 import { PolarisCliConfig, PolarisCliError, PolarisCliProjectType, PolarisLibraryProject, getTempDir, getWorkspaceTsConfigPath } from '../../util';
 import { GenerateCrdsExecutorSchema } from './schema';
@@ -33,7 +33,7 @@ const executeGenerateCrds: Executor<GenerateCrdsExecutorSchema> = (options: Gene
     return Promise.resolve({
         success: result.status === 0,
     });
-}
+};
 
 export default executeGenerateCrds;
 
@@ -41,7 +41,7 @@ function getProjectAndCheckCrds(host: Tree, projectName: string): PolarisLibrary
     const polarisCliConfig = PolarisCliConfig.readFromFile(host);
     const lib = polarisCliConfig.getAndValidateProject(projectName, PolarisCliProjectType.Library);
     if (!lib.crds?.polarisTypes?.length) {
-        throw new PolarisCliError(`The project ${projectName} does not have any Polaris types configured as CRDs.`)
+        throw new PolarisCliError(`The project ${projectName} does not have any Polaris types configured as CRDs.`);
     }
     return lib;
 }

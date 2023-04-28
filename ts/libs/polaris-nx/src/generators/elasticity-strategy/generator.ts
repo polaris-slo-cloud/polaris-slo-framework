@@ -9,7 +9,7 @@ import {
     names,
     readProjectConfiguration,
     updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import {
     PolarisCliConfig,
     adaptTsConfigForPolaris,
@@ -62,7 +62,7 @@ const generateElasticityStrategyType: Generator<ElasticityStrategyGeneratorSchem
     await formatFiles(host);
 
     return runCallbacksSequentially(...callbacks);
-}
+};
 
 // Export the generator function as the default export to enable integration with Nx.
 export default generateElasticityStrategyType;
@@ -87,7 +87,7 @@ function normalizeOptions(host: Tree, options: ElasticityStrategyGeneratorSchema
 /**
  * Generates the ElasticityStrategy type.
  */
- export function addElasticityStrategyFile(host: Tree, options: ElasticityStrategyGeneratorNormalizedSchema): void {
+export function addElasticityStrategyFile(host: Tree, options: ElasticityStrategyGeneratorNormalizedSchema): void {
     const templateOptions = {
         ...options.eStratNames,
         template: '', // Used to replace '__template__' with an empty string in file names.

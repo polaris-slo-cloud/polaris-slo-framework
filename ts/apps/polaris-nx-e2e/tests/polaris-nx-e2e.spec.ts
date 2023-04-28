@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { names } from '@nrwl/devkit';
-import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { names } from '@nx/devkit';
+import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nx/plugin/testing';
 import { POLARIS_CLI_CONFIG_FILE, WORKSPACE_NPM_ORG, WORKSPACE_NPM_PACKAGE } from './util';
-
 
 describe('polaris-nx e2e', () => {
 
@@ -17,7 +16,7 @@ describe('polaris-nx e2e', () => {
         const sloMappingNames = names(sloMappingType);
 
         ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
-        // await runNxCommandAsync(`generate @nrwl/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
+        // await runNxCommandAsync(`generate @nx/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
 
         // eslint-disable-next-line max-len
         const result = await runNxCommandAsync(`generate @polaris-sloc/polaris-nx:slo-mapping-type ${sloMappingType} --project=${libProj} --createLibProject=true --importPath=${WORKSPACE_NPM_ORG}/${libProj}`);
@@ -30,8 +29,8 @@ describe('polaris-nx e2e', () => {
             POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
 
-    //     const result = await runNxCommandAsync(`build ${plugin}`);
-    //     expect(result.stdout).toContain('Executor ran');
+        //     const result = await runNxCommandAsync(`build ${plugin}`);
+        //     expect(result.stdout).toContain('Executor ran');
     });
 
     it('should create an slo-mapping instance', async () => {
@@ -84,7 +83,7 @@ describe('polaris-nx e2e', () => {
         const elasticityStrategyNames = names(elasticityStrategyType);
 
         ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
-        // await runNxCommandAsync(`generate @nrwl/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
+        // await runNxCommandAsync(`generate @nx/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
 
         // eslint-disable-next-line max-len
         const result = await runNxCommandAsync(`generate @polaris-sloc/polaris-nx:elasticity-strategy ${elasticityStrategyType} --project=${libProj} --createLibProject=true --importPath=${WORKSPACE_NPM_ORG}/${libProj}`);
@@ -129,7 +128,7 @@ describe('polaris-nx e2e', () => {
         const compMetricNames = names(compMetricName);
 
         ensureNxProject(WORKSPACE_NPM_PACKAGE, 'dist/libs/polaris-nx');
-        // await runNxCommandAsync(`generate @nrwl/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
+        // await runNxCommandAsync(`generate @nx/node:library ${libProj} --importPath=${WORKSPACE_NPM_ORG}/${libProj} --unitTestRunner=none`);
 
         // eslint-disable-next-line max-len
         const result = await runNxCommandAsync(`generate @polaris-sloc/polaris-nx:composed-metric-type ${compMetricName} --project=${libProj} --createLibProject=true --importPath=${WORKSPACE_NPM_ORG}/${libProj}`);
@@ -171,5 +170,4 @@ describe('polaris-nx e2e', () => {
             POLARIS_CLI_CONFIG_FILE,
         )).not.toThrow();
     });
-
 });

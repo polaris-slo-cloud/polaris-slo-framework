@@ -9,7 +9,7 @@ import {
     names,
     readProjectConfiguration,
     updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import {
     PolarisCliConfig,
     adaptTsConfigForPolaris,
@@ -68,7 +68,7 @@ const generateComposedMetricType: Generator<ComposedMetricTypeGeneratorSchema> =
     await formatFiles(host);
 
     return runCallbacksSequentially(...callbacks);
-}
+};
 
 // Export the generator function as the default export to enable integration with Nx.
 export default generateComposedMetricType;
@@ -93,7 +93,7 @@ function normalizeOptions(host: Tree, options: ComposedMetricTypeGeneratorSchema
 /**
  * Generates the ComposedMetricType.
  */
- export function addComposedMetricTypeFile(host: Tree, options: ComposedMetricTypeGeneratorNormalizedSchema): void {
+export function addComposedMetricTypeFile(host: Tree, options: ComposedMetricTypeGeneratorNormalizedSchema): void {
     const templateOptions = {
         ...options.compMetricNames,
         fileName: options.fileName,

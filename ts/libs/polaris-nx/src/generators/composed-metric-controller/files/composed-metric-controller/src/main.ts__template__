@@ -1,7 +1,7 @@
 import { KubeConfig } from '@kubernetes/client-node';
 import { <%= compMetricType %>, <%= compMetricMapping %>, <%= initPolarisLibFn %> as initCompMetricsLib } from '<%= compMetricTypePkg %>';
 import { COMPOSED_METRIC_COMPUTATION_DEFAULT_INTERVAL_MS, Logger, convertToNumber, getEnvironmentVariable } from '@polaris-sloc/core';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { initPolarisKubernetes } from '@polaris-sloc/kubernetes';
 import { PrometheusComposedMetricsCollectorManager, initPrometheusQueryBackend } from '@polaris-sloc/prometheus';
 import { <%= compMetricSourceFactory %> } from './app/metrics';

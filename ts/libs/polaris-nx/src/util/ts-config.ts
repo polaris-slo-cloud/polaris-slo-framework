@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import {
-    Tree,
-    joinPathFragments,
-    readJson,
-    readProjectConfiguration,
-    updateJson,
-} from '@nrwl/devkit';
+import { Tree, joinPathFragments, readJson, readProjectConfiguration, updateJson } from '@nx/devkit';
 
 const TS_CONFIG_FILES = [
     'tsconfig.base.json',
@@ -62,7 +56,7 @@ export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): v
             json.compilerOptions = { module: 'commonjs' };
         }
         return json;
-    }
+    };
 
     tsConfigs.forEach(tsConfig => {
         if (host.exists(tsConfig)) {

@@ -1,4 +1,4 @@
-import { GeneratorCallback } from '@nrwl/devkit';
+import { GeneratorCallback } from '@nx/devkit';
 
 /**
  * Executes the specified callbacks sequentially.

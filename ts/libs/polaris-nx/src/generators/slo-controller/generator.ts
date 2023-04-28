@@ -1,13 +1,5 @@
 import * as path from 'path';
-import {
-    Generator,
-    Tree,
-    formatFiles,
-    generateFiles,
-    offsetFromRoot,
-    readProjectConfiguration,
-    updateProjectConfiguration,
-} from '@nrwl/devkit';
+import { Generator, Tree, formatFiles, generateFiles, offsetFromRoot, readProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,

@@ -1,4 +1,4 @@
-import { GeneratorCallback, Tree, addDependenciesToPackageJson } from '@nrwl/devkit';
+import { GeneratorCallback, Tree, addDependenciesToPackageJson } from '@nx/devkit';
 
 /** The name of the Polaris npm organization. */
 export const POLARIS_NPM_ORG = '@polaris-sloc';
@@ -7,7 +7,7 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
  * Defines the versions of packages added by the generators.
  */
 export const VERSIONS = {
-    polaris: '0.6.0-beta.2',
+    polaris: '0.6.0-beta.3',
     rxJs: '^6.6.7',
     tsNode: '^10.9.1',
     tsNodeConfigPaths: '^4.2.0',
@@ -15,7 +15,6 @@ export const VERSIONS = {
 
 /** Full names of packages added by the generators. */
 export const NPM_PACKAGES = {
-
     rxJs: 'rxjs',
     tsNode: 'ts-node',
     tsNodeConfigPaths: 'tsconfig-paths',

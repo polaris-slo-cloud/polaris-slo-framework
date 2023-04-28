@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Tree, generateFiles, joinPathFragments } from '@nrwl/devkit';
+import { Tree, generateFiles, joinPathFragments } from '@nx/devkit';
 import { NormalizedLibraryClassGeneratorSchema, POLARIS_INIT_FN_FILE_NAME, POLARIS_INIT_LIB_FN_NAME } from '../../util';
 
 /**
@@ -22,7 +22,7 @@ export function addOrExtendInitFn(host: Tree, options: NormalizedLibraryClassGen
     const typeName = options.className;
     console.warn(
         `!!! Important !!!\nPlease add the following line to the ${POLARIS_INIT_LIB_FN_NAME}() function in ${POLARIS_INIT_LIB_FN_NAME}\n` +
-        `polarisRuntime.transformer.registerObjectKind(new ${typeName}().objectKind, ${typeName});`,
+            `polarisRuntime.transformer.registerObjectKind(new ${typeName}().objectKind, ${typeName});`,
     );
     return false;
 }

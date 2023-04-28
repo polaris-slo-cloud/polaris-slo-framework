@@ -1,15 +1,9 @@
-import {Tree, names} from '@nrwl/devkit';
-import {SloMappingBase} from '@polaris-sloc/core';
-import {Dashboard, Panels, Row, Target} from 'grafana-dash-gen';
-import {
-    getPanels,
-    readGrafanaBearerTokenFromKubernetes,
-    readGrafanaUrlFromEnv,
-    saveDashboard,
-} from '../../util/grafana';
-import {PrometheusComposedMetric, createKubeConfig, listAllComposedMetrics} from '../../util/kubernetes';
-import {GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema} from './schema';
-
+import { Tree, names } from '@nx/devkit';
+import { SloMappingBase } from '@polaris-sloc/core';
+import { Dashboard, Panels, Row, Target } from 'grafana-dash-gen';
+import { getPanels, readGrafanaBearerTokenFromKubernetes, readGrafanaUrlFromEnv, saveDashboard } from '../../util/grafana';
+import { PrometheusComposedMetric, createKubeConfig, listAllComposedMetrics } from '../../util/kubernetes';
+import { GrafanaDashboardGeneratorNormalizedSchema, GrafanaDashboardGeneratorSchema } from './schema';
 
 async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSchema): Promise<GrafanaDashboardGeneratorNormalizedSchema> {
     const normalizedName = names(options.name).name;
@@ -19,9 +13,7 @@ async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSc
     const panelType = options.panelType || 'graph';
     const datasource = options.dashboard || 'default';
     const refresh = options.refresh || '5s';
-    const parsedTags = options.tags
-        ? options.tags.split(',').map((s) => s.trim())
-        : [];
+    const parsedTags = options.tags ? options.tags.split(',').map(s => s.trim()) : [];
     const asRate = options.asRate || false;
     let grafanaUrl = options.grafanaUrl || '';
     let bearerToken = options.bearerToken || '';
@@ -39,7 +31,6 @@ async function normalizeOptions(host: Tree, options: GrafanaDashboardGeneratorSc
             bearerToken = await readGrafanaBearerTokenFromKubernetes();
         }
     }
-
 
     return {
         name: normalizedName,
@@ -77,7 +68,7 @@ function sanitizeForPrometheus(dashboard: typeof Dashboard, datasource: string):
         panel.datasource = datasource;
         for (let k = 0; k < panel.targets.length; k++) {
             const target = panel.targets[k];
-            delete Object.assign(target, {['expr']: target['target']})['target'];
+            delete Object.assign(target, { ['expr']: target['target'] })['target'];
         }
     }
     return dashboard;
@@ -103,9 +94,7 @@ function createPanel(metric: string, type: string, asRate: boolean, title?: stri
         return new Panels.Graph({
             title: title || metric,
             span: 4,
-            targets: [
-                new Target(metric),
-            ],
+            targets: [new Target(metric)],
         });
     }
 
@@ -113,9 +102,7 @@ function createPanel(metric: string, type: string, asRate: boolean, title?: stri
         return new Panels.Table({
             title: title || metric,
             span: 4,
-            targets: [
-                new Target(metric),
-            ],
+            targets: [new Target(metric)],
         });
     }
 
@@ -123,9 +110,7 @@ function createPanel(metric: string, type: string, asRate: boolean, title?: stri
         const panel = new Panels.SingleStat({
             title: title || metric,
             span: 4,
-            targets: [
-                new Target(metric),
-            ],
+            targets: [new Target(metric)],
         });
         panel.state.type = type;
         return panel;
@@ -135,16 +120,15 @@ function createPanel(metric: string, type: string, asRate: boolean, title?: stri
     return new Panels.SingleStat({
         title: 'Unknown panel',
         span: 4,
-        targets: [
-            new Target('unknown'),
-        ],
+        targets: [new Target('unknown')],
     });
-
 }
 
-
-function generateDashboardForSlo(slo: SloMappingBase<any>, composedMetrics: PrometheusComposedMetric[],
-                                 options: GrafanaDashboardGeneratorNormalizedSchema): string {
+function generateDashboardForSlo(
+    slo: SloMappingBase<any>,
+    composedMetrics: PrometheusComposedMetric[],
+    options: GrafanaDashboardGeneratorNormalizedSchema,
+): string {
     const rows = [];
     /* eslint-disable @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call */
     for (const composedMetric of composedMetrics) {
@@ -163,7 +147,6 @@ function generateDashboardForSlo(slo: SloMappingBase<any>, composedMetrics: Prom
             rows.push(row);
         }
     }
-
 
     const dashboard = new Dashboard({
         title: `${slo.metadata.name} Dashboard`,
@@ -204,7 +187,6 @@ export default async function (host: Tree, options: GrafanaDashboardGeneratorSch
                 console.error('Failed dashboard generation');
             }
         }
-
     } catch (e) {
         console.error(e);
         return Promise.resolve();
