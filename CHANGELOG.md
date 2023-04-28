@@ -14,8 +14,8 @@
     npx nx migrate --run-migrations
     rm ./migrations.json
 
-    # Upgrade to v15.9.2
-    npx nx migrate 15.9.2
+    # Upgrade to v15.9.3
+    npx nx migrate 15.9.3
 
     # Before continuing the Nx upgrade, open your package.json file and set all Polaris package versions to "~0.6.0-beta.2".
 
@@ -33,7 +33,7 @@
 
 ### Dependency Updates
 
-* Upgrade [Nx libraries](https://nx.dev) to v15.9.2.
+* Upgrade [Nx libraries](https://nx.dev) to v15.9.3.
 * Migrate to Nx project.json files and remove Angular CLI.
 * Remove all Angular dependencies, except for `@angular-devkit/core` and `@angular-devkit/schematics`, which are required by a dependency of `polaris-nx`.
 
