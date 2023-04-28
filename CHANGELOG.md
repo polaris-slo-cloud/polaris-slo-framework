@@ -31,7 +31,7 @@
     rm ./migrations.json
     ```
 * Remove deprecated polaris-ui project - this has been replaced with a new [polaris-ui](https://github.com/polaris-slo-cloud/polaris-ui) project.
-* A recent Nx version broke the generation of source maps for applications (see [issue](https://github.com/nrwl/nx/issues/15159) and [workaround](https://github.com/nrwl/nx/issues/14708#issuecomment-1457996600)). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file (see [changes](https://github.com/polaris-slo-cloud/polaris/pull/68/commits/a33474d75f5b537fb0d6e98dee902b38dd875a54#diff-3a4c63f3f75415fd052210bc27bafbd298fed2b8cf5b043c20fa6de2443691bd)).     
+* A recent Nx version broke the generation of source maps for applications (see [issue](https://github.com/nrwl/nx/issues/15159) and [workaround](https://github.com/nrwl/nx/issues/14708#issuecomment-1457996600)). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file (see [working webpack.config.js](https://github.com/polaris-slo-cloud/polaris/blob/a266c010161a3277b4b3b8126cc7ae7b8d5a423e/ts/apps/elasticity/horizontal-elasticity-strategy-controller/webpack.config.js)).     
 
 ### Features
 
