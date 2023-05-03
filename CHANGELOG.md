@@ -37,7 +37,7 @@
 
 ### Dependency Updates
 
-* Upgrade [Nx libraries](https://nx.dev) to v16.0.0.
+* Upgrade [Nx libraries](https://nx.dev) to v16.0.3.
 * Migrate to Nx project.json files and remove Angular CLI.
 * Remove all Angular dependencies, except for `@angular-devkit/core` and `@angular-devkit/schematics`, which are required by a dependency of `polaris-nx`.
 
