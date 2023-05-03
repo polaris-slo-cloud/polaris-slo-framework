@@ -1,6 +1,6 @@
-# Polaris SLO Cloud
+# Polaris SLO Framework
 
-The Polaris SLO Cloud project aims to provide Service Level Objectives (SLOs) for next generation Cloud computing.
+The Polaris SLO Framework project aims to provide Service Level Objectives (SLOs) for the Edge-Cloud continuum.
 
 Service Level Agreements (SLAs) are very common in cloud computing.
 Each SLA consists of one or more Service Level Objectives, which are measurable capacity guarantees.
@@ -11,7 +11,7 @@ It is commonly understood as provisioning more resources for an application as t
 However, this *resource elasticity* is only one of three possible [elasticity dimensions](https://ieeexplore.ieee.org/document/6015579).
 The other two are *cost elasticity* (i.e., how much is a customer willing to pay for a service) and *quality elasticity* (e.g., the desired accuracy of the prediction of a machine learning model).
 
-The goal of the Polaris project is to bring **high-level SLOs** to the cloud and enable customers to leverage all three levels of elasticity.
+The goal of the Polaris project is to bring **high-level SLOs** to the Edge-Cloud continuum and enable customers to leverage all three levels of elasticity.
 
 
 ## Documentation
@@ -174,4 +174,4 @@ git push origin
 
 ## Our Users
 
-The Polaris SLO Cloud project is actively used by the [orchestration layer](https://gitlab.com/rainbow-project1/rainbow-orchestration) of the [RAINBOW](https://rainbow-h2020.eu) project to bring complex SLOs to Fog Computing.
+The Polaris SLO Framework project is actively used by the [orchestration layer](https://gitlab.com/rainbow-project1/rainbow-orchestration) of the [RAINBOW](https://rainbow-h2020.eu) project to bring complex SLOs to Fog Computing.
