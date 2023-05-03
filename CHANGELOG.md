@@ -1,6 +1,6 @@
 # Polaris SLO Framework Changelog
 
-## v0.6.0 (not yet released)
+## v0.6.0 (2023-05-03)
 
 ### Breaking Changes
 
