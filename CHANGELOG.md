@@ -6,7 +6,7 @@
 
 * Upgrade to Node.js v18 - this is the minimum required version from now on.
 * Change target JavaScript version to ES2020 (TypeScript tsconfig `target` property).
-* Upgrade to Nx v16.0.0 - this requires a manual upgrade of the Nx dependencies in existing Polaris workspaces (**during** this process you will also update the Polaris dependencies). Please run the following commands:
+* Upgrade to Nx v16.0.3 - this requires a manual upgrade of the Nx dependencies in existing Polaris workspaces (**during** this process you will also update the Polaris dependencies). Please run the following commands:
     ```sh
     # Upgrade to latest version of Nx v14 branch.
     npx nx migrate 14.8.8
@@ -14,24 +14,22 @@
     npx nx migrate --run-migrations
     rm ./migrations.json
 
-    # Upgrade to v15.9.3
-    npx nx migrate 15.9.3
-    # IMPORTANT: Before continuing the Nx upgrade, open your package.json file and set all Polaris package versions to "~0.6.0-beta.2".
+    # Upgrade to Nx v16.0.3
+    npx nx migrate 16.0.3
+    # IMPORTANT: Before continuing the Nx upgrade, open your package.json file and set all @polaris-sloc package versions to "~0.6.0".
     # Continue the Nx upgrade.
     npm install
     npx nx migrate --run-migrations
     rm ./migrations.json
 
-    # Upgrade to v16.0.0
-    npx nx migrate 16.0.0
-    # IMPORTANT: Before continuing the Nx upgrade, open your package.json file and set all Polaris package versions to "~0.6.0-beta.3".
-    # Continue the Nx upgrade.
-    npm install
-    npx nx migrate --run-migrations
-    rm ./migrations.json
+    # Install the Nx webpack plugin, if not present.
+    npm install --save-dev @nx/webpack
+
+    # Search all project.json files or the angular.json file (if present) for `"executor": "@nrwl/webpack:webpack"` and replace it with `"executor": "@nx/webpack:webpack"`
+    # If your workspace contains webpack.config.js files, apply the source maps workaround below.
     ```
+* A recent Nx version broke the generation of source maps for applications (see [issue](https://github.com/nrwl/nx/issues/15159) and [workaround](https://github.com/nrwl/nx/issues/14708#issuecomment-1457996600)). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file, if present in your project (see [working webpack.config.js](https://github.com/polaris-slo-cloud/polaris/blob/a266c010161a3277b4b3b8126cc7ae7b8d5a423e/ts/apps/elasticity/horizontal-elasticity-strategy-controller/webpack.config.js)).     
 * Remove deprecated polaris-ui project - this has been replaced with a new [polaris-ui](https://github.com/polaris-slo-cloud/polaris-ui) project.
-* A recent Nx version broke the generation of source maps for applications (see [issue](https://github.com/nrwl/nx/issues/15159) and [workaround](https://github.com/nrwl/nx/issues/14708#issuecomment-1457996600)). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file (see [working webpack.config.js](https://github.com/polaris-slo-cloud/polaris/blob/a266c010161a3277b4b3b8126cc7ae7b8d5a423e/ts/apps/elasticity/horizontal-elasticity-strategy-controller/webpack.config.js)).     
 
 ### Features
 
