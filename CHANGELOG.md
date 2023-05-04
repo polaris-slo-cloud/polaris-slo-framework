@@ -24,7 +24,7 @@
     rm ./migrations.json
 
     # Install the Nx webpack plugin, if not present.
-    npm install --save-dev @nx/webpack
+    npm install --save-dev -E @nx/webpack@16.0.3
 
     # Search all project.json files or the angular.json file (if present) for `"executor": "@nrwl/webpack:webpack"` and replace it with `"executor": "@nx/webpack:webpack"`
     # If your workspace contains webpack.config.js files, apply the source maps workaround below.
