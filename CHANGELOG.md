@@ -31,7 +31,7 @@
 
     # Update the Dockerfiles of your applications according to the example file linked below.
     ```
-* **Manual change required:** A recent Nx version broke the generation of source maps for applications (see [issue](https://github.com/nrwl/nx/issues/15159) and [workaround](https://github.com/nrwl/nx/issues/14708#issuecomment-1457996600)). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file, if present in your project (see [working webpack.config.js](https://github.com/polaris-slo-cloud/polaris/blob/a266c010161a3277b4b3b8126cc7ae7b8d5a423e/ts/apps/elasticity/horizontal-elasticity-strategy-controller/webpack.config.js)).
+* **Manual change required:** A recent Nx version broke the generation of source maps for applications (see [issue](https://github.com/nrwl/nx/issues/15159) and [workaround](https://github.com/nrwl/nx/issues/14708#issuecomment-1457996600)). Apps generated with the polaris-cli contain the workaround, but existing app projects require manually modifying the `webpack.config.js` file, if present in your project (see [working webpack.config.js](https://github.com/polaris-slo-cloud/polaris-slo-framework/blob/a266c010161a3277b4b3b8126cc7ae7b8d5a423e/ts/apps/elasticity/horizontal-elasticity-strategy-controller/webpack.config.js)).
 * **Manual change required:** The changes in the structure of Nx projects and the Node.js upgrade requires changes to the Dockerfiles of existing applications. Copy this [updated Dockerfile](https://github.com/polaris-slo-cloud/polaris-demos/blob/b891094703ea038b46fc68278fb014b1cd090720/horizontal-elasticity-strat/apps/my-horizontal-elasticity-strategy-controller/Dockerfile) over your existing ones.
 
 ### Features

@@ -11,7 +11,7 @@ To build the components of the Polaris project for local development or testing,
 
 Furthermore, you need a Kubernetes cluster, with a running Prometheus instance.
 For testing locally, e.g., [minikube](https://minikube.sigs.k8s.io/docs/), [kind](https://kind.sigs.k8s.io/), or [MicroK8s](https://microk8s.io/) can be used.
-For instructions on setting up a cluster for Polaris, please see our testbed [setup guide](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds/kubernetes).
+For instructions on setting up a cluster for Polaris, please see our testbed [setup guide](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/testbeds/kubernetes).
 
 The Polaris Kubernetes controllers should normally run as pods within the Kubernetes cluster.
 For testing and development, they can also be run as a normal process on your development machine and connect to a local or remote cluster
@@ -34,7 +34,7 @@ To build and run/debug individual components, please see the next section.
 
 This section shows you how to build, run, and debug individual Polaris components.
 
-1. Open a terminal in the [ts](https://github.com/polaris-slo-cloud/polaris/tree/master/ts) folder of the Polaris repository.
+1. Open a terminal in the [ts](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/ts) folder of the Polaris repository.
 1. Install the dependencies:
     ```sh
     npm install
@@ -62,18 +62,18 @@ This section shows you how to build, run, and debug individual Polaris component
     ```
     To debug a controller with Visual Studio Code, open the `ts` folder in VS Code and open a JavaScript Debug Terminal.
     Then, execute the above `node` command in that terminal.
-    Additionally, there are some application-specific debug configurations in the [`ts/.vscode`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts/.vscode) folder, which the the IDE will detect automatically.
+    Additionally, there are some application-specific debug configurations in the [`ts/.vscode`](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/ts/.vscode) folder, which the the IDE will detect automatically.
 
 If you want to test if all Polaris components build successfully after a change, you can execute the `build-all.sh` script in the `ts` folder.
 
-For more details, please see the README in the [ts folder](https://github.com/polaris-slo-cloud/polaris/tree/master/ts) of the project.
+For more details, please see the README in the [ts folder](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/ts) of the project.
 
 
 ## Publishing npm Packages
 
 To publish the Polaris npm packages, do the following:
 
-1. Open a terminal in the [ts](https://github.com/polaris-slo-cloud/polaris/tree/master/ts) folder of the Polaris repository.
+1. Open a terminal in the [ts](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/ts) folder of the Polaris repository.
 1. Remove all existing dependencies (this clears the Nx CLI's build cache) and build output:
     ```sh
     rm -rf ./node_modules ./tmp ./dist
