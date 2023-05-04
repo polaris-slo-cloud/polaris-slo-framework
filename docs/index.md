@@ -124,17 +124,17 @@ All code for this project is contained in this repository.
 
 | Directory                | Contents |
 |--------------------------|----------|
-| [`deployment`](https://github.com/polaris-slo-cloud/polaris/tree/master/deployment) | YAML files for quickly deploying Polaris CRDs and controllers |
-| [`docs`](https://github.com/polaris-slo-cloud/polaris/tree/master/docs)         | Documentation files |
-| [`python`](https://github.com/polaris-slo-cloud/polaris/tree/master/python)     | Python code, e.g., predicted metric controller base |
-| [`testbeds`](https://github.com/polaris-slo-cloud/polaris/tree/master/testbeds) | Configurations and demo applications, we use for testing |
-| [`ts`](https://github.com/polaris-slo-cloud/polaris/tree/master/ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
+| [`deployment`](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/deployment) | YAML files for quickly deploying Polaris CRDs and controllers |
+| [`docs`](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/docs)         | Documentation files |
+| [`python`](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/python)     | Python code, e.g., predicted metric controller base |
+| [`testbeds`](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/testbeds) | Configurations and demo applications, we use for testing |
+| [`ts`](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/ts)             | TypeScript code, i.e., all SLO Script libraries, SLO controllers, etc. |
 
 
 
 ## Building, Running, and Debugging
 
-For details, on how to build, run and debug the Polaris components, please see the README of the [TypeScript components](https://github.com/polaris-slo-cloud/polaris/tree/master/ts).
+For details, on how to build, run and debug the Polaris components, please see the README of the [TypeScript components](https://github.com/polaris-slo-cloud/polaris-slo-framework/tree/master/ts).
 
 
 
