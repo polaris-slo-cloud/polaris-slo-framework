@@ -3,7 +3,7 @@
 This library is a plugin for the [Nx](https://nx.dev) CLI.
 It is wrapped by the *Polaris CLI*.
 
-For more information, please have a look at the [Polaris CLI documentation](https://polaris-slo-cloud.github.io/polaris/features/cli.html).
+For more information, please have a look at the [Polaris CLI documentation](https://polaris-slo-cloud.github.io/polaris-slo-framework/features/cli.html).
 
 
 ## Running E2E Tests and Manual Testing

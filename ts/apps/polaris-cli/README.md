@@ -2,7 +2,7 @@
 
 This is the CLI for the Polaris SLO Framework project.
 
-For more information, please have a look at the [Polaris CLI documentation](https://polaris-slo-cloud.github.io/polaris/features/cli.html).
+For more information, please have a look at the [Polaris CLI documentation](https://polaris-slo-cloud.github.io/polaris-slo-framework/features/cli.html).
 
 ## Debugging the CLI:
 

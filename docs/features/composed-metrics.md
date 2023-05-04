@@ -1,7 +1,7 @@
 # Composed Metrics
 
 Polaris supports two types of metric abstraction:
-* **Raw Metrics** are time series obtained using the [Raw Metrics Query API](https://polaris-slo-cloud.github.io/polaris/typedoc/interfaces/core_src.TimeSeriesSource.html#select).
+* **Raw Metrics** are time series obtained using the [Raw Metrics Query API](https://polaris-slo-cloud.github.io/polaris-slo-framework/typedoc/interfaces/core_src.TimeSeriesSource.html#select).
 * **Composed Metrics** have been processed by a metrics library and may be composed of a combination of raw metrics.
 
 Examples:
