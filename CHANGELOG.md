@@ -22,7 +22,8 @@
 
 ### Dependency Updates
 
-* Upgrade [Nx libraries](https://nx.dev) to v16.1.0. 
+* Upgrade [Nx libraries](https://nx.dev) to v16.1.0.
+* Upgrade to TypeScript v5.0.4.
 
 
 
