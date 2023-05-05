@@ -2,7 +2,7 @@ import { GeneratorCallback, ProjectConfiguration, Tree, readProjectConfiguration
 import { libraryGenerator } from '@nx/js';
 import { applicationGenerator } from '@nx/node';
 import { NormalizedLibraryClassGeneratorSchema, NormalizedProjectGeneratorSchema } from './schema';
-import { adaptLibModuleTypeForPolaris } from './ts-config';
+import { adaptLibModuleTypeForPolaris, enableEmbeddingSourcesInSourceMaps } from './ts-config';
 
 /** Configuration for a project within an Nx CLI workspace. */
 export type ProjectConfig = ProjectConfiguration;
@@ -111,6 +111,7 @@ export async function createLibProject(host: Tree, options: LibProjectOptions): 
     );
 
     adaptLibModuleTypeForPolaris(host, options.projectName);
+    enableEmbeddingSourcesInSourceMaps(host, options.projectName);
     return ret;
 }
 

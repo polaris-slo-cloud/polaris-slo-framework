@@ -74,6 +74,37 @@ export function adaptLibModuleTypeForPolaris(host: Tree, projectName: string): v
 }
 
 /**
+ * Configures `tsconfig.lib.json` to embed the TS source code into the source maps by setting
+ * `"inlineSources": true`.
+ *
+ * Otherwise the source maps would point to .ts files, which are not bundled in the npm packages.
+ * This is a solution found here: https://github.com/nrwl/nx/issues/11179#issuecomment-1263474100
+ */
+export function enableEmbeddingSourcesInSourceMaps(host: Tree, projectName: string): void {
+    const project = readProjectConfiguration(host, projectName);
+    const tsConfigs = [
+        joinPathFragments(project.root, 'tsconfig.lib.json'),
+        // joinPathFragments(project.root, 'tsconfig.spec.json'),
+    ];
+
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const updateFn = (json: any) => {
+        if (json.compilerOptions) {
+            json.compilerOptions.inlineSources = true;
+        } else {
+            json.compilerOptions = { inlineSources: true };
+        }
+        return json;
+    };
+
+    tsConfigs.forEach(tsConfig => {
+        if (host.exists(tsConfig)) {
+            updateJson(host, tsConfig, updateFn);
+        }
+    });
+}
+
+/**
  * Checks if he specified `npmPackage` is remapped in the tsconfig `paths`.
  *
  * If it is remapped, the package's source is likely contained in the local monorepo and

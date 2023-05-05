@@ -7,7 +7,7 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
  * Defines the versions of packages added by the generators.
  */
 export const VERSIONS = {
-    polaris: '0.6.0',
+    polaris: '0.6.1',
     rxJs: '^6.6.7',
     tsNode: '^10.9.1',
     tsNodeConfigPaths: '^4.2.0',
@@ -22,6 +22,7 @@ export const NPM_PACKAGES = {
     polaris: {
         core: `${POLARIS_NPM_ORG}/core`,
         commonMappings: `${POLARIS_NPM_ORG}/common-mappings`,
+        schemaGenerator: `${POLARIS_NPM_ORG}/schema-gen`,
 
         orchestrators: {
             kubernetes: `${POLARIS_NPM_ORG}/kubernetes`,
@@ -48,10 +49,12 @@ export function addPolarisDependenciesToPackageJson(
     const dependencies: Record<string, string> = {
         [NPM_PACKAGES.polaris.core]: VERSIONS.polaris,
         [NPM_PACKAGES.polaris.commonMappings]: VERSIONS.polaris,
+        [NPM_PACKAGES.polaris.orchestrators.kubernetes]: VERSIONS.polaris,
         [NPM_PACKAGES.rxJs]: VERSIONS.rxJs,
         ...extraDependencies,
     };
     const devDependencies: Record<string, string> = {
+        [NPM_PACKAGES.polaris.schemaGenerator]: VERSIONS.polaris,
         [NPM_PACKAGES.tsNode]: VERSIONS.tsNode,
         [NPM_PACKAGES.tsNodeConfigPaths]: VERSIONS.tsNodeConfigPaths,
         ...extraDevDependencies,

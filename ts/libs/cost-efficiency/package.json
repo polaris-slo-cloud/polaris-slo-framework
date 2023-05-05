@@ -1,11 +1,11 @@
 {
   "name": "@polaris-sloc/cost-efficiency",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "license": "Apache-2.0",
   "author": "Polaris SLO Framework Authors",
   "private": false,
   "type": "commonjs",
   "peerDependencies": {
-    "@polaris-sloc/core": "~0.6.0"
+    "@polaris-sloc/core": "~0.6.1"
   }
 }

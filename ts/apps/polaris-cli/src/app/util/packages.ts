@@ -7,7 +7,7 @@ export const POLARIS_NPM_ORG = '@polaris-sloc';
  * Defines the versions of packages that are currently used.
  */
 export const VERSIONS = {
-    nx: '16.0.3',
+    nx: '16.1.0',
     polaris: polarisVersion,
 };
 
