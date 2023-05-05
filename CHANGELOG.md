@@ -1,5 +1,31 @@
 # Polaris SLO Framework Changelog
 
+## v0.6.1 (2023-05-05)
+
+### Manual Changes
+
+* Upgrade to Nx v16.1.0.
+    ```sh
+    nx migrate 16.1.0
+
+    # Open package.json and update all @polaris-sloc package versions to "~0.6.1"
+
+    npm install
+    ```
+* To enable embedding TypeScript sources into npm packages for existing library projects, please make [this change](https://github.com/polaris-slo-cloud/polaris-slo-framework/commit/83fb63ad6805a8bea9cfa6f9c65d1a63dbdc1d27#diff-bcfd1fda3080038ca9467864bc4ea79ff75d2a968a1b5536eeb09634f153f173) to the `tsconfig.lib.json` files of your library projects.
+
+
+### Bugfixes
+
+* Fix missing TypeScript source code referenced from source maps in Polaris npm packages.
+
+
+### Dependency Updates
+
+* Upgrade [Nx libraries](https://nx.dev) to v16.1.0. 
+
+
+
 ## v0.6.0 (2023-05-03)
 
 ### Breaking Changes
