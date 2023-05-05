@@ -86,8 +86,8 @@ export class ApiObjectTransformer<T, P = any> implements ReusablePolarisTransfor
             this.defaultTransformer.transformToOrchestratorSchema(polarisSchema, polarisType, transformationService) as any;
 
         // Move the `ApiObject.objectKind` property's contents to the root level.
-        const transformedObjKindSchema: JsonSchema<ApiVersionKind> = (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind as any;
-        delete (transformedSchema as JsonSchema<ApiObject<T>>).properties.objectKind;
+        const transformedObjKindSchema: JsonSchema<ApiVersionKind> = (transformedSchema as unknown as JsonSchema<ApiObject<T>>).properties.objectKind as any;
+        delete (transformedSchema as unknown as JsonSchema<ApiObject<T>>).properties.objectKind;
         transformedSchema.required = transformedSchema.required.filter(propKey => propKey !== 'objectKind');
         transformedSchema.properties.apiVersion = transformedObjKindSchema.properties.apiVersion;
         transformedSchema.properties.kind = transformedObjKindSchema.properties.kind;
