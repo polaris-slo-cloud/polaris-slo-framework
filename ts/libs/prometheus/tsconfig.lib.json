@@ -3,7 +3,8 @@
     "compilerOptions": {
         "module": "commonjs",
         "outDir": "../../dist/out-tsc",
-        "declaration": true
+        "declaration": true,
+        "inlineSources": true
     },
     "exclude": [
         "jest.config.ts",
