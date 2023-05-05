@@ -4,14 +4,17 @@
 
 ### Manual Changes
 
-* Upgrade to Nx v16.1.0.
-    ```sh
-    nx migrate 16.1.0
+* If you are currently on Polaris v0.6.0:
+    * Upgrade to Nx v16.1.0.
+        ```sh
+        npx nx migrate 16.1.0
 
-    # Open package.json and update all @polaris-sloc package versions to "~0.6.1"
+        # Open package.json and update all @polaris-sloc package versions to "~0.6.1"
 
-    npm install
-    ```
+        npm install
+        ```
+* If you are currently on Polaris v0.5.0 or earlier:
+    * Follow the Polaris v0.6.0 breaking changes instructions below, but use @nx version 16.1.0 instead of 16.0.3 and @polaris-sloc version ~0.6.1 instead of ~0.6.0.
 * To enable embedding TypeScript sources into npm packages for existing library projects, please make [this change](https://github.com/polaris-slo-cloud/polaris-slo-framework/commit/83fb63ad6805a8bea9cfa6f9c65d1a63dbdc1d27#diff-bcfd1fda3080038ca9467864bc4ea79ff75d2a968a1b5536eeb09634f153f173) to the `tsconfig.lib.json` files of your library projects.
 
 
