@@ -1,5 +1,5 @@
 import { KubernetesObject, KubernetesObjectApi } from '@kubernetes/client-node';
-import { ApiObject, Logger, PolarisRuntime, SloEvaluatorBase, SloOutput } from '@polaris-sloc/core';
+import { ApiObject, Logger, POLARIS_API, PolarisRuntime, SloEvaluatorBase, SloOutput } from '@polaris-sloc/core';
 import { KubernetesObjectHeader, KubernetesObjectWithSpec } from '../../model';
 
 export class KubernetesSloEvaluator extends SloEvaluatorBase {
@@ -53,6 +53,9 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
             ...currStrategyData,
             ...newStrategyData,
         };
+
+        update.metadata.labels = update.metadata.labels ?? {};
+        update.metadata.labels[POLARIS_API.LAST_MODIFIED_LABEL] = Date.now().toString();
 
         await this.k8sClient.replace(update);
     }
