@@ -1,5 +1,13 @@
 # Polaris SLO Framework Changelog
 
+## v0.6.2 (2023-07-12)
+
+### Bugfixes
+
+* Ensure that elasticity strategy controller is triggered even if SLO Output stays the same.
+
+
+
 ## v0.6.1 (2023-05-05)
 
 ### Manual Changes
