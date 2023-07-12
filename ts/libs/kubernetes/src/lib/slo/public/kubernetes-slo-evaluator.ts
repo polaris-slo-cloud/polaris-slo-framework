@@ -54,7 +54,9 @@ export class KubernetesSloEvaluator extends SloEvaluatorBase {
             ...newStrategyData,
         };
 
-        update.metadata.labels = update.metadata.labels ?? {};
+        if (!update.metadata.labels) {
+            update.metadata.labels = {};
+        }
         update.metadata.labels[POLARIS_API.LAST_MODIFIED_LABEL] = Date.now().toString();
 
         await this.k8sClient.replace(update);

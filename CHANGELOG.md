@@ -4,7 +4,7 @@
 
 ### Bugfixes
 
-* Ensure that elasticity strategy controller is triggered even if SLO Output stays the same.
+* Add a last modified label to elasticity strategy objects in Kubernetes to ensure that an elasticity strategy controller is triggered even if the SLO Output remains unchanged. For example, an SLO may require scaling out by the same amount as last time (same SLO Output), which would normally not be considered a change by Kubernetes.
 
 
 
