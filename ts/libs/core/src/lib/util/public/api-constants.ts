@@ -30,4 +30,11 @@ export const POLARIS_API = Object.freeze({
     /** Used for storing the Polaris schema generator version in a CRD. */
     ANNOTATION_CRD_GENERATOR_VERSION: 'polaris-slo-cloud.github.io/schema-gen-version',
 
+    /**
+     * Used for storing the last modified time as a Unix timestamp of a Polaris elasticity strategy.
+     * This is needed to ensure that an elasticity strategy controller is triggered,
+     * even if the SLO Output stays the same, e.g., scale out by the same amount as last time.
+     * */
+    LAST_MODIFIED_LABEL: 'polaris-slo-cloud.github.io/last-modified',
+
 });
