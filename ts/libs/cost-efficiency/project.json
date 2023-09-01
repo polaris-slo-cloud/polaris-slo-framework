@@ -16,7 +16,8 @@
                 "main": "libs/cost-efficiency/src/index.ts",
                 "assets": [
                     "libs/cost-efficiency/*.md"
-                ]
+                ],
+                "updateBuildableProjectDepsInPackageJson": true
             }
         },
         "lint": {

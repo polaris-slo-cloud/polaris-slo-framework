@@ -16,7 +16,8 @@
                 "main": "libs/common-mappings/src/index.ts",
                 "assets": [
                     "libs/common-mappings/*.md"
-                ]
+                ],
+                "updateBuildableProjectDepsInPackageJson": true
             }
         },
         "lint": {

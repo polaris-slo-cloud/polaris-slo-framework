@@ -16,7 +16,8 @@
                 "main": "libs/core/src/index.ts",
                 "assets": [
                     "libs/core/*.md"
-                ]
+                ],
+                "updateBuildableProjectDepsInPackageJson": true
             }
         },
         "lint": {

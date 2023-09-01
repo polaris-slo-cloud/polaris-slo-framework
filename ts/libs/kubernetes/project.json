@@ -16,7 +16,8 @@
                 "main": "libs/kubernetes/src/index.ts",
                 "assets": [
                     "libs/kubernetes/*.md"
-                ]
+                ],
+                "updateBuildableProjectDepsInPackageJson": true
             }
         },
         "lint": {

@@ -5,11 +5,14 @@
     "sourceRoot": "apps/polaris-nx-e2e/src",
     "targets": {
         "e2e": {
-            "executor": "@nx/plugin:e2e",
+            "executor": "@nx/jest:jest",
             "options": {
-                "target": "polaris-nx:build",
-                "jestConfig": "apps/polaris-nx-e2e/jest.config.ts"
-            }
+                "jestConfig": "apps/polaris-nx-e2e/jest.config.ts",
+                "runInBand": true
+            },
+            "dependsOn": [
+                "polaris-nx:build"
+            ]
         },
         "lint": {
             "executor": "@nx/linter:eslint",

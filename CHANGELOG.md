@@ -1,5 +1,13 @@
 # Polaris SLO Framework Changelog
 
+## v0.6.3 (not yet released)
+
+### Dependency Updates
+
+* Upgrade [Nx libraries](https://nx.dev) to v16.7.4.
+* Upgrade to TypeScript v5.1.6.
+
+
 ## v0.6.2 (2023-07-12)
 
 ### Bugfixes

@@ -16,7 +16,8 @@
                 "main": "libs/prometheus/src/index.ts",
                 "assets": [
                     "libs/prometheus/*.md"
-                ]
+                ],
+                "updateBuildableProjectDepsInPackageJson": true
             }
         },
         "lint": {
