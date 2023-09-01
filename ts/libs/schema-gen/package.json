@@ -14,6 +14,7 @@
   },
   "peerDependencies": {
     "@polaris-sloc/core": "~0.6.2",
-    "rxjs": "^6.6.7"
+    "rxjs": "^6.6.7",
+    "tslib": "^2.6.2"
   }
 }
