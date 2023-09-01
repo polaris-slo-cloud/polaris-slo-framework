@@ -1,6 +1,6 @@
 {
   "name": "@polaris-sloc/prometheus",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "license": "Apache-2.0",
   "author": "Polaris SLO Framework Authors",
   "private": false,
@@ -12,7 +12,7 @@
     "safe-flat": "^2.0.2"
   },
   "peerDependencies": {
-    "@polaris-sloc/core": "~0.6.2",
+    "@polaris-sloc/core": "~0.6.3",
     "tslib": "^2.6.2"
   }
 }
