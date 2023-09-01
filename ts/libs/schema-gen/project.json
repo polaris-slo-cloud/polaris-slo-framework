@@ -16,7 +16,8 @@
                 "main": "libs/schema-gen/src/index.ts",
                 "assets": [
                     "libs/schema-gen/*.md"
-                ]
+                ],
+                "updateBuildableProjectDepsInPackageJson": true
             }
         },
         "lint": {
