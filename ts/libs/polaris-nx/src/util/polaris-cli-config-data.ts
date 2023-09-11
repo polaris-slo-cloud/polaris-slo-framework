@@ -15,11 +15,14 @@ export interface PolarisCliProject {
     /** TS entry point file (index.ts for libs, main.ts for apps) for the project relative to the root of the workspace. */
     tsEntryPoint: string;
 
-    /** Defimes the Docker Image Name */
+    /** Defines the Docker Image Name */
     dockerImageName?: string;
 
-    /** Defimes the Docker Image Tags */
+    /** Defines the Docker Image Tags */
     dockerImageTags?: string;
+
+    /** Defines the Dockerfile Path */
+    dockerFilePath?: string;
 }
 
 /** Stores details about a library project. */

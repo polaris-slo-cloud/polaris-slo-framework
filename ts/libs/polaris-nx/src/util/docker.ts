@@ -58,14 +58,8 @@ export function generateDockerfilePackageInstallCmd(host: Tree): string {
  */
 export function addDockerBuildConfig(projectConfig: ProjectConfig, options: NormalizedProjectGeneratorSchema): void {
     projectConfig.targets['docker-build'] = {
-        executor: 'nx:run-commands',
-        options: {
-            commands: [
-                // eslint-disable-next-line max-len
-                `docker build -f ./${options.projectRoot}/Dockerfile --build-arg POLARIS_APP_TYPE=slo --build-arg POLARIS_APP_NAME=${options.projectName} -t ${getContainerImageName(options)}:latest .`,
-            ],
-            parallel: false,
-        },
+        executor: '@polaris-sloc/polaris-nx:docker-build',
+        options: { projectName: options.projectName},
     };
 }
 

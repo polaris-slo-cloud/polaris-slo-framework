@@ -6,6 +6,7 @@
 
 * Local npm registry using [Verdaccio](https://verdaccio.org/)
 * Run e2e tests in GithubActions
+* Docker-build command using an Nx executor
 
 
 
