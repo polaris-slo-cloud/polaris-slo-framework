@@ -1,7 +1,16 @@
-import { ApiextensionsV1Api, CoreV1Api, CustomObjectsApi, KubeConfig, V1CustomResourceDefinition } from '@kubernetes/client-node';
+import {
+    ApiextensionsV1Api,
+    CoreV1Api,
+    CustomObjectsApi,
+    KubeConfig,
+    KubernetesObject,
+    KubernetesObjectApi,
+    V1CustomResourceDefinition,
+} from '@kubernetes/client-node';
 import { Tree } from '@nx/devkit';
 import { SloMappingBase } from '@polaris-sloc/core';
 import { camelCase, snakeCase } from 'change-case';
+import { loadAll } from 'js-yaml';
 import { flushChanges } from 'nx/src/generators/tree';
 import { DEFAULT_CONFIG as TS_JSON_SCHEMA_GEN_DEFAULT_CONFIG, createGenerator } from 'ts-json-schema-generator';
 import { getTempDir } from '.';
@@ -251,4 +260,35 @@ async function readMetricPropKeys(composedMetricTypePkg: string, composedMetricT
     }
     deleteDir(host);
     return Promise.resolve(metricPropKeys);
+}
+
+type KubernetesObjectHeader<T extends KubernetesObject | KubernetesObject> = Pick<T, 'apiVersion' | 'kind'> & {
+    metadata: {
+        name: string;
+        namespace: string;
+    };
+};
+
+export async function apply(kubeConfig: KubeConfig, specString: string): Promise<KubernetesObject[]> {
+    const client = KubernetesObjectApi.makeApiClient(kubeConfig);
+
+    const specs: KubernetesObject[] = loadAll(specString);
+    const validSpecs = specs.filter((s): s is KubernetesObjectHeader<KubernetesObject> => s && !!s.kind && !!s.metadata);
+    const created: KubernetesObject[] = [];
+    for (const spec of validSpecs) {
+        try {
+            await client.read(spec);
+            // Note that this could fail if the spec refers to a custom resource. For custom resources you may need
+            // to specify a different patch merge strategy in the content-type header.
+            //
+            // See: https://github.com/kubernetes/kubernetes/issues/97423
+            const response = await client.patch(spec);
+            created.push(response.body);
+        } catch (e) {
+            // resource doesn't exist -> create it
+            const response = await client.create(spec);
+            created.push(response.body);
+        }
+    }
+    return created;
 }

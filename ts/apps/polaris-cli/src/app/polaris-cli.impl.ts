@@ -6,6 +6,7 @@ import { PolarisCli } from './polaris-cli';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
 import {
     configCommand,
+    createApplySloMappingCommand,
     createBuildCommand,
     createDeployCommand,
     createDockerBuildCommand,
@@ -38,6 +39,7 @@ export class PolarisCliImpl implements PolarisCli {
             .command(createInitCommand(this))
             .command(createGenerateCommand(this))
             .command(createSerializeSloMappingCommand(this))
+            .command(createApplySloMappingCommand(this))
             .command(createBuildCommand(this))
             .command(createDockerBuildCommand(this))
             .command(createDeployCommand(this))

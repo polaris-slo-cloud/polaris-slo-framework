@@ -7,4 +7,4 @@ export * from './generate-command';
 export * from './generate-crds-command';
 export * from './init-command';
 export * from './serialize-slo-mapping-command';
-
+export * from './apply-slo-mapping-command';

@@ -8,6 +8,7 @@
 * Run e2e tests in GithubActions
 * Docker-build command using an Nx executor
 * Generate a Visual Studio Code .devcontainer configuration when creating a new Polaris workspace
+* Add `apply-slo-mapping` command to polaris-cli
 
 
 
