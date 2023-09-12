@@ -1,6 +1,8 @@
+import { promises as fs } from 'fs';
 import { CommandModule } from 'yargs';
 import { PolarisCli } from '../polaris-cli';
-import { RunNpmBinaryTask } from '../tasks';
+import { PromiseTask, RunNpmBinaryTask } from '../tasks';
+import { copyKubeConfigDotSh, devContainerDotJson, dockerfile } from '../util/devcontainer-files';
 import { NPM_PACKAGES, VERSIONS } from '../util/packages';
 import { createYargsCommand } from './command';
 
@@ -75,6 +77,18 @@ export function createInitCommand(cli: PolarisCli): CommandModule<any, any> {
                         devDependency: true,
                     }),
                     workingDir: workspaceDir,
+                }),
+                // create devcontainer configuration
+                new PromiseTask(async () => {
+                    // create folder
+                    const basePath = `${workspaceDir}/.devcontainer`;
+                    await fs.mkdir(basePath, { recursive: true });
+                    // write files in parallel
+                    await Promise.all([
+                        fs.writeFile(`${basePath}/copy-kube-config.sh`, copyKubeConfigDotSh),
+                        fs.writeFile(`${basePath}/devcontainer.json`, devContainerDotJson),
+                        fs.writeFile(`${basePath}/Dockerfile`, dockerfile),
+                    ]);
                 }),
             );
         },
