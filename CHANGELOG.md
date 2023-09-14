@@ -9,6 +9,7 @@
 * Docker-build command using an Nx executor
 * Generate a Visual Studio Code .devcontainer configuration when creating a new Polaris workspace
 * Add `apply-slo-mapping` command to polaris-cli
+* Add `polaris-cli migrate` command that migrates all polaris packages to the specified version and all Nx packages to the appropriate version.
 
 
 

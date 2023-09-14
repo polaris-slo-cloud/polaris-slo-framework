@@ -10,7 +10,7 @@ const KEY = 'key';
 /**
  * Factory for getting / setting a field in a Polaris config.
  */
-export function configCommand(cli: PolarisCli): CommandModule<any, any> {
+export function createConfigCommand(cli: PolarisCli): CommandModule<any, any> {
     return createYargsCommand(
         ['config <modifier> <project> <key>'],
         'Get or set a field in the Polaris config.',
@@ -31,7 +31,6 @@ export function configCommand(cli: PolarisCli): CommandModule<any, any> {
                 }),
         args => {
             const options = args._.slice(1).join(' ');
-            console.log(`${NX_CLI} ${POLARIS_NX}:config ${args.modifier} ${args.project} ${args.key} ${options}`);
             return cli.taskExecutor.runTask(
                 new RunNpmBinaryTask({
                     command: `${NX_CLI} ${POLARIS_NX}:config ${args.project} ${args.modifier}  ${args.key} ${options}`,

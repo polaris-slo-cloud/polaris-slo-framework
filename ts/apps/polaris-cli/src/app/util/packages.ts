@@ -21,7 +21,16 @@ export const NPM_PACKAGES = {
     },
 
     polaris: {
+        core: `${POLARIS_NPM_ORG}/core`,
+        commonMappings: `${POLARIS_NPM_ORG}/common-mappings`,
+        kubernetes: `${POLARIS_NPM_ORG}/kubernetes`,
+        prometheus: `${POLARIS_NPM_ORG}/prometheus`,
+        costEfficiency: `${POLARIS_NPM_ORG}/cost-efficiency`,
+        schemaGen: `${POLARIS_NPM_ORG}/schema-gen`,
         nx: `${POLARIS_NPM_ORG}/polaris-nx`,
         cli: `${POLARIS_NPM_ORG}/cli`,
     },
 };
+
+/** Full names of @polaris-sloc packages */
+export const POLARIS_PKGS = Object.values(NPM_PACKAGES.polaris);

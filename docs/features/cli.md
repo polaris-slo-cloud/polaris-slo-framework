@@ -29,6 +29,8 @@ The Polaris CLI supports the following commands:
 | `polaris-cli docker-build <name>`    | Builds the Docker container image for a Polaris controller project. |
 | `polaris-cli deploy <name>`          | Deploys a Polaris project or an SLO Mapping to an orchestrator. |
 | `polaris-cli generate-crds <project>`| Generates a Custom Resource Definition (CRD) for an existing Polaris ApiObject type. [alias: `gen-crds`] |
+| `polaris-cli migrate <polaris-version>`| Migrates all polaris packages to the specified version and all Nx packages to the appropriate version. |
+
 
 
 ## Create a New Workspace

@@ -21,5 +21,8 @@
     "grafana-dash-gen": "^3.2.1",
     "nx": "*",
     "tslib": "^2.6.2"
+  },
+  "nx-migrations": {
+    "migrations": "./migrations.json"
   }
 }
