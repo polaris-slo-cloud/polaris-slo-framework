@@ -10,6 +10,7 @@
 * Generate a Visual Studio Code .devcontainer configuration when creating a new Polaris workspace
 * Add `apply-slo-mapping` command to polaris-cli
 * Add `polaris-cli migrate` command that migrates all polaris packages to the specified version and all Nx packages to the appropriate version.
+* Use an executor for the `polaris-cli deploy` command and check if unmodifiable Kubernets objects already exist
 
 
 

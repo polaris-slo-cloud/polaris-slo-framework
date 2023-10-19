@@ -5,6 +5,9 @@ import {
     KubeConfig,
     KubernetesObject,
     KubernetesObjectApi,
+    RbacAuthorizationV1Api,
+    V1ClusterRole,
+    V1ClusterRoleBinding,
     V1CustomResourceDefinition,
 } from '@kubernetes/client-node';
 import { Tree } from '@nx/devkit';
@@ -272,7 +275,7 @@ type KubernetesObjectHeader<T extends KubernetesObject | KubernetesObject> = Pic
 export async function apply(kubeConfig: KubeConfig, specString: string): Promise<KubernetesObject[]> {
     const client = KubernetesObjectApi.makeApiClient(kubeConfig);
 
-    const specs: KubernetesObject[] = loadAll(specString);
+    const specs: KubernetesObject[] = loadAll(specString).flat();
     const validSpecs = specs.filter((s): s is KubernetesObjectHeader<KubernetesObject> => s && !!s.kind && !!s.metadata);
     const created: KubernetesObject[] = [];
     for (const spec of validSpecs) {
@@ -291,4 +294,38 @@ export async function apply(kubeConfig: KubeConfig, specString: string): Promise
         }
     }
     return created;
+}
+
+export function getClusterRoleFromManifest(manifest: unknown[]): V1ClusterRole | undefined {
+    return manifest.find((obj): obj is V1ClusterRole => typeof obj === 'object' && 'kind' in obj && obj.kind === 'ClusterRole');
+}
+
+export function getClusterRoleBindingFromManifest(manifest: unknown[]): V1ClusterRoleBinding | undefined {
+    return manifest.find((obj): obj is V1ClusterRoleBinding => typeof obj === 'object' && 'kind' in obj && obj.kind === 'ClusterRoleBinding');
+}
+
+export async function getDeployedClusterRole(name: string, kubeConfig: KubeConfig): Promise<V1ClusterRole> {
+    const rbacAuthorizationApi = kubeConfig.makeApiClient(RbacAuthorizationV1Api);
+    try {
+        const response = await rbacAuthorizationApi.readClusterRole(name);
+        return response.body;
+    } catch (error) {
+        if (error.statusCode === 404) {
+            return undefined;
+        }
+        throw error;
+    }
+}
+
+export async function getDeployedClusterRoleBinding(name: string, kubeConfig: KubeConfig): Promise<V1ClusterRoleBinding> {
+    const rbacAuthorizationApi = kubeConfig.makeApiClient(RbacAuthorizationV1Api);
+    try {
+        const response = await rbacAuthorizationApi.readClusterRoleBinding(name);
+        return response.body;
+    } catch (error) {
+        if (error.statusCode === 404) {
+            return undefined;
+        }
+        throw error;
+    }
 }
