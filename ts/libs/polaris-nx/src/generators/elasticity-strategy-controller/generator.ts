@@ -1,13 +1,17 @@
+import * as child_process from 'child_process';
 import * as path from 'path';
 import {
     Generator,
     Tree,
     formatFiles,
     generateFiles,
+    joinPathFragments,
     offsetFromRoot,
     readProjectConfiguration,
     updateProjectConfiguration,
 } from '@nx/devkit';
+import { ObjectKind } from '@polaris-sloc/core';
+import { flushChanges } from 'nx/src/generators/tree';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,
@@ -20,6 +24,8 @@ import {
     changeBuildDependencyBundling,
     createAppProject,
     getElasticityStrategyNames,
+    getTempDir,
+    getWorkspaceTsConfigPath,
     normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
 } from '../../util';
@@ -70,9 +76,12 @@ export default generateElasticityStrategyController;
 
 function addElasticityStrategyControllerFiles(host: Tree, options: ElasticityStrategyControllerGeneratorNormalizedSchema): void {
     const eStratNames = getElasticityStrategyNames(options.eStratType);
+    const { group, kind } = extractEStratType(host, options)
 
     const templateOptions = {
         ...eStratNames,
+        eStratTypeApiGroup: group,
+        eStratK8sResources: kind.toLowerCase(),
         eStratTypePkg: options.eStratTypePkg,
         initPolarisLibFn: POLARIS_INIT_LIB_FN_NAME,
         controllerProjectName: options.projectName,
@@ -82,4 +91,43 @@ function addElasticityStrategyControllerFiles(host: Tree, options: ElasticityStr
     };
     generateFiles(host, path.join(__dirname, 'files/elasticity-strategy-controller'), options.projectRoot, templateOptions);
     generateTypeScriptDockerfile(host, options);
+}
+
+function extractEStratType(host: Tree, options: ElasticityStrategyControllerGeneratorNormalizedSchema): ObjectKind {
+    const tempDir = getTempDir(options.name, 'gen-elasticity-stratetgy-controller');
+    generateAndWriteScripts(host, options.eStratTypePkg, options.eStratType, tempDir);
+
+    // Run the gen-crds script.
+    const scriptTsConfig = joinPathFragments(tempDir, 'tsconfig.json');
+    const scriptTs = joinPathFragments(tempDir, 'gen-controller.ts');
+    const result = child_process.spawnSync(
+        'npx',
+        [ 'ts-node', '--project', scriptTsConfig, scriptTs ],
+        {
+            cwd: host.root,
+        },
+    );
+
+    const objectKindString = result.stdout.toString();
+    return JSON.parse(objectKindString);
+}
+
+function generateAndWriteScripts(host: Tree, eStratTypePkg: string, polarisType: string, tempDir: string): void {
+    const tsConfigBase = getWorkspaceTsConfigPath(host);
+    const templateOptions = {
+        tsConfigBase: joinPathFragments(offsetFromRoot(tempDir), tsConfigBase),
+        eStratTypePkg,
+        polarisType,
+        template: '',
+    };
+
+    generateFiles(
+        host,
+        path.join(__dirname, 'files/gen-elasticity-strategy-controller-scripts'),
+        tempDir,
+        templateOptions,
+    );
+
+    const changes = host.listChanges().filter((change) => change.path.startsWith(tempDir));
+    flushChanges(host.root, changes);
 }

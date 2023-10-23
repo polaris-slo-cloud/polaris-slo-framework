@@ -28,7 +28,7 @@ rules:
 
 # Allow reading supported Composed Metric Mapping types
 - apiGroups:
-  - metrics.polaris-slo-cloud.github.io
+  - <%= compMetricApiGroup %>
   resources:
   - <%= compMetricK8sResources %>
   verbs:
@@ -36,7 +36,7 @@ rules:
   - watch
   - list
 - apiGroups:
-  - metrics.polaris-slo-cloud.github.io
+  - <%= compMetricApiGroup %>
   resources:
   - <%= compMetricK8sResources %>/status
   verbs:

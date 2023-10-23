@@ -1,5 +1,8 @@
+import * as child_process from 'child_process';
 import * as path from 'path';
-import { Generator, Tree, formatFiles, generateFiles, offsetFromRoot, readProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
+import { Generator, Tree, formatFiles, generateFiles, joinPathFragments, offsetFromRoot, readProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
+import { ObjectKind } from '@polaris-sloc/core';
+import { flushChanges } from 'nx/src/generators/tree';
 import {
     NPM_PACKAGES,
     POLARIS_INIT_LIB_FN_NAME,
@@ -12,6 +15,8 @@ import {
     changeBuildDependencyBundling,
     createAppProject,
     getSloNames,
+    getTempDir,
+    getWorkspaceTsConfigPath,
     normalizeProjectGeneratorOptions,
     runCallbacksSequentially,
 } from '../../util';
@@ -60,9 +65,12 @@ export default generateSloController;
 
 function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormalizedSchema): void {
     const sloNames = getSloNames(options.sloMappingType);
+    const { group, kind } = extractSloType(host, options);
 
     const templateOptions = {
         ...sloNames,
+        sloMappingTypeApiGroup: group,
+        sloMappingK8sResources: kind.toLowerCase(),
         sloMappingTypePkg: options.sloMappingTypePkg,
         initPolarisLibFn: POLARIS_INIT_LIB_FN_NAME,
         controllerProjectName: options.projectName,
@@ -72,4 +80,43 @@ function addSloControllerFiles(host: Tree, options: SloControllerGeneratorNormal
     };
     generateFiles(host, path.join(__dirname, 'files/slo-controller'), options.projectRoot, templateOptions);
     generateTypeScriptDockerfile(host, options);
+}
+
+function extractSloType(host: Tree, options: SloControllerGeneratorNormalizedSchema): ObjectKind {
+    const tempDir = getTempDir(options.name, 'gen-slo-controller');
+    generateAndWriteScripts(host, options.sloMappingTypePkg, options.sloMappingType, tempDir);
+
+    // Run the gen-crds script.
+    const scriptTsConfig = joinPathFragments(tempDir, 'tsconfig.json');
+    const scriptTs = joinPathFragments(tempDir, 'gen-controller.ts');
+    const result = child_process.spawnSync(
+        'npx',
+        [ 'ts-node', '--project', scriptTsConfig, scriptTs ],
+        {
+            cwd: host.root,
+        },
+    );
+
+    const objectKindString = result.stdout.toString();
+    return JSON.parse(objectKindString);
+}
+
+function generateAndWriteScripts(host: Tree, sloMappingTypePkg: string, polarisType: string, tempDir: string): void {
+    const tsConfigBase = getWorkspaceTsConfigPath(host);
+    const templateOptions = {
+        tsConfigBase: joinPathFragments(offsetFromRoot(tempDir), tsConfigBase),
+        sloMappingTypePkg,
+        polarisType,
+        template: '',
+    };
+
+    generateFiles(
+        host,
+        path.join(__dirname, 'files/gen-slo-controller-scripts'),
+        tempDir,
+        templateOptions,
+    );
+
+    const changes = host.listChanges().filter((change) => change.path.startsWith(tempDir));
+    flushChanges(host.root, changes);
 }
