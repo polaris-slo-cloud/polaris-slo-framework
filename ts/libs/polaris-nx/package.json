@@ -23,6 +23,15 @@
     "tslib": "^2.6.2"
   },
   "nx-migrations": {
+    "packageGroup": [
+      "@polaris-sloc/core",
+      "@polaris-sloc/common-mappings",
+      "@polaris-sloc/kubernetes",
+      "@polaris-sloc/prometheus",
+      "@polaris-sloc/cost-efficiency",
+      "@polaris-sloc/schema-gen",
+      "@polaris-sloc/cli"
+    ],
     "migrations": "./migrations.json"
   }
 }
