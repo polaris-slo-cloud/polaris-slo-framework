@@ -71,14 +71,14 @@ export const devContainerDotJson = `// For format details, see https://aka.ms/de
 	"forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "cd ./ts && npm --silent install",
+	"postCreateCommand": "npm --silent install",
 
 	// throws error code or code-insiders is not installed
-	//"postStartCommand": "cd ./ts && code .",
+	//"postStartCommand": "code .",
 	// Debug info
 	//"postStartCommand": "whoami && pwd && . /usr/local/share/copy-kube-config.sh && kubectl config view && kubectl cluster-info",
-	// Register CRDs - TODO remove this once CLI implements this
-	"postStartCommand": ". /usr/local/share/copy-kube-config.sh && kubectl apply -f ./ts/crds/kubernetes",
+	// Copy kube config - TODO remove this once CLI implements this
+	"postStartCommand": ". /usr/local/share/copy-kube-config.sh",
 
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
