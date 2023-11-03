@@ -200,12 +200,23 @@ export interface TimeInstantQuery<T> extends ValueFilterableQuery<TimeSeriesInst
     maxByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<number>;
 
     /**
+     * Groups the `TimeSeries` using the specified `LabelGroupingConfig` and then
+     * counts the number of elements each group.
+     *
+     * @param groupingConfig The configuration used for grouping. Use the static methods of the `LabelGrouping` class
+     * to create this parameter. If no config is specified, no grouping is performed.
+     * @returns A `TimeInstantQuery` with one `TimeSeriesInstant` per group.
+     */
+    countByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<T>;
+
+    /**
      * Calculates the `quantile` from a histgoram.
      *
      * @param quantile The quantile to calculate. Must be between 0 and 100.
      * @returns A `TimeInstantQuery` with the quantile value from the histogram.
      */
-    histogramQuantile(quantile: number): TimeInstantQuery<T>
+    histogramQuantile(quantile: number): TimeInstantQuery<T>;
+
 }
 
 /**

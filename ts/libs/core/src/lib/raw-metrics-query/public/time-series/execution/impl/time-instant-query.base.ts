@@ -13,9 +13,9 @@ import {
     BinaryOperationQueryContent,
     BinaryOperationWithConstOperandQueryContent,
     FilterOnValueQueryContent,
+    HistogramQuantileQueryContent,
     QueryContentType,
     createQueryContent,
-    HistogramQuantileQueryContent,
 } from '../query-content';
 import { TimeSeriesQueryBase } from './time-series-query.base';
 
@@ -142,6 +142,17 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         return this.createTimeInstantQuery(queryContent);
     }
 
+    countByGroup(groupingConfig?: LabelGroupingConfig): TimeInstantQuery<T> {
+        const queryContent = createQueryContent(
+            QueryContentType.AggregateByGroup,
+            {
+                aggregationType: 'count',
+                groupingConfig,
+            },
+        );
+        return this.createTimeInstantQuery(queryContent);
+    }
+
     filterOnValue(predicate: ValueFilter): TimeInstantQuery<T> {
         const queryContent: FilterOnValueQueryContent = {
             contentType: QueryContentType.FilterOnValue,
@@ -154,8 +165,8 @@ export abstract class TimeInstantQueryBase<T> extends TimeSeriesQueryBase<TimeSe
         const queryContent: HistogramQuantileQueryContent = {
             contentType: QueryContentType.HistogramQuantile,
             quantile,
-            functionName: 'histogramQuantile'
-        }
+            functionName: 'histogramQuantile',
+        };
         return this.createTimeInstantQuery(queryContent);
     }
 

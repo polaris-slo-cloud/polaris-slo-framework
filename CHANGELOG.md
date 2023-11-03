@@ -1,5 +1,13 @@
 # Polaris SLO Framework Changelog
 
+## v0.7.0 (2023-11-03)
+
+### Features
+
+* Add `countByGroup()` to `TimeInstantQuery`.
+
+
+
 ## v0.6.3 (2023-09-01)
 
 ### Bugfixes

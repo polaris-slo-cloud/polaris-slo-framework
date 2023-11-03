@@ -33,6 +33,7 @@ const AGGREGATIONS_MAP: Record<AggregationType, string> = {
     min: 'min',
     max: 'max',
     avg: 'avg',
+    count: 'count',
 };
 
 /**
@@ -56,7 +57,7 @@ const BINARY_OPS_MAP: Record<BinaryOperator, string> = {
 const FUNCTIONS_MAP: Record<DBFunctionName, string> = {
     rate: 'rate',
     averageOverTime: 'avg_over_time',
-    histogramQuantile: 'histogram_quantile'
+    histogramQuantile: 'histogram_quantile',
 };
 
 export class PrometheusNativeQueryBuilder extends NativeQueryBuilderBase {
