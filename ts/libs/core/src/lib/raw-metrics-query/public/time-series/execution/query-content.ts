@@ -146,7 +146,7 @@ export interface FunctionQueryContent extends QueryContent {
 
 }
 
-export type AggregationType = 'sum' | 'min' | 'max' | 'avg'; // ToDo: extend
+export type AggregationType = 'sum' | 'min' | 'max' | 'avg' | 'count'; // ToDo: extend
 
 /**
  * Describes a query that performs an aggregation.
