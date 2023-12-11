@@ -33,7 +33,7 @@ export function createConfigCommand(cli: PolarisCli): CommandModule<any, any> {
             const options = args._.slice(1).join(' ');
             return cli.taskExecutor.runTask(
                 new RunNpmBinaryTask({
-                    command: `${NX_CLI} ${POLARIS_NX}:config ${args.project} ${args.modifier}  ${args.key} ${options}`,
+                    command: `${NX_CLI} g ${POLARIS_NX}:config ${args.project} ${args.modifier} ${args.key} ${options}`,
                 }),
             );
         },
