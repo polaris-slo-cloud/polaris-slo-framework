@@ -4,8 +4,16 @@ import { isMatch } from 'lodash';
 
 import { PolarisCliError } from '../../util';
 import { DeployExecutorSchema } from './schema';
-import { readFile } from 'fs/promises';
-import { apply, createKubeConfig, getClusterRoleBindingFromManifest, getClusterRoleFromManifest, getDeployedClusterRole, getDeployedClusterRoleBinding } from '../../util/kubernetes';
+import { readFile, readdir } from 'fs/promises';
+import { join } from 'path';
+import {
+    apply,
+    createKubeConfig,
+    getClusterRoleBindingFromManifest,
+    getClusterRoleFromManifest,
+    getDeployedClusterRole,
+    getDeployedClusterRoleBinding
+} from '../../util/kubernetes';
 
 /**
  * Deploys a Polaris project or an SLO Mapping to an orchestrator.
@@ -15,9 +23,10 @@ const executeDeploy: Executor<DeployExecutorSchema> = async (options: DeployExec
         throw new PolarisCliError('This executor must be run on a project. No projectName found in context.', context);
     }
 
-    const manifestPath = `./apps/${context.projectName}/manifests/kubernetes/1-rbac.yaml`
-    const manifestContent = await readFile(manifestPath);
-    const manifest = loadAll(manifestContent.toString());
+    const manifestsDir = `./apps/${context.projectName}/manifests/kubernetes`;
+    const manifestPaths = await readdir(manifestsDir);
+    const manifestContents = await Promise.all(manifestPaths.map((fileName) => readFile(join(manifestsDir, fileName))));
+    const manifest = loadAll(manifestContents.map((content) => content.toString()).join('\n---\n'));
 
     const clusterRole = getClusterRoleFromManifest(manifest);
     const clusterRoleBinding = getClusterRoleBindingFromManifest(manifest);
