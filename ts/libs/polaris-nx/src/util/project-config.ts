@@ -33,15 +33,8 @@ export function changeBuildDependencyBundling(projectConfig: ProjectConfig): voi
  */
 export function addDeployTarget(projectConfig: ProjectConfig, options: NormalizedProjectGeneratorSchema): void {
     projectConfig.targets['deploy'] = {
-        executor: 'nx:run-commands',
-        options: {
-            commands: [
-                // Allows specifying the destination context, but if user does not specify the destination, its string value is 'undefined'
-                // `kubectl apply --context='{args.destination}' -f ./${options.projectRoot}/manifests/kubernetes`,
-                `kubectl apply -f ./${options.projectRoot}/manifests/kubernetes`,
-            ],
-            parallel: false,
-        },
+        executor: '@polaris-sloc/polaris-nx:deploy',
+        options: { projectName: options.projectName }, // todo check if you need project.name or something else
     };
 }
 

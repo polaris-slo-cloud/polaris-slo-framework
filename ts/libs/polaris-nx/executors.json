@@ -5,6 +5,17 @@
             "implementation": "./src/executors/generate-crds/executor",
             "schema": "./src/executors/generate-crds/schema.json",
             "description": "Generate the Custom Resource Definition (CRDs) for the Polaris types in a project"
+        },
+        "deploy": {
+            "implementation": "./src/executors/deploy/executor",
+            "schema": "./src/executors/deploy/schema.json",
+            "description": "Deploys a Polaris project or an SLO Mapping to an orchestrator"
+        }
+        ,
+        "docker-build": {
+            "implementation": "./src/executors/docker-build/executor",
+            "schema": "./src/executors/docker-build/schema.json",
+            "description": "Build Docker containers for a containerized Polaris project"
         }
     }
 }

@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/naming-convention */
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { PolarisCli } from './polaris-cli';
 import { DefaultTaskExecutor, TaskExecutor } from './tasks';
 import {
+    createApplySloMappingCommand,
     createBuildCommand,
+    createConfigCommand,
     createDeployCommand,
     createDockerBuildCommand,
     createGenerateCommand,
     createGenerateCrdCommand,
     createInitCommand,
+    createMigrateCommand,
     createSerializeSloMappingCommand,
 } from './yargs-commands';
 
 export class PolarisCliImpl implements PolarisCli {
-
     readonly startupDir: string;
     readonly workspaceRootDir: string;
 
@@ -37,13 +40,15 @@ export class PolarisCliImpl implements PolarisCli {
             .command(createInitCommand(this))
             .command(createGenerateCommand(this))
             .command(createSerializeSloMappingCommand(this))
+            .command(createApplySloMappingCommand(this))
             .command(createBuildCommand(this))
             .command(createDockerBuildCommand(this))
             .command(createDeployCommand(this))
             .command(createGenerateCrdCommand(this))
+            .command(createConfigCommand(this))
+            .command(createMigrateCommand(this))
             .help()
             .recommendCommands()
             .parseSync();
     }
-
 }

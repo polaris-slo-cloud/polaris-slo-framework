@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "title": "Deploy",
+    "description": "Deploys a Polaris project or an SLO Mapping to an orchestrator",
+    "type": "object",
+    "properties": {},
+    "required": []
+}

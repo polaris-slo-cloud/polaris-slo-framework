@@ -1,0 +1,14 @@
+{
+    "generators": {
+        "use-executor-for-docker-build": {
+            "version": "0.6.4",
+            "description": "Use the new executor for the docker build command instead of a shell command",
+            "implementation": "./src/migrations/use-executor-for-docker-build/use-executor-for-docker-build"
+        },
+        "use-executor-for-deployment": {
+            "version": "0.6.4",
+            "description": "Use new executor for the deploy command",
+            "implementation": "./src/migrations/use-executor-for-deployment/use-executor-for-deployment"
+        }
+    }
+}

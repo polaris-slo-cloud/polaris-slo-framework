@@ -151,6 +151,9 @@ export class PolarisCliConfig {
             controller = {
                 projectType: type,
                 tsEntryPoint: joinPathFragmentsAndNormalize(srcRoot, 'main.ts'),
+                dockerImageName: options.projectName,
+                dockerImageTags: 'latest',
+                dockerFilePath: `${options.projectRoot}/Dockerfile`,
             };
             this.data.projects[options.projectName] = controller;
         }

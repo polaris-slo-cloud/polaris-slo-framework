@@ -57,6 +57,16 @@
             "factory": "./src/generators/serialize-slo-mapping/generator",
             "schema": "./src/generators/serialize-slo-mapping/schema.json",
             "description": "serialize-slo-mapping generator"
+        },
+        "apply-slo-mapping": {
+            "factory": "./src/generators/apply-slo-mapping/generator",
+            "schema": "./src/generators/apply-slo-mapping/schema.json",
+            "description": "apply-slo-mapping generator"
+        },
+        "config": {
+            "factory": "./src/generators/config/generator",
+            "schema": "./src/generators/config/schema.json",
+            "description": "config generator"
         }
     }
 }

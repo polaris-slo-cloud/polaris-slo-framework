@@ -35,6 +35,11 @@
                         "input": "./libs/polaris-nx",
                         "glob": "executors.json",
                         "output": "."
+                    },
+                    {
+                        "input": "./libs/polaris-nx",
+                        "glob": "migrations.json",
+                        "output": "."
                     }
                 ],
                 "updateBuildableProjectDepsInPackageJson": true
@@ -50,7 +55,8 @@
                     "libs/polaris-nx/**/*.ts",
                     "libs/polaris-nx/generators.json",
                     "libs/polaris-nx/executors.json",
-                    "libs/polaris-nx/package.json"
+                    "libs/polaris-nx/package.json",
+                    "libs/polaris-nx/migrations.json"
                 ]
             }
         },

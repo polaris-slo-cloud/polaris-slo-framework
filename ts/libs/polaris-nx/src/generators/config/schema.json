@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "cli": "nx",
+    "title": "Config generator",
+    "properties": {
+        "project": {
+            "type": "string",
+            "description": "The project name",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "Please enter the project name"
+        },
+        "modifier": {
+            "type": "string",
+            "description": "Get or set modifier for the project/component.",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": "Please enter get or set modifier for the project/component."
+        },
+
+        "key": {
+            "type": "string",
+            "description": "The field to be changed/read.",
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            },
+            "x-prompt": "Please enter he field to be changed/read."
+        },
+        "value": {
+            "type": "string",
+            "description": "Value to be changed.",
+            "$default": {
+                "$source": "argv",
+                "index": 3
+            },
+            "x-prompt": "Please enter the value to be changed."
+        }
+    },
+    "required": ["modifier", "project", "key"]
+}

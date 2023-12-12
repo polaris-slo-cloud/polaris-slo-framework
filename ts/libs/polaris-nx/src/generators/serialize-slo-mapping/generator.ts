@@ -79,7 +79,7 @@ function checkSloMapping(host: Tree, options: SerializeSloMappingGeneratorNormal
 /**
  * Extracts the SloMapping's package name from the .ts file using a regular expression.
  */
-function extractSloMappingPackageName(host: Tree, options: SerializeSloMappingGeneratorNormalizedSchema): string {
+export function extractSloMappingPackageName(host: Tree, options: SerializeSloMappingGeneratorNormalizedSchema): string {
     const sloMappingTsContent = host.read(options.fullSloMappingTsPath);
     const sloMappingTsContentStr = sloMappingTsContent.toString();
 
@@ -92,7 +92,7 @@ function extractSloMappingPackageName(host: Tree, options: SerializeSloMappingGe
     throw new Error(`Could not extract SloMapping package name from ${options.fullSloMappingTsPath}`);
 }
 
-function generateAndWriteScripts(host: Tree, options: SerializeSloMappingGeneratorNormalizedSchema, sloMappingTypePkg: string, tempDir: string): void {
+export function generateAndWriteScripts(host: Tree, options: SerializeSloMappingGeneratorNormalizedSchema, sloMappingTypePkg: string, tempDir: string): void {
     const tsConfigBase = getWorkspaceTsConfigPath(host);
     let initCommonMappingsLib = '';
     if ((sloMappingTypePkg as any) !== COMMON_MAPPINGS_PKG) {

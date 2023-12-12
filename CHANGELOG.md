@@ -1,5 +1,19 @@
 # Polaris SLO Framework Changelog
 
+## v0.8.0 (not released yet)
+
+### Features
+
+* Local npm registry using [Verdaccio](https://verdaccio.org/)
+* Run e2e tests in GithubActions
+* Docker-build command using an Nx executor
+* Generate a Visual Studio Code .devcontainer configuration when creating a new Polaris workspace
+* Add `apply-slo-mapping` command to polaris-cli
+* Add `polaris-cli migrate` command that migrates all polaris packages to the specified version and all Nx packages to the appropriate version.
+* Use an executor for the `polaris-cli deploy` command and check if unmodifiable Kubernets objects already exist
+* Extract Group, Version & Kind from Polaris Types during Controller Generation
+
+
 ## v0.7.0 (2023-11-03)
 
 ### Features
